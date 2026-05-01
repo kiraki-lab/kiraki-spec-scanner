@@ -1,5 +1,6 @@
 const fields = {
   lucidLevel: document.getElementById('lucidLevel'),
+  bossLevel: document.getElementById('bossLevel'),
   mastery: document.getElementById('mastery'),
   magicPower: document.getElementById('magicPower'),
   criticalRate: document.getElementById('criticalRate'),
@@ -10,6 +11,7 @@ const fields = {
 const baseCpEl = document.getElementById('baseCp');
 const finalCpEl = document.getElementById('finalCp');
 const cooldownMultiplierEl = document.getElementById('cooldownMultiplier');
+const levelPenaltyEl = document.getElementById('levelPenalty');
 const noticeBox = document.getElementById('noticeBox');
 const calculateButton = document.getElementById('calculateButton');
 const resetButton = document.getElementById('resetButton');
@@ -17,18 +19,17 @@ const imageInput = document.getElementById('imageInput');
 const previewBox = document.getElementById('previewBox');
 const dropZone = document.getElementById('dropZone');
 
-const cooldownLevelBreakpoints = [0, 1, 10, 20, 45];
-const cooldownDamageTable = [
-  [0, 49397696.46773333, 79807910.47733334, 94230321.81653333, 106206323.14986667],
-  [0, 51494890.86622222, 81884467.96222222, 96294267.85422222, 108270269.18755555],
-  [0, 53922452.26618803, 84288217.53880341, 98683465.76095727, 110659467.0942906],
-  [0, 56762972.418, 87100957.22999999, 101479228.50400001, 113455229.83733334],
-  [0, 60129076.43579798, 90434229.79434343, 104792437.40234342, 116768438.73567677],
-  [0, 64178439.47937778, 94444195.09377778, 108778326.30257778, 120754327.6359111],
-  [0, 66431275.62975438, 96674222.02385965, 110994414.26470175, 122970415.5980351],
-  [0, 68940003.69807407, 99157606.51407407, 113462311.01274073, 125438312.34607407],
-  [0, 71749781.08162092, 101939058.72209151, 116226453.39126797, 128202454.72460131],
-  [0, 74917054.527, 105074466.345, 119342387.456, 131318388.78933334],
+const cooldownDamageBySeconds = [
+  106206323.14986667,
+  108270269.18755555,
+  110659467.0942906,
+  113455229.83733334,
+  116768438.73567677,
+  120754327.6359111,
+  122970415.5980351,
+  125438312.34607407,
+  128202454.72460131,
+  131318388.78933334,
 ];
 const cooldownReferenceDamage = 106206323.14986667;
 
@@ -44,24 +45,30 @@ function formatNumber(value, digits = 0) {
   return new Intl.NumberFormat('ko-KR', { maximumFractionDigits: digits }).format(value);
 }
 
-function getLevelColumnIndex(level) {
-  let index = 0;
-  for (let i = 0; i < cooldownLevelBreakpoints.length; i += 1) {
-    if (level >= cooldownLevelBreakpoints[i]) index = i;
-  }
-  return index;
+function formatPercent(value, digits = 0) {
+  if (!Number.isFinite(value)) return '-';
+  return `${formatNumber(value * 100, digits)}%`;
 }
 
-function getCorrectionMultiplier(lucidLevel, cooldownReduction) {
+function getCooldownMultiplier(cooldownReduction) {
   const cooldownIndex = Math.max(0, Math.min(9, Math.trunc(cooldownReduction)));
-  const levelColumnIndex = getLevelColumnIndex(lucidLevel);
-  return cooldownDamageTable[cooldownIndex][levelColumnIndex] / cooldownReferenceDamage;
+  return cooldownDamageBySeconds[cooldownIndex] / cooldownReferenceDamage;
+}
+
+function getLevelPenaltyMultiplier(lucidLevel, bossLevel) {
+  const levelGap = Math.max(0, bossLevel - lucidLevel);
+  const cycle = Math.floor(levelGap / 4);
+  const remainder = levelGap % 4;
+  const remainderPenaltyPattern = [0, 2, 5, 7];
+  const penaltyPercent = cycle * 10 + remainderPenaltyPattern[remainder];
+  return Math.max(0, (100 - penaltyPercent) / 100);
 }
 
 function validateInputs(values) {
   const errors = [];
 
-  if (values.lucidLevel === null || values.lucidLevel < 0 || values.lucidLevel > 45) errors.push('루시드 레벨은 0~45 사이로 입력해 주세요.');
+  if (values.lucidLevel === null || values.lucidLevel < 1 || values.lucidLevel > 100) errors.push('루시드 레벨은 1~100 사이로 입력해 주세요.');
+  if (values.bossLevel === null || values.bossLevel < 1 || values.bossLevel > 100) errors.push('상대 보스 레벨은 1~100 사이로 입력해 주세요.');
   if (values.mastery === null || values.mastery < 0 || values.mastery > 100) errors.push('숙련도는 0~100% 사이로 입력해 주세요.');
   if (values.magicPower === null || values.magicPower < 0) errors.push('마력은 0 이상의 숫자로 입력해 주세요.');
   if (values.criticalRate === null || values.criticalRate < 0 || values.criticalRate > 100) errors.push('크리티컬 확률은 0~100% 사이로 입력해 주세요.');
@@ -77,22 +84,25 @@ function calculateCp(values) {
   const critDamageRatio = values.criticalDamage / 100;
   const criticalFactor = 1 + critRateRatio * (critDamageRatio - 1);
   const baseCp = values.magicPower * masteryFactor * criticalFactor;
-  const correctionMultiplier = getCorrectionMultiplier(values.lucidLevel, values.cooldownReduction);
-  const finalCp = baseCp * correctionMultiplier;
+  const levelPenaltyMultiplier = getLevelPenaltyMultiplier(values.lucidLevel, values.bossLevel);
+  const cooldownMultiplier = getCooldownMultiplier(values.cooldownReduction);
+  const finalCp = baseCp * levelPenaltyMultiplier * cooldownMultiplier;
 
-  return { baseCp, correctionMultiplier, finalCp };
+  return { baseCp, levelPenaltyMultiplier, cooldownMultiplier, finalCp };
 }
 
-function updateNotice(type, messages) {
+function updateNotice(type, messages, result, values) {
   if (type === 'error') {
     noticeBox.innerHTML = `<strong>확인 필요</strong><p>${messages.join('<br />')}</p>`;
     noticeBox.style.borderLeftColor = 'var(--warning)';
     return;
   }
 
+  const levelGap = Math.max(0, values.bossLevel - values.lucidLevel);
+  const penaltyPercent = Math.round((1 - result.levelPenaltyMultiplier) * 100);
   noticeBox.innerHTML = `
     <strong>계산 완료</strong>
-    <p>기본 CP 공식은 기존 계산기와 동일하게 두고, 환산 보정은 업로드한 엑셀의 쿨감 시트 표를 기준으로 적용했습니다. 레벨 구간은 0 / 1 / 10 / 20 / 45 기준으로 매칭됩니다.</p>
+    <p>레벨 차이는 ${levelGap}레벨 부족으로 계산했으며, 레벨 페널티는 -${penaltyPercent}%입니다. 기본 CP에 레벨 페널티와 엑셀 기준 쿨감 보정 배율을 곱해 최종 CP를 계산했습니다.</p>
   `;
   noticeBox.style.borderLeftColor = 'var(--pink)';
 }
@@ -100,6 +110,7 @@ function updateNotice(type, messages) {
 function handleCalculate() {
   const values = {
     lucidLevel: readNumber('lucidLevel'),
+    bossLevel: readNumber('bossLevel'),
     mastery: readNumber('mastery'),
     magicPower: readNumber('magicPower'),
     criticalRate: readNumber('criticalRate'),
@@ -110,6 +121,7 @@ function handleCalculate() {
   const errors = validateInputs(values);
   if (errors.length > 0) {
     baseCpEl.textContent = '-';
+    levelPenaltyEl.textContent = '-';
     cooldownMultiplierEl.textContent = '-';
     finalCpEl.textContent = '-';
     updateNotice('error', errors);
@@ -118,21 +130,23 @@ function handleCalculate() {
 
   const result = calculateCp(values);
   baseCpEl.textContent = formatNumber(result.baseCp);
-  cooldownMultiplierEl.textContent = `${formatNumber(result.correctionMultiplier, 3)}x`;
+  levelPenaltyEl.textContent = formatPercent(result.levelPenaltyMultiplier);
+  cooldownMultiplierEl.textContent = `${formatNumber(result.cooldownMultiplier, 3)}x`;
   finalCpEl.textContent = formatNumber(result.finalCp);
-  updateNotice('success');
+  updateNotice('success', [], result, values);
 }
 
 function resetForm() {
   Object.values(fields).forEach((input) => { input.value = ''; });
   baseCpEl.textContent = '-';
+  levelPenaltyEl.textContent = '-';
   cooldownMultiplierEl.textContent = '-';
   finalCpEl.textContent = '-';
   previewBox.innerHTML = '<p>아직 업로드된 이미지가 없습니다.</p>';
   imageInput.value = '';
   noticeBox.innerHTML = `
     <strong>계산식 메모</strong>
-    <p>기본 CP는 기존 계산기 공식을 따르고, 레벨/쿨감 보정은 업로드한 엑셀의 쿨감 시트 표를 기준으로 계산합니다. 현재는 OCR을 붙이기 전 수동 입력 MVP입니다.</p>
+    <p>기본 CP는 기존 계산기 공식을 따르고, 최종 CP는 보스 레벨 대비 루시드 레벨 페널티와 쿨감 보정 배율을 함께 적용합니다. 현재는 OCR을 붙이기 전 수동 입력 MVP입니다.</p>
   `;
   noticeBox.style.borderLeftColor = 'var(--pink)';
 }
