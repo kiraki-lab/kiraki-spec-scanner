@@ -17,6 +17,21 @@ const imageInput = document.getElementById('imageInput');
 const previewBox = document.getElementById('previewBox');
 const dropZone = document.getElementById('dropZone');
 
+const cooldownLevelBreakpoints = [0, 1, 10, 20, 45];
+const cooldownDamageTable = [
+  [0, 49397696.46773333, 79807910.47733334, 94230321.81653333, 106206323.14986667],
+  [0, 51494890.86622222, 81884467.96222222, 96294267.85422222, 108270269.18755555],
+  [0, 53922452.26618803, 84288217.53880341, 98683465.76095727, 110659467.0942906],
+  [0, 56762972.418, 87100957.22999999, 101479228.50400001, 113455229.83733334],
+  [0, 60129076.43579798, 90434229.79434343, 104792437.40234342, 116768438.73567677],
+  [0, 64178439.47937778, 94444195.09377778, 108778326.30257778, 120754327.6359111],
+  [0, 66431275.62975438, 96674222.02385965, 110994414.26470175, 122970415.5980351],
+  [0, 68940003.69807407, 99157606.51407407, 113462311.01274073, 125438312.34607407],
+  [0, 71749781.08162092, 101939058.72209151, 116226453.39126797, 128202454.72460131],
+  [0, 74917054.527, 105074466.345, 119342387.456, 131318388.78933334],
+];
+const cooldownReferenceDamage = 106206323.14986667;
+
 function readNumber(id) {
   const raw = fields[id].value;
   if (raw === '') return null;
@@ -29,37 +44,43 @@ function formatNumber(value, digits = 0) {
   return new Intl.NumberFormat('ko-KR', { maximumFractionDigits: digits }).format(value);
 }
 
+function getLevelColumnIndex(level) {
+  let index = 0;
+  for (let i = 0; i < cooldownLevelBreakpoints.length; i += 1) {
+    if (level >= cooldownLevelBreakpoints[i]) index = i;
+  }
+  return index;
+}
+
+function getCorrectionMultiplier(lucidLevel, cooldownReduction) {
+  const cooldownIndex = Math.max(0, Math.min(9, Math.trunc(cooldownReduction)));
+  const levelColumnIndex = getLevelColumnIndex(lucidLevel);
+  return cooldownDamageTable[cooldownIndex][levelColumnIndex] / cooldownReferenceDamage;
+}
+
 function validateInputs(values) {
   const errors = [];
 
-  if (values.lucidLevel === null || values.lucidLevel < 1 || values.lucidLevel > 300) errors.push('루시드 레벨은 1~300 사이로 입력해 주세요.');
+  if (values.lucidLevel === null || values.lucidLevel < 0 || values.lucidLevel > 45) errors.push('루시드 레벨은 0~45 사이로 입력해 주세요.');
   if (values.mastery === null || values.mastery < 0 || values.mastery > 100) errors.push('숙련도는 0~100% 사이로 입력해 주세요.');
   if (values.magicPower === null || values.magicPower < 0) errors.push('마력은 0 이상의 숫자로 입력해 주세요.');
   if (values.criticalRate === null || values.criticalRate < 0 || values.criticalRate > 100) errors.push('크리티컬 확률은 0~100% 사이로 입력해 주세요.');
   if (values.criticalDamage === null || values.criticalDamage < 0) errors.push('크리티컬 데미지는 0 이상의 숫자로 입력해 주세요.');
-  if (values.cooldownReduction === null || values.cooldownReduction < 0 || values.cooldownReduction > 10) errors.push('재사용 대기시간 감소는 0~10초 사이로 입력해 주세요.');
+  if (values.cooldownReduction === null || values.cooldownReduction < 0 || values.cooldownReduction > 9 || !Number.isInteger(values.cooldownReduction)) errors.push('재사용 대기시간 감소는 0~9 사이의 정수로 입력해 주세요.');
 
   return errors;
 }
 
 function calculateCp(values) {
-  // 기준 공식:
-  // 기본 CP = 마력 × (45 + 숙련도% × 0.075) × {1 + 크확% × (크뎀% - 1)}
-  // 입력된 퍼센트 값은 계산 전에 소수 배율로 변환합니다.
   const masteryFactor = 45 + values.mastery * 0.075;
   const critRateRatio = values.criticalRate / 100;
   const critDamageRatio = values.criticalDamage / 100;
   const criticalFactor = 1 + critRateRatio * (critDamageRatio - 1);
   const baseCp = values.magicPower * masteryFactor * criticalFactor;
+  const correctionMultiplier = getCorrectionMultiplier(values.lucidLevel, values.cooldownReduction);
+  const finalCp = baseCp * correctionMultiplier;
 
-  // TODO: 기존 계산기 기준표에 맞춰 쿨타임 감소 배율을 확정합니다.
-  const cooldownMultiplier = 1 + values.cooldownReduction * 0.025;
-
-  // TODO: 루시드 레벨 기준의 레벨 페널티를 확정합니다.
-  const levelPenalty = 1;
-  const finalCp = baseCp * levelPenalty * cooldownMultiplier;
-
-  return { baseCp, cooldownMultiplier, finalCp };
+  return { baseCp, correctionMultiplier, finalCp };
 }
 
 function updateNotice(type, messages) {
@@ -71,7 +92,7 @@ function updateNotice(type, messages) {
 
   noticeBox.innerHTML = `
     <strong>계산 완료</strong>
-    <p>기본 CP는 마력 × (45 + 숙련도% × 0.075) × {1 + 크확% × (크뎀% - 1)} 기준으로 계산했습니다. 레벨 페널티와 쿨감 보정표는 다음 단계에서 기존 계산기 기준에 맞춰 고정하면 됩니다.</p>
+    <p>기본 CP 공식은 기존 계산기와 동일하게 두고, 환산 보정은 업로드한 엑셀의 쿨감 시트 표를 기준으로 적용했습니다. 레벨 구간은 0 / 1 / 10 / 20 / 45 기준으로 매칭됩니다.</p>
   `;
   noticeBox.style.borderLeftColor = 'var(--pink)';
 }
@@ -97,7 +118,7 @@ function handleCalculate() {
 
   const result = calculateCp(values);
   baseCpEl.textContent = formatNumber(result.baseCp);
-  cooldownMultiplierEl.textContent = `${formatNumber(result.cooldownMultiplier, 3)}x`;
+  cooldownMultiplierEl.textContent = `${formatNumber(result.correctionMultiplier, 3)}x`;
   finalCpEl.textContent = formatNumber(result.finalCp);
   updateNotice('success');
 }
@@ -111,7 +132,7 @@ function resetForm() {
   imageInput.value = '';
   noticeBox.innerHTML = `
     <strong>계산식 메모</strong>
-    <p>기본 CP는 마력 × (45 + 숙련도% × 0.075) × {1 + 크확% × (크뎀% - 1)} 기준입니다. 현재는 OCR을 붙이기 전 수동 입력 MVP입니다.</p>
+    <p>기본 CP는 기존 계산기 공식을 따르고, 레벨/쿨감 보정은 업로드한 엑셀의 쿨감 시트 표를 기준으로 계산합니다. 현재는 OCR을 붙이기 전 수동 입력 MVP입니다.</p>
   `;
   noticeBox.style.borderLeftColor = 'var(--pink)';
 }
