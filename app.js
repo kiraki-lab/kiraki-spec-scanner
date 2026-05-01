@@ -1,6 +1,5 @@
 const fields = {
   lucidLevel: document.getElementById('lucidLevel'),
-  bossLevel: document.getElementById('bossLevel'),
   mastery: document.getElementById('mastery'),
   magicPower: document.getElementById('magicPower'),
   criticalRate: document.getElementById('criticalRate'),
@@ -8,10 +7,10 @@ const fields = {
   cooldownReduction: document.getElementById('cooldownReduction'),
 };
 
-const baseCpEl = document.getElementById('baseCp');
+const selectedBossNameEl = document.getElementById('selectedBossName');
+const requiredCpEl = document.getElementById('requiredCp');
 const finalCpEl = document.getElementById('finalCp');
-const cooldownMultiplierEl = document.getElementById('cooldownMultiplier');
-const levelPenaltyEl = document.getElementById('levelPenalty');
+const powerRatioEl = document.getElementById('powerRatio');
 const noticeBox = document.getElementById('noticeBox');
 const calculateButton = document.getElementById('calculateButton');
 const resetButton = document.getElementById('resetButton');
@@ -24,6 +23,13 @@ const ocrStatus = document.getElementById('ocrStatus');
 const ocrRawText = document.getElementById('ocrRawText');
 
 let currentImageFile = null;
+
+const bosses = {
+  chaosZakum: { name: '카오스 자쿰', requiredLevel: 10, minPower: 9000 },
+  chaosVellum: { name: '카오스 벨룸', requiredLevel: 30, minPower: 80800 },
+  hardLucid: { name: '하드 루시드', requiredLevel: 60, minPower: 355000 },
+  normalHelena: { name: '🧚 노멀 헬레나', requiredLevel: 75, minPower: 576000 },
+};
 
 const cooldownDamageBySeconds = [
   106206323.14986667,
@@ -41,7 +47,6 @@ const cooldownReferenceDamage = 106206323.14986667;
 
 const fieldRules = {
   lucidLevel: { min: 1, max: 100, integer: true },
-  bossLevel: { min: 1, max: 100, integer: true },
   mastery: { min: 0, max: 100, integer: false },
   magicPower: { min: 0, max: 999999999, integer: false },
   criticalRate: { min: 0, max: 1000, integer: false },
@@ -51,7 +56,6 @@ const fieldRules = {
 
 const fieldLabels = {
   lucidLevel: '루시드 레벨',
-  bossLevel: '상대 보스 레벨',
   mastery: '숙련도',
   magicPower: '마력',
   criticalRate: '크리티컬 확률',
@@ -59,15 +63,27 @@ const fieldLabels = {
   cooldownReduction: '재사용 대기시간 감소',
 };
 
-// 루시드 드림 화면의 고정 UI 기준 상대 좌표입니다.
-// 예시처럼 전체 게임 화면을 캡처했을 때 전체 OCR보다 훨씬 안정적으로 숫자를 읽습니다.
 const lucidDreamRois = {
-  lucidLevel: { x: 0.115, y: 0.835, w: 0.205, h: 0.105, scale: 4 },
-  magicPower: { x: 0.392, y: 0.492, w: 0.108, h: 0.055, scale: 6 },
-  mastery: { x: 0.625, y: 0.455, w: 0.092, h: 0.055, scale: 6 },
-  criticalRate: { x: 0.625, y: 0.492, w: 0.098, h: 0.055, scale: 6 },
-  criticalDamage: { x: 0.865, y: 0.455, w: 0.100, h: 0.055, scale: 6 },
-  cooldownReduction: { x: 0.885, y: 0.492, w: 0.078, h: 0.055, scale: 6 },
+  lucidLevel: [
+    { x: 0.110, y: 0.830, w: 0.220, h: 0.115, scale: 4 },
+  ],
+  magicPower: [
+    { x: 0.390, y: 0.487, w: 0.116, h: 0.060, scale: 6 },
+  ],
+  mastery: [
+    { x: 0.622, y: 0.451, w: 0.100, h: 0.060, scale: 6 },
+  ],
+  criticalRate: [
+    { x: 0.622, y: 0.487, w: 0.105, h: 0.060, scale: 6 },
+  ],
+  criticalDamage: [
+    { x: 0.862, y: 0.451, w: 0.105, h: 0.060, scale: 6 },
+  ],
+  cooldownReduction: [
+    { x: 0.878, y: 0.487, w: 0.090, h: 0.062, scale: 8 },
+    { x: 0.897, y: 0.487, w: 0.070, h: 0.062, scale: 10 },
+    { x: 0.865, y: 0.480, w: 0.105, h: 0.075, scale: 8 },
+  ],
 };
 
 function readNumber(id) {
@@ -77,14 +93,20 @@ function readNumber(id) {
   return Number.isFinite(value) ? value : null;
 }
 
+function getSelectedBoss() {
+  const checked = document.querySelector('input[name="bossKey"]:checked');
+  return bosses[checked?.value] ?? bosses.chaosZakum;
+}
+
 function formatNumber(value, digits = 0) {
   if (!Number.isFinite(value)) return '-';
   return new Intl.NumberFormat('ko-KR', { maximumFractionDigits: digits }).format(value);
 }
 
-function formatPercent(value, digits = 0) {
+function formatRatio(value) {
   if (!Number.isFinite(value)) return '-';
-  return `${formatNumber(value * 100, digits)}%`;
+  if (value >= 10) return `${formatNumber(value, 1)}배`;
+  return `${formatNumber(value, 2)}배`;
 }
 
 function getCooldownMultiplier(cooldownReduction) {
@@ -92,8 +114,8 @@ function getCooldownMultiplier(cooldownReduction) {
   return cooldownDamageBySeconds[cooldownIndex] / cooldownReferenceDamage;
 }
 
-function getLevelPenaltyMultiplier(lucidLevel, bossLevel) {
-  const levelGap = Math.max(0, bossLevel - lucidLevel);
+function getLevelPenaltyMultiplier(lucidLevel, bossRequiredLevel) {
+  const levelGap = Math.max(0, bossRequiredLevel - lucidLevel);
   const cycle = Math.floor(levelGap / 4);
   const remainder = levelGap % 4;
   const remainderPenaltyPattern = [0, 2, 5, 7];
@@ -112,7 +134,6 @@ function validateFieldValue(fieldId, value) {
 function validateInputs(values) {
   const errors = [];
   if (!validateFieldValue('lucidLevel', values.lucidLevel)) errors.push('루시드 레벨은 1~100 사이로 입력해 주세요.');
-  if (!validateFieldValue('bossLevel', values.bossLevel)) errors.push('상대 보스 레벨은 1~100 사이로 입력해 주세요.');
   if (!validateFieldValue('mastery', values.mastery)) errors.push('숙련도는 0~100% 사이로 입력해 주세요.');
   if (!validateFieldValue('magicPower', values.magicPower)) errors.push('마력은 0 이상의 숫자로 입력해 주세요.');
   if (!validateFieldValue('criticalRate', values.criticalRate)) errors.push('크리티컬 확률은 0 이상의 숫자로 입력해 주세요.');
@@ -121,32 +142,34 @@ function validateInputs(values) {
   return errors;
 }
 
-function calculateCp(values) {
+function calculateCp(values, boss) {
   const masteryFactor = 45 + values.mastery * 0.075;
   const critRateRatio = values.criticalRate / 100;
   const critDamageRatio = values.criticalDamage / 100;
   const criticalFactor = 1 + critRateRatio * (critDamageRatio - 1);
   const baseCp = values.magicPower * masteryFactor * criticalFactor;
-  const levelPenaltyMultiplier = getLevelPenaltyMultiplier(values.lucidLevel, values.bossLevel);
+  const levelPenaltyMultiplier = getLevelPenaltyMultiplier(values.lucidLevel, boss.requiredLevel);
   const cooldownMultiplier = getCooldownMultiplier(values.cooldownReduction);
   const finalCp = baseCp * levelPenaltyMultiplier * cooldownMultiplier;
-  return { baseCp, levelPenaltyMultiplier, cooldownMultiplier, finalCp };
+  const powerRatio = finalCp / boss.minPower;
+  return { baseCp, levelPenaltyMultiplier, cooldownMultiplier, finalCp, powerRatio };
 }
 
-function updateNotice(type, messages, result, values) {
+function updateNotice(type, messages, result, values, boss) {
   if (type === 'error') {
     noticeBox.innerHTML = `<strong>확인 필요</strong><p>${messages.join('<br />')}</p>`;
     noticeBox.style.borderLeftColor = 'var(--warning)';
     return;
   }
 
-  const levelGap = Math.max(0, values.bossLevel - values.lucidLevel);
+  const levelGap = Math.max(0, boss.requiredLevel - values.lucidLevel);
   const penaltyPercent = Math.round((1 - result.levelPenaltyMultiplier) * 100);
+  const status = result.powerRatio >= 1 ? '최소 전투력 이상입니다.' : '최소 전투력보다 부족합니다.';
   noticeBox.innerHTML = `
     <strong>계산 완료</strong>
-    <p>레벨 차이는 ${levelGap}레벨 부족으로 계산했으며, 레벨 페널티는 -${penaltyPercent}%입니다. 기본 CP에 레벨 페널티와 엑셀 기준 쿨감 보정 배율을 곱해 최종 CP를 계산했습니다.</p>
+    <p>${boss.name} 기준 최소 전투력은 ${formatNumber(boss.minPower)}입니다. 루시드 레벨은 보스 요구 레벨보다 ${levelGap}레벨 부족으로 계산했고, 레벨 페널티는 -${penaltyPercent}%입니다. 쿨감 보정 ${formatNumber(result.cooldownMultiplier, 3)}배를 적용한 최종 CP는 ${formatNumber(result.finalCp)}이며, 최소 전투력 대비 ${formatRatio(result.powerRatio)}입니다. ${status}</p>
   `;
-  noticeBox.style.borderLeftColor = 'var(--pink)';
+  noticeBox.style.borderLeftColor = result.powerRatio >= 1 ? 'var(--mint)' : 'var(--warning)';
 }
 
 function normalizeOcrText(text) {
@@ -190,7 +213,9 @@ function parseOcrValue(text, fieldId) {
   }
 
   if (fieldId === 'cooldownReduction') {
-    return numbers.map((value) => Math.trunc(value)).find((value) => validateFieldValue(fieldId, value)) ?? null;
+    return numbers
+      .map((value) => Math.trunc(value))
+      .find((value) => validateFieldValue(fieldId, value)) ?? null;
   }
 
   return numbers.find((value) => validateFieldValue(fieldId, value)) ?? null;
@@ -201,7 +226,7 @@ function escapeRegExp(text) {
 }
 
 function extractCandidateAfterKeyword(text, keywords, options = {}) {
-  const windowSize = options.windowSize ?? 60;
+  const windowSize = options.windowSize ?? 70;
   const allowDecimal = options.allowDecimal ?? true;
   const escaped = keywords.map(escapeRegExp).join('|');
   const numberPattern = allowDecimal ? '([0-9][0-9,]*(?:\\.[0-9]+)?)' : '([0-9][0-9,]*)';
@@ -214,12 +239,11 @@ function inferFieldsFromFullText(rawText) {
   const text = normalizeOcrText(rawText);
   const inferred = {
     lucidLevel: extractCandidateAfterKeyword(text, ['루시드 레벨', 'Lucid Level', 'Lucid Lv', 'LV', 'Lv', '루시드렙'], { allowDecimal: false }),
-    bossLevel: extractCandidateAfterKeyword(text, ['상대 보스 레벨', '보스 레벨', 'Boss Level', 'Boss Lv', '보스렙'], { allowDecimal: false }),
     mastery: extractCandidateAfterKeyword(text, ['숙련도', 'Mastery'], { allowDecimal: true }),
     magicPower: extractCandidateAfterKeyword(text, ['마력', 'Magic Power', 'MATK', 'M.ATK'], { allowDecimal: false }),
     criticalRate: extractCandidateAfterKeyword(text, ['크리티컬 확률', '크확', 'Critical Rate', 'Crit Rate'], { allowDecimal: true }),
     criticalDamage: extractCandidateAfterKeyword(text, ['크리티컬 데미지', '크뎀', 'Critical Damage', 'Crit Damage'], { allowDecimal: true }),
-    cooldownReduction: extractCandidateAfterKeyword(text, ['재사용 대기시간 감소', '쿨감', 'Cooldown Reduction', 'Cooldown'], { allowDecimal: false }),
+    cooldownReduction: extractCandidateAfterKeyword(text, ['재사용 대기시간 감소', '재사용', '쿨감', 'Cooldown Reduction', 'Cooldown'], { allowDecimal: false, windowSize: 90 }),
   };
 
   Object.keys(inferred).forEach((fieldId) => {
@@ -279,8 +303,10 @@ function createPreprocessedCropDataUrl(image, roi) {
     const g = data[i + 1];
     const b = data[i + 2];
     const gray = 0.299 * r + 0.587 * g + 0.114 * b;
-    const isBrightText = gray > 170 && Math.max(r, g, b) - Math.min(r, g, b) < 120;
-    const value = isBrightText ? 0 : 255;
+    const brightness = Math.max(r, g, b);
+    const contrast = brightness - Math.min(r, g, b);
+    const isTextLike = gray > 155 && contrast < 145;
+    const value = isTextLike ? 0 : 255;
     data[i] = value;
     data[i + 1] = value;
     data[i + 2] = value;
@@ -299,6 +325,14 @@ async function createOcrWorker(language = 'eng', logger) {
   return worker;
 }
 
+async function recognizeRoiWithWorker(worker, image, fieldId, roi) {
+  const dataUrl = createPreprocessedCropDataUrl(image, roi);
+  const { data } = await worker.recognize(dataUrl);
+  const raw = data.text || '';
+  const value = parseOcrValue(raw, fieldId);
+  return { raw, value: validateFieldValue(fieldId, value) ? value : null };
+}
+
 async function runFixedRegionOcr(image) {
   const results = {};
   const rawParts = [];
@@ -313,14 +347,22 @@ async function runFixedRegionOcr(image) {
 
   try {
     for (let i = 0; i < roiEntries.length; i += 1) {
-      const [fieldId, roi] = roiEntries[i];
+      const [fieldId, roiList] = roiEntries[i];
       setOcrStatus(`고정 영역 OCR 중... ${i + 1}/${roiEntries.length} (${fieldLabels[fieldId]})`);
-      const dataUrl = createPreprocessedCropDataUrl(image, roi);
-      const { data } = await worker.recognize(dataUrl);
-      const raw = data.text || '';
-      const value = parseOcrValue(raw, fieldId);
-      results[fieldId] = validateFieldValue(fieldId, value) ? value : null;
-      rawParts.push(`[${fieldLabels[fieldId]}]\n${raw.trim() || '(인식 없음)'}`);
+
+      let selectedRaw = '';
+      let selectedValue = null;
+      for (const roi of roiList) {
+        const { raw, value } = await recognizeRoiWithWorker(worker, image, fieldId, roi);
+        selectedRaw += `${raw.trim() || '(인식 없음)'}\n`;
+        if (validateFieldValue(fieldId, value)) {
+          selectedValue = value;
+          break;
+        }
+      }
+
+      results[fieldId] = selectedValue;
+      rawParts.push(`[${fieldLabels[fieldId]}]\n${selectedRaw.trim() || '(인식 없음)'}`);
     }
   } finally {
     await worker.terminate();
@@ -361,15 +403,6 @@ function applyOcrValues(inferred) {
     }
   });
 
-  if (validateFieldValue('bossLevel', inferred.bossLevel)) {
-    fields.bossLevel.value = inferred.bossLevel;
-    markField('bossLevel', 'ocr-filled');
-    filledCount += 1;
-  } else if (!fields.bossLevel.value) {
-    markField('bossLevel', 'ocr-review');
-    missing.push('상대 보스 레벨(캡처에 없으면 수동 입력)');
-  }
-
   if (filledCount === 0) {
     setOcrStatus('값을 자동 인식하지 못했어요. OCR 원문을 보고 입력값을 수동으로 넣어주세요.', 'error');
     return;
@@ -404,7 +437,7 @@ async function runOcr() {
       .filter((fieldId) => !validateFieldValue(fieldId, inferred[fieldId]));
 
     let fallbackRawText = '';
-    if (missingAfterFixed.length >= 3) {
+    if (missingAfterFixed.length > 0) {
       const fallbackResult = await runFullTextOcrFallback(missingAfterFixed);
       Object.assign(inferred, fallbackResult.results);
       fallbackRawText = fallbackResult.rawText;
@@ -431,38 +464,39 @@ function clearOcrResult(updateMessage = true) {
 function handleCalculate() {
   const values = {
     lucidLevel: readNumber('lucidLevel'),
-    bossLevel: readNumber('bossLevel'),
     mastery: readNumber('mastery'),
     magicPower: readNumber('magicPower'),
     criticalRate: readNumber('criticalRate'),
     criticalDamage: readNumber('criticalDamage'),
     cooldownReduction: readNumber('cooldownReduction'),
   };
+  const boss = getSelectedBoss();
 
   const errors = validateInputs(values);
   if (errors.length > 0) {
-    baseCpEl.textContent = '-';
-    levelPenaltyEl.textContent = '-';
-    cooldownMultiplierEl.textContent = '-';
+    selectedBossNameEl.textContent = '-';
+    requiredCpEl.textContent = '-';
     finalCpEl.textContent = '-';
+    powerRatioEl.textContent = '-';
     updateNotice('error', errors);
     return;
   }
 
-  const result = calculateCp(values);
-  baseCpEl.textContent = formatNumber(result.baseCp);
-  levelPenaltyEl.textContent = formatPercent(result.levelPenaltyMultiplier);
-  cooldownMultiplierEl.textContent = `${formatNumber(result.cooldownMultiplier, 3)}x`;
+  const result = calculateCp(values, boss);
+  selectedBossNameEl.textContent = boss.name;
+  requiredCpEl.textContent = formatNumber(boss.minPower);
   finalCpEl.textContent = formatNumber(result.finalCp);
-  updateNotice('success', [], result, values);
+  powerRatioEl.textContent = formatRatio(result.powerRatio);
+  updateNotice('success', [], result, values, boss);
 }
 
 function resetForm() {
   Object.values(fields).forEach((input) => { input.value = ''; });
-  baseCpEl.textContent = '-';
-  levelPenaltyEl.textContent = '-';
-  cooldownMultiplierEl.textContent = '-';
+  document.querySelector('input[name="bossKey"][value="chaosZakum"]').checked = true;
+  selectedBossNameEl.textContent = '-';
+  requiredCpEl.textContent = '-';
   finalCpEl.textContent = '-';
+  powerRatioEl.textContent = '-';
   previewBox.innerHTML = '<p>아직 업로드된 이미지가 없습니다.</p>';
   imageInput.value = '';
   currentImageFile = null;
@@ -470,7 +504,7 @@ function resetForm() {
   setOcrStatus('이미지를 올린 뒤 OCR 버튼을 눌러주세요.');
   noticeBox.innerHTML = `
     <strong>계산식 메모</strong>
-    <p>기본 CP는 기존 계산기 공식을 따르고, 최종 CP는 보스 레벨 대비 루시드 레벨 페널티와 쿨감 보정 배율을 함께 적용합니다. 현재 OCR은 루시드 드림 화면 전용 베타 기능입니다.</p>
+    <p>기본 CP는 기존 계산기 공식을 따르고, 보스 요구 레벨에 따른 레벨 페널티와 쿨감 보정 배율을 적용한 뒤 최소 전투력 대비 배율을 계산합니다.</p>
   `;
   noticeBox.style.borderLeftColor = 'var(--pink)';
 }
@@ -483,7 +517,7 @@ function previewImage(file) {
     previewBox.innerHTML = `<img src="${event.target.result}" alt="업로드한 스펙 캡처 미리보기" />`;
   };
   reader.readAsDataURL(file);
-  setOcrStatus('이미지를 불러왔습니다. 예시처럼 루시드 드림 전체 화면이면 전용 OCR로 값을 읽습니다. 상대 보스 레벨은 캡처에 없으면 직접 입력해 주세요.');
+  setOcrStatus('이미지를 불러왔습니다. 루시드 드림 전체 화면이면 전용 OCR로 값을 읽습니다. 보스는 오른쪽에서 선택해 주세요.');
 }
 
 calculateButton.addEventListener('click', handleCalculate);
@@ -519,5 +553,11 @@ Object.values(fields).forEach((input) => {
       event.preventDefault();
       handleCalculate();
     }
+  });
+});
+
+document.querySelectorAll('input[name="bossKey"]').forEach((radio) => {
+  radio.addEventListener('change', () => {
+    if (finalCpEl.textContent !== '-') handleCalculate();
   });
 });
