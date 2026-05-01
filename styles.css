@@ -294,6 +294,19 @@ h2 {
   font-weight: 900;
 }
 
+.field-hint {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 6px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(255, 220, 125, .14);
+  color: #ffe99f;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 950;
+}
+
 input {
   width: 100%;
   min-height: 52px;

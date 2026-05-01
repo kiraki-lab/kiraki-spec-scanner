@@ -115,7 +115,13 @@ function formatNumber(value, digits = 0) {
 function formatCompactPower(value) {
   if (!Number.isFinite(value)) return '-';
   if (Math.abs(value) < 10000) return formatNumber(value);
-  return `${Math.trunc(value / 10000)}만`;
+
+  const sign = value < 0 ? '-' : '';
+  const absoluteValue = Math.abs(Math.trunc(value));
+  const man = Math.trunc(absoluteValue / 10000);
+  const rest = absoluteValue % 10000;
+
+  return rest > 0 ? `${sign}${formatNumber(man)}만 ${formatNumber(rest)}` : `${sign}${formatNumber(man)}만`;
 }
 
 function formatRatioPercent(value) {
@@ -722,7 +728,7 @@ function resetForm() {
   imageInput.value = '';
   currentImageFile = null;
   clearOcrResult(false);
-  setOcrStatus('이미지를 올린 뒤 OCR 버튼을 눌러주세요.');
+  setOcrStatus('스탯창만 캡처해서 올리면 인식률이 올라갑니다. 루시드 레벨은 직접 입력을 권장해요.');
   noticeBox.innerHTML = `
     <strong>🎀 메모</strong>
     <p>헬레나 계열 최소 전투력은 유저 최소컷 자료를 기반으로 산출·보정할 예정입니다.</p>
@@ -738,7 +744,7 @@ function previewImage(file) {
     previewBox.innerHTML = `<img src="${event.target.result}" alt="업로드한 스펙 캡처 미리보기" />`;
   };
   reader.readAsDataURL(file);
-  setOcrStatus('이미지를 불러왔습니다. 전체 OCR을 먼저 시도하고, 실패한 값은 보조 영역 OCR로 한 번 더 확인합니다.');
+  setOcrStatus('이미지를 불러왔습니다. 스탯창만 잘라 올린 캡처일수록 인식률이 좋습니다. 루시드 레벨은 직접 확인해 주세요.');
 }
 
 calculateButton.addEventListener('click', handleCalculate);
