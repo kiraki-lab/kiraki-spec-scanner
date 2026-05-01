@@ -25,26 +25,27 @@ const ocrRawText = document.getElementById('ocrRawText');
 let currentImageFile = null;
 
 const bosses = [
-  { key: 'chaosZakum', name: '카오스 자쿰', subtitle: '초반 체크용', requiredLevel: 10, minPower: 9000 },
-  { key: 'chaosVellum', name: '카오스 벨룸', subtitle: '중간 기준', requiredLevel: 30, minPower: 80800 },
-  { key: 'hardLucid', name: '하드 루시드', subtitle: '루시드 핵심 목표', requiredLevel: 60, minPower: 355000 },
-  { key: 'normalHelena', name: '🧚 노멀 헬레나', subtitle: '상위 목표', requiredLevel: 75, minPower: 576000 },
-  { key: 'nightmareHelena', name: '🌙 헬레나 나이트메어', subtitle: '클리어 기록 수집 예정', requiredLevel: null, minPower: null },
+  { key: 'chaosZakum', name: '카오스 자쿰', requiredLevel: 10, minPower: 9000 },
+  { key: 'chaosVellum', name: '카오스 벨룸', requiredLevel: 30, minPower: 80800 },
+  { key: 'hardLucid', name: '하드 루시드', requiredLevel: 60, minPower: 355000 },
+  { key: 'normalHelena', name: '🧚 노멀 헬레나', requiredLevel: 75, minPower: 576000 },
+  { key: 'nightmareHelena', name: '🌙 헬레나 나이트메어', requiredLevel: null, minPower: null },
 ];
 
-const cooldownDamageBySeconds = [
-  106206323.14986667,
-  108270269.18755555,
-  110659467.0942906,
-  113455229.83733334,
-  116768438.73567677,
-  120754327.6359111,
-  122970415.5980351,
-  125438312.34607407,
-  128202454.72460131,
-  131318388.78933334,
+const rawCooldownMultipliers = [
+  1.0,
+  1.0194333630661188,
+  1.041929179095487,
+  1.0682530613289174,
+  1.099449027822063,
+  1.1369787038528383,
+  1.1578445797856385,
+  1.1810813953993053,
+  1.2071075518139924,
+  1.236446050429891,
 ];
-const cooldownReferenceDamage = 106206323.14986667;
+
+const cooldownCalibrationFactor = 0.9091725049221282;
 
 const fieldRules = {
   lucidLevel: { min: 1, max: 100, integer: true },
@@ -79,7 +80,9 @@ const lucidDreamRois = {
     { x: 0.615, y: 0.500, w: 0.125, h: 0.065, scale: 6 },
   ],
   criticalDamage: [
-    { x: 0.855, y: 0.465, w: 0.120, h: 0.065, scale: 6 },
+    { x: 0.845, y: 0.455, w: 0.145, h: 0.078, scale: 8 },
+    { x: 0.805, y: 0.445, w: 0.190, h: 0.095, scale: 8 },
+    { x: 0.865, y: 0.465, w: 0.110, h: 0.065, scale: 10 },
   ],
   cooldownReduction: [
     { x: 0.872, y: 0.500, w: 0.105, h: 0.070, scale: 9 },
@@ -100,15 +103,15 @@ function formatNumber(value, digits = 0) {
   return new Intl.NumberFormat('ko-KR', { maximumFractionDigits: digits }).format(value);
 }
 
-function formatRatio(value) {
+function formatRatioPercent(value) {
   if (!Number.isFinite(value)) return '-';
-  if (value >= 10) return `${formatNumber(value, 1)}배`;
-  return `${formatNumber(value, 2)}배`;
+  return `${formatNumber(Math.trunc(value * 100))}%`;
 }
 
 function getCooldownMultiplier(cooldownReduction) {
   const cooldownIndex = Math.max(0, Math.min(9, Math.trunc(cooldownReduction)));
-  return cooldownDamageBySeconds[cooldownIndex] / cooldownReferenceDamage;
+  const raw = rawCooldownMultipliers[cooldownIndex];
+  return 1 + (raw - 1) * cooldownCalibrationFactor;
 }
 
 function getLevelPenaltyMultiplier(lucidLevel, requiredLevel) {
@@ -177,16 +180,11 @@ function renderBossResults(rows) {
     const minPowerText = Number.isFinite(boss.minPower) ? formatNumber(boss.minPower) : '기록 수집중';
     const levelTextRatio = Number.isFinite(levelMultiplier) ? `${formatNumber(levelMultiplier * 100)}%` : '-';
     const finalCpText = Number.isFinite(finalCp) ? formatNumber(finalCp) : '-';
-    const ratioText = Number.isFinite(ratio) ? formatRatio(ratio) : '-';
+    const ratioText = Number.isFinite(ratio) ? formatRatioPercent(ratio) : '-';
 
     return `
       <tr>
-        <td>
-          <div class="boss-title">
-            <strong>${boss.name}</strong>
-            <small>${boss.subtitle}</small>
-          </div>
-        </td>
+        <td><div class="boss-title"><strong>${boss.name}</strong></div></td>
         <td>${levelText}</td>
         <td>${minPowerText}</td>
         <td>${levelTextRatio}</td>
@@ -209,7 +207,7 @@ function updateNotice(type, messages, rows, values) {
   const best = validRows.sort((a, b) => b.ratio - a.ratio)[0];
   noticeBox.innerHTML = `
     <strong>🎀 계산 완료</strong>
-    <p>현재 스펙 기준 가장 높은 배율은 ${best ? `${best.boss.name} ${formatRatio(best.ratio)}` : '아직 없습니다'}. 헬레나 나이트메어는 클리어 기록을 모아 요구 레벨과 최소 전투력을 입력하면 바로 배율표에 포함됩니다.</p>
+    <p>현재 스펙 기준 가장 높은 배율은 ${best ? `${best.boss.name} ${formatRatioPercent(best.ratio)}` : '아직 없습니다'}. 쿨감 보정은 환산사이트 예시값에 맞춘 보정계수를 적용했습니다.</p>
   `;
   noticeBox.style.borderLeftColor = 'var(--pink)';
 }
@@ -277,6 +275,38 @@ function extractCandidateAfterKeyword(text, keywords, options = {}) {
   return match ? parseNumberToken(match[1]) : null;
 }
 
+function inferFromStatNumberOrder(text, inferred) {
+  const statIndex = text.search(/STAT|스탯|HP|마력|숙련도|크리티컬/i);
+  if (statIndex < 0) return inferred;
+  const endMatch = text.slice(statIndex).search(/처치|EXP|드림 패스|사용하기/i);
+  const block = endMatch > 0 ? text.slice(statIndex, statIndex + endMatch) : text.slice(statIndex, statIndex + 420);
+  const nums = extractNumbers(block);
+
+  if (!validateFieldValue('criticalDamage', inferred.criticalDamage)) {
+    const candidate = nums
+      .filter((n) => n >= 120 && n <= 1000)
+      .sort((a, b) => b - a)[0];
+    if (validateFieldValue('criticalDamage', candidate)) inferred.criticalDamage = candidate;
+  }
+
+  if (!validateFieldValue('criticalRate', inferred.criticalRate)) {
+    const cd = inferred.criticalDamage;
+    const candidate = nums
+      .filter((n) => n >= 1 && n <= 1000 && n !== cd)
+      .sort((a, b) => b - a)[0];
+    if (validateFieldValue('criticalRate', candidate)) inferred.criticalRate = candidate;
+  }
+
+  if (!validateFieldValue('cooldownReduction', inferred.cooldownReduction)) {
+    const candidate = nums
+      .map((n) => Math.trunc(n))
+      .find((n) => n >= 0 && n <= 9);
+    if (validateFieldValue('cooldownReduction', candidate)) inferred.cooldownReduction = candidate;
+  }
+
+  return inferred;
+}
+
 function inferFieldsFromFullText(rawText) {
   const text = normalizeOcrText(rawText);
   const inferred = {
@@ -284,14 +314,15 @@ function inferFieldsFromFullText(rawText) {
     mastery: extractCandidateAfterKeyword(text, ['숙련도', 'Mastery'], { allowDecimal: true }),
     magicPower: extractCandidateAfterKeyword(text, ['마력', 'Magic Power', 'MATK', 'M.ATK'], { allowDecimal: false }),
     criticalRate: extractCandidateAfterKeyword(text, ['크리티컬 확률', '크확', 'Critical Rate', 'Crit Rate'], { allowDecimal: true }),
-    criticalDamage: extractCandidateAfterKeyword(text, ['크리티컬 데미지', '크뎀', 'Critical Damage', 'Crit Damage'], { allowDecimal: true }),
+    criticalDamage: extractCandidateAfterKeyword(text, ['크리티컬 데미지', '크리티컬 데미', '크뎀', 'Critical Damage', 'Crit Damage'], { allowDecimal: true, windowSize: 95 }),
     cooldownReduction: extractCandidateAfterKeyword(text, ['재사용 대기시간 감소', '재사용', '쿨감', 'Cooldown Reduction', 'Cooldown'], { allowDecimal: false, windowSize: 90 }),
   };
 
   Object.keys(inferred).forEach((fieldId) => {
     if (!validateFieldValue(fieldId, inferred[fieldId])) inferred[fieldId] = null;
   });
-  return inferred;
+
+  return inferFromStatNumberOrder(text, inferred);
 }
 
 function setOcrStatus(message, type = 'normal') {
@@ -474,7 +505,6 @@ async function runOcr() {
     const roiResult = missingAfterFull.length > 0 ? await runFixedRegionOcr(image) : { results: {}, rawText: '' };
     const inferred = { ...roiResult.results, ...fullTextResult.results };
 
-    // 전체 OCR에서 실패한 값만 보조 ROI 결과로 채웁니다.
     missingAfterFull.forEach((fieldId) => {
       if (validateFieldValue(fieldId, roiResult.results[fieldId])) inferred[fieldId] = roiResult.results[fieldId];
     });
@@ -527,7 +557,7 @@ function handleCalculate() {
 
   baseCpSummaryEl.textContent = formatNumber(baseCp);
   cooldownSummaryEl.textContent = `${formatNumber(cooldownMultiplier, 3)}x`;
-  bestRatioSummaryEl.textContent = best ? formatRatio(best.ratio) : '-';
+  bestRatioSummaryEl.textContent = best ? formatRatioPercent(best.ratio) : '-';
   renderBossResults(rows);
   updateNotice('success', [], rows, values);
 }
@@ -545,7 +575,7 @@ function resetForm() {
   setOcrStatus('이미지를 올린 뒤 OCR 버튼을 눌러주세요.');
   noticeBox.innerHTML = `
     <strong>🎀 메모</strong>
-    <p>노멀 헬레나와 헬레나 나이트메어의 최소 전투력은 클리어 기록을 쌓으면서 계속 보정할 수 있게 코드에 분리해두었습니다.</p>
+    <p>헬레나 나이트메어의 최소 전투력은 클리어 기록을 쌓으면서 계속 보정할 수 있게 코드에 분리해두었습니다.</p>
   `;
   noticeBox.style.borderLeftColor = 'var(--pink)';
 }

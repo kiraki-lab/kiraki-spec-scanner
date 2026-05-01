@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="키라키 스펙 스캐너 - 루시드 드림 캡처 기반 보스 배율 계산기" />
     <title>키라키 스펙 스캐너</title>
-    <link rel="stylesheet" href="./styles.css?v=pretty2" />
+    <link rel="stylesheet" href="./styles.css?v=pretty3" />
   </head>
   <body>
     <main class="page-shell">
@@ -14,7 +14,7 @@
         <h1>키라키 스펙 스캐너</h1>
         <p class="hero-copy">
           루시드 드림 캡처에서 스펙을 읽고, 모든 보스의 최소 전투력 대비 배율을 한 번에 보여줘요.
-          OCR 값이 틀리면 노란 항목만 살짝 고쳐 주세요.
+          인식이 애매한 값만 살짝 고쳐 주세요.
         </p>
       </section>
 
@@ -90,7 +90,7 @@
 
           <div class="formula-note">
             <strong>계산 기준</strong>
-            <p>기본 CP에 레벨 페널티와 쿨감 보정 배율을 적용한 뒤, 각 보스의 최소 전투력 대비 배율을 계산합니다.</p>
+            <p>기본 전투력에 레벨 페널티와 쿨감 보정 배율을 적용한 뒤, 각 보스 최소 전투력 대비 퍼센트를 계산합니다.</p>
           </div>
         </section>
       </section>
@@ -106,7 +106,7 @@
 
         <div class="summary-grid">
           <article class="summary-card">
-            <span>기본 CP</span>
+            <span>기본 전투력</span>
             <strong id="baseCpSummary">-</strong>
           </article>
           <article class="summary-card">
@@ -127,7 +127,7 @@
                 <th>요구 레벨</th>
                 <th>최소 전투력</th>
                 <th>레벨 보정</th>
-                <th>내 최종 CP</th>
+                <th>내 최종 전투력</th>
                 <th>배율</th>
                 <th>판정</th>
               </tr>
@@ -143,13 +143,13 @@
         <div class="notice-box" id="noticeBox">
           <strong>🎀 메모</strong>
           <p>
-            노멀 헬레나와 헬레나 나이트메어의 최소 전투력은 클리어 기록을 쌓으면서 계속 보정할 수 있게 코드에 분리해두었습니다.
+            헬레나 나이트메어의 최소 전투력은 클리어 기록을 쌓으면서 계속 보정할 수 있게 코드에 분리해두었습니다.
           </p>
         </div>
       </section>
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
-    <script src="./app.js?v=pretty2"></script>
+    <script src="./app.js?v=pretty3"></script>
   </body>
 </html>
