@@ -72,7 +72,7 @@ h1 { font-size: clamp(34px, 6vw, 64px); letter-spacing: -0.04em; }
 h2 { font-size: 22px; letter-spacing: -0.02em; }
 
 .hero-copy {
-  max-width: 760px;
+  max-width: 820px;
   margin: 18px 0 0;
   color: var(--muted);
   font-size: 17px;
@@ -211,6 +211,74 @@ h2 { font-size: 22px; letter-spacing: -0.02em; }
   line-height: 1.5;
 }
 
+.boss-select-area {
+  margin-bottom: 18px;
+}
+
+.mini-label {
+  margin: 0 0 10px;
+  color: #f7b5dc;
+  font-size: 14px;
+  font-weight: 900;
+}
+
+.boss-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.boss-card {
+  position: relative;
+  display: grid;
+  gap: 6px;
+  min-height: 104px;
+  padding: 16px;
+  border: 1px solid rgba(255, 133, 211, 0.22);
+  border-radius: 18px;
+  background: rgba(0, 0, 0, 0.16);
+  cursor: pointer;
+  transition: transform 0.16s ease, border-color 0.16s ease, background 0.16s ease;
+}
+
+.boss-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 95, 184, 0.55);
+  background: rgba(255, 95, 184, 0.08);
+}
+
+.boss-card input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+  min-height: auto;
+}
+
+.boss-name {
+  color: white;
+  font-size: 16px;
+  font-weight: 950;
+}
+
+.boss-card small {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.boss-card strong {
+  color: var(--mint);
+  font-size: 13px;
+  font-weight: 950;
+}
+
+.boss-card:has(input:checked) {
+  border-color: rgba(119, 255, 214, 0.62);
+  background: linear-gradient(135deg, rgba(119, 255, 214, 0.12), rgba(154, 92, 255, 0.1));
+  box-shadow: 0 0 0 4px rgba(119, 255, 214, 0.08);
+}
+
 .spec-form { display: grid; gap: 14px; }
 .spec-form label { display: grid; gap: 8px; }
 .spec-form span { color: #f7b5dc; font-size: 14px; font-weight: 800; }
@@ -290,7 +358,7 @@ button:disabled {
 }
 
 .result-card span { display: block; color: var(--muted); font-size: 14px; font-weight: 800; }
-.result-card strong { display: block; margin-top: 14px; color: white; font-size: clamp(22px, 3vw, 34px); letter-spacing: -0.04em; }
+.result-card strong { display: block; margin-top: 14px; color: white; font-size: clamp(20px, 2.6vw, 32px); letter-spacing: -0.04em; word-break: keep-all; }
 
 .result-card.highlight {
   border-color: rgba(119, 255, 214, 0.4);
@@ -315,7 +383,7 @@ button:disabled {
 }
 
 @media (max-width: 840px) {
-  .grid-layout, .result-grid, .ocr-actions { grid-template-columns: 1fr; }
+  .grid-layout, .result-grid, .ocr-actions, .boss-grid { grid-template-columns: 1fr; }
   .hero-card, .panel { padding: 24px; border-radius: 24px; }
   .panel-title-row { flex-direction: column; }
   .primary-button, .ghost-button { width: 100%; }

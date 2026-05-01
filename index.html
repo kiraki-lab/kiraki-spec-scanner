@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="키라키 스펙 스캐너 - 캡처 기반 루시드 스펙 계산기 MVP" />
     <title>키라키 스펙 스캐너</title>
-    <link rel="stylesheet" href="./styles.css?v=ocr1" />
+    <link rel="stylesheet" href="./styles.css?v=boss1" />
   </head>
   <body>
     <main class="page-shell">
@@ -13,7 +13,8 @@
         <div class="eyebrow">Kiraki Spec Scanner · OCR Beta</div>
         <h1>키라키 스펙 스캐너</h1>
         <p class="hero-copy">
-          캡처 이미지를 올리면 OCR로 값을 먼저 읽어 입력칸에 채웁니다. 인식이 애매한 값은 직접 수정한 뒤 계산하면 돼요.
+          루시드 드림 캡처에서 스펙을 자동 인식하고, 선택한 보스의 최소 전투력 기준으로 배율을 계산합니다.
+          인식이 애매한 값만 직접 수정하면 돼요.
         </p>
       </section>
 
@@ -55,39 +56,65 @@
           <div class="panel-title-row">
             <div>
               <p class="section-label">Step 2</p>
-              <h2>루시드 스펙 입력</h2>
+              <h2>보스 선택 & 스펙 확인</h2>
             </div>
             <button class="ghost-button" id="resetButton" type="button">초기화</button>
+          </div>
+
+          <div class="boss-select-area">
+            <p class="mini-label">상대 보스</p>
+            <div class="boss-grid" id="bossGrid">
+              <label class="boss-card">
+                <input type="radio" name="bossKey" value="chaosZakum" checked />
+                <span class="boss-name">카오스 자쿰</span>
+                <small>요구 레벨: Lv.10</small>
+                <strong>최소 전투력: 9,000</strong>
+              </label>
+              <label class="boss-card">
+                <input type="radio" name="bossKey" value="chaosVellum" />
+                <span class="boss-name">카오스 벨룸</span>
+                <small>요구 레벨: Lv.30</small>
+                <strong>최소 전투력: 80,800</strong>
+              </label>
+              <label class="boss-card">
+                <input type="radio" name="bossKey" value="hardLucid" />
+                <span class="boss-name">하드 루시드</span>
+                <small>요구 레벨: Lv.60</small>
+                <strong>최소 전투력: 355,000</strong>
+              </label>
+              <label class="boss-card">
+                <input type="radio" name="bossKey" value="normalHelena" />
+                <span class="boss-name">🧚 노멀 헬레나</span>
+                <small>요구 레벨: Lv.75</small>
+                <strong>최소 전투력: 576,000</strong>
+              </label>
+            </div>
           </div>
 
           <form class="spec-form" id="specForm">
             <label>
               <span>루시드 레벨</span>
-              <input type="number" id="lucidLevel" min="1" max="100" placeholder="예: 100" />
-            </label>
-            <label>
-              <span>상대 보스 레벨</span>
-              <input type="number" id="bossLevel" min="1" max="100" placeholder="예: 100" />
+              <input type="number" id="lucidLevel" min="1" max="100" placeholder="예: 80" />
             </label>
             <label>
               <span>숙련도 (%)</span>
-              <input type="number" id="mastery" min="0" max="100" step="0.1" placeholder="예: 98.5" />
+              <input type="number" id="mastery" min="0" max="100" step="0.1" placeholder="예: 14" />
             </label>
             <label>
               <span>마력</span>
-              <input type="number" id="magicPower" min="0" placeholder="예: 123456" />
+              <input type="number" id="magicPower" min="0" placeholder="예: 8612" />
             </label>
             <label>
               <span>크리티컬 확률 (%)</span>
-              <input type="number" id="criticalRate" min="0" max="100" step="0.1" placeholder="예: 95" />
+              <input type="number" id="criticalRate" min="0" max="1000" step="0.1" placeholder="예: 102" />
             </label>
             <label>
               <span>크리티컬 데미지 (%)</span>
-              <input type="number" id="criticalDamage" min="0" step="0.1" placeholder="예: 135" />
+              <input type="number" id="criticalDamage" min="0" max="1000" step="0.1" placeholder="예: 268" />
             </label>
             <label>
               <span>재사용 대기시간 감소 (초)</span>
-              <input type="number" id="cooldownReduction" min="0" max="9" step="1" placeholder="예: 2" />
+              <input type="number" id="cooldownReduction" min="0" max="9" step="1" placeholder="예: 6" />
             </label>
           </form>
         </section>
@@ -99,38 +126,38 @@
             <p class="section-label">Step 3</p>
             <h2>계산 결과</h2>
           </div>
-          <button class="primary-button" id="calculateButton" type="button">격파 가능성 계산하기</button>
+          <button class="primary-button" id="calculateButton" type="button">배율 계산하기</button>
         </div>
 
         <div class="result-grid">
           <article class="result-card">
-            <span>기본 CP</span>
-            <strong id="baseCp">-</strong>
+            <span>선택 보스</span>
+            <strong id="selectedBossName">-</strong>
           </article>
           <article class="result-card">
-            <span>레벨 페널티</span>
-            <strong id="levelPenalty">-</strong>
+            <span>최소 전투력</span>
+            <strong id="requiredCp">-</strong>
           </article>
           <article class="result-card">
-            <span>쿨감 보정 배율</span>
-            <strong id="cooldownMultiplier">-</strong>
-          </article>
-          <article class="result-card highlight">
             <span>최종 CP</span>
             <strong id="finalCp">-</strong>
+          </article>
+          <article class="result-card highlight">
+            <span>전투력 배율</span>
+            <strong id="powerRatio">-</strong>
           </article>
         </div>
 
         <div class="notice-box" id="noticeBox">
           <strong>계산식 메모</strong>
           <p>
-            기본 CP는 기존 계산기 공식을 따르고, 최종 CP는 레벨 페널티와 쿨감 보정 배율을 함께 적용합니다.
+            기본 CP는 기존 계산기 공식을 따르고, 보스 요구 레벨에 따른 레벨 페널티와 쿨감 보정 배율을 적용한 뒤 최소 전투력 대비 배율을 계산합니다.
           </p>
         </div>
       </section>
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
-    <script src="./app.js?v=ocr1"></script>
+    <script src="./app.js?v=boss1"></script>
   </body>
 </html>
