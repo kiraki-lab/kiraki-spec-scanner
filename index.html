@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="키라키 스펙 스캐너 - 루시드 드림 캡처 기반 보스 배율 계산기" />
     <title>키라키 스펙 스캐너</title>
-    <link rel="stylesheet" href="./styles.css?v=pretty3" />
+    <link rel="stylesheet" href="./styles.css?v=pretty4" />
   </head>
   <body>
     <main class="page-shell">
@@ -88,9 +88,20 @@
             </label>
           </form>
 
+          <div class="live-power-box">
+            <article>
+              <span>기본 전투력</span>
+              <strong id="inputBasePower">-</strong>
+            </article>
+            <article>
+              <span>쿨감 반영 전투력</span>
+              <strong id="inputCooldownPower">-</strong>
+            </article>
+          </div>
+
           <div class="formula-note">
             <strong>계산 기준</strong>
-            <p>기본 전투력에 레벨 페널티와 쿨감 보정 배율을 적용한 뒤, 각 보스 최소 전투력 대비 퍼센트를 계산합니다.</p>
+            <p>기본 전투력에 레벨 페널티와 쿨감 보정 배율을 적용한 뒤, 각 보스 최소 전투력 대비 퍼센트를 계산합니다. 크확은 원 계산식 기준 최대 100%로 적용합니다.</p>
           </div>
         </section>
       </section>
@@ -143,13 +154,23 @@
         <div class="notice-box" id="noticeBox">
           <strong>🎀 메모</strong>
           <p>
-            헬레나 나이트메어의 최소 전투력은 클리어 기록을 쌓으면서 계속 보정할 수 있게 코드에 분리해두었습니다.
+            헬레나 계열 최소 전투력은 유저 최소컷 자료를 기반으로 산출·보정할 예정입니다.
           </p>
         </div>
       </section>
+
+      <footer class="source-footer">
+        <p>
+          계산식 출처:
+          <a href="https://www.inven.co.kr/board/maple/2304/47201?my=chu" target="_blank" rel="noreferrer">
+            메이플 인벤 나린사람님 게시글
+          </a>
+        </p>
+        <p>보스 최소 전투력 기준: 유저 최소컷 자료를 기반으로 산출 및 보정 예정</p>
+      </footer>
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
-    <script src="./app.js?v=pretty3"></script>
+    <script src="./app.js?v=pretty4"></script>
   </body>
 </html>

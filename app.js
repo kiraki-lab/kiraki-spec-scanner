@@ -10,6 +10,8 @@ const fields = {
 const baseCpSummaryEl = document.getElementById('baseCpSummary');
 const cooldownSummaryEl = document.getElementById('cooldownSummary');
 const bestRatioSummaryEl = document.getElementById('bestRatioSummary');
+const inputBasePowerEl = document.getElementById('inputBasePower');
+const inputCooldownPowerEl = document.getElementById('inputCooldownPower');
 const bossResultsBody = document.getElementById('bossResultsBody');
 const noticeBox = document.getElementById('noticeBox');
 const calculateButton = document.getElementById('calculateButton');
@@ -32,20 +34,19 @@ const bosses = [
   { key: 'nightmareHelena', name: '🌙 헬레나 나이트메어', requiredLevel: null, minPower: null },
 ];
 
-const rawCooldownMultipliers = [
-  1.0,
-  1.0194333630661188,
-  1.041929179095487,
-  1.0682530613289174,
-  1.099449027822063,
-  1.1369787038528383,
-  1.1578445797856385,
-  1.1810813953993053,
-  1.2071075518139924,
-  1.236446050429891,
+const cooldownDamageBySeconds = [
+  106206323.14986667,
+  108270269.18755555,
+  110659467.0942906,
+  113455229.83733334,
+  116768438.73567677,
+  120754327.6359111,
+  122970415.5980351,
+  125438312.34607407,
+  128202454.72460131,
+  131318388.78933334,
 ];
-
-const cooldownCalibrationFactor = 0.9091725049221282;
+const cooldownReferenceDamage = 106206323.14986667;
 
 const fieldRules = {
   lucidLevel: { min: 1, max: 100, integer: true },
@@ -77,7 +78,9 @@ const lucidDreamRois = {
     { x: 0.615, y: 0.465, w: 0.115, h: 0.065, scale: 6 },
   ],
   criticalRate: [
-    { x: 0.615, y: 0.500, w: 0.125, h: 0.065, scale: 6 },
+    { x: 0.605, y: 0.490, w: 0.145, h: 0.080, scale: 8 },
+    { x: 0.580, y: 0.485, w: 0.180, h: 0.090, scale: 8 },
+    { x: 0.625, y: 0.500, w: 0.125, h: 0.065, scale: 10 },
   ],
   criticalDamage: [
     { x: 0.845, y: 0.455, w: 0.145, h: 0.078, scale: 8 },
@@ -110,8 +113,7 @@ function formatRatioPercent(value) {
 
 function getCooldownMultiplier(cooldownReduction) {
   const cooldownIndex = Math.max(0, Math.min(9, Math.trunc(cooldownReduction)));
-  const raw = rawCooldownMultipliers[cooldownIndex];
-  return 1 + (raw - 1) * cooldownCalibrationFactor;
+  return cooldownDamageBySeconds[cooldownIndex] / cooldownReferenceDamage;
 }
 
 function getLevelPenaltyMultiplier(lucidLevel, requiredLevel) {
@@ -145,7 +147,8 @@ function validateInputs(values) {
 
 function calculateBase(values) {
   const masteryFactor = 45 + values.mastery * 0.075;
-  const critRateRatio = values.criticalRate / 100;
+  const effectiveCritRate = Math.min(values.criticalRate, 100);
+  const critRateRatio = effectiveCritRate / 100;
   const critDamageRatio = values.criticalDamage / 100;
   const criticalFactor = 1 + critRateRatio * (critDamageRatio - 1);
   return values.magicPower * masteryFactor * criticalFactor;
@@ -170,6 +173,20 @@ function getStatus(ratio) {
   if (ratio >= 1) return { text: '가능', cls: 'good' };
   if (ratio >= 0.85) return { text: '아슬', cls: 'warn' };
   return { text: '부족', cls: 'bad' };
+}
+
+function renderPowerPreview(values) {
+  const errors = validateInputs(values);
+  if (errors.length > 0) {
+    inputBasePowerEl.textContent = '-';
+    inputCooldownPowerEl.textContent = '-';
+    return;
+  }
+
+  const baseCp = calculateBase(values);
+  const cooldownPower = baseCp * getCooldownMultiplier(values.cooldownReduction);
+  inputBasePowerEl.textContent = formatNumber(baseCp);
+  inputCooldownPowerEl.textContent = formatNumber(cooldownPower);
 }
 
 function renderBossResults(rows) {
@@ -207,7 +224,7 @@ function updateNotice(type, messages, rows, values) {
   const best = validRows.sort((a, b) => b.ratio - a.ratio)[0];
   noticeBox.innerHTML = `
     <strong>🎀 계산 완료</strong>
-    <p>현재 스펙 기준 가장 높은 배율은 ${best ? `${best.boss.name} ${formatRatioPercent(best.ratio)}` : '아직 없습니다'}. 쿨감 보정은 환산사이트 예시값에 맞춘 보정계수를 적용했습니다.</p>
+    <p>현재 스펙 기준 가장 높은 배율은 ${best ? `${best.boss.name} ${formatRatioPercent(best.ratio)}` : '아직 없습니다'}. 크리티컬 확률은 원 계산식과 동일하게 최대 100%로 계산했습니다.</p>
   `;
   noticeBox.style.borderLeftColor = 'var(--pink)';
 }
@@ -279,7 +296,7 @@ function inferFromStatNumberOrder(text, inferred) {
   const statIndex = text.search(/STAT|스탯|HP|마력|숙련도|크리티컬/i);
   if (statIndex < 0) return inferred;
   const endMatch = text.slice(statIndex).search(/처치|EXP|드림 패스|사용하기/i);
-  const block = endMatch > 0 ? text.slice(statIndex, statIndex + endMatch) : text.slice(statIndex, statIndex + 420);
+  const block = endMatch > 0 ? text.slice(statIndex, statIndex + endMatch) : text.slice(statIndex, statIndex + 460);
   const nums = extractNumbers(block);
 
   if (!validateFieldValue('criticalDamage', inferred.criticalDamage)) {
@@ -290,9 +307,8 @@ function inferFromStatNumberOrder(text, inferred) {
   }
 
   if (!validateFieldValue('criticalRate', inferred.criticalRate)) {
-    const cd = inferred.criticalDamage;
     const candidate = nums
-      .filter((n) => n >= 1 && n <= 1000 && n !== cd)
+      .filter((n) => n >= 1 && n <= 200 && n !== inferred.mastery && n !== inferred.cooldownReduction)
       .sort((a, b) => b - a)[0];
     if (validateFieldValue('criticalRate', candidate)) inferred.criticalRate = candidate;
   }
@@ -313,7 +329,7 @@ function inferFieldsFromFullText(rawText) {
     lucidLevel: extractCandidateAfterKeyword(text, ['루시드 레벨', 'Lucid Level', 'Lucid Lv', 'LV', 'Lv', '루시드렙'], { allowDecimal: false }),
     mastery: extractCandidateAfterKeyword(text, ['숙련도', 'Mastery'], { allowDecimal: true }),
     magicPower: extractCandidateAfterKeyword(text, ['마력', 'Magic Power', 'MATK', 'M.ATK'], { allowDecimal: false }),
-    criticalRate: extractCandidateAfterKeyword(text, ['크리티컬 확률', '크확', 'Critical Rate', 'Crit Rate'], { allowDecimal: true }),
+    criticalRate: extractCandidateAfterKeyword(text, ['크리티컬 확률', '크리티컬 확률', '크확', 'Critical Rate', 'Crit Rate'], { allowDecimal: true, windowSize: 95 }),
     criticalDamage: extractCandidateAfterKeyword(text, ['크리티컬 데미지', '크리티컬 데미', '크뎀', 'Critical Damage', 'Crit Damage'], { allowDecimal: true, windowSize: 95 }),
     cooldownReduction: extractCandidateAfterKeyword(text, ['재사용 대기시간 감소', '재사용', '쿨감', 'Cooldown Reduction', 'Cooldown'], { allowDecimal: false, windowSize: 90 }),
   };
@@ -470,6 +486,8 @@ function applyOcrValues(inferred) {
     }
   });
 
+  updatePowerPreviewFromInputs();
+
   if (filledCount === 0) {
     setOcrStatus('값을 자동 인식하지 못했어요. OCR 원문을 보고 입력값을 수동으로 넣어주세요.', 'error');
     return;
@@ -529,8 +547,8 @@ function clearOcrResult(updateMessage = true) {
   if (updateMessage) setOcrStatus('OCR 표시를 지웠습니다. 이미지는 유지됩니다.');
 }
 
-function handleCalculate() {
-  const values = {
+function getCurrentValues() {
+  return {
     lucidLevel: readNumber('lucidLevel'),
     mastery: readNumber('mastery'),
     magicPower: readNumber('magicPower'),
@@ -538,6 +556,14 @@ function handleCalculate() {
     criticalDamage: readNumber('criticalDamage'),
     cooldownReduction: readNumber('cooldownReduction'),
   };
+}
+
+function updatePowerPreviewFromInputs() {
+  renderPowerPreview(getCurrentValues());
+}
+
+function handleCalculate() {
+  const values = getCurrentValues();
 
   const errors = validateInputs(values);
   if (errors.length > 0) {
@@ -546,6 +572,7 @@ function handleCalculate() {
     bestRatioSummaryEl.textContent = '-';
     bossResultsBody.innerHTML = `<tr><td colspan="7" class="empty-row">입력값을 먼저 확인해 주세요.</td></tr>`;
     updateNotice('error', errors);
+    updatePowerPreviewFromInputs();
     return;
   }
 
@@ -558,6 +585,7 @@ function handleCalculate() {
   baseCpSummaryEl.textContent = formatNumber(baseCp);
   cooldownSummaryEl.textContent = `${formatNumber(cooldownMultiplier, 3)}x`;
   bestRatioSummaryEl.textContent = best ? formatRatioPercent(best.ratio) : '-';
+  renderPowerPreview(values);
   renderBossResults(rows);
   updateNotice('success', [], rows, values);
 }
@@ -567,6 +595,8 @@ function resetForm() {
   baseCpSummaryEl.textContent = '-';
   cooldownSummaryEl.textContent = '-';
   bestRatioSummaryEl.textContent = '-';
+  inputBasePowerEl.textContent = '-';
+  inputCooldownPowerEl.textContent = '-';
   bossResultsBody.innerHTML = `<tr><td colspan="7" class="empty-row">스펙을 입력하거나 OCR로 불러온 뒤 계산해 주세요.</td></tr>`;
   previewBox.innerHTML = '<p>아직 업로드된 이미지가 없습니다.</p>';
   imageInput.value = '';
@@ -575,7 +605,7 @@ function resetForm() {
   setOcrStatus('이미지를 올린 뒤 OCR 버튼을 눌러주세요.');
   noticeBox.innerHTML = `
     <strong>🎀 메모</strong>
-    <p>헬레나 나이트메어의 최소 전투력은 클리어 기록을 쌓으면서 계속 보정할 수 있게 코드에 분리해두었습니다.</p>
+    <p>헬레나 계열 최소 전투력은 유저 최소컷 자료를 기반으로 산출·보정할 예정입니다.</p>
   `;
   noticeBox.style.borderLeftColor = 'var(--pink)';
 }
@@ -619,6 +649,7 @@ document.addEventListener('paste', (event) => {
 });
 
 Object.values(fields).forEach((input) => {
+  input.addEventListener('input', updatePowerPreviewFromInputs);
   input.addEventListener('keydown', (event) => {
     if (event.key === 'Enter') {
       event.preventDefault();
