@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="키라키 스펙 스캐너 - 루시드 드림 캡처 기반 보스 배율 계산기" />
     <title>키라키 스펙 스캐너</title>
-    <link rel="stylesheet" href="./styles.css?v=history1" />
+    <link rel="stylesheet" href="./styles.css?v=guide1" />
   </head>
   <body>
     <main class="page-shell">
@@ -13,8 +13,8 @@
         <div class="ribbon">Kiraki Dream Scanner</div>
         <h1>키라키 스펙 스캐너</h1>
         <p class="hero-copy">
-          루시드 드림 캡처에서 스펙을 읽고, 모든 보스의 최소 전투력 대비 배율을 한 번에 보여줘요.
-          인식이 애매한 값만 살짝 고쳐 주세요.
+          스탯창만 작게 캡처해서 올리면 OCR 인식률이 더 좋아져요.
+          루시드 레벨은 화면에 따라 오인식될 수 있어 직접 입력을 권장합니다.
         </p>
       </section>
 
@@ -31,8 +31,8 @@
           <label class="drop-zone" for="imageInput" id="dropZone">
             <input id="imageInput" type="file" accept="image/*" />
             <span class="drop-icon">🦋</span>
-            <strong>루시드 드림 화면을 올려주세요</strong>
-            <small>클릭 · 드래그 · Ctrl+V 붙여넣기 지원</small>
+            <strong>가능하면 STAT 스탯창만 잘라 올려주세요</strong>
+            <small>스탯창만 캡처하면 인식률이 올라갑니다 · 루시드 레벨은 직접 입력 권장</small>
           </label>
 
           <div class="preview-box" id="previewBox">
@@ -44,7 +44,7 @@
             <button class="ghost-button" id="clearOcrButton" type="button">OCR 표시 지우기</button>
           </div>
 
-          <div class="ocr-status" id="ocrStatus">이미지를 올린 뒤 OCR 버튼을 눌러주세요.</div>
+          <div class="ocr-status" id="ocrStatus">스탯창만 캡처해서 올리면 인식률이 올라갑니다. 루시드 레벨은 직접 입력을 권장해요.</div>
 
           <details class="ocr-raw-box">
             <summary>OCR 원문 보기</summary>
@@ -63,7 +63,7 @@
 
           <form class="spec-form" id="specForm">
             <label>
-              <span>루시드 레벨</span>
+              <span>루시드 레벨 <em class="field-hint">직접 입력 권장</em></span>
               <input type="number" id="lucidLevel" min="1" max="100" placeholder="예: 80" />
             </label>
             <label>
@@ -105,7 +105,7 @@
 
           <div class="formula-note">
             <strong>계산 기준</strong>
-            <p>기본 전투력에 레벨 페널티와 쿨감 보정 배율을 적용한 뒤, 각 보스 최소 전투력 대비 퍼센트를 계산합니다. 크확은 원 계산식 기준 최대 100%로 적용합니다.</p>
+            <p>기본 전투력에 레벨 페널티와 쿨감 보정 배율을 적용한 뒤, 각 보스 최소 전투력 대비 퍼센트를 계산합니다. 배율은 소수점 아래를 버려 표시하고, 전투력은 만 단위 아래까지 함께 보여줍니다.</p>
           </div>
         </section>
       </section>
@@ -193,6 +193,6 @@
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
-    <script src="./app.js?v=history1"></script>
+    <script src="./app.js?v=guide1"></script>
   </body>
 </html>
