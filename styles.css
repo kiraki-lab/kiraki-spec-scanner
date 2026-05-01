@@ -419,7 +419,7 @@ button:disabled {
 
 .boss-table {
   width: 100%;
-  min-width: 860px;
+  min-width: 820px;
   border-collapse: collapse;
 }
 
@@ -448,18 +448,8 @@ button:disabled {
   border-bottom: 0;
 }
 
-.boss-title {
-  display: grid;
-  gap: 4px;
-}
-
 .boss-title strong {
   font-size: 15px;
-}
-
-.boss-title small {
-  color: var(--muted);
-  font-size: 12px;
 }
 
 .ratio-pill {
