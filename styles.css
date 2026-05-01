@@ -279,6 +279,10 @@ h2 {
   gap: 14px;
 }
 
+.memo-field {
+  grid-column: 1 / -1;
+}
+
 .spec-form label {
   display: grid;
   gap: 8px;
@@ -533,6 +537,115 @@ button:disabled {
 
 .notice-box strong { color: #fff; }
 .notice-box p { margin: 6px 0 0; }
+
+
+.history-panel {
+  margin-top: 22px;
+}
+
+.history-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.history-list {
+  display: grid;
+  gap: 12px;
+}
+
+.history-empty {
+  margin: 0;
+  padding: 20px;
+  border: 1px dashed rgba(255, 184, 220, .36);
+  border-radius: 20px;
+  color: var(--muted);
+  text-align: center;
+  background: rgba(255, 255, 255, .04);
+}
+
+.history-card {
+  display: grid;
+  gap: 12px;
+  padding: 18px;
+  border: 1px solid rgba(255, 184, 220, .28);
+  border-radius: 22px;
+  background: rgba(255,255,255,.055);
+}
+
+.history-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.history-card-title {
+  display: grid;
+  gap: 4px;
+}
+
+.history-card-title strong {
+  color: #fff;
+  font-size: 16px;
+}
+
+.history-card-title small {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.history-values {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.history-values div {
+  padding: 12px;
+  border-radius: 16px;
+  background: rgba(0,0,0,.14);
+}
+
+.history-values span {
+  display: block;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 850;
+}
+
+.history-values strong {
+  display: block;
+  margin-top: 4px;
+  color: white;
+  font-size: 15px;
+}
+
+.history-delete-button {
+  min-height: 34px;
+  border-radius: 999px;
+  padding: 0 12px;
+  border: 1px solid rgba(255, 184, 220, .34);
+  color: #ffe0f0;
+  background: rgba(255, 255, 255, .055);
+}
+
+@media (max-width: 960px) {
+  .history-actions {
+    width: 100%;
+  }
+
+  .history-values {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 560px) {
+  .history-values {
+    grid-template-columns: 1fr;
+  }
+}
 
 .source-footer {
   margin-top: 18px;
