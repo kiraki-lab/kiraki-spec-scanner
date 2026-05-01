@@ -7,10 +7,10 @@ const fields = {
   cooldownReduction: document.getElementById('cooldownReduction'),
 };
 
-const selectedBossNameEl = document.getElementById('selectedBossName');
-const requiredCpEl = document.getElementById('requiredCp');
-const finalCpEl = document.getElementById('finalCp');
-const powerRatioEl = document.getElementById('powerRatio');
+const baseCpSummaryEl = document.getElementById('baseCpSummary');
+const cooldownSummaryEl = document.getElementById('cooldownSummary');
+const bestRatioSummaryEl = document.getElementById('bestRatioSummary');
+const bossResultsBody = document.getElementById('bossResultsBody');
 const noticeBox = document.getElementById('noticeBox');
 const calculateButton = document.getElementById('calculateButton');
 const resetButton = document.getElementById('resetButton');
@@ -24,12 +24,13 @@ const ocrRawText = document.getElementById('ocrRawText');
 
 let currentImageFile = null;
 
-const bosses = {
-  chaosZakum: { name: '카오스 자쿰', requiredLevel: 10, minPower: 9000 },
-  chaosVellum: { name: '카오스 벨룸', requiredLevel: 30, minPower: 80800 },
-  hardLucid: { name: '하드 루시드', requiredLevel: 60, minPower: 355000 },
-  normalHelena: { name: '🧚 노멀 헬레나', requiredLevel: 75, minPower: 576000 },
-};
+const bosses = [
+  { key: 'chaosZakum', name: '카오스 자쿰', subtitle: '초반 체크용', requiredLevel: 10, minPower: 9000 },
+  { key: 'chaosVellum', name: '카오스 벨룸', subtitle: '중간 기준', requiredLevel: 30, minPower: 80800 },
+  { key: 'hardLucid', name: '하드 루시드', subtitle: '루시드 핵심 목표', requiredLevel: 60, minPower: 355000 },
+  { key: 'normalHelena', name: '🧚 노멀 헬레나', subtitle: '상위 목표', requiredLevel: 75, minPower: 576000 },
+  { key: 'nightmareHelena', name: '🌙 헬레나 나이트메어', subtitle: '클리어 기록 수집 예정', requiredLevel: null, minPower: null },
+];
 
 const cooldownDamageBySeconds = [
   106206323.14986667,
@@ -65,24 +66,25 @@ const fieldLabels = {
 
 const lucidDreamRois = {
   lucidLevel: [
-    { x: 0.110, y: 0.830, w: 0.220, h: 0.115, scale: 4 },
+    { x: 0.105, y: 0.815, w: 0.240, h: 0.130, scale: 4 },
   ],
   magicPower: [
-    { x: 0.390, y: 0.487, w: 0.116, h: 0.060, scale: 6 },
+    { x: 0.385, y: 0.500, w: 0.118, h: 0.065, scale: 6 },
+    { x: 0.365, y: 0.485, w: 0.150, h: 0.085, scale: 6 },
   ],
   mastery: [
-    { x: 0.622, y: 0.451, w: 0.100, h: 0.060, scale: 6 },
+    { x: 0.615, y: 0.465, w: 0.115, h: 0.065, scale: 6 },
   ],
   criticalRate: [
-    { x: 0.622, y: 0.487, w: 0.105, h: 0.060, scale: 6 },
+    { x: 0.615, y: 0.500, w: 0.125, h: 0.065, scale: 6 },
   ],
   criticalDamage: [
-    { x: 0.862, y: 0.451, w: 0.105, h: 0.060, scale: 6 },
+    { x: 0.855, y: 0.465, w: 0.120, h: 0.065, scale: 6 },
   ],
   cooldownReduction: [
-    { x: 0.878, y: 0.487, w: 0.090, h: 0.062, scale: 8 },
-    { x: 0.897, y: 0.487, w: 0.070, h: 0.062, scale: 10 },
-    { x: 0.865, y: 0.480, w: 0.105, h: 0.075, scale: 8 },
+    { x: 0.872, y: 0.500, w: 0.105, h: 0.070, scale: 9 },
+    { x: 0.840, y: 0.490, w: 0.145, h: 0.085, scale: 9 },
+    { x: 0.900, y: 0.500, w: 0.070, h: 0.070, scale: 12 },
   ],
 };
 
@@ -91,11 +93,6 @@ function readNumber(id) {
   if (raw === '') return null;
   const value = Number(raw);
   return Number.isFinite(value) ? value : null;
-}
-
-function getSelectedBoss() {
-  const checked = document.querySelector('input[name="bossKey"]:checked');
-  return bosses[checked?.value] ?? bosses.chaosZakum;
 }
 
 function formatNumber(value, digits = 0) {
@@ -114,8 +111,9 @@ function getCooldownMultiplier(cooldownReduction) {
   return cooldownDamageBySeconds[cooldownIndex] / cooldownReferenceDamage;
 }
 
-function getLevelPenaltyMultiplier(lucidLevel, bossRequiredLevel) {
-  const levelGap = Math.max(0, bossRequiredLevel - lucidLevel);
+function getLevelPenaltyMultiplier(lucidLevel, requiredLevel) {
+  if (!Number.isFinite(requiredLevel)) return null;
+  const levelGap = Math.max(0, requiredLevel - lucidLevel);
   const cycle = Math.floor(levelGap / 4);
   const remainder = levelGap % 4;
   const remainderPenaltyPattern = [0, 2, 5, 7];
@@ -142,34 +140,78 @@ function validateInputs(values) {
   return errors;
 }
 
-function calculateCp(values, boss) {
+function calculateBase(values) {
   const masteryFactor = 45 + values.mastery * 0.075;
   const critRateRatio = values.criticalRate / 100;
   const critDamageRatio = values.criticalDamage / 100;
   const criticalFactor = 1 + critRateRatio * (critDamageRatio - 1);
-  const baseCp = values.magicPower * masteryFactor * criticalFactor;
-  const levelPenaltyMultiplier = getLevelPenaltyMultiplier(values.lucidLevel, boss.requiredLevel);
-  const cooldownMultiplier = getCooldownMultiplier(values.cooldownReduction);
-  const finalCp = baseCp * levelPenaltyMultiplier * cooldownMultiplier;
-  const powerRatio = finalCp / boss.minPower;
-  return { baseCp, levelPenaltyMultiplier, cooldownMultiplier, finalCp, powerRatio };
+  return values.magicPower * masteryFactor * criticalFactor;
 }
 
-function updateNotice(type, messages, result, values, boss) {
+function calculateBossRows(values) {
+  const baseCp = calculateBase(values);
+  const cooldownMultiplier = getCooldownMultiplier(values.cooldownReduction);
+
+  return bosses.map((boss) => {
+    const levelMultiplier = getLevelPenaltyMultiplier(values.lucidLevel, boss.requiredLevel);
+    const ready = Number.isFinite(boss.minPower) && Number.isFinite(levelMultiplier);
+    const finalCp = ready ? baseCp * cooldownMultiplier * levelMultiplier : null;
+    const ratio = ready ? finalCp / boss.minPower : null;
+    return { boss, baseCp, cooldownMultiplier, levelMultiplier, finalCp, ratio };
+  });
+}
+
+function getStatus(ratio) {
+  if (!Number.isFinite(ratio)) return { text: '기준 수집중', cls: 'ready' };
+  if (ratio >= 1.3) return { text: '여유', cls: 'good' };
+  if (ratio >= 1) return { text: '가능', cls: 'good' };
+  if (ratio >= 0.85) return { text: '아슬', cls: 'warn' };
+  return { text: '부족', cls: 'bad' };
+}
+
+function renderBossResults(rows) {
+  bossResultsBody.innerHTML = rows.map((row) => {
+    const { boss, levelMultiplier, finalCp, ratio } = row;
+    const status = getStatus(ratio);
+    const levelText = Number.isFinite(boss.requiredLevel) ? `Lv.${boss.requiredLevel}` : '추후 입력';
+    const minPowerText = Number.isFinite(boss.minPower) ? formatNumber(boss.minPower) : '기록 수집중';
+    const levelTextRatio = Number.isFinite(levelMultiplier) ? `${formatNumber(levelMultiplier * 100)}%` : '-';
+    const finalCpText = Number.isFinite(finalCp) ? formatNumber(finalCp) : '-';
+    const ratioText = Number.isFinite(ratio) ? formatRatio(ratio) : '-';
+
+    return `
+      <tr>
+        <td>
+          <div class="boss-title">
+            <strong>${boss.name}</strong>
+            <small>${boss.subtitle}</small>
+          </div>
+        </td>
+        <td>${levelText}</td>
+        <td>${minPowerText}</td>
+        <td>${levelTextRatio}</td>
+        <td>${finalCpText}</td>
+        <td><span class="ratio-pill ${status.cls}">${ratioText}</span></td>
+        <td><span class="status-text ${status.cls}">${status.text}</span></td>
+      </tr>
+    `;
+  }).join('');
+}
+
+function updateNotice(type, messages, rows, values) {
   if (type === 'error') {
     noticeBox.innerHTML = `<strong>확인 필요</strong><p>${messages.join('<br />')}</p>`;
     noticeBox.style.borderLeftColor = 'var(--warning)';
     return;
   }
 
-  const levelGap = Math.max(0, boss.requiredLevel - values.lucidLevel);
-  const penaltyPercent = Math.round((1 - result.levelPenaltyMultiplier) * 100);
-  const status = result.powerRatio >= 1 ? '최소 전투력 이상입니다.' : '최소 전투력보다 부족합니다.';
+  const validRows = rows.filter((row) => Number.isFinite(row.ratio));
+  const best = validRows.sort((a, b) => b.ratio - a.ratio)[0];
   noticeBox.innerHTML = `
-    <strong>계산 완료</strong>
-    <p>${boss.name} 기준 최소 전투력은 ${formatNumber(boss.minPower)}입니다. 루시드 레벨은 보스 요구 레벨보다 ${levelGap}레벨 부족으로 계산했고, 레벨 페널티는 -${penaltyPercent}%입니다. 쿨감 보정 ${formatNumber(result.cooldownMultiplier, 3)}배를 적용한 최종 CP는 ${formatNumber(result.finalCp)}이며, 최소 전투력 대비 ${formatRatio(result.powerRatio)}입니다. ${status}</p>
+    <strong>🎀 계산 완료</strong>
+    <p>현재 스펙 기준 가장 높은 배율은 ${best ? `${best.boss.name} ${formatRatio(best.ratio)}` : '아직 없습니다'}. 헬레나 나이트메어는 클리어 기록을 모아 요구 레벨과 최소 전투력을 입력하면 바로 배율표에 포함됩니다.</p>
   `;
-  noticeBox.style.borderLeftColor = result.powerRatio >= 1 ? 'var(--mint)' : 'var(--warning)';
+  noticeBox.style.borderLeftColor = 'var(--pink)';
 }
 
 function normalizeOcrText(text) {
@@ -339,7 +381,7 @@ async function runFixedRegionOcr(image) {
   const roiEntries = Object.entries(lucidDreamRois);
   const worker = await createOcrWorker('eng', (message) => {
     if (message.status === 'recognizing text') {
-      setOcrStatus(`루시드 드림 화면 전용 OCR 중... ${Math.round((message.progress || 0) * 100)}%`);
+      setOcrStatus(`루시드 드림 화면 보조 OCR 중... ${Math.round((message.progress || 0) * 100)}%`);
     } else if (message.status) {
       setOcrStatus(`OCR 처리 중: ${message.status}`);
     }
@@ -348,7 +390,7 @@ async function runFixedRegionOcr(image) {
   try {
     for (let i = 0; i < roiEntries.length; i += 1) {
       const [fieldId, roiList] = roiEntries[i];
-      setOcrStatus(`고정 영역 OCR 중... ${i + 1}/${roiEntries.length} (${fieldLabels[fieldId]})`);
+      setOcrStatus(`보조 영역 OCR 중... ${i + 1}/${roiEntries.length} (${fieldLabels[fieldId]})`);
 
       let selectedRaw = '';
       let selectedValue = null;
@@ -370,20 +412,14 @@ async function runFixedRegionOcr(image) {
   return { results, rawText: rawParts.join('\n\n') };
 }
 
-async function runFullTextOcrFallback(missingFieldIds) {
-  if (missingFieldIds.length === 0) return { results: {}, rawText: '' };
-  setOcrStatus('일부 값이 비어 있어 전체 OCR로 한 번 더 확인 중입니다...');
+async function runFullTextOcr() {
+  setOcrStatus('전체 화면에서 글자를 먼저 읽는 중입니다...');
   const { data } = await Tesseract.recognize(currentImageFile, 'kor+eng', {
     logger: (message) => {
-      if (message.status === 'recognizing text') setOcrStatus(`전체 OCR 재확인 중... ${Math.round((message.progress || 0) * 100)}%`);
+      if (message.status === 'recognizing text') setOcrStatus(`전체 OCR 중... ${Math.round((message.progress || 0) * 100)}%`);
     },
   });
-  const inferred = inferFieldsFromFullText(data.text || '');
-  const results = {};
-  missingFieldIds.forEach((fieldId) => {
-    if (validateFieldValue(fieldId, inferred[fieldId])) results[fieldId] = inferred[fieldId];
-  });
-  return { results, rawText: data.text || '' };
+  return { results: inferFieldsFromFullText(data.text || ''), rawText: data.text || '' };
 }
 
 function applyOcrValues(inferred) {
@@ -427,25 +463,27 @@ async function runOcr() {
 
   ocrButton.disabled = true;
   clearOcrResult(false);
-  setOcrStatus('루시드 드림 화면 전용 OCR을 준비 중입니다...');
 
   try {
+    const fullTextResult = await runFullTextOcr();
     const image = await loadImageFromFile(currentImageFile);
-    const fixedResult = await runFixedRegionOcr(image);
-    const inferred = { ...fixedResult.results };
-    const missingAfterFixed = ['lucidLevel', 'mastery', 'magicPower', 'criticalRate', 'criticalDamage', 'cooldownReduction']
-      .filter((fieldId) => !validateFieldValue(fieldId, inferred[fieldId]));
 
-    let fallbackRawText = '';
-    if (missingAfterFixed.length > 0) {
-      const fallbackResult = await runFullTextOcrFallback(missingAfterFixed);
-      Object.assign(inferred, fallbackResult.results);
-      fallbackRawText = fallbackResult.rawText;
-    }
+    const missingAfterFull = ['lucidLevel', 'mastery', 'magicPower', 'criticalRate', 'criticalDamage', 'cooldownReduction']
+      .filter((fieldId) => !validateFieldValue(fieldId, fullTextResult.results[fieldId]));
 
-    ocrRawText.textContent = [fixedResult.rawText, fallbackRawText ? `[전체 OCR 원문]\n${fallbackRawText}` : '']
-      .filter(Boolean)
-      .join('\n\n---\n\n') || '인식된 텍스트가 없습니다.';
+    const roiResult = missingAfterFull.length > 0 ? await runFixedRegionOcr(image) : { results: {}, rawText: '' };
+    const inferred = { ...roiResult.results, ...fullTextResult.results };
+
+    // 전체 OCR에서 실패한 값만 보조 ROI 결과로 채웁니다.
+    missingAfterFull.forEach((fieldId) => {
+      if (validateFieldValue(fieldId, roiResult.results[fieldId])) inferred[fieldId] = roiResult.results[fieldId];
+    });
+
+    ocrRawText.textContent = [
+      `[전체 OCR 원문]\n${fullTextResult.rawText || '(인식 없음)'}`,
+      roiResult.rawText ? `[보조 영역 OCR]\n${roiResult.rawText}` : '',
+    ].filter(Boolean).join('\n\n---\n\n');
+
     applyOcrValues(inferred);
   } catch (error) {
     console.error(error);
@@ -458,7 +496,7 @@ async function runOcr() {
 function clearOcrResult(updateMessage = true) {
   ocrRawText.textContent = '아직 인식된 텍스트가 없습니다.';
   Object.keys(fields).forEach((fieldId) => markField(fieldId, null));
-  if (updateMessage) setOcrStatus('OCR 결과를 지웠습니다. 이미지는 유지됩니다.');
+  if (updateMessage) setOcrStatus('OCR 표시를 지웠습니다. 이미지는 유지됩니다.');
 }
 
 function handleCalculate() {
@@ -470,41 +508,44 @@ function handleCalculate() {
     criticalDamage: readNumber('criticalDamage'),
     cooldownReduction: readNumber('cooldownReduction'),
   };
-  const boss = getSelectedBoss();
 
   const errors = validateInputs(values);
   if (errors.length > 0) {
-    selectedBossNameEl.textContent = '-';
-    requiredCpEl.textContent = '-';
-    finalCpEl.textContent = '-';
-    powerRatioEl.textContent = '-';
+    baseCpSummaryEl.textContent = '-';
+    cooldownSummaryEl.textContent = '-';
+    bestRatioSummaryEl.textContent = '-';
+    bossResultsBody.innerHTML = `<tr><td colspan="7" class="empty-row">입력값을 먼저 확인해 주세요.</td></tr>`;
     updateNotice('error', errors);
     return;
   }
 
-  const result = calculateCp(values, boss);
-  selectedBossNameEl.textContent = boss.name;
-  requiredCpEl.textContent = formatNumber(boss.minPower);
-  finalCpEl.textContent = formatNumber(result.finalCp);
-  powerRatioEl.textContent = formatRatio(result.powerRatio);
-  updateNotice('success', [], result, values, boss);
+  const rows = calculateBossRows(values);
+  const baseCp = calculateBase(values);
+  const cooldownMultiplier = getCooldownMultiplier(values.cooldownReduction);
+  const validRows = rows.filter((row) => Number.isFinite(row.ratio));
+  const best = validRows.reduce((acc, row) => !acc || row.ratio > acc.ratio ? row : acc, null);
+
+  baseCpSummaryEl.textContent = formatNumber(baseCp);
+  cooldownSummaryEl.textContent = `${formatNumber(cooldownMultiplier, 3)}x`;
+  bestRatioSummaryEl.textContent = best ? formatRatio(best.ratio) : '-';
+  renderBossResults(rows);
+  updateNotice('success', [], rows, values);
 }
 
 function resetForm() {
   Object.values(fields).forEach((input) => { input.value = ''; });
-  document.querySelector('input[name="bossKey"][value="chaosZakum"]').checked = true;
-  selectedBossNameEl.textContent = '-';
-  requiredCpEl.textContent = '-';
-  finalCpEl.textContent = '-';
-  powerRatioEl.textContent = '-';
+  baseCpSummaryEl.textContent = '-';
+  cooldownSummaryEl.textContent = '-';
+  bestRatioSummaryEl.textContent = '-';
+  bossResultsBody.innerHTML = `<tr><td colspan="7" class="empty-row">스펙을 입력하거나 OCR로 불러온 뒤 계산해 주세요.</td></tr>`;
   previewBox.innerHTML = '<p>아직 업로드된 이미지가 없습니다.</p>';
   imageInput.value = '';
   currentImageFile = null;
   clearOcrResult(false);
   setOcrStatus('이미지를 올린 뒤 OCR 버튼을 눌러주세요.');
   noticeBox.innerHTML = `
-    <strong>계산식 메모</strong>
-    <p>기본 CP는 기존 계산기 공식을 따르고, 보스 요구 레벨에 따른 레벨 페널티와 쿨감 보정 배율을 적용한 뒤 최소 전투력 대비 배율을 계산합니다.</p>
+    <strong>🎀 메모</strong>
+    <p>노멀 헬레나와 헬레나 나이트메어의 최소 전투력은 클리어 기록을 쌓으면서 계속 보정할 수 있게 코드에 분리해두었습니다.</p>
   `;
   noticeBox.style.borderLeftColor = 'var(--pink)';
 }
@@ -517,7 +558,7 @@ function previewImage(file) {
     previewBox.innerHTML = `<img src="${event.target.result}" alt="업로드한 스펙 캡처 미리보기" />`;
   };
   reader.readAsDataURL(file);
-  setOcrStatus('이미지를 불러왔습니다. 루시드 드림 전체 화면이면 전용 OCR로 값을 읽습니다. 보스는 오른쪽에서 선택해 주세요.');
+  setOcrStatus('이미지를 불러왔습니다. 전체 OCR을 먼저 시도하고, 실패한 값은 보조 영역 OCR로 한 번 더 확인합니다.');
 }
 
 calculateButton.addEventListener('click', handleCalculate);
@@ -553,11 +594,5 @@ Object.values(fields).forEach((input) => {
       event.preventDefault();
       handleCalculate();
     }
-  });
-});
-
-document.querySelectorAll('input[name="bossKey"]').forEach((radio) => {
-  radio.addEventListener('change', () => {
-    if (finalCpEl.textContent !== '-') handleCalculate();
   });
 });
