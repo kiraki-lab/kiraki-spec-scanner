@@ -52,7 +52,11 @@
           <form class="spec-form" id="specForm">
             <label>
               <span>루시드 레벨</span>
-              <input type="number" id="lucidLevel" min="1" max="300" placeholder="예: 260" />
+              <input type="number" id="lucidLevel" min="1" max="100" placeholder="예: 100" />
+            </label>
+            <label>
+              <span>상대 보스 레벨</span>
+              <input type="number" id="bossLevel" min="1" max="100" placeholder="예: 100" />
             </label>
             <label>
               <span>숙련도 (%)</span>
@@ -72,7 +76,7 @@
             </label>
             <label>
               <span>재사용 대기시간 감소 (초)</span>
-              <input type="number" id="cooldownReduction" min="0" max="10" step="0.1" placeholder="예: 2" />
+              <input type="number" id="cooldownReduction" min="0" max="9" step="1" placeholder="예: 2" />
             </label>
           </form>
         </section>
@@ -93,6 +97,10 @@
             <strong id="baseCp">-</strong>
           </article>
           <article class="result-card">
+            <span>레벨 페널티</span>
+            <strong id="levelPenalty">-</strong>
+          </article>
+          <article class="result-card">
             <span>쿨감 보정 배율</span>
             <strong id="cooldownMultiplier">-</strong>
           </article>
@@ -105,8 +113,7 @@
         <div class="notice-box" id="noticeBox">
           <strong>계산식 메모</strong>
           <p>
-            현재 공식은 화면에서 보이는 수식을 바탕으로 만든 MVP용입니다. 실제 기준이 확정되면
-            레벨 페널티와 쿨감 보정값을 더 정확하게 조정하면 됩니다.
+            기본 CP는 기존 계산기 공식을 따르고, 최종 CP는 레벨 페널티와 쿨감 보정 배율을 함께 적용합니다.
           </p>
         </div>
       </section>
