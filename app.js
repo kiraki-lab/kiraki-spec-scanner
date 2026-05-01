@@ -10,6 +10,10 @@ const fields = {
 const baseCpSummaryEl = document.getElementById('baseCpSummary');
 const cooldownSummaryEl = document.getElementById('cooldownSummary');
 const bestRatioSummaryEl = document.getElementById('bestRatioSummary');
+const historyMemoEl = document.getElementById('historyMemo');
+const saveHistoryButton = document.getElementById('saveHistoryButton');
+const clearHistoryButton = document.getElementById('clearHistoryButton');
+const historyList = document.getElementById('historyList');
 const inputBasePowerEl = document.getElementById('inputBasePower');
 const inputCooldownPowerEl = document.getElementById('inputCooldownPower');
 const bossResultsBody = document.getElementById('bossResultsBody');
@@ -25,6 +29,7 @@ const ocrStatus = document.getElementById('ocrStatus');
 const ocrRawText = document.getElementById('ocrRawText');
 
 let currentImageFile = null;
+const HISTORY_STORAGE_KEY = 'kirakiSpecHistory:v1';
 
 const bosses = [
   { key: 'chaosZakum', name: '카오스 자쿰', requiredLevel: 10, minPower: 9000 },
@@ -78,9 +83,10 @@ const lucidDreamRois = {
     { x: 0.615, y: 0.465, w: 0.115, h: 0.065, scale: 6 },
   ],
   criticalRate: [
-    { x: 0.605, y: 0.490, w: 0.145, h: 0.080, scale: 8 },
-    { x: 0.580, y: 0.485, w: 0.180, h: 0.090, scale: 8 },
-    { x: 0.625, y: 0.500, w: 0.125, h: 0.065, scale: 10 },
+    { x: 0.595, y: 0.485, w: 0.170, h: 0.090, scale: 9 },
+    { x: 0.560, y: 0.480, w: 0.220, h: 0.100, scale: 9 },
+    { x: 0.615, y: 0.500, w: 0.150, h: 0.070, scale: 12 },
+    { x: 0.485, y: 0.485, w: 0.285, h: 0.095, scale: 8 },
   ],
   criticalDamage: [
     { x: 0.845, y: 0.455, w: 0.145, h: 0.078, scale: 8 },
@@ -104,6 +110,12 @@ function readNumber(id) {
 function formatNumber(value, digits = 0) {
   if (!Number.isFinite(value)) return '-';
   return new Intl.NumberFormat('ko-KR', { maximumFractionDigits: digits }).format(value);
+}
+
+function formatCompactPower(value) {
+  if (!Number.isFinite(value)) return '-';
+  if (Math.abs(value) < 10000) return formatNumber(value);
+  return `${Math.trunc(value / 10000)}만`;
 }
 
 function formatRatioPercent(value) {
@@ -185,8 +197,8 @@ function renderPowerPreview(values) {
 
   const baseCp = calculateBase(values);
   const cooldownPower = baseCp * getCooldownMultiplier(values.cooldownReduction);
-  inputBasePowerEl.textContent = formatNumber(baseCp);
-  inputCooldownPowerEl.textContent = formatNumber(cooldownPower);
+  inputBasePowerEl.textContent = formatCompactPower(baseCp);
+  inputCooldownPowerEl.textContent = formatCompactPower(cooldownPower);
 }
 
 function renderBossResults(rows) {
@@ -194,9 +206,9 @@ function renderBossResults(rows) {
     const { boss, levelMultiplier, finalCp, ratio } = row;
     const status = getStatus(ratio);
     const levelText = Number.isFinite(boss.requiredLevel) ? `Lv.${boss.requiredLevel}` : '추후 입력';
-    const minPowerText = Number.isFinite(boss.minPower) ? formatNumber(boss.minPower) : '기록 수집중';
+    const minPowerText = Number.isFinite(boss.minPower) ? formatCompactPower(boss.minPower) : '기록 수집중';
     const levelTextRatio = Number.isFinite(levelMultiplier) ? `${formatNumber(levelMultiplier * 100)}%` : '-';
-    const finalCpText = Number.isFinite(finalCp) ? formatNumber(finalCp) : '-';
+    const finalCpText = Number.isFinite(finalCp) ? formatCompactPower(finalCp) : '-';
     const ratioText = Number.isFinite(ratio) ? formatRatioPercent(ratio) : '-';
 
     return `
@@ -307,10 +319,10 @@ function inferFromStatNumberOrder(text, inferred) {
   }
 
   if (!validateFieldValue('criticalRate', inferred.criticalRate)) {
-    const candidate = nums
-      .filter((n) => n >= 1 && n <= 200 && n !== inferred.mastery && n !== inferred.cooldownReduction)
-      .sort((a, b) => b - a)[0];
-    if (validateFieldValue('criticalRate', candidate)) inferred.criticalRate = candidate;
+    const excluded = new Set([inferred.mastery, inferred.cooldownReduction, inferred.criticalDamage, inferred.lucidLevel]);
+    const candidates = nums.filter((n) => n >= 1 && n <= 200 && !excluded.has(n));
+    const preferred = candidates.find((n) => n >= 70 && n <= 150) ?? candidates.sort((a, b) => b - a)[0];
+    if (validateFieldValue('criticalRate', preferred)) inferred.criticalRate = preferred;
   }
 
   if (!validateFieldValue('cooldownReduction', inferred.cooldownReduction)) {
@@ -562,6 +574,113 @@ function updatePowerPreviewFromInputs() {
   renderPowerPreview(getCurrentValues());
 }
 
+
+function loadHistory() {
+  try {
+    const raw = localStorage.getItem(HISTORY_STORAGE_KEY);
+    const parsed = raw ? JSON.parse(raw) : [];
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveHistory(items) {
+  localStorage.setItem(HISTORY_STORAGE_KEY, JSON.stringify(items.slice(0, 30)));
+}
+
+function renderHistory() {
+  const items = loadHistory();
+
+  if (items.length === 0) {
+    historyList.innerHTML = '<p class="history-empty">아직 기록된 스펙이 없습니다. 장비를 바꾼 뒤 “현재 스펙 기록하기”를 눌러 비교해보세요.</p>';
+    return;
+  }
+
+  historyList.innerHTML = items.map((item) => {
+    const memo = item.memo || '메모 없음';
+    const createdAt = new Date(item.createdAt).toLocaleString('ko-KR', {
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+
+    return `
+      <article class="history-card">
+        <div class="history-card-header">
+          <div class="history-card-title">
+            <strong>${memo}</strong>
+            <small>${createdAt}</small>
+          </div>
+          <button class="history-delete-button" type="button" data-history-delete="${item.id}">삭제</button>
+        </div>
+        <div class="history-values">
+          <div><span>쿨감 반영 전투력</span><strong>${formatCompactPower(item.cooldownPower)}</strong></div>
+          <div><span>최고 배율</span><strong>${formatRatioPercent(item.bestRatio)}</strong></div>
+          <div><span>크확 / 크뎀</span><strong>${item.values.criticalRate}% / ${item.values.criticalDamage}%</strong></div>
+          <div><span>마력 / 쿨감</span><strong>${formatNumber(item.values.magicPower)} / ${item.values.cooldownReduction}초</strong></div>
+        </div>
+      </article>
+    `;
+  }).join('');
+}
+
+function buildHistoryItem() {
+  const values = getCurrentValues();
+  const errors = validateInputs(values);
+  if (errors.length > 0) {
+    updateNotice('error', errors);
+    return null;
+  }
+
+  const rows = calculateBossRows(values);
+  const validRows = rows.filter((row) => Number.isFinite(row.ratio));
+  const best = validRows.reduce((acc, row) => !acc || row.ratio > acc.ratio ? row : acc, null);
+  const basePower = calculateBase(values);
+  const cooldownPower = basePower * getCooldownMultiplier(values.cooldownReduction);
+
+  return {
+    id: `${Date.now()}-${Math.random().toString(16).slice(2)}`,
+    createdAt: new Date().toISOString(),
+    memo: historyMemoEl.value.trim(),
+    values,
+    basePower,
+    cooldownPower,
+    bestBoss: best?.boss.name ?? null,
+    bestRatio: best?.ratio ?? null,
+  };
+}
+
+function handleSaveHistory() {
+  const item = buildHistoryItem();
+  if (!item) return;
+
+  const items = loadHistory();
+  saveHistory([item, ...items]);
+  renderHistory();
+
+  noticeBox.innerHTML = `
+    <strong>🎀 기록 완료</strong>
+    <p>현재 스펙을 로컬 히스토리에 저장했습니다. 이 기록은 이 브라우저 안에만 저장됩니다.</p>
+  `;
+  noticeBox.style.borderLeftColor = 'var(--mint)';
+}
+
+function clearHistory() {
+  const ok = confirm('로컬 히스토리를 모두 삭제할까요?');
+  if (!ok) return;
+  localStorage.removeItem(HISTORY_STORAGE_KEY);
+  renderHistory();
+}
+
+function deleteHistoryItem(id) {
+  const items = loadHistory().filter((item) => item.id !== id);
+  saveHistory(items);
+  renderHistory();
+}
+
+
 function handleCalculate() {
   const values = getCurrentValues();
 
@@ -582,7 +701,7 @@ function handleCalculate() {
   const validRows = rows.filter((row) => Number.isFinite(row.ratio));
   const best = validRows.reduce((acc, row) => !acc || row.ratio > acc.ratio ? row : acc, null);
 
-  baseCpSummaryEl.textContent = formatNumber(baseCp);
+  baseCpSummaryEl.textContent = formatCompactPower(baseCp);
   cooldownSummaryEl.textContent = `${formatNumber(cooldownMultiplier, 3)}x`;
   bestRatioSummaryEl.textContent = best ? formatRatioPercent(best.ratio) : '-';
   renderPowerPreview(values);
@@ -592,6 +711,7 @@ function handleCalculate() {
 
 function resetForm() {
   Object.values(fields).forEach((input) => { input.value = ''; });
+  historyMemoEl.value = '';
   baseCpSummaryEl.textContent = '-';
   cooldownSummaryEl.textContent = '-';
   bestRatioSummaryEl.textContent = '-';
@@ -625,6 +745,13 @@ calculateButton.addEventListener('click', handleCalculate);
 resetButton.addEventListener('click', resetForm);
 ocrButton.addEventListener('click', runOcr);
 clearOcrButton.addEventListener('click', () => clearOcrResult(true));
+saveHistoryButton.addEventListener('click', handleSaveHistory);
+clearHistoryButton.addEventListener('click', clearHistory);
+historyList.addEventListener('click', (event) => {
+  const deleteButton = event.target.closest('[data-history-delete]');
+  if (!deleteButton) return;
+  deleteHistoryItem(deleteButton.dataset.historyDelete);
+});
 
 imageInput.addEventListener('change', (event) => previewImage(event.target.files[0]));
 
@@ -657,3 +784,7 @@ Object.values(fields).forEach((input) => {
     }
   });
 });
+
+
+renderHistory();
+updatePowerPreviewFromInputs();

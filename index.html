@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="키라키 스펙 스캐너 - 루시드 드림 캡처 기반 보스 배율 계산기" />
     <title>키라키 스펙 스캐너</title>
-    <link rel="stylesheet" href="./styles.css?v=pretty4" />
+    <link rel="stylesheet" href="./styles.css?v=history1" />
   </head>
   <body>
     <main class="page-shell">
@@ -86,6 +86,10 @@
               <span>재사용 대기시간 감소 (초)</span>
               <input type="number" id="cooldownReduction" min="0" max="9" step="1" placeholder="예: 6" />
             </label>
+            <label class="memo-field">
+              <span>장비/변경 메모 (선택)</span>
+              <input type="text" id="historyMemo" placeholder="예: 무기 교체, 보조 잠재 변경" />
+            </label>
           </form>
 
           <div class="live-power-box">
@@ -159,6 +163,24 @@
         </div>
       </section>
 
+
+      <section class="panel history-panel">
+        <div class="panel-title-row">
+          <div>
+            <p class="section-label">Step 4</p>
+            <h2>장비 변경 히스토리</h2>
+          </div>
+          <div class="history-actions">
+            <button class="primary-button" id="saveHistoryButton" type="button">현재 스펙 기록하기</button>
+            <button class="ghost-button" id="clearHistoryButton" type="button">히스토리 비우기</button>
+          </div>
+        </div>
+
+        <div class="history-list" id="historyList">
+          <p class="history-empty">아직 기록된 스펙이 없습니다. 장비를 바꾼 뒤 “현재 스펙 기록하기”를 눌러 비교해보세요.</p>
+        </div>
+      </section>
+
       <footer class="source-footer">
         <p>
           계산식 출처:
@@ -171,6 +193,6 @@
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
-    <script src="./app.js?v=pretty4"></script>
+    <script src="./app.js?v=history1"></script>
   </body>
 </html>
