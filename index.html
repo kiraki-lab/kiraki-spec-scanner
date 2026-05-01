@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="키라키 스펙 스캐너 - 캡처 기반 루시드 스펙 계산기 MVP" />
+    <title>키라키 스펙 스캐너</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="page-shell">
+      <section class="hero-card">
+        <div class="eyebrow">Kiraki Spec Scanner · MVP</div>
+        <h1>키라키 스펙 스캐너</h1>
+        <p class="hero-copy">
+          지금은 수동 입력 기반 계산기입니다. 캡처 이미지를 올려두고 값을 확인한 뒤,
+          다음 단계에서 OCR 자동 입력 기능을 붙일 예정이에요.
+        </p>
+      </section>
+
+      <section class="grid-layout">
+        <section class="panel upload-panel">
+          <div class="panel-title-row">
+            <div>
+              <p class="section-label">Step 1</p>
+              <h2>스펙 캡처 업로드</h2>
+            </div>
+            <span class="badge">OCR 준비 단계</span>
+          </div>
+
+          <label class="drop-zone" for="imageInput" id="dropZone">
+            <input id="imageInput" type="file" accept="image/*" />
+            <span class="drop-icon">📷</span>
+            <strong>이미지를 클릭하거나 드래그하세요</strong>
+            <small>Ctrl + V로 캡처 붙여넣기도 가능합니다.</small>
+          </label>
+
+          <div class="preview-box" id="previewBox">
+            <p>아직 업로드된 이미지가 없습니다.</p>
+          </div>
+        </section>
+
+        <section class="panel input-panel">
+          <div class="panel-title-row">
+            <div>
+              <p class="section-label">Step 2</p>
+              <h2>루시드 스펙 입력</h2>
+            </div>
+            <button class="ghost-button" id="resetButton" type="button">초기화</button>
+          </div>
+
+          <form class="spec-form" id="specForm">
+            <label>
+              <span>루시드 레벨</span>
+              <input type="number" id="lucidLevel" min="1" max="300" placeholder="예: 260" />
+            </label>
+            <label>
+              <span>숙련도 (%)</span>
+              <input type="number" id="mastery" min="0" max="100" step="0.1" placeholder="예: 98.5" />
+            </label>
+            <label>
+              <span>마력</span>
+              <input type="number" id="magicPower" min="0" placeholder="예: 123456" />
+            </label>
+            <label>
+              <span>크리티컬 확률 (%)</span>
+              <input type="number" id="criticalRate" min="0" max="100" step="0.1" placeholder="예: 95" />
+            </label>
+            <label>
+              <span>크리티컬 데미지 (%)</span>
+              <input type="number" id="criticalDamage" min="0" step="0.1" placeholder="예: 135" />
+            </label>
+            <label>
+              <span>재사용 대기시간 감소 (초)</span>
+              <input type="number" id="cooldownReduction" min="0" max="10" step="0.1" placeholder="예: 2" />
+            </label>
+          </form>
+        </section>
+      </section>
+
+      <section class="panel result-panel">
+        <div class="panel-title-row">
+          <div>
+            <p class="section-label">Step 3</p>
+            <h2>계산 결과</h2>
+          </div>
+          <button class="primary-button" id="calculateButton" type="button">격파 가능성 계산하기</button>
+        </div>
+
+        <div class="result-grid">
+          <article class="result-card">
+            <span>기본 CP</span>
+            <strong id="baseCp">-</strong>
+          </article>
+          <article class="result-card">
+            <span>쿨감 보정 배율</span>
+            <strong id="cooldownMultiplier">-</strong>
+          </article>
+          <article class="result-card highlight">
+            <span>최종 CP</span>
+            <strong id="finalCp">-</strong>
+          </article>
+        </div>
+
+        <div class="notice-box" id="noticeBox">
+          <strong>계산식 메모</strong>
+          <p>
+            현재 공식은 화면에서 보이는 수식을 바탕으로 만든 MVP용입니다. 실제 기준이 확정되면
+            레벨 페널티와 쿨감 보정값을 더 정확하게 조정하면 됩니다.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
