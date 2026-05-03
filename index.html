@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="키라키 스펙 스캐너 - 루시드 드림 캡처 기반 보스 배율 계산기" />
     <title>키라키 스펙 스캐너</title>
-    <link rel="stylesheet" href="./styles.css?v=nightmare1" />
+    <link rel="stylesheet" href="./styles.css?v=effdrop1" />
   </head>
   <body>
     <main class="page-shell">
@@ -175,8 +175,50 @@
         </div>
 
         <p class="efficiency-copy">
-          현재 옵션 효율은 해당 옵션이 이미 장착되어 있다고 보고 제거했을 때의 손실분입니다. 추가 옵션 효율은 지금 스펙에 같은 옵션을 새로 더했을 때의 증가율입니다.
+          현재 옵션 효율은 해당 옵션이 이미 장착되어 있다고 보고 제거했을 때의 손실분입니다. 추가 옵션 효율은 지금 스펙에 같은 옵션을 새로 더했을 때의 증가율입니다. 드롭다운에서 레전더리 옵션 수치를 바꿔 비교할 수 있어요.
         </p>
+
+
+        <div class="efficiency-select-grid">
+          <label>
+            <span>고정 마력</span>
+            <select id="effFlatMagic">
+              <option value="200">마력 +200</option>
+              <option value="300">마력 +300</option>
+              <option value="400" selected>마력 +400</option>
+            </select>
+          </label>
+          <label>
+            <span>마력 %</span>
+            <select id="effMagicPercent">
+              <option value="3">마력 +3%</option>
+              <option value="4">마력 +4%</option>
+              <option value="5" selected>마력 +5%</option>
+            </select>
+          </label>
+          <label>
+            <span>크리티컬 데미지</span>
+            <select id="effCriticalDamage">
+              <option value="10">크뎀 +10%</option>
+              <option value="12">크뎀 +12%</option>
+              <option value="14" selected>크뎀 +14%</option>
+            </select>
+          </label>
+          <label>
+            <span>숙련도</span>
+            <select id="effMastery">
+              <option value="9">숙련도 +9%</option>
+              <option value="12">숙련도 +12%</option>
+              <option value="16" selected>숙련도 +16%</option>
+            </select>
+          </label>
+          <label>
+            <span>쿨타임 감소</span>
+            <select id="effCooldown">
+              <option value="2" selected>쿨감 +2초</option>
+            </select>
+          </label>
+        </div>
 
         <div class="efficiency-list" id="efficiencyList">
           <p class="efficiency-empty">스펙을 입력하면 옵션별 효율이 여기에 표시됩니다.</p>
@@ -197,7 +239,7 @@
         <p class="legendary-copy">
           레전더리 결정에서 자주 보는 옵션을 현재 스펙 기준으로 순위화합니다.
           추가 스펙 입력값이 있으면 “추가 옵션 효율”도 함께 비교해요.
-          크리티컬 확률은 100% 캡 이후 효율이 달라져 별도 판단 항목으로 보고, 티어 비교에서는 제외했습니다. HP 계열처럼 현재 계산식에 반영되지 않는 옵션도 제외했습니다.
+          크리티컬 확률은 100% 캡 이후 효율이 달라져 별도 판단 항목으로 보고, 티어 비교에서는 제외했습니다. HP 계열처럼 현재 계산식에 반영되지 않는 옵션도 제외했습니다. 쿨감은 9초 상한을 적용합니다.
         </p>
 
         <div class="legendary-tier-list" id="legendaryTierList">
@@ -235,6 +277,6 @@
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
-    <script src="./app.js?v=nightmare1"></script>
+    <script src="./app.js?v=effdrop1"></script>
   </body>
 </html>

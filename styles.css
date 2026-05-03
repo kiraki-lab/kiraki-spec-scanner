@@ -600,6 +600,60 @@ button:disabled {
   font-size: 16px;
 }
 
+
+.efficiency-select-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  margin: 0 0 18px;
+  padding: 16px;
+  border: 1px solid rgba(255, 184, 220, .22);
+  border-radius: 22px;
+  background: rgba(255,255,255,.045);
+}
+
+.efficiency-select-grid label {
+  display: grid;
+  gap: 8px;
+}
+
+.efficiency-select-grid span {
+  color: #ffd2e9;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+select {
+  width: 100%;
+  min-height: 44px;
+  border: 1px solid rgba(255, 184, 220, .42);
+  border-radius: 16px;
+  padding: 0 12px;
+  outline: none;
+  color: white;
+  background: rgba(20, 6, 27, .72);
+  font-size: 15px;
+  font-weight: 850;
+  font-family: inherit;
+}
+
+select:focus {
+  border-color: var(--pink);
+  box-shadow: 0 0 0 4px rgba(255, 117, 191, .18);
+}
+
+@media (max-width: 960px) {
+  .efficiency-select-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 560px) {
+  .efficiency-select-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 .efficiency-list {
   display: grid;
   gap: 12px;
