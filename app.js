@@ -14,6 +14,16 @@ const historyMemoEl = document.getElementById('historyMemo');
 const saveHistoryButton = document.getElementById('saveHistoryButton');
 const clearHistoryButton = document.getElementById('clearHistoryButton');
 const historyList = document.getElementById('historyList');
+const efficiencyList = document.getElementById('efficiencyList');
+const legendaryTierList = document.getElementById('legendaryTierList');
+const extraSpecFields = {
+  magicPower: document.getElementById('extraMagicPower'),
+  magicPercent: document.getElementById('extraMagicPercent'),
+  criticalRate: document.getElementById('extraCriticalRate'),
+  criticalDamage: document.getElementById('extraCriticalDamage'),
+  mastery: document.getElementById('extraMastery'),
+  cooldownReduction: document.getElementById('extraCooldownReduction'),
+};
 const inputBasePowerEl = document.getElementById('inputBasePower');
 const inputCooldownPowerEl = document.getElementById('inputCooldownPower');
 const bossResultsBody = document.getElementById('bossResultsBody');
@@ -70,6 +80,63 @@ const fieldLabels = {
   criticalDamage: '크리티컬 데미지',
   cooldownReduction: '재사용 대기시간 감소',
 };
+
+const efficiencyOptions = [
+  {
+    key: 'flatMagic',
+    icon: '🏆',
+    name: '+500 마력',
+    hint: '고정 마력 증가',
+    apply: (values) => ({ ...values, magicPower: values.magicPower + 500 }),
+  },
+  {
+    key: 'percentMagic',
+    icon: '💗',
+    name: '+5% 마력',
+    hint: '현재 마력 기준 배율',
+    apply: (values) => ({ ...values, magicPower: values.magicPower * 1.05 }),
+  },
+  {
+    key: 'criticalDamage',
+    icon: '⚡',
+    name: '+13% 크뎀',
+    hint: '크리티컬 데미지 증가',
+    apply: (values) => ({ ...values, criticalDamage: values.criticalDamage + 13 }),
+  },
+  {
+    key: 'cooldown',
+    icon: '⏱️',
+    name: '+1초 쿨감',
+    hint: '최대 9초까지 적용',
+    apply: (values) => ({ ...values, cooldownReduction: Math.min(9, values.cooldownReduction + 1) }),
+  },
+  {
+    key: 'mastery',
+    icon: '📖',
+    name: '+12% 숙련도',
+    hint: '숙련도 증가',
+    apply: (values) => ({ ...values, mastery: Math.min(100, values.mastery + 12) }),
+  },
+];
+
+
+const legendaryCrystalOptions = [
+  { key: 'magic400', group: '마력', name: '마력 +400', valueLabel: '레전 최상', apply: (values) => ({ ...values, magicPower: values.magicPower + 400 }) },
+  { key: 'magic300', group: '마력', name: '마력 +300', valueLabel: '레전 중상', apply: (values) => ({ ...values, magicPower: values.magicPower + 300 }) },
+  { key: 'magic200', group: '마력', name: '마력 +200', valueLabel: '레전 하한', apply: (values) => ({ ...values, magicPower: values.magicPower + 200 }) },
+
+  { key: 'magicPercent5', group: '마력 %', name: '마력 +5%', valueLabel: '레전 최상', apply: (values) => ({ ...values, magicPower: values.magicPower * 1.05 }) },
+  { key: 'magicPercent4', group: '마력 %', name: '마력 +4%', valueLabel: '레전 중간', apply: (values) => ({ ...values, magicPower: values.magicPower * 1.04 }) },
+  { key: 'magicPercent3', group: '마력 %', name: '마력 +3%', valueLabel: '레전 하한', apply: (values) => ({ ...values, magicPower: values.magicPower * 1.03 }) },
+
+  { key: 'critDamage14', group: '크리티컬 데미지', name: '크뎀 +14%', valueLabel: '레전 상한', apply: (values) => ({ ...values, criticalDamage: values.criticalDamage + 14 }) },
+  { key: 'critDamage12', group: '크리티컬 데미지', name: '크뎀 +12%', valueLabel: '레전 중간', apply: (values) => ({ ...values, criticalDamage: values.criticalDamage + 12 }) },
+  { key: 'critDamage10', group: '크리티컬 데미지', name: '크뎀 +10%', valueLabel: '레전 하한', apply: (values) => ({ ...values, criticalDamage: values.criticalDamage + 10 }) },
+  { key: 'mastery16', group: '숙련도', name: '숙련도 +16%', valueLabel: '레전 상한', apply: (values) => ({ ...values, mastery: Math.min(100, values.mastery + 16) }) },
+  { key: 'mastery12', group: '숙련도', name: '숙련도 +12%', valueLabel: '레전 중간', apply: (values) => ({ ...values, mastery: Math.min(100, values.mastery + 12) }) },
+  { key: 'mastery9', group: '숙련도', name: '숙련도 +9%', valueLabel: '레전 하한', apply: (values) => ({ ...values, mastery: Math.min(100, values.mastery + 9) }) },
+  { key: 'cooldown2', group: '쿨타임 감소', name: '쿨감 +2초', valueLabel: '레전 옵션', apply: (values) => ({ ...values, cooldownReduction: Math.min(9, values.cooldownReduction + 2) }) },
+];
 
 const lucidDreamRois = {
   lucidLevel: [
@@ -191,6 +258,177 @@ function getStatus(ratio) {
   if (ratio >= 1) return { text: '가능', cls: 'good' };
   if (ratio >= 0.85) return { text: '아슬', cls: 'warn' };
   return { text: '부족', cls: 'bad' };
+}
+
+
+function readOptionalExtraNumber(key) {
+  const raw = extraSpecFields[key].value;
+  if (raw === '') return 0;
+  const value = Number(raw);
+  return Number.isFinite(value) ? value : 0;
+}
+
+function getExtraSpecValues() {
+  return {
+    magicPower: readOptionalExtraNumber('magicPower'),
+    magicPercent: readOptionalExtraNumber('magicPercent'),
+    criticalRate: readOptionalExtraNumber('criticalRate'),
+    criticalDamage: readOptionalExtraNumber('criticalDamage'),
+    mastery: readOptionalExtraNumber('mastery'),
+    cooldownReduction: readOptionalExtraNumber('cooldownReduction'),
+  };
+}
+
+function applyExtraSpec(values, extra) {
+  const magicPowerAfterFlat = values.magicPower + extra.magicPower;
+  const magicPowerAfterPercent = magicPowerAfterFlat * (1 + extra.magicPercent / 100);
+
+  return {
+    ...values,
+    magicPower: Math.max(0, magicPowerAfterPercent),
+    criticalRate: values.criticalRate + extra.criticalRate,
+    criticalDamage: values.criticalDamage + extra.criticalDamage,
+    mastery: Math.min(100, Math.max(0, values.mastery + extra.mastery)),
+    cooldownReduction: Math.min(9, Math.max(0, Math.trunc(values.cooldownReduction + extra.cooldownReduction))),
+  };
+}
+
+function calculatePowerWithoutLevel(values) {
+  return calculateBase(values) * getCooldownMultiplier(values.cooldownReduction);
+}
+
+function calculateEfficiencyGain(values, option) {
+  const before = calculatePowerWithoutLevel(values);
+  const after = calculatePowerWithoutLevel(option.apply(values));
+
+  if (!Number.isFinite(before) || before <= 0 || !Number.isFinite(after)) return null;
+  return ((after / before) - 1) * 100;
+}
+
+function formatEfficiencyPercent(value) {
+  if (!Number.isFinite(value)) return '-';
+  const sign = value > 0 ? '+' : '';
+  return `${sign}${value.toFixed(2)}%`;
+}
+
+function renderUpgradeEfficiency() {
+  const values = getCurrentValues();
+  const errors = validateInputs(values);
+
+  if (errors.length > 0) {
+    efficiencyList.innerHTML = '<p class="efficiency-empty">스펙을 입력하면 옵션별 효율이 여기에 표시됩니다.</p>';
+    return;
+  }
+
+  const extra = getExtraSpecValues();
+  const futureValues = applyExtraSpec(values, extra);
+
+  const rows = efficiencyOptions.map((option) => {
+    const currentGain = calculateEfficiencyGain(values, option);
+    const futureGain = calculateEfficiencyGain(futureValues, option);
+    return { option, currentGain, futureGain };
+  }).sort((a, b) => (b.currentGain ?? -999) - (a.currentGain ?? -999));
+
+  const maxGain = Math.max(
+    0.01,
+    ...rows.flatMap((row) => [row.currentGain ?? 0, row.futureGain ?? 0]).map(Math.abs)
+  );
+
+  efficiencyList.innerHTML = rows.map((row, index) => {
+    const { option, currentGain, futureGain } = row;
+    const currentWidth = Math.min(100, Math.max(0, ((currentGain ?? 0) / maxGain) * 100));
+    const futureWidth = Math.min(100, Math.max(0, ((futureGain ?? 0) / maxGain) * 100));
+    const delta = (futureGain ?? 0) - (currentGain ?? 0);
+    const deltaClass = delta > 0.001 ? 'up' : delta < -0.001 ? 'down' : '';
+
+    return `
+      <article class="efficiency-card">
+        <div class="efficiency-option">
+          <span class="efficiency-rank">${index + 1}</span>
+          <div class="efficiency-option-title">
+            <strong>${option.icon} ${option.name}</strong>
+            <small>${option.hint}</small>
+          </div>
+        </div>
+
+        <div class="efficiency-metric">
+          <div class="efficiency-metric-head">
+            <span>현재 스펙 효율</span>
+            <strong class="efficiency-value current">${formatEfficiencyPercent(currentGain)}</strong>
+          </div>
+          <div class="efficiency-bar">
+            <div class="efficiency-bar-fill" style="width:${currentWidth}%"></div>
+          </div>
+        </div>
+
+        <div class="efficiency-metric">
+          <div class="efficiency-metric-head">
+            <span>추가 스펙 후 효율</span>
+            <strong class="efficiency-value future">${formatEfficiencyPercent(futureGain)}</strong>
+          </div>
+          <div class="efficiency-bar">
+            <div class="efficiency-bar-fill future" style="width:${futureWidth}%"></div>
+          </div>
+          <span class="efficiency-delta ${deltaClass}">변화 ${formatEfficiencyPercent(delta)}</span>
+        </div>
+      </article>
+    `;
+  }).join('');
+}
+
+
+function calculateLegendaryOptionGain(values, option) {
+  const before = calculatePowerWithoutLevel(values);
+  const after = calculatePowerWithoutLevel(option.apply(values));
+
+  if (!Number.isFinite(before) || before <= 0 || !Number.isFinite(after)) return null;
+  return ((after / before) - 1) * 100;
+}
+
+function renderLegendaryTiers() {
+  const values = getCurrentValues();
+  const errors = validateInputs(values);
+
+  if (errors.length > 0) {
+    legendaryTierList.innerHTML = '<p class="legendary-empty">스펙을 입력하면 레전 결정 옵션 효율 순위가 표시됩니다.</p>';
+    return;
+  }
+
+  const extra = getExtraSpecValues();
+  const futureValues = applyExtraSpec(values, extra);
+
+  const rows = legendaryCrystalOptions.map((option) => {
+    const currentGain = calculateLegendaryOptionGain(values, option);
+    const futureGain = calculateLegendaryOptionGain(futureValues, option);
+    return { option, currentGain, futureGain };
+  }).sort((a, b) => (b.currentGain ?? -999) - (a.currentGain ?? -999));
+
+  legendaryTierList.innerHTML = rows.map((row, index) => {
+    const { option, currentGain, futureGain } = row;
+    const diff = (futureGain ?? 0) - (currentGain ?? 0);
+    const diffText = `${diff >= 0 ? '+' : ''}${diff.toFixed(2)}%`;
+
+    return `
+      <article class="legendary-card ${index < 3 ? 'top' : ''}">
+        <div class="legendary-option">
+          <span class="legendary-rank">${index + 1}</span>
+          <div class="legendary-title">
+            <strong>${option.name}</strong>
+            <small>${option.group} · ${option.valueLabel}</small>
+          </div>
+        </div>
+        <div class="legendary-metric">
+          <span>현재 스펙 효율</span>
+          <strong>${formatEfficiencyPercent(currentGain)}</strong>
+        </div>
+        <div class="legendary-metric future">
+          <span>추가 스펙 후 효율</span>
+          <strong>${formatEfficiencyPercent(futureGain)}</strong>
+        </div>
+        <span class="legendary-pill">변화 ${diffText}</span>
+      </article>
+    `;
+  }).join('');
 }
 
 function renderPowerPreview(values) {
@@ -578,6 +816,8 @@ function getCurrentValues() {
 
 function updatePowerPreviewFromInputs() {
   renderPowerPreview(getCurrentValues());
+  renderUpgradeEfficiency();
+  renderLegendaryTiers();
 }
 
 
@@ -718,6 +958,7 @@ function handleCalculate() {
 function resetForm() {
   Object.values(fields).forEach((input) => { input.value = ''; });
   historyMemoEl.value = '';
+  Object.values(extraSpecFields).forEach((input) => { input.value = ''; });
   baseCpSummaryEl.textContent = '-';
   cooldownSummaryEl.textContent = '-';
   bestRatioSummaryEl.textContent = '-';
@@ -729,6 +970,8 @@ function resetForm() {
   currentImageFile = null;
   clearOcrResult(false);
   setOcrStatus('스탯창만 캡처해서 올리면 인식률이 올라갑니다. 루시드 레벨은 직접 입력을 권장해요.');
+  renderUpgradeEfficiency();
+  renderLegendaryTiers();
   noticeBox.innerHTML = `
     <strong>🎀 메모</strong>
     <p>헬레나 계열 최소 전투력은 유저 최소컷 자료를 기반으로 산출·보정할 예정입니다.</p>
@@ -788,6 +1031,13 @@ Object.values(fields).forEach((input) => {
       event.preventDefault();
       handleCalculate();
     }
+  });
+});
+
+Object.values(extraSpecFields).forEach((input) => {
+  input.addEventListener('input', () => {
+    renderUpgradeEfficiency();
+    renderLegendaryTiers();
   });
 });
 
