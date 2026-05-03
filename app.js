@@ -15,6 +15,13 @@ const saveHistoryButton = document.getElementById('saveHistoryButton');
 const clearHistoryButton = document.getElementById('clearHistoryButton');
 const historyList = document.getElementById('historyList');
 const efficiencyList = document.getElementById('efficiencyList');
+const efficiencyOptionSelects = {
+  flatMagic: document.getElementById('effFlatMagic'),
+  magicPercent: document.getElementById('effMagicPercent'),
+  criticalDamage: document.getElementById('effCriticalDamage'),
+  mastery: document.getElementById('effMastery'),
+  cooldown: document.getElementById('effCooldown'),
+};
 const legendaryTierList = document.getElementById('legendaryTierList');
 const inputBasePowerEl = document.getElementById('inputBasePower');
 const inputCooldownPowerEl = document.getElementById('inputCooldownPower');
@@ -77,42 +84,42 @@ const efficiencyOptions = [
   {
     key: 'flatMagic',
     icon: '🏆',
-    name: '마력 +500',
-    hint: '고정 마력 옵션',
-    apply: (values) => ({ ...values, magicPower: values.magicPower + 500 }),
-    remove: (values) => ({ ...values, magicPower: Math.max(0, values.magicPower - 500) }),
+    getName: () => `마력 +${readEfficiencyOptionNumber('flatMagic')}`,
+    hint: '레전더리 고정 마력',
+    apply: (values) => ({ ...values, magicPower: values.magicPower + readEfficiencyOptionNumber('flatMagic') }),
+    remove: (values) => ({ ...values, magicPower: Math.max(0, values.magicPower - readEfficiencyOptionNumber('flatMagic')) }),
   },
   {
     key: 'percentMagic',
     icon: '💗',
-    name: '마력 +5%',
-    hint: '마력 퍼센트 옵션',
-    apply: (values) => ({ ...values, magicPower: values.magicPower * 1.05 }),
-    remove: (values) => ({ ...values, magicPower: values.magicPower / 1.05 }),
+    getName: () => `마력 +${readEfficiencyOptionNumber('magicPercent')}%`,
+    hint: '레전더리 마력 %',
+    apply: (values) => ({ ...values, magicPower: values.magicPower * (1 + readEfficiencyOptionNumber('magicPercent') / 100) }),
+    remove: (values) => ({ ...values, magicPower: values.magicPower / (1 + readEfficiencyOptionNumber('magicPercent') / 100) }),
   },
   {
     key: 'criticalDamage',
     icon: '⚡',
-    name: '크뎀 +13%',
-    hint: '크리티컬 데미지 옵션',
-    apply: (values) => ({ ...values, criticalDamage: values.criticalDamage + 13 }),
-    remove: (values) => ({ ...values, criticalDamage: Math.max(0, values.criticalDamage - 13) }),
+    getName: () => `크뎀 +${readEfficiencyOptionNumber('criticalDamage')}%`,
+    hint: '레전더리 크리티컬 데미지',
+    apply: (values) => ({ ...values, criticalDamage: values.criticalDamage + readEfficiencyOptionNumber('criticalDamage') }),
+    remove: (values) => ({ ...values, criticalDamage: Math.max(0, values.criticalDamage - readEfficiencyOptionNumber('criticalDamage')) }),
   },
   {
     key: 'cooldown',
     icon: '⏱️',
-    name: '쿨감 +1초',
-    hint: '쿨타임 감소 옵션',
-    apply: (values) => ({ ...values, cooldownReduction: Math.min(9, values.cooldownReduction + 1) }),
-    remove: (values) => ({ ...values, cooldownReduction: Math.max(0, values.cooldownReduction - 1) }),
+    getName: () => `쿨감 +${readEfficiencyOptionNumber('cooldown')}초`,
+    hint: '레전더리 쿨감 · 9초 상한',
+    apply: (values) => ({ ...values, cooldownReduction: Math.min(9, values.cooldownReduction + readEfficiencyOptionNumber('cooldown')) }),
+    remove: (values) => ({ ...values, cooldownReduction: Math.max(0, values.cooldownReduction - readEfficiencyOptionNumber('cooldown')) }),
   },
   {
     key: 'mastery',
     icon: '📖',
-    name: '숙련도 +12%',
-    hint: '숙련도 옵션',
-    apply: (values) => ({ ...values, mastery: Math.min(100, values.mastery + 12) }),
-    remove: (values) => ({ ...values, mastery: Math.max(0, values.mastery - 12) }),
+    getName: () => `숙련도 +${readEfficiencyOptionNumber('mastery')}%`,
+    hint: '레전더리 숙련도',
+    apply: (values) => ({ ...values, mastery: Math.min(100, values.mastery + readEfficiencyOptionNumber('mastery')) }),
+    remove: (values) => ({ ...values, mastery: Math.max(0, values.mastery - readEfficiencyOptionNumber('mastery')) }),
   },
 ];
 
@@ -164,6 +171,13 @@ const lucidDreamRois = {
     { x: 0.900, y: 0.500, w: 0.070, h: 0.070, scale: 12 },
   ],
 };
+
+
+function readEfficiencyOptionNumber(key) {
+  const element = efficiencyOptionSelects[key];
+  const value = Number(element?.value ?? 0);
+  return Number.isFinite(value) ? value : 0;
+}
 
 function readNumber(id) {
   const raw = fields[id].value;
@@ -317,7 +331,7 @@ function renderUpgradeEfficiency() {
         <div class="efficiency-option">
           <span class="efficiency-rank">${index + 1}</span>
           <div class="efficiency-option-title">
-            <strong>${option.icon} ${option.name}</strong>
+            <strong>${option.icon} ${option.getName()}</strong>
             <small>${option.hint}</small>
           </div>
         </div>
@@ -925,6 +939,11 @@ function handleCalculate() {
 function resetForm() {
   Object.values(fields).forEach((input) => { input.value = ''; });
   historyMemoEl.value = '';
+  efficiencyOptionSelects.flatMagic.value = '400';
+  efficiencyOptionSelects.magicPercent.value = '5';
+  efficiencyOptionSelects.criticalDamage.value = '14';
+  efficiencyOptionSelects.mastery.value = '16';
+  efficiencyOptionSelects.cooldown.value = '2';
   baseCpSummaryEl.textContent = '-';
   cooldownSummaryEl.textContent = '-';
   bestRatioSummaryEl.textContent = '-';
@@ -997,6 +1016,13 @@ Object.values(fields).forEach((input) => {
       event.preventDefault();
       handleCalculate();
     }
+  });
+});
+
+Object.values(efficiencyOptionSelects).forEach((select) => {
+  select.addEventListener('change', () => {
+    renderUpgradeEfficiency();
+    renderLegendaryTiers();
   });
 });
 
