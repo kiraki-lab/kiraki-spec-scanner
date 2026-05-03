@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="키라키 스펙 스캐너 - 루시드 드림 캡처 기반 보스 배율 계산기" />
     <title>키라키 스펙 스캐너</title>
-    <link rel="stylesheet" href="./styles.css?v=nocr1" />
+    <link rel="stylesheet" href="./styles.css?v=nightmare1" />
   </head>
   <body>
     <main class="page-shell">
@@ -158,7 +158,7 @@
         <div class="notice-box" id="noticeBox">
           <strong>🎀 메모</strong>
           <p>
-            헬레나 계열 최소 전투력은 유저 최소컷 자료를 기반으로 산출·보정할 예정입니다.
+            헬레나 나이트메어는 테섭 데이터 기준 Lv.100 / 최소 전투력 115만 1,913으로 임시 반영했습니다. 추후 유저 최소컷 자료로 보정할 예정입니다.
           </p>
         </div>
       </section>
@@ -171,39 +171,12 @@
             <p class="section-label">Bonus</p>
             <h2>추가 스펙 효율 비교</h2>
           </div>
-          <span class="soft-badge">현재 vs 추가 반영</span>
+          <span class="soft-badge">현재 옵션 vs 추가 옵션</span>
         </div>
 
         <p class="efficiency-copy">
-          현재 스펙에서 옵션을 하나 올렸을 때의 효율과, 아래 추가 스펙을 먼저 반영한 뒤 같은 옵션을 올렸을 때의 효율을 비교합니다.
+          현재 옵션 효율은 해당 옵션이 이미 장착되어 있다고 보고 제거했을 때의 손실분입니다. 추가 옵션 효율은 지금 스펙에 같은 옵션을 새로 더했을 때의 증가율입니다.
         </p>
-
-        <div class="extra-spec-grid">
-          <label>
-            <span>추가 마력</span>
-            <input type="number" id="extraMagicPower" placeholder="예: 500" />
-          </label>
-          <label>
-            <span>추가 마력 (%)</span>
-            <input type="number" id="extraMagicPercent" placeholder="예: 5" />
-          </label>
-          <label>
-            <span>추가 크확 (%)</span>
-            <input type="number" id="extraCriticalRate" placeholder="예: 10" />
-          </label>
-          <label>
-            <span>추가 크뎀 (%)</span>
-            <input type="number" id="extraCriticalDamage" placeholder="예: 13" />
-          </label>
-          <label>
-            <span>추가 숙련도 (%)</span>
-            <input type="number" id="extraMastery" placeholder="예: 12" />
-          </label>
-          <label>
-            <span>추가 쿨감 (초)</span>
-            <input type="number" id="extraCooldownReduction" min="0" max="9" step="1" placeholder="예: 1" />
-          </label>
-        </div>
 
         <div class="efficiency-list" id="efficiencyList">
           <p class="efficiency-empty">스펙을 입력하면 옵션별 효율이 여기에 표시됩니다.</p>
@@ -223,7 +196,7 @@
 
         <p class="legendary-copy">
           레전더리 결정에서 자주 보는 옵션을 현재 스펙 기준으로 순위화합니다.
-          추가 스펙 입력값이 있으면 “추가 스펙 후 효율”도 함께 비교해요.
+          추가 스펙 입력값이 있으면 “추가 옵션 효율”도 함께 비교해요.
           크리티컬 확률은 100% 캡 이후 효율이 달라져 별도 판단 항목으로 보고, 티어 비교에서는 제외했습니다. HP 계열처럼 현재 계산식에 반영되지 않는 옵션도 제외했습니다.
         </p>
 
@@ -257,11 +230,11 @@
             메이플 인벤 나린사람님 게시글
           </a>
         </p>
-        <p>보스 최소 전투력 기준: 유저 최소컷 자료를 기반으로 산출 및 보정 예정</p>
+        <p>보스 최소 전투력 기준: 유저 최소컷 자료 기반 산출 및 보정 예정 · 헬레나 나이트메어는 테섭 데이터 기준 임시 반영</p>
       </footer>
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
-    <script src="./app.js?v=nocr1"></script>
+    <script src="./app.js?v=nightmare1"></script>
   </body>
 </html>
