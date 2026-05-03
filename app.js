@@ -529,12 +529,108 @@ function extractCandidateAfterKeyword(text, keywords, options = {}) {
   return match ? parseNumberToken(match[1]) : null;
 }
 
+function isValidStructuredStatCandidate(candidate) {
+  if (!candidate) return false;
+  return (
+    Number.isFinite(candidate.magicPower) && candidate.magicPower >= 1000 &&
+    Number.isFinite(candidate.mastery) && candidate.mastery >= 0 && candidate.mastery <= 100 &&
+    Number.isFinite(candidate.criticalDamage) && candidate.criticalDamage >= 100 && candidate.criticalDamage <= 1000 &&
+    Number.isFinite(candidate.criticalRate) && candidate.criticalRate >= 0 && candidate.criticalRate <= 200 &&
+    Number.isFinite(candidate.cooldownReduction) && candidate.cooldownReduction >= 0 && candidate.cooldownReduction <= 9
+  );
+}
+
+function scoreStructuredStatCandidate(candidate) {
+  if (!candidate) return -999;
+  let score = 0;
+  if (Number.isFinite(candidate.hp) && candidate.hp >= 1000) score += 1;
+  if (Number.isFinite(candidate.magicPower) && candidate.magicPower >= 1000 && candidate.magicPower <= 999999) score += 3;
+  if (Number.isFinite(candidate.mastery) && candidate.mastery >= 0 && candidate.mastery <= 100) score += 2;
+  if (Number.isFinite(candidate.criticalDamage) && candidate.criticalDamage >= 100 && candidate.criticalDamage <= 1000) score += 3;
+  if (Number.isFinite(candidate.criticalRate) && candidate.criticalRate >= 70 && candidate.criticalRate <= 200) score += 3;
+  else if (Number.isFinite(candidate.criticalRate) && candidate.criticalRate >= 0 && candidate.criticalRate <= 200) score += 1;
+  if (Number.isFinite(candidate.cooldownReduction) && candidate.cooldownReduction >= 0 && candidate.cooldownReduction <= 9) score += 2;
+  return score;
+}
+
+function inferStructuredStatsFromNumbers(nums) {
+  if (!Array.isArray(nums) || nums.length < 6) return null;
+
+  const integerNums = nums.map((value) => Math.trunc(value));
+  const candidates = [];
+
+  // STAT 스탯창을 줄 단위로 읽은 경우:
+  // HP, 숙련도, 크뎀, 마력, 크확, 쿨감
+  candidates.push({
+    hp: integerNums[0],
+    mastery: integerNums[1],
+    criticalDamage: integerNums[2],
+    magicPower: integerNums[3],
+    criticalRate: integerNums[4],
+    cooldownReduction: integerNums[5],
+  });
+
+  // 열 단위로 읽은 경우:
+  // HP, 마력, 숙련도, 크확, 크뎀, 쿨감
+  candidates.push({
+    hp: integerNums[0],
+    magicPower: integerNums[1],
+    mastery: integerNums[2],
+    criticalRate: integerNums[3],
+    criticalDamage: integerNums[4],
+    cooldownReduction: integerNums[5],
+  });
+
+  // 오른쪽/중앙 값이 먼저 섞여 들어온 경우를 대비한 후보:
+  // 큰 수 2개 중 두 번째를 마력, 0~30 작은 수를 숙련도, 100~1000 최대값을 크뎀,
+  // 70~200 값을 크확, 0~9 마지막 값을 쿨감으로 추정.
+  const largeNumbers = integerNums.filter((n) => n >= 1000);
+  const smallNumbers = integerNums.filter((n) => n >= 0 && n <= 30);
+  const percentCandidates = integerNums.filter((n) => n >= 70 && n <= 200);
+  const damageCandidates = integerNums.filter((n) => n >= 120 && n <= 1000);
+  const cooldownCandidates = integerNums.filter((n) => n >= 0 && n <= 9);
+
+  candidates.push({
+    hp: largeNumbers[0],
+    magicPower: largeNumbers[1] ?? largeNumbers[0],
+    mastery: smallNumbers.find((n) => n > 0 && n <= 20),
+    criticalDamage: damageCandidates.sort((a, b) => b - a)[0],
+    criticalRate: percentCandidates.find((n) => n !== damageCandidates[0]),
+    cooldownReduction: cooldownCandidates[cooldownCandidates.length - 1],
+  });
+
+  return candidates
+    .filter(isValidStructuredStatCandidate)
+    .sort((a, b) => scoreStructuredStatCandidate(b) - scoreStructuredStatCandidate(a))[0] ?? null;
+}
+
 function inferFromStatNumberOrder(text, inferred) {
   const statIndex = text.search(/STAT|스탯|HP|마력|숙련도|크리티컬/i);
-  if (statIndex < 0) return inferred;
-  const endMatch = text.slice(statIndex).search(/처치|EXP|드림 패스|사용하기/i);
-  const block = endMatch > 0 ? text.slice(statIndex, statIndex + endMatch) : text.slice(statIndex, statIndex + 460);
+  const source = statIndex >= 0 ? text.slice(statIndex) : text;
+  const endMatch = source.search(/처치|EXP|드림 패스|사용하기|레벨 보너스/i);
+  const block = endMatch > 0 ? source.slice(0, endMatch) : source.slice(0, 520);
   const nums = extractNumbers(block);
+
+  const structured = inferStructuredStatsFromNumbers(nums);
+  if (structured) {
+    if (!validateFieldValue('magicPower', inferred.magicPower)) inferred.magicPower = structured.magicPower;
+    if (!validateFieldValue('mastery', inferred.mastery)) inferred.mastery = structured.mastery;
+    if (!validateFieldValue('criticalDamage', inferred.criticalDamage)) inferred.criticalDamage = structured.criticalDamage;
+    if (!validateFieldValue('criticalRate', inferred.criticalRate)) inferred.criticalRate = structured.criticalRate;
+    if (!validateFieldValue('cooldownReduction', inferred.cooldownReduction)) inferred.cooldownReduction = structured.cooldownReduction;
+  }
+
+  if (!validateFieldValue('magicPower', inferred.magicPower)) {
+    const largeNumbers = nums.filter((n) => n >= 1000 && n <= 999999999);
+    const candidate = largeNumbers[1] ?? largeNumbers[0];
+    if (validateFieldValue('magicPower', candidate)) inferred.magicPower = candidate;
+  }
+
+  if (!validateFieldValue('mastery', inferred.mastery)) {
+    const excluded = new Set([inferred.cooldownReduction, inferred.lucidLevel]);
+    const candidate = nums.find((n) => n >= 1 && n <= 30 && !excluded.has(n));
+    if (validateFieldValue('mastery', candidate)) inferred.mastery = candidate;
+  }
 
   if (!validateFieldValue('criticalDamage', inferred.criticalDamage)) {
     const candidate = nums
@@ -546,14 +642,15 @@ function inferFromStatNumberOrder(text, inferred) {
   if (!validateFieldValue('criticalRate', inferred.criticalRate)) {
     const excluded = new Set([inferred.mastery, inferred.cooldownReduction, inferred.criticalDamage, inferred.lucidLevel]);
     const candidates = nums.filter((n) => n >= 1 && n <= 200 && !excluded.has(n));
-    const preferred = candidates.find((n) => n >= 70 && n <= 150) ?? candidates.sort((a, b) => b - a)[0];
+    const preferred = candidates.find((n) => n >= 70 && n <= 200) ?? candidates.sort((a, b) => b - a)[0];
     if (validateFieldValue('criticalRate', preferred)) inferred.criticalRate = preferred;
   }
 
   if (!validateFieldValue('cooldownReduction', inferred.cooldownReduction)) {
-    const candidate = nums
+    const candidates = nums
       .map((n) => Math.trunc(n))
-      .find((n) => n >= 0 && n <= 9);
+      .filter((n) => n >= 0 && n <= 9);
+    const candidate = candidates[candidates.length - 1];
     if (validateFieldValue('cooldownReduction', candidate)) inferred.cooldownReduction = candidate;
   }
 
@@ -972,7 +1069,7 @@ function previewImage(file) {
     previewBox.innerHTML = `<img src="${event.target.result}" alt="업로드한 스펙 캡처 미리보기" />`;
   };
   reader.readAsDataURL(file);
-  setOcrStatus('이미지를 불러왔습니다. 스탯창만 잘라 올린 캡처일수록 인식률이 좋습니다. 루시드 레벨은 직접 확인해 주세요.');
+  setOcrStatus('이미지를 불러왔습니다. STAT 스탯창만 잘라 올린 캡처일수록 인식률이 좋습니다. 숙련도/크확은 숫자 순서 보정을 함께 적용합니다.');
 }
 
 calculateButton.addEventListener('click', handleCalculate);

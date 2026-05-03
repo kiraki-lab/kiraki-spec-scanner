@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="키라키 스펙 스캐너 - 루시드 드림 캡처 기반 보스 배율 계산기" />
     <title>키라키 스펙 스캐너</title>
-    <link rel="stylesheet" href="./styles.css?v=effdrop1" />
+    <link rel="stylesheet" href="./styles.css?v=ocrstat1" />
   </head>
   <body>
     <main class="page-shell">
@@ -44,7 +44,7 @@
             <button class="ghost-button" id="clearOcrButton" type="button">OCR 표시 지우기</button>
           </div>
 
-          <div class="ocr-status" id="ocrStatus">스탯창만 캡처해서 올리면 인식률이 올라갑니다. 루시드 레벨은 직접 입력을 권장해요.</div>
+          <div class="ocr-status" id="ocrStatus">STAT 스탯창만 작게 캡처하면 인식률이 올라갑니다. 숙련도/크확은 숫자 순서 보정도 함께 적용합니다. 루시드 레벨은 직접 입력 권장.</div>
 
           <details class="ocr-raw-box">
             <summary>OCR 원문 보기</summary>
@@ -175,7 +175,7 @@
         </div>
 
         <p class="efficiency-copy">
-          현재 옵션 효율은 해당 옵션이 이미 장착되어 있다고 보고 제거했을 때의 손실분입니다. 추가 옵션 효율은 지금 스펙에 같은 옵션을 새로 더했을 때의 증가율입니다. 드롭다운에서 레전더리 옵션 수치를 바꿔 비교할 수 있어요.
+          현재 옵션 효율은 해당 옵션이 이미 장착되어 있다고 보고 제거했을 때의 손실분입니다. 추가 옵션 효율은 지금 스펙에 같은 옵션을 새로 더했을 때의 증가율입니다. 드롭다운에서 레전더리 옵션 수치를 바꿔 비교할 수 있어요. 쿨감은 9초 상한을 자동 적용합니다.
         </p>
 
 
@@ -200,7 +200,9 @@
             <span>크리티컬 데미지</span>
             <select id="effCriticalDamage">
               <option value="10">크뎀 +10%</option>
+              <option value="11">크뎀 +11%</option>
               <option value="12">크뎀 +12%</option>
+              <option value="13">크뎀 +13%</option>
               <option value="14" selected>크뎀 +14%</option>
             </select>
           </label>
@@ -208,13 +210,19 @@
             <span>숙련도</span>
             <select id="effMastery">
               <option value="9">숙련도 +9%</option>
+              <option value="10">숙련도 +10%</option>
+              <option value="11">숙련도 +11%</option>
               <option value="12">숙련도 +12%</option>
+              <option value="13">숙련도 +13%</option>
+              <option value="14">숙련도 +14%</option>
+              <option value="15">숙련도 +15%</option>
               <option value="16" selected>숙련도 +16%</option>
             </select>
           </label>
           <label>
             <span>쿨타임 감소</span>
             <select id="effCooldown">
+              <option value="1">쿨감 +1초</option>
               <option value="2" selected>쿨감 +2초</option>
             </select>
           </label>
@@ -277,6 +285,6 @@
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
-    <script src="./app.js?v=effdrop1"></script>
+    <script src="./app.js?v=ocrstat1"></script>
   </body>
 </html>
