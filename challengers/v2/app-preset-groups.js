@@ -21,18 +21,47 @@
     const custom = preset.status === 'custom';
     const statusText = reference ? '기준 확정' : custom ? '키라키 추가' : '검토중';
     const autoSummary = `Lv.${preset.level} + 보스 ${targets.length}종`;
+    const thresholdGap = tier ? total - tier.threshold : 0;
+    const gapText = thresholdGap > 0 ? `목표보다 ${number.format(thresholdGap)}점 여유` : '목표 점수 일치';
 
     return `
-      <article class="preset-card${reference ? ' reference' : ''}${custom ? ' admin-added' : ''}">
+      <article class="preset-card preset-card-readable${reference ? ' reference' : ''}${custom ? ' admin-added' : ''}">
         <div class="preset-topline">
           <span class="type-badge ${escapeHtml(preset.type || 'custom')}">${escapeHtml(type?.name || '직접 설계')}</span>
           <span class="status-badge${reference ? ' reference' : ''}${custom ? ' custom' : ''}">${statusText}</span>
         </div>
-        <h3>${escapeHtml(preset.name)}</h3>
+
+        <div class="preset-title-row">
+          <h3>${escapeHtml(preset.name)}</h3>
+          <strong class="preset-total-score">${number.format(total)}점</strong>
+        </div>
+
         <p class="preset-summary">${escapeHtml(preset.summary || autoSummary)}</p>
-        <p class="preset-target-count">${escapeHtml(tier?.name || '')} 목표 · 실제 격파 ${targets.length}종 · 완료 미션 ${ids.length}개</p>
-        <div class="preset-score-row"><span>레벨 ${number.format(levelScore)} + 보스 ${number.format(bossScore)}</span><strong>${number.format(total)}점</strong></div>
+
+        <div class="preset-metric-grid" aria-label="빌드 포인트 구성">
+          <div class="preset-metric">
+            <span>권장 레벨</span>
+            <strong>Lv.${preset.level}</strong>
+          </div>
+          <div class="preset-metric">
+            <span>레벨 포인트</span>
+            <strong>${number.format(levelScore)}</strong>
+          </div>
+          <div class="preset-metric">
+            <span>보스 포인트</span>
+            <strong>${number.format(bossScore)}</strong>
+          </div>
+        </div>
+
+        <div class="preset-detail-row">
+          <span>${escapeHtml(tier?.name || '')} 목표</span>
+          <span>실제 격파 ${targets.length}종</span>
+          <span>완료 미션 ${ids.length}개</span>
+          <span>${escapeHtml(gapText)}</span>
+        </div>
+
         <p class="preset-note">${escapeHtml(preset.note || type?.description || '')}</p>
+
         <div class="preset-actions">
           <button type="button" class="button ${reference ? 'primary' : 'secondary'} small" data-apply-preset="${escapeHtml(preset.id)}">이 빌드 적용</button>
           ${custom && isAdminUnlocked() ? `<button type="button" class="button ghost small" data-edit-custom-preset="${escapeHtml(preset.id)}">편집</button>` : ''}
@@ -74,13 +103,18 @@
       if (!selectedTierIds.has(tier.id)) return null;
       const presets = filteredPresets.filter((preset) => preset.tierId === tier.id);
       if (!presets.length) return null;
+      const gridClass = presets.length === 1 ? ' single-card' : presets.length === 2 ? ' two-cards' : '';
+
       return `
         <details class="preset-tier-group" open data-preset-tier-group="${tier.id}">
           <summary>
-            <span class="preset-tier-group-title"><strong>${escapeHtml(tier.name)}</strong><small>${number.format(tier.threshold)}점</small></span>
+            <span class="preset-tier-group-title">
+              <strong>${escapeHtml(tier.name)}</strong>
+              <small>${number.format(tier.threshold)}점</small>
+            </span>
             <span class="preset-tier-group-count">빌드 ${presets.length}개</span>
           </summary>
-          <div class="preset-tier-card-grid">${presets.map(buildCard).join('')}</div>
+          <div class="preset-tier-card-grid${gridClass}">${presets.map(buildCard).join('')}</div>
         </details>`;
     }).filter(Boolean);
 
