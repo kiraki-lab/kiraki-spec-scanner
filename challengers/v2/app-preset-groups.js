@@ -22,7 +22,11 @@
     const statusText = reference ? '기준 확정' : custom ? '키라키 추가' : '검토중';
     const autoSummary = `Lv.${preset.level} + 보스 ${targets.length}종`;
     const thresholdGap = tier ? total - tier.threshold : 0;
-    const gapText = thresholdGap > 0 ? `목표보다 ${number.format(thresholdGap)}점 여유` : '목표 점수 일치';
+    const gapText = thresholdGap > 0
+      ? `목표보다 ${number.format(thresholdGap)}점 여유`
+      : thresholdGap < 0
+        ? `목표까지 ${number.format(Math.abs(thresholdGap))}점 부족`
+        : '목표 점수 일치';
 
     return `
       <article class="preset-card preset-card-readable${reference ? ' reference' : ''}${custom ? ' admin-added' : ''}">
