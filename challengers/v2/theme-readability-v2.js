@@ -8,6 +8,21 @@ body{font-size:16px;line-height:1.55;word-break:keep-all}
 .score-card span,.muted-label{font-size:.78rem}.score-card strong{font-size:1.35rem}
 .next-tier-copy{font-size:.88rem}.recommendation-result p{font-size:.86rem}.recommendation-list li{font-size:.82rem}
 
+.recommendation-result{max-height:520px;padding:13px}
+.recommendation-plan-list{display:grid;gap:9px;margin-top:10px}
+.recommendation-plan{display:grid;gap:9px;padding:11px;border:1px solid var(--line);border-radius:11px;background:var(--surface);transition:border-color .12s ease,box-shadow .12s ease,background .12s ease}
+.recommendation-plan.selected{border-color:var(--accent);background:color-mix(in srgb,var(--accent2) 38%,var(--surface));box-shadow:0 0 0 2px color-mix(in srgb,var(--accent) 10%,transparent)}
+.recommendation-plan-header{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.recommendation-plan-header>div{display:grid;gap:3px}.recommendation-plan-header>div>strong{font-size:.9rem;font-weight:900}.recommendation-plan-header small{color:var(--muted);font-size:.68rem;line-height:1.45}
+.recommendation-plan-header>span{flex:0 0 auto;color:var(--accent);font-size:.78rem;font-weight:900;white-space:nowrap}
+.recommendation-plan .recommendation-list{gap:6px}
+.recommendation-action-item{align-items:center!important;padding:8px 9px!important;border:1px solid color-mix(in srgb,var(--line) 80%,transparent);background:color-mix(in srgb,var(--soft) 70%,var(--surface))!important}
+.recommendation-action-copy{display:grid;gap:3px;min-width:0}.recommendation-action-copy>strong{font-size:.8rem;font-weight:900}.recommendation-action-copy small{color:var(--muted);font-size:.68rem;line-height:1.45}
+.recommendation-action-points{flex:0 0 auto;color:var(--accent);font-size:.78rem;font-weight:900;white-space:nowrap}
+.recommendation-plan-select{justify-self:end;min-height:31px;padding:0 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);font-size:.72rem;font-weight:850;cursor:pointer}
+.recommendation-plan-select:hover{border-color:var(--accent);color:var(--accent)}
+.recommendation-plan.selected .recommendation-plan-select{border-color:var(--accent);background:var(--accent);color:#fff}
+
 .preset-tier-filter-panel{display:grid;gap:13px;margin-bottom:16px;padding:16px;border:1px solid var(--line);border-radius:14px;background:var(--soft)}
 .preset-tier-filter-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:14px}
 .preset-tier-filter-heading>div:first-child{display:grid;gap:3px}.preset-tier-filter-heading strong{font-size:1rem;font-weight:900}.preset-tier-filter-heading span{color:var(--muted);font-size:.8rem}
@@ -63,6 +78,7 @@ body{font-size:16px;line-height:1.55;word-break:keep-all}
 }
 @media(max-width:760px){
   body{font-size:15px}
+  .recommendation-plan-header{display:grid;gap:5px}.recommendation-plan-header>span{white-space:normal}.recommendation-plan-select{justify-self:stretch}
   .preset-tier-filter-heading{align-items:stretch;flex-direction:column}.preset-tier-actions{display:grid;grid-template-columns:1fr 1fr}
   .preset-tier-checklist{grid-template-columns:repeat(2,minmax(0,1fr))}
   .preset-tier-card-grid,.preset-tier-card-grid.single-card,.preset-tier-card-grid.two-cards{grid-template-columns:1fr;padding:11px}
@@ -70,6 +86,7 @@ body{font-size:16px;line-height:1.55;word-break:keep-all}
   .boss-filter-panel{grid-template-columns:1fr}.boss-action-stack{grid-column:auto;grid-template-columns:1fr}.boss-group-title{gap:5px 8px}.boss-group-meta{width:100%;margin-left:0}.boss-group>summary:after{align-self:flex-start;margin-top:4px}
 }
 @media(max-width:470px){
+  .recommendation-action-item{align-items:flex-start!important}.recommendation-action-points{padding-top:2px}
   .preset-tier-checklist{grid-template-columns:1fr}.preset-tier-choice{min-height:56px}
   .preset-title-row{display:grid;gap:6px}.preset-total-score{font-size:1.1rem}
   .preset-key-bosses-list{display:grid;grid-template-columns:1fr}.preset-boss-chip{justify-content:center;text-align:center}
