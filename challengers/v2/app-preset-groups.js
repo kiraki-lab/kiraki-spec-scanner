@@ -9,6 +9,54 @@
     return allPresets().filter((preset) => typeFilter === 'all' || preset.type === typeFilter);
   }
 
+  function bossLabel(boss) {
+    return `${boss.difficulty} ${boss.shortBoss || boss.boss}`;
+  }
+
+  function uniqueHighestBosses(bosses) {
+    const bySeriesMap = new Map();
+    bosses.filter(Boolean).forEach((boss) => {
+      const current = bySeriesMap.get(boss.series);
+      if (!current || boss.rank > current.rank) bySeriesMap.set(boss.series, boss);
+    });
+    return [...bySeriesMap.values()].sort((a, b) => b.points - a.points || bossLabel(a).localeCompare(bossLabel(b), 'ko'));
+  }
+
+  function keyBossInfo(preset, targets) {
+    let bosses = [];
+    let label = '핵심 보스';
+
+    if (Array.isArray(preset.highlightBossIds) && preset.highlightBossIds.length) {
+      bosses = uniqueHighestBosses(preset.highlightBossIds.map((id) => byId.get(id)));
+    } else if (Array.isArray(preset.extraBossIds) && preset.extraBossIds.length) {
+      bosses = uniqueHighestBosses(preset.extraBossIds.map((id) => byId.get(id)));
+      const pointValues = [...new Set(bosses.map((boss) => boss.points))];
+      label = pointValues.length === 1
+        ? `${number.format(pointValues[0])}점 선택 보스`
+        : '추가 선택 보스';
+    } else {
+      const sortedTargets = [...targets].sort((a, b) => b.target.points - a.target.points || bossLabel(a.target).localeCompare(bossLabel(b.target), 'ko'));
+      const highestPoints = sortedTargets[0]?.target.points;
+      if (highestPoints !== undefined) {
+        bosses = uniqueHighestBosses(
+          sortedTargets
+            .filter(({ target }) => target.points === highestPoints)
+            .map(({ target }) => target)
+        );
+        label = `${number.format(highestPoints)}점 핵심 보스`;
+      }
+    }
+
+    if (!bosses.length) return null;
+
+    const visible = bosses.slice(0, 5);
+    return {
+      label,
+      bosses: visible,
+      remaining: Math.max(0, bosses.length - visible.length)
+    };
+  }
+
   function buildCard(preset) {
     const ids = presetBossIds(preset);
     const targets = collapseTargets(ids);
@@ -27,6 +75,17 @@
       : thresholdGap < 0
         ? `목표까지 ${number.format(Math.abs(thresholdGap))}점 부족`
         : '목표 점수 일치';
+    const keyBosses = keyBossInfo(preset, targets);
+    const keyBossHtml = keyBosses
+      ? `
+        <div class="preset-key-bosses">
+          <span class="preset-key-bosses-label">${escapeHtml(keyBosses.label)}</span>
+          <div class="preset-key-bosses-list">
+            ${keyBosses.bosses.map((boss) => `<span class="preset-boss-chip">${escapeHtml(bossLabel(boss))}</span>`).join('')}
+            ${keyBosses.remaining ? `<span class="preset-boss-chip more">외 ${keyBosses.remaining}종</span>` : ''}
+          </div>
+        </div>`
+      : '';
 
     return `
       <article class="preset-card preset-card-readable${reference ? ' reference' : ''}${custom ? ' admin-added' : ''}">
@@ -41,6 +100,7 @@
         </div>
 
         <p class="preset-summary">${escapeHtml(preset.summary || autoSummary)}</p>
+        ${keyBossHtml}
 
         <div class="preset-metric-grid" aria-label="빌드 포인트 구성">
           <div class="preset-metric">
