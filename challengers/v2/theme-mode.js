@@ -24,7 +24,19 @@
     }
   }
 
+  function loadCoinShop() {
+    if (document.querySelector('script[data-kiraki-coinshop]')) return;
+    const script = document.createElement('script');
+    script.src = './coinshop.js?v=0.1.0';
+    script.dataset.kirakiCoinshop = 'true';
+    script.async = false;
+    document.body.append(script);
+  }
+
   const initialTheme = root.classList.contains('theme-kiraki') ? 'kiraki' : 'clean';
   applyTheme(initialTheme, false);
   button?.addEventListener('click', () => applyTheme(root.classList.contains('theme-kiraki') ? 'clean' : 'kiraki'));
+
+  if (document.readyState === 'complete') loadCoinShop();
+  else window.addEventListener('load', loadCoinShop, { once: true });
 })();
