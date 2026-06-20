@@ -49,6 +49,7 @@ assert.equal(data.bossMissions.length, 36);
 assert.equal(levelPoints(276), 11200);
 assert.equal(levelPoints(280), 15700);
 assert.equal(levelPoints(281), 17200);
+assert.equal(levelPoints(282), 18700);
 assert.equal(levelPoints(284), 21700);
 assert.equal(bossPointsAtOrBelow(3000), 29300);
 assert.equal(levelPoints(276) + bossPointsAtOrBelow(3000), 40500);
@@ -68,7 +69,11 @@ const expected = {
   'emerald-video-30k-v01': 30000,
   'sapphire-reference-v01': 40500,
   'sapphire-video-40k-no-hilla-v01': 40000,
+  'sapphire-video-40k-normal-will-hilla-v01': 41000,
+  'sapphire-video-40k-normal-will-no-hilla-v01': 40500,
   'diamond-video-50k-mayrin-v01': 50000,
+  'diamond-video-50k-black-mage-v01': 51000,
+  'diamond-video-50k-seren-v01': 51000,
   'master-video-adversary-v01': 70000,
   'master-video-kalos-v01': 70500,
   'challenger-video-hard-mayrin-v01': 90000
