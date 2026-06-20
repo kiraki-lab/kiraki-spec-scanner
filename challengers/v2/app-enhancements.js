@@ -16,15 +16,25 @@
   const enhancementStyle = document.createElement('style');
   enhancementStyle.textContent = `
 .channel-button{display:inline-flex;align-items:center;justify-content:center;gap:6px;text-decoration:none;white-space:nowrap}
-.boss-group>summary{gap:10px}
-.boss-group-title{flex:1 1 auto}
+.tier-scale span{transition:color .15s ease,font-weight .15s ease}
+.tier-scale span.achieved{color:var(--accent);font-weight:900}
+.tier-scale span.next-target{color:var(--ink);font-weight:900;text-decoration:underline;text-decoration-color:var(--accent);text-underline-offset:3px}
+.tier-scale .tier-scale-start{color:var(--muted)}
+.boss-group>summary{gap:10px;flex-wrap:wrap}
+.boss-group-title{flex:1 1 260px}
+.boss-quick-checks{display:flex;align-items:center;flex-wrap:wrap;gap:5px;flex:1 1 320px;min-width:0}
+.boss-quick-check{display:inline-flex;align-items:center;gap:5px;min-height:32px;padding:0 8px;border:1px solid var(--line);border-radius:999px;background:var(--surface);color:var(--ink);font-size:.72rem;font-weight:800;white-space:nowrap;cursor:pointer;user-select:none}
+.boss-quick-check:hover{border-color:var(--accent)}
+.boss-quick-check input{width:16px;height:16px;margin:0;accent-color:var(--accent);cursor:pointer}
+.boss-quick-check.checked{border-color:var(--accent);background:var(--accent2);color:var(--accent)}
 .boss-group-toggle{display:inline-flex;align-items:center;gap:7px;min-height:36px;padding:0 10px;flex:0 0 auto;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);font-size:.74rem;font-weight:900;white-space:nowrap;cursor:pointer;user-select:none}
 .boss-group-toggle:hover{border-color:var(--accent)}
 .boss-group-toggle input{width:18px;height:18px;margin:0;accent-color:var(--accent);cursor:pointer}
 .boss-group-toggle.checked{border-color:var(--accent);background:var(--accent2);color:var(--accent)}
 .boss-group-toggle.indeterminate{border-color:color-mix(in srgb,var(--accent) 55%,var(--line));background:color-mix(in srgb,var(--accent2) 60%,var(--surface))}
-@media(max-width:700px){.channel-button{flex:1}.boss-group>summary{align-items:flex-start;flex-wrap:wrap}.boss-group-toggle{margin-left:auto}.boss-group>summary:after{margin-left:0}}
-@media(max-width:430px){.boss-group-toggle{width:100%;justify-content:center;order:3}.boss-group>summary:after{order:4}}
+@media(max-width:900px){.boss-group-title{flex-basis:100%}.boss-quick-checks{flex-basis:calc(100% - 140px)}}
+@media(max-width:700px){.channel-button{flex:1}.boss-group>summary{align-items:flex-start}.boss-quick-checks{flex-basis:100%;order:3}.boss-group-toggle{margin-left:auto}.boss-group>summary:after{margin-left:0;order:4}}
+@media(max-width:430px){.boss-group-toggle{width:100%;justify-content:center;order:4}.boss-group>summary:after{order:5}.boss-quick-check{flex:1 1 calc(50% - 5px);justify-content:center}}
 `;
   document.head.append(enhancementStyle);
 
@@ -80,8 +90,45 @@
     actions.insertBefore(channelButton, el.adminOpenButton);
 
     const versionBadge = actions.querySelector('.version-badge');
-    if (versionBadge) versionBadge.textContent = 'UI v0.6';
+    if (versionBadge) versionBadge.textContent = 'UI v0.7';
   }
+
+  function installProgressScale() {
+    if (!el.tierScale) return;
+    el.tierScale.innerHTML = `
+      <span class="tier-scale-start" data-tier-start>시작</span>
+      ${DATA.tiers.map((tier) => `<span data-tier-scale-id="${tier.id}" title="${number.format(tier.threshold)}점">${escapeHtml(tier.name)}</span>`).join('')}`;
+  }
+
+  function syncProgressScale() {
+    const total = levelPoints(activeProfile().level) + bossPoints(activeProfile().clearedBossIds);
+    const tierCount = DATA.tiers.length;
+    const nextIndex = DATA.tiers.findIndex((tier) => total < tier.threshold);
+    let visualProgress = 100;
+
+    if (nextIndex >= 0) {
+      const lower = nextIndex === 0 ? 0 : DATA.tiers[nextIndex - 1].threshold;
+      const upper = DATA.tiers[nextIndex].threshold;
+      const fraction = upper === lower ? 0 : clamp((total - lower) / (upper - lower), 0, 1);
+      visualProgress = ((nextIndex + fraction) / tierCount) * 100;
+    }
+
+    el.tierProgressFill.style.width = `${clamp(visualProgress, 0, 100)}%`;
+    document.querySelectorAll('[data-tier-scale-id]').forEach((label) => {
+      const tier = DATA.tiers.find((item) => item.id === label.dataset.tierScaleId);
+      const achieved = tier ? total >= tier.threshold : false;
+      const next = tier ? total < tier.threshold && DATA.tiers.find((item) => total < item.threshold)?.id === tier.id : false;
+      label.classList.toggle('achieved', achieved);
+      label.classList.toggle('next-target', next);
+    });
+  }
+
+  const originalRenderSummary = renderSummary;
+  renderSummary = function enhancedRenderSummary() {
+    const result = originalRenderSummary();
+    syncProgressScale();
+    return result;
+  };
 
   function normalizeSearch(value) {
     return String(value || '').toLocaleLowerCase('ko-KR').replace(/\s+/g, '');
@@ -166,6 +213,40 @@
     });
   }
 
+  function installQuickBossChecks() {
+    document.querySelectorAll('[data-boss-group]').forEach((group) => {
+      const points = Number(group.dataset.points);
+      const summary = group.querySelector('summary');
+      if (!summary || summary.querySelector('[data-boss-quick-checks]')) return;
+
+      const quickChecks = document.createElement('div');
+      quickChecks.className = 'boss-quick-checks';
+      quickChecks.setAttribute('data-boss-quick-checks', '');
+      quickChecks.setAttribute('aria-label', `${number.format(points)}점 난이도 개별 보스 선택`);
+
+      (bossIdsByPoints.get(points) || []).forEach((id) => {
+        const boss = byId.get(id);
+        if (!boss) return;
+        const label = document.createElement('label');
+        label.className = 'boss-quick-check';
+        label.title = `${boss.boss} ${boss.difficulty} · ${number.format(boss.points)}점`;
+        label.innerHTML = `
+          <input type="checkbox" data-boss-quick-checkbox="${id}" aria-label="${escapeHtml(boss.boss)} ${escapeHtml(boss.difficulty)} 체크" />
+          <span>${escapeHtml(boss.shortBoss || boss.boss)}</span>`;
+        label.addEventListener('click', (event) => {
+          event.preventDefault();
+          event.stopPropagation();
+          const checkbox = label.querySelector('[data-boss-quick-checkbox]');
+          checkbox.checked = !checkbox.checked;
+          checkbox.dispatchEvent(new Event('change', { bubbles: true }));
+        });
+        quickChecks.append(label);
+      });
+
+      summary.append(quickChecks);
+    });
+  }
+
   function installGroupToggles() {
     document.querySelectorAll('[data-boss-group]').forEach((group) => {
       const points = Number(group.dataset.points);
@@ -191,6 +272,15 @@
       });
 
       summary.append(label);
+    });
+  }
+
+  function syncQuickBossChecks() {
+    const selected = new Set(activeProfile().clearedBossIds);
+    document.querySelectorAll('[data-boss-quick-checkbox]').forEach((checkbox) => {
+      const checked = selected.has(checkbox.dataset.bossQuickCheckbox);
+      checkbox.checked = checked;
+      checkbox.closest('.boss-quick-check')?.classList.toggle('checked', checked);
     });
   }
 
@@ -220,6 +310,7 @@
   const originalRenderBosses = renderBosses;
   renderBosses = function enhancedRenderBosses(forceOpen = false) {
     const result = originalRenderBosses(forceOpen);
+    syncQuickBossChecks();
     syncGroupToggles();
     return result;
   };
@@ -261,6 +352,17 @@
   levelIncreaseButton?.addEventListener('click', () => changeLevel(1));
 
   el.bossGroups?.addEventListener('change', (event) => {
+    const quickCheckbox = event.target.closest('[data-boss-quick-checkbox]');
+    if (quickCheckbox) {
+      const id = quickCheckbox.dataset.bossQuickCheckbox;
+      const nextIds = quickCheckbox.checked
+        ? normalizeBosses([...activeProfile().clearedBossIds, id])
+        : removeBossAndHigher(activeProfile().clearedBossIds, id);
+      patchProfile({ clearedBossIds: nextIds }, quickCheckbox.checked ? '보스 미션 체크됨' : '보스 미션 해제됨');
+      render();
+      return;
+    }
+
     const checkbox = event.target.closest('[data-boss-group-toggle]');
     if (!checkbox) return;
 
@@ -284,11 +386,14 @@
   });
 
   installChannelButton();
+  installProgressScale();
   populateBossNames();
   decorateBossGroupHeadings();
+  installQuickBossChecks();
   installGroupToggles();
   document.querySelectorAll('[data-boss-group]').forEach((group) => { group.open = true; });
   setAdminUnlocked(isAdminUnlocked());
   syncKirakiLabels();
+  renderSummary();
   renderBosses(false);
 })();
