@@ -16,16 +16,40 @@ const bossPointsAtOrBelow = (points) => data.bossMissions
   .reduce((sum, boss) => sum + boss.points, 0);
 
 const byId = new Map(data.bossMissions.map((boss) => [boss.id, boss]));
-const presetTotal = (preset) => {
-  const ids = new Set([
-    ...data.bossMissions.filter((boss) => boss.points <= preset.includeAtOrBelow).map((boss) => boss.id),
-    ...preset.extraBossIds
-  ]);
-  return levelPoints(preset.level) + [...ids].reduce((sum, id) => sum + byId.get(id).points, 0);
+const bySeries = new Map();
+data.bossMissions.forEach((boss) => {
+  if (!bySeries.has(boss.series)) bySeries.set(boss.series, []);
+  bySeries.get(boss.series).push(boss);
+});
+bySeries.forEach((bosses) => bosses.sort((a, b) => a.rank - b.rank));
+
+const normalizeBossIds = (ids) => {
+  const selected = new Set(ids.filter((id) => byId.has(id)));
+  [...selected].forEach((id) => {
+    const boss = byId.get(id);
+    (bySeries.get(boss.series) || []).forEach((candidate) => {
+      if (candidate.rank < boss.rank) selected.add(candidate.id);
+    });
+  });
+  return [...selected];
 };
+
+const presetBossIds = (preset) => {
+  if (Array.isArray(preset.bossIds)) return normalizeBossIds(preset.bossIds);
+  return normalizeBossIds([
+    ...data.bossMissions.filter((boss) => boss.points <= Number(preset.includeAtOrBelow || 0)).map((boss) => boss.id),
+    ...(Array.isArray(preset.extraBossIds) ? preset.extraBossIds : [])
+  ]);
+};
+
+const presetTotal = (preset) => levelPoints(preset.level) + presetBossIds(preset)
+  .reduce((sum, id) => sum + byId.get(id).points, 0);
 
 assert.equal(data.bossMissions.length, 36);
 assert.equal(levelPoints(276), 11200);
+assert.equal(levelPoints(280), 15700);
+assert.equal(levelPoints(281), 17200);
+assert.equal(levelPoints(284), 21700);
 assert.equal(bossPointsAtOrBelow(3000), 29300);
 assert.equal(levelPoints(276) + bossPointsAtOrBelow(3000), 40500);
 assert.deepEqual(
@@ -41,8 +65,18 @@ const expected = {
   'gold-stable-v01': 15100,
   'platinum-stable-v01': 20200,
   'emerald-stable-v01': 30000,
-  'sapphire-reference-v01': 40500
+  'emerald-video-30k-v01': 30000,
+  'sapphire-reference-v01': 40500,
+  'sapphire-video-40k-no-hilla-v01': 40000,
+  'diamond-video-50k-mayrin-v01': 50000,
+  'master-video-adversary-v01': 70000,
+  'master-video-kalos-v01': 70500,
+  'challenger-video-hard-mayrin-v01': 90000
 };
 
-data.presets.forEach((preset) => assert.equal(presetTotal(preset), expected[preset.id], preset.name));
+data.presets.forEach((preset) => {
+  assert.ok(Object.prototype.hasOwnProperty.call(expected, preset.id), `예상값이 없는 프리셋: ${preset.id}`);
+  assert.equal(presetTotal(preset), expected[preset.id], `${preset.name} 총점`);
+});
+
 console.log('challengers v2 data tests passed');
