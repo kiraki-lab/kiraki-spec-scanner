@@ -1,1 +1,0 @@
-window.CHALLENGERS_DATA_V2_TEST = true;
