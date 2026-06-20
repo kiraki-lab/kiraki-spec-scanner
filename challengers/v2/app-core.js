@@ -13,6 +13,8 @@ const byId = new Map(DATA.bossMissions.map((boss) => [boss.id, boss]));
 const bySeries = new Map();
 const typeById = new Map(DATA.buildTypes.map((type) => [type.id, type]));
 let recommendationIds = [];
+let recommendationOptions = [];
+let selectedRecommendationIndex = 0;
 let adminDraftBossIds = [];
 let saveTimer = null;
 let levelTimer = null;

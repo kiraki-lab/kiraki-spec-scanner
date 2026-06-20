@@ -100,36 +100,155 @@ function renderPresets() {
   }).join('');
 }
 
-function chooseSubset(candidates, needed) {
-  const maxPoint = Math.max(0, ...candidates.map((boss) => boss.points));
-  const cap = needed + maxPoint;
-  const dp = new Map([[0, []]]);
-  candidates.forEach((boss) => {
-    [...dp.entries()].forEach(([sum, list]) => {
-      const next = sum + boss.points;
-      if (next > cap) return;
-      const proposed = [...list, boss];
-      if (!dp.has(next) || proposed.length < dp.get(next).length) dp.set(next, proposed);
-    });
-  });
-  return [...dp.entries()].filter(([sum]) => sum >= needed).sort((a, b) => a[1].length - b[1].length || a[0] - b[0])[0]?.[1] || [];
+function bossMissionName(boss) {
+  return `${boss.difficulty} ${boss.shortBoss || boss.boss}`;
 }
 
-function stableRecommendation(currentIds, needed) {
+function recommendationActionGroups(currentIds) {
   const selected = new Set(currentIds);
-  const candidates = DATA.bossMissions.filter((boss) => !selected.has(boss.id));
-  const bands = [...new Set(candidates.map((boss) => boss.points))].sort((a, b) => a - b);
-  for (const band of bands) {
-    const allowed = candidates.filter((boss) => boss.points <= band);
-    if (allowed.reduce((sum, boss) => sum + boss.points, 0) < needed) continue;
-    const subset = chooseSubset(allowed, needed);
-    if (!subset.length) continue;
-    const normalized = normalizeBosses([...currentIds, ...subset.map((boss) => boss.id)]);
-    const addedIds = normalized.filter((id) => !selected.has(id));
-    const added = bossPoints(addedIds);
-    if (added >= needed) return { ids: addedIds, points: added, band };
-  }
-  return { ids: [], points: 0, band: 0 };
+
+  return [...bySeries.values()].map((bosses) => {
+    const currentRank = Math.max(0, ...bosses.filter((boss) => selected.has(boss.id)).map((boss) => boss.rank));
+
+    return bosses
+      .filter((target) => target.rank > currentRank)
+      .map((target) => {
+        const ids = bosses
+          .filter((boss) => boss.rank <= target.rank && !selected.has(boss.id))
+          .map((boss) => boss.id);
+
+        return {
+          series: target.series,
+          target,
+          ids,
+          points: bossPoints(ids),
+          missionCount: ids.length
+        };
+      })
+      .filter((action) => action.points > 0);
+  }).filter((options) => options.length);
+}
+
+function recommendationPlanSignature(actions) {
+  return actions.map((action) => action.target.id).sort().join('|');
+}
+
+function compareRecommendationPlans(a, b, needed = 0) {
+  return a.maxBand - b.maxBand
+    || a.actions.length - b.actions.length
+    || (a.points - needed) - (b.points - needed)
+    || a.missionCount - b.missionCount
+    || a.signature.localeCompare(b.signature);
+}
+
+function addRecommendationState(states, sum, plan, maxPlansPerSum = 6) {
+  const plans = states.get(sum) || [];
+  if (plans.some((item) => item.signature === plan.signature)) return;
+  plans.push(plan);
+  plans.sort((a, b) => compareRecommendationPlans(a, b));
+  if (plans.length > maxPlansPerSum) plans.length = maxPlansPerSum;
+  states.set(sum, plans);
+}
+
+function buildRecommendationPlans(currentIds, needed, limit = 4) {
+  const groups = recommendationActionGroups(currentIds);
+  const actions = groups.flat();
+  if (!actions.length) return [];
+
+  const maxActionPoints = Math.max(...actions.map((action) => action.points));
+  const cap = needed + maxActionPoints;
+  let states = new Map([[0, [{
+    actions: [],
+    ids: [],
+    points: 0,
+    maxBand: 0,
+    missionCount: 0,
+    signature: ''
+  }]]]);
+
+  groups.forEach((options) => {
+    const nextStates = new Map();
+
+    states.forEach((plans, sum) => {
+      plans.forEach((plan) => {
+        addRecommendationState(nextStates, sum, plan);
+
+        options.forEach((action) => {
+          const nextSum = sum + action.points;
+          if (nextSum > cap) return;
+
+          const nextActions = [...plan.actions, action];
+          const nextPlan = {
+            actions: nextActions,
+            ids: [...plan.ids, ...action.ids],
+            points: nextSum,
+            maxBand: Math.max(plan.maxBand, action.target.points),
+            missionCount: plan.missionCount + action.missionCount,
+            signature: recommendationPlanSignature(nextActions)
+          };
+          addRecommendationState(nextStates, nextSum, nextPlan);
+        });
+      });
+    });
+
+    states = nextStates;
+  });
+
+  const candidates = [];
+  states.forEach((plans, sum) => {
+    if (sum < needed) return;
+    plans.forEach((plan) => candidates.push(plan));
+  });
+
+  candidates.sort((a, b) => compareRecommendationPlans(a, b, needed));
+
+  const selectedPlans = [];
+  const signatures = new Set();
+  candidates.forEach((plan) => {
+    if (selectedPlans.length >= limit || signatures.has(plan.signature)) return;
+    signatures.add(plan.signature);
+    selectedPlans.push(plan);
+  });
+  return selectedPlans;
+}
+
+function recommendationActionHtml(action) {
+  const addedBosses = action.ids
+    .map((id) => byId.get(id))
+    .filter(Boolean)
+    .sort((a, b) => a.rank - b.rank);
+  const lowerBosses = addedBosses.filter((boss) => boss.id !== action.target.id);
+  const lowerText = lowerBosses.length
+    ? `<small>자동 포함: ${lowerBosses.map((boss) => escapeHtml(bossMissionName(boss))).join(' · ')}</small>`
+    : '';
+
+  return `
+    <li class="recommendation-action-item">
+      <span class="recommendation-action-copy">
+        <strong>${escapeHtml(bossMissionName(action.target))}</strong>
+        ${lowerText}
+      </span>
+      <strong class="recommendation-action-points">+${number.format(action.points)}</strong>
+    </li>`;
+}
+
+function recommendationPlanHtml(plan, index, current) {
+  const selected = index === selectedRecommendationIndex;
+  const title = index === 0 ? '추천안 1' : `대체안 ${index + 1}`;
+  const expected = current + plan.points;
+
+  return `
+    <article class="recommendation-plan${selected ? ' selected' : ''}" data-recommendation-plan="${index}">
+      <div class="recommendation-plan-header">
+        <div>
+          <strong>${title}</strong>
+          <small>최고 ${number.format(plan.maxBand)}점 난이도 · 실제 격파 ${plan.actions.length}종 · 완료 미션 ${plan.missionCount}개</small>
+        </div>
+        <span>예상 ${number.format(expected)}점</span>
+      </div>
+      <ul class="recommendation-list">${plan.actions.map(recommendationActionHtml).join('')}</ul>
+      <button type="button" class="recommendation-plan-select" data-select-recommendation-plan="${index}" aria-pressed="${selected}">${selected ? '선택됨' : '이 안 선택'}</button>
+    </article>`;
 }
 
 function renderRecommendation() {
@@ -137,22 +256,38 @@ function renderRecommendation() {
   const target = DATA.tiers.find((tier) => tier.id === profile.targetTierId) || DATA.tiers[1];
   const current = levelPoints(profile.level) + bossPoints(profile.clearedBossIds);
   const needed = Math.max(0, target.threshold - current);
+
   if (!needed) {
     recommendationIds = [];
+    recommendationOptions = [];
+    selectedRecommendationIndex = 0;
     el.recommendationResult.innerHTML = `<h3>${escapeHtml(target.name)} 포인트 기준 달성</h3><p>현재 총점이 목표 이상입니다. 더 높은 티어를 선택해 보세요.</p>`;
+    el.applyRecommendationButton.textContent = '추천 적용';
     el.applyRecommendationButton.disabled = true;
     return;
   }
-  const result = stableRecommendation(profile.clearedBossIds, needed);
-  recommendationIds = result.ids;
-  if (!result.ids.length) {
+
+  const plans = buildRecommendationPlans(profile.clearedBossIds, needed);
+  recommendationOptions = plans;
+  selectedRecommendationIndex = 0;
+  recommendationIds = plans[0]?.ids || [];
+
+  if (!plans.length) {
     el.recommendationResult.innerHTML = `<h3>${escapeHtml(target.name)}까지 ${number.format(needed)}점 필요</h3><p>현재 입력된 보스 데이터만으로는 목표에 도달하지 못합니다. 레벨 또는 상위 미션 데이터가 더 필요합니다.</p>`;
+    el.applyRecommendationButton.textContent = '추천 적용';
     el.applyRecommendationButton.disabled = true;
     return;
   }
-  const targets = collapseTargets(result.ids);
-  const list = targets.map(({ target: boss, missionCount, points }) => `<li><span>${escapeHtml(boss.shortBoss || boss.boss)} ${escapeHtml(boss.difficulty)}${missionCount > 1 ? ` · 하위 ${missionCount - 1}개 포함` : ''}</span><strong>+${number.format(points)}</strong></li>`).join('');
-  el.recommendationResult.innerHTML = `<h3>${escapeHtml(target.name)} 안정형 추천</h3><p>최고 ${number.format(result.band)}점 난이도 안에서 실제 격파 ${targets.length}종을 추가합니다. 적용 예상 총점은 ${number.format(current + result.points)}점입니다.</p><ul class="recommendation-list">${list}</ul>`;
+
+  const choiceCopy = plans.length > 1
+    ? `아래 ${plans.length}가지 중 편한 조합을 선택할 수 있습니다.`
+    : '필요한 미션을 정확한 이름으로 표시했습니다.';
+
+  el.recommendationResult.innerHTML = `
+    <h3>${escapeHtml(target.name)}까지 ${number.format(needed)}점 필요</h3>
+    <p>${choiceCopy} 상위 난이도 선택 시 자동 완료되는 하위 미션도 함께 적었습니다.</p>
+    <div class="recommendation-plan-list">${plans.map((plan, index) => recommendationPlanHtml(plan, index, current)).join('')}</div>`;
+  el.applyRecommendationButton.textContent = '추천안 1 적용';
   el.applyRecommendationButton.disabled = false;
 }
 
