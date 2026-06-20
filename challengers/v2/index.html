@@ -1,86 +1,138 @@
 <!doctype html>
 <html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="챌린저스 월드 레벨·보스 포인트 계산, 구간별 권장 빌드, 캐릭터별 진행도 저장을 제공하는 비공식 계산기" />
-    <meta name="theme-color" content="#111a3c" />
-    <title>챌린저스 구간 빌드 계산기</title>
-    <link rel="stylesheet" href="./styles.css?v=0.2.0" />
-    <script src="./data.js?v=0.2.0" defer></script>
-    <script src="./app.js?v=0.2.0" defer></script>
-  </head>
-  <body>
-    <header class="site-header">
-      <div class="header-inner">
-        <div class="brand-copy"><p class="eyebrow">KIRAKI LAB · 비공식 팬 제작 도구</p><h1>챌린저스 구간 빌드 계산기</h1><p>현재 진행도는 저장하고, 권장 빌드는 별도로 비교합니다.</p></div>
-        <div class="header-actions"><span class="version-badge">DATA v0.2</span><button type="button" class="header-button" id="adminOpenButton">관리자 모드</button></div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="챌린저스 월드 레벨·보스 포인트 계산, 구간별 권장 빌드, 캐릭터별 진행도 저장을 제공하는 비공식 계산기" />
+  <meta name="theme-color" content="#ff8fc5" />
+  <title>챌린저스 구간 빌드 계산기</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Jua&display=swap" rel="stylesheet" />
+  <script src="./theme.js?v=0.3.0"></script>
+  <script src="./theme-components.js?v=0.3.0"></script>
+  <script src="./theme-responsive.js?v=0.3.0"></script>
+  <script src="./data.js?v=0.3.0" defer></script>
+  <script src="./app-core.js?v=0.3.0" defer></script>
+  <script src="./app-render.js?v=0.3.0" defer></script>
+  <script src="./app-builder.js?v=0.3.0" defer></script>
+  <script src="./app-events.js?v=0.3.0" defer></script>
+</head>
+<body class="theme-kiraki">
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand-copy">
+        <p class="eyebrow">Kiraki Challengers</p>
+        <h1>챌린저스 구간 빌드 계산기</h1>
+        <p>현재 진행도는 저장하고, 권장 빌드는 별도로 비교합니다.</p>
       </div>
-    </header>
+      <div class="header-actions">
+        <span class="version-badge">DATA v0.3</span>
+        <button type="button" class="header-button" id="adminOpenButton">관리자 모드</button>
+      </div>
+    </div>
+  </header>
 
-    <main class="page-shell">
-      <section class="panel control-bar" aria-labelledby="profileTitle">
-        <div class="control-main">
-          <label class="field compact-field"><span id="profileTitle">캐릭터</span><select id="profileSelect" aria-label="저장할 캐릭터 선택"></select></label>
-          <div class="profile-buttons" aria-label="캐릭터 관리"><button type="button" class="icon-button" id="addProfileButton" title="새 캐릭터">＋</button><button type="button" class="button ghost small" id="renameProfileButton">이름 변경</button><button type="button" class="button ghost small danger-text" id="deleteProfileButton">삭제</button></div>
-          <label class="field compact-field level-control"><span>현재 레벨</span><input id="levelInput" type="number" min="260" max="290" step="1" inputmode="numeric" /></label>
-          <div class="mini-score" title="현재 총 포인트"><span>총점</span><strong id="toolbarTotalPoints">0</strong></div>
-          <div class="mini-score tier-mini" title="현재 포인트 티어"><span>티어</span><strong id="toolbarTierName">미달성</strong></div>
+  <main class="page-shell">
+    <section class="panel control-bar" aria-labelledby="profileTitle">
+      <div class="control-main">
+        <label class="field compact-field"><span id="profileTitle">캐릭터</span><select id="profileSelect" aria-label="저장할 캐릭터 선택"></select></label>
+        <div class="profile-buttons" aria-label="캐릭터 관리">
+          <button type="button" class="icon-button" id="addProfileButton" title="새 캐릭터">＋</button>
+          <button type="button" class="button ghost small" id="renameProfileButton">이름 변경</button>
+          <button type="button" class="button ghost small danger-text" id="deleteProfileButton">삭제</button>
         </div>
-        <details class="utility-menu"><summary>저장·백업</summary><div class="utility-popover"><span class="save-status" id="saveStatus" aria-live="polite">자동 저장 준비</span><button type="button" class="button ghost small" id="exportButton">백업 내보내기</button><label class="button ghost small file-button" for="importInput">백업 불러오기</label><input id="importInput" class="visually-hidden" type="file" accept="application/json,.json" /><button type="button" class="button ghost small danger-text" id="resetProgressButton">현재 캐릭터 초기화</button></div></details>
-      </section>
-
-      <nav class="view-tabs" aria-label="계산기 화면 전환"><button type="button" class="view-tab active" data-view-button="dashboard" aria-selected="true">요약·추천</button><button type="button" class="view-tab" data-view-button="presets" aria-selected="false">권장 빌드</button><button type="button" class="view-tab" data-view-button="bosses" aria-selected="false">보스 체크</button></nav>
-
-      <section class="view-panel active" data-view-panel="dashboard">
-        <div class="dashboard-grid">
-          <section class="panel progress-panel" aria-labelledby="progressTitle">
-            <div class="section-heading compact-heading"><div><p class="section-kicker">현재 상태</p><h2 id="progressTitle">포인트 계산</h2></div><span class="level-summary" id="levelMissionSummary">Lv.260까지 완료</span></div>
-            <div class="score-grid"><article class="score-card"><span>레벨 미션</span><strong id="levelPoints">0</strong></article><article class="score-card"><span>보스 미션</span><strong id="bossPoints">0</strong></article><article class="score-card total-card"><span>총 포인트</span><strong id="totalPoints">0</strong></article></div>
-            <div class="tier-result"><div><span class="muted-label">현재 포인트 티어</span><strong id="currentTierName">미달성</strong></div><div class="next-tier-copy" id="nextTierCopy">브론즈까지 5,000점</div></div>
-            <div class="progress-track" aria-hidden="true"><div class="progress-fill" id="tierProgressFill"></div></div><div class="tier-scale" id="tierScale"></div>
-          </section>
-          <aside class="panel recommendation-panel" aria-labelledby="recommendationTitle">
-            <div class="section-heading compact-heading"><div><p class="section-kicker recommendation-kicker">권장 · 진행도와 별도</p><h2 id="recommendationTitle">다음 목표 추천</h2></div><span class="separate-badge">자동 추천</span></div>
-            <div class="recommendation-controls"><label class="field compact-field"><span>목표 티어</span><select id="targetTierSelect"></select></label><button type="button" class="button primary" id="applyRecommendationButton" disabled>추천 적용</button></div>
-            <div class="recommendation-result" id="recommendationResult" aria-live="polite"></div><p class="micro-copy">같은 포인트 보스는 같은 난이도로 취급하고, 상위 난이도는 하위 미션을 자동 포함합니다.</p>
-          </aside>
+        <label class="field compact-field level-control"><span>현재 레벨</span><input id="levelInput" type="number" min="260" max="290" step="1" inputmode="numeric" /></label>
+        <div class="mini-score"><span>총점</span><strong id="toolbarTotalPoints">0</strong></div>
+        <div class="mini-score tier-mini"><span>티어</span><strong id="toolbarTierName">미달성</strong></div>
+      </div>
+      <details class="utility-menu">
+        <summary>저장·백업</summary>
+        <div class="utility-popover">
+          <span class="save-status" id="saveStatus" aria-live="polite">자동 저장 준비</span>
+          <button type="button" class="button ghost small" id="exportButton">백업 내보내기</button>
+          <label class="button ghost small file-button" for="importInput">백업 불러오기</label>
+          <input id="importInput" class="visually-hidden" type="file" accept="application/json,.json" />
+          <button type="button" class="button ghost small danger-text" id="resetProgressButton">현재 캐릭터 초기화</button>
         </div>
-        <section class="panel quick-guide"><div><strong>빠른 사용법</strong><span>레벨 입력 → 보스 체크 → 권장 빌드 비교</span></div><button type="button" class="button secondary small" data-go-view="bosses">보스 미션 체크하기</button><button type="button" class="button ghost small" data-go-view="presets">프리셋 보기</button></section>
-      </section>
+      </details>
+    </section>
 
-      <section class="view-panel" data-view-panel="presets" hidden>
-        <section class="panel presets-panel" aria-labelledby="presetsTitle">
-          <div class="section-heading presets-heading"><div><p class="section-kicker recommendation-kicker">권장 프리셋</p><h2 id="presetsTitle">구간별 빌드</h2></div><div class="preset-filters"><label class="field compact-field"><span>유형</span><select id="presetTypeFilter"></select></label><label class="field compact-field"><span>티어</span><select id="presetTierFilter"></select></label></div></div>
-          <p class="section-intro">사파이어는 제공된 Lv.276 기준 빌드입니다. 나머지는 조정 초안이며 관리자 모드에서 밸런스형·사냥 중심 등 새 빌드를 추가할 수 있습니다.</p><div class="preset-grid" id="presetGrid"></div><div class="empty-state" id="presetEmptyState" hidden>조건에 맞는 빌드가 없습니다.</div>
+    <nav class="view-tabs" aria-label="계산기 화면 전환">
+      <button type="button" class="view-tab active" data-view-button="dashboard" aria-selected="true">요약·추천</button>
+      <button type="button" class="view-tab" data-view-button="presets" aria-selected="false">권장 빌드</button>
+      <button type="button" class="view-tab" data-view-button="bosses" aria-selected="false">보스 체크</button>
+    </nav>
+
+    <section class="view-panel active" data-view-panel="dashboard">
+      <div class="dashboard-grid">
+        <section class="panel progress-panel" aria-labelledby="progressTitle">
+          <div class="section-heading compact-heading"><div><p class="section-kicker">현재 상태</p><h2 id="progressTitle">포인트 계산</h2></div><span class="level-summary" id="levelMissionSummary">Lv.260까지 완료</span></div>
+          <div class="score-grid"><article class="score-card"><span>레벨 미션</span><strong id="levelPoints">0</strong></article><article class="score-card"><span>보스 미션</span><strong id="bossPoints">0</strong></article><article class="score-card total-card"><span>총 포인트</span><strong id="totalPoints">0</strong></article></div>
+          <div class="tier-result"><div><span class="muted-label">현재 포인트 티어</span><strong id="currentTierName">미달성</strong></div><div class="next-tier-copy" id="nextTierCopy">브론즈까지 5,000점</div></div>
+          <div class="progress-track" aria-hidden="true"><div class="progress-fill" id="tierProgressFill"></div></div><div class="tier-scale" id="tierScale"></div>
         </section>
-      </section>
+        <aside class="panel recommendation-panel" aria-labelledby="recommendationTitle">
+          <div class="section-heading compact-heading"><div><p class="section-kicker recommendation-kicker">권장 · 진행도와 별도</p><h2 id="recommendationTitle">다음 목표 추천</h2></div><span class="separate-badge">자동 추천</span></div>
+          <div class="recommendation-controls"><label class="field compact-field"><span>목표 티어</span><select id="targetTierSelect"></select></label><button type="button" class="button primary" id="applyRecommendationButton" disabled>추천 적용</button></div>
+          <div class="recommendation-result" id="recommendationResult" aria-live="polite"></div>
+          <p class="micro-copy">같은 포인트 보스는 같은 난이도로 취급하고, 상위 난이도는 하위 미션을 자동 포함합니다.</p>
+        </aside>
+      </div>
+      <section class="panel quick-guide"><div><strong>빠른 사용법</strong><span>레벨 입력 → 보스 체크 → 권장 빌드 비교</span></div><button type="button" class="button secondary small" data-go-view="bosses">보스 미션 체크하기</button><button type="button" class="button ghost small" data-go-view="presets">프리셋 보기</button></section>
+    </section>
 
-      <section class="view-panel" data-view-panel="bosses" hidden>
-        <section class="panel boss-panel" aria-labelledby="bossTitle">
-          <div class="section-heading boss-heading"><div><p class="section-kicker">직접 체크</p><h2 id="bossTitle">보스 미션 진행도</h2></div><div class="boss-tools"><label class="field compact-field"><span>구간 필터</span><select id="bossRangeFilter"><option value="all">전체 구간</option><option value="low">500점 이하</option><option value="mid">1,000~3,000점</option><option value="high">5,000점 이상</option><option value="checked">체크한 미션만</option></select></label><button type="button" class="button ghost small" id="clearBossesButton">전체 해제</button></div></div>
-          <p class="section-intro">점수 구간을 눌러 펼쳐 보세요. 높은 난이도를 체크하면 같은 보스의 낮은 난이도 미션도 자동 체크됩니다.</p><div id="bossGroups" class="boss-groups"></div><div class="empty-state" id="bossEmptyState" hidden>선택한 조건에 맞는 미션이 없습니다.</div>
-        </section>
+    <section class="view-panel" data-view-panel="presets" hidden>
+      <section class="panel presets-panel" aria-labelledby="presetsTitle">
+        <div class="section-heading presets-heading"><div><p class="section-kicker recommendation-kicker">권장 프리셋</p><h2 id="presetsTitle">구간별 빌드</h2></div><div class="preset-filters"><label class="field compact-field"><span>유형</span><select id="presetTypeFilter"></select></label><label class="field compact-field"><span>티어</span><select id="presetTierFilter"></select></label></div></div>
+        <p class="section-intro">사파이어는 제공된 Lv.276 기준 빌드입니다. 나머지는 조정 초안이며 관리자 모드에서 밸런스형·사냥 중심·보스 중심 빌드를 추가할 수 있습니다.</p>
+        <div class="preset-grid" id="presetGrid"></div><div class="empty-state" id="presetEmptyState" hidden>조건에 맞는 빌드가 없습니다.</div>
       </section>
-      <footer class="page-note">현재 버전은 제공된 표의 챌린저스 포인트만 반영합니다. 코인과 마스터·챌린저 별도 격파 조건은 아직 계산하지 않습니다.</footer>
-    </main>
+    </section>
 
-    <dialog class="admin-dialog" id="adminDialog" aria-labelledby="adminTitle">
-      <div class="dialog-shell">
-        <div class="dialog-header"><div><p class="section-kicker">관리자 모드</p><h2 id="adminTitle">권장 빌드 관리</h2></div><button type="button" class="icon-button" id="adminCloseButton" aria-label="관리자 창 닫기">×</button></div>
+    <section class="view-panel" data-view-panel="bosses" hidden>
+      <section class="panel boss-panel" aria-labelledby="bossTitle">
+        <div class="section-heading boss-heading"><div><p class="section-kicker">직접 체크</p><h2 id="bossTitle">보스 미션 진행도</h2></div><div class="boss-tools"><label class="field compact-field"><span>구간 필터</span><select id="bossRangeFilter"><option value="all">전체 구간</option><option value="low">500점 이하</option><option value="mid">1,000~3,000점</option><option value="high">5,000점 이상</option><option value="checked">체크한 미션만</option></select></label><button type="button" class="button ghost small" id="clearBossesButton">전체 해제</button></div></div>
+        <p class="section-intro">점수 구간을 눌러 펼쳐 보세요. 높은 난이도를 체크하면 같은 보스의 낮은 난이도 미션도 자동 체크됩니다.</p>
+        <div id="bossGroups" class="boss-groups"></div><div class="empty-state" id="bossEmptyState" hidden>선택한 조건에 맞는 미션이 없습니다.</div>
+      </section>
+    </section>
+    <footer class="page-note">Kiraki Challengers Calculator · 제공된 챌린저스 포인트 표 기준</footer>
+  </main>
+
+  <dialog class="admin-dialog" id="adminDialog" aria-labelledby="adminTitle">
+    <div class="dialog-shell">
+      <div class="dialog-header"><div><p class="section-kicker">관리자 모드</p><h2 id="adminTitle">권장 빌드 관리</h2></div><button type="button" class="icon-button" id="adminCloseButton" aria-label="관리자 창 닫기">×</button></div>
+      <section id="adminGate">
+        <p class="admin-notice">GitHub Pages의 간편 잠금입니다. 관리자 빌드는 이 브라우저에 저장되며 JSON으로 내보낼 수 있습니다.</p>
+        <form id="adminGateForm" class="admin-gate-form">
+          <label class="field"><span>관리자 비밀번호</span><input id="adminGateInput" type="password" inputmode="numeric" autocomplete="off" required /></label>
+          <button type="submit" class="button primary">관리자 모드 열기</button>
+        </form>
+        <p id="adminGateError" class="form-error" aria-live="polite"></p>
+      </section>
+      <section id="adminEditor" hidden>
         <div class="admin-status-row"><span class="save-status">편집 가능</span><button type="button" class="button ghost small" id="adminLockButton">잠그기</button></div>
         <p class="admin-notice">직접 구성한 빌드는 이 브라우저에 저장됩니다. 공개 기본 빌드로 확정할 때는 JSON으로 내보내 저장소 데이터에 반영하세요.</p>
         <form id="adminPresetForm" class="admin-form">
           <input type="hidden" id="adminPresetId" />
-          <div class="admin-form-grid"><label class="field wide-field"><span>빌드 이름</span><input id="adminPresetName" type="text" maxlength="40" required placeholder="예: 실버 사냥 중심" /></label><label class="field"><span>빌드 유형</span><select id="adminPresetType"></select></label><label class="field"><span>목표 티어</span><select id="adminPresetTier"></select></label><label class="field"><span>권장 레벨</span><input id="adminPresetLevel" type="number" min="260" max="290" required /></label><label class="field wide-field"><span>한 줄 구성</span><input id="adminPresetSummary" type="text" maxlength="100" placeholder="비우면 자동 생성됩니다." /></label><label class="field wide-field"><span>설명·교체 메모</span><textarea id="adminPresetNote" rows="2" maxlength="240" placeholder="같은 점수 교체 후보, 추천 이유 등을 적으세요."></textarea></label></div>
+          <div class="admin-form-grid">
+            <label class="field wide-field"><span>빌드 이름</span><input id="adminPresetName" type="text" maxlength="40" required placeholder="예: 실버 사냥 중심" /></label>
+            <label class="field"><span>빌드 유형</span><select id="adminPresetType"></select></label>
+            <label class="field"><span>목표 티어</span><select id="adminPresetTier"></select></label>
+            <label class="field"><span>권장 레벨</span><input id="adminPresetLevel" type="number" min="260" max="290" required /></label>
+            <label class="field wide-field"><span>한 줄 구성</span><input id="adminPresetSummary" type="text" maxlength="100" placeholder="비우면 자동 생성됩니다." /></label>
+            <label class="field wide-field"><span>설명·교체 메모</span><textarea id="adminPresetNote" rows="2" maxlength="240" placeholder="같은 점수 교체 후보, 추천 이유 등을 적으세요."></textarea></label>
+          </div>
           <div class="admin-boss-heading"><div><strong>보스 미션 선택</strong><span id="adminBossSummary">0개 · 0점</span></div><div><button type="button" class="button ghost small" id="adminLoadCurrentButton">현재 진행도 가져오기</button><button type="button" class="button ghost small" id="adminClearBossButton">선택 해제</button></div></div>
           <div class="admin-boss-picker" id="adminBossPicker"></div>
           <div class="admin-form-actions"><button type="submit" class="button primary" id="adminSavePresetButton">새 빌드 저장</button><button type="button" class="button ghost" id="adminResetFormButton">입력 초기화</button><span class="admin-total" id="adminPresetTotal">예상 총점 0점</span></div>
         </form>
         <section class="admin-list-section"><div class="admin-list-heading"><div><strong>직접 구성 빌드</strong><span>현재 브라우저에 저장됩니다.</span></div><button type="button" class="button ghost small" id="adminExportBuildsButton">빌드 JSON 내보내기</button></div><div class="admin-preset-list" id="adminPresetList"></div></section>
-      </div>
-    </dialog>
-
-    <div class="toast" id="toast" role="status" aria-live="polite"></div><noscript>이 계산기는 JavaScript를 켜야 사용할 수 있습니다.</noscript>
-  </body>
+      </section>
+    </div>
+  </dialog>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <noscript>이 계산기는 JavaScript를 켜야 사용할 수 있습니다.</noscript>
+</body>
 </html>
