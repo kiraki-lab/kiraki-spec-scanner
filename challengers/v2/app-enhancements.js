@@ -3,6 +3,7 @@
   const bossNameOptions = document.querySelector('#bossNameOptions');
   const expandAllButton = document.querySelector('#expandAllBossesButton');
   const collapseAllButton = document.querySelector('#collapseAllBossesButton');
+  const checkAllButton = document.querySelector('#checkAllBossesButton');
   const levelDecreaseButton = document.querySelector('#levelDecreaseButton');
   const levelIncreaseButton = document.querySelector('#levelIncreaseButton');
 
@@ -105,9 +106,39 @@
       .join('');
   }
 
-  function changeLevel(delta) {
-    const current = Number(el.levelInput.value) || activeProfile().level || 260;
-    const level = clamp(Math.round(current + delta), 260, 290);
+  function decorateBossGroupHeadings() {
+    const grouped = new Map();
+    DATA.bossMissions.forEach((boss) => {
+      if (!grouped.has(boss.points)) grouped.set(boss.points, []);
+      grouped.get(boss.points).push(boss);
+    });
+
+    document.querySelectorAll('[data-boss-group]').forEach((group) => {
+      const points = Number(group.dataset.points);
+      const bosses = grouped.get(points) || [];
+      const names = [...new Set(bosses.map((boss) => boss.shortBoss || boss.boss))];
+      const title = group.querySelector('.boss-group-title');
+      const oldMeta = group.querySelector('[data-group-meta]')?.textContent || `0/${bosses.length} 완료`;
+      if (!title) return;
+      title.innerHTML = `
+        <span class="boss-group-score">${number.format(points)}점 난이도</span>
+        <span class="boss-group-names">${escapeHtml(names.join(' · '))}</span>
+        <span class="boss-group-meta" data-group-meta="${points}">${escapeHtml(oldMeta)}</span>`;
+    });
+  }
+
+  function buttonLevelTarget(current, direction) {
+    if (direction > 0) {
+      if (current < 280) return Math.min(280, current + 2);
+      return Math.min(290, current + 1);
+    }
+    if (current > 280) return Math.max(280, current - 1);
+    return Math.max(260, current - 2);
+  }
+
+  function changeLevel(direction) {
+    const current = clamp(Math.round(Number(el.levelInput.value) || activeProfile().level || 260), 260, 290);
+    const level = buttonLevelTarget(current, direction);
     if (level === activeProfile().level) {
       el.levelInput.value = level;
       return;
@@ -124,10 +155,16 @@
   });
   expandAllButton?.addEventListener('click', () => setVisibleBossGroupsOpen(true));
   collapseAllButton?.addEventListener('click', () => setVisibleBossGroupsOpen(false));
+  checkAllButton?.addEventListener('click', () => {
+    patchProfile({ clearedBossIds: DATA.bossMissions.map((boss) => boss.id) }, '전체 보스 체크됨');
+    render();
+    toast('모든 보스 미션을 체크했습니다.');
+  });
   levelDecreaseButton?.addEventListener('click', () => changeLevel(-1));
   levelIncreaseButton?.addEventListener('click', () => changeLevel(1));
 
   populateBossNames();
+  decorateBossGroupHeadings();
   document.querySelectorAll('[data-boss-group]').forEach((group) => { group.open = true; });
   setAdminUnlocked(isAdminUnlocked());
   syncKirakiLabels();
