@@ -121,7 +121,7 @@
       const oldMeta = group.querySelector('[data-group-meta]')?.textContent || `0/${bosses.length} 완료`;
       if (!title) return;
       title.innerHTML = `
-        <span class="boss-group-score">${number.format(points)}점</span>
+        <span class="boss-group-score">${number.format(points)}점 난이도</span>
         <span class="boss-group-names">${escapeHtml(names.join(' · '))}</span>
         <span class="boss-group-meta" data-group-meta="${points}">${escapeHtml(oldMeta)}</span>`;
     });
