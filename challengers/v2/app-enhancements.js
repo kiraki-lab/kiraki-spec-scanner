@@ -6,7 +6,9 @@
   const levelDecreaseButton = document.querySelector('#levelDecreaseButton');
   const levelIncreaseButton = document.querySelector('#levelIncreaseButton');
 
-  const replaceModeWord = (value) => typeof value === 'string' ? value.replaceAll('관리자', '키라키') : value;
+  const replaceModeWord = (value) => typeof value === 'string'
+    ? value.replaceAll('관리자가 추가한', '키라키 모드에서 추가한').replaceAll('관리자', '키라키')
+    : value;
 
   const originalToast = toast;
   toast = function patchedToast(message) {
@@ -32,7 +34,7 @@
       const nodes = [];
       while (walker.nextNode()) nodes.push(walker.currentNode);
       nodes.forEach((node) => {
-        if (node.nodeValue?.includes('관리자')) node.nodeValue = node.nodeValue.replaceAll('관리자', '키라키');
+        if (node.nodeValue?.includes('관리자')) node.nodeValue = replaceModeWord(node.nodeValue);
       });
     });
   }
