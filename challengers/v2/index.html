@@ -9,20 +9,22 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  <script src="./theme-boot.js?v=0.4.0"></script>
-  <script src="./theme.js?v=0.4.0"></script>
-  <script src="./theme-components.js?v=0.4.0"></script>
-  <script src="./theme-responsive.js?v=0.4.0"></script>
-  <script src="./theme-inputs.js?v=0.4.0"></script>
-  <script src="./theme-clean.js?v=0.4.0"></script>
-  <script src="./theme-kiraki-scoped.js?v=0.4.0"></script>
-  <script src="./theme-mode.js?v=0.4.0" defer></script>
-  <script src="./data.js?v=0.4.0" defer></script>
-  <script src="./app-core.js?v=0.4.0" defer></script>
-  <script src="./app-render.js?v=0.4.0" defer></script>
-  <script src="./app-builder.js?v=0.4.0" defer></script>
-  <script src="./app-events.js?v=0.4.0" defer></script>
-  <script src="./app-enhancements.js?v=0.4.0" defer></script>
+  <script src="./theme-boot.js?v=0.5.0"></script>
+  <script src="./theme.js?v=0.5.0"></script>
+  <script src="./theme-components.js?v=0.5.0"></script>
+  <script src="./theme-responsive.js?v=0.5.0"></script>
+  <script src="./theme-inputs.js?v=0.5.0"></script>
+  <script src="./theme-clean.js?v=0.5.0"></script>
+  <script src="./theme-kiraki-scoped.js?v=0.5.0"></script>
+  <script src="./theme-readability-v2.js?v=0.5.0"></script>
+  <script src="./theme-mode.js?v=0.5.0" defer></script>
+  <script src="./data.js?v=0.5.0" defer></script>
+  <script src="./app-core.js?v=0.5.0" defer></script>
+  <script src="./app-render.js?v=0.5.0" defer></script>
+  <script src="./app-builder.js?v=0.5.0" defer></script>
+  <script src="./app-events.js?v=0.5.0" defer></script>
+  <script src="./app-enhancements.js?v=0.5.0" defer></script>
+  <script src="./app-preset-groups.js?v=0.5.0" defer></script>
 </head>
 <body>
   <header class="site-header">
@@ -33,7 +35,7 @@
         <p>내 진행도와 권장 빌드를 나누어 보고, 필요한 보스만 빠르게 확인합니다.</p>
       </div>
       <div class="header-actions">
-        <span class="version-badge">UI v0.4</span>
+        <span class="version-badge">UI v0.5</span>
         <button id="themeToggle" class="theme-toggle" type="button" aria-label="현재 하얀모드, 핑크모드로 전환">
           <span class="theme-toggle-main">현재: 하얀모드</span>
           <small>핑크모드로 전환</small>
@@ -81,11 +83,11 @@
         <article class="input-card">
           <div class="input-card-title"><span class="step-number">2</span><div><strong>현재 레벨</strong><small>Lv.260부터 Lv.290까지 입력합니다.</small></div></div>
           <div class="level-stepper">
-            <button type="button" class="stepper-button" id="levelDecreaseButton" aria-label="레벨 1 감소">−</button>
+            <button type="button" class="stepper-button" id="levelDecreaseButton" aria-label="레벨 감소">−</button>
             <label class="level-input-label"><span>Lv.</span><input id="levelInput" type="number" min="260" max="290" step="1" inputmode="numeric" aria-label="현재 레벨" /></label>
-            <button type="button" class="stepper-button" id="levelIncreaseButton" aria-label="레벨 1 증가">＋</button>
+            <button type="button" class="stepper-button" id="levelIncreaseButton" aria-label="레벨 증가">＋</button>
           </div>
-          <p class="input-help">레벨 미션 포인트는 입력한 레벨까지 자동으로 누적됩니다.</p>
+          <p class="input-help">버튼은 Lv.280까지 2레벨씩, 그 이후에는 1레벨씩 움직입니다. 숫자를 직접 입력해도 됩니다.</p>
         </article>
 
         <article class="input-card result-input-card">
@@ -125,16 +127,26 @@
 
     <section class="view-panel" data-view-panel="presets" hidden>
       <section class="panel presets-panel" aria-labelledby="presetsTitle">
-        <div class="section-heading presets-heading"><div><p class="section-kicker recommendation-kicker">권장 프리셋</p><h2 id="presetsTitle">구간별 빌드</h2></div><div class="preset-filters"><label class="field compact-field"><span>유형</span><select id="presetTypeFilter"></select></label><label class="field compact-field"><span>티어</span><select id="presetTierFilter"></select></label></div></div>
-        <p class="section-intro">사파이어는 제공된 Lv.276 기준 빌드입니다. 나머지는 조정 초안이며 키라키 모드에서 밸런스형·사냥 중심·보스 중심 빌드를 추가할 수 있습니다.</p>
-        <div class="preset-grid" id="presetGrid"></div><div class="empty-state" id="presetEmptyState" hidden>조건에 맞는 빌드가 없습니다.</div>
+        <div class="section-heading presets-heading">
+          <div><p class="section-kicker recommendation-kicker">권장 프리셋</p><h2 id="presetsTitle">구간별 빌드</h2></div>
+          <label class="field compact-field"><span>빌드 유형</span><select id="presetTypeFilter"></select></label>
+        </div>
+        <div class="preset-tier-filter-panel">
+          <div class="preset-tier-filter-heading">
+            <div><strong>티어 선택</strong><span>확인할 티어를 체크하면 빌드가 표시됩니다.</span></div>
+            <div class="preset-tier-actions"><button type="button" class="button ghost small" id="selectAllPresetTiersButton">전체 선택</button><button type="button" class="button ghost small" id="clearPresetTiersButton">선택 해제</button></div>
+          </div>
+          <div id="presetTierChecklist" class="preset-tier-checklist" role="group" aria-label="표시할 권장 빌드 티어"></div>
+          <select id="presetTierFilter" class="visually-hidden" tabindex="-1" aria-hidden="true"><option value="all">전체 티어</option></select>
+        </div>
+        <div class="preset-grid" id="presetGrid"></div><div class="empty-state" id="presetEmptyState">티어를 선택하면 권장 빌드가 표시됩니다.</div>
       </section>
     </section>
 
     <section class="view-panel" data-view-panel="bosses" hidden>
       <section class="panel boss-panel" aria-labelledby="bossTitle">
-        <div class="section-heading boss-heading"><div><p class="section-kicker">직접 체크</p><h2 id="bossTitle">보스 미션 진행도</h2></div><button type="button" class="button ghost small" id="clearBossesButton">전체 체크 해제</button></div>
-        <p class="section-intro">보스 이름을 검색하거나 점수 구간으로 좁혀보세요. 모든 구간은 처음부터 펼쳐져 있으며 필요할 때 한 번에 접을 수 있습니다.</p>
+        <div class="section-heading boss-heading"><div><p class="section-kicker">직접 체크</p><h2 id="bossTitle">보스 미션 진행도</h2></div></div>
+        <p class="section-intro">보스 이름을 검색하거나 점수 구간으로 좁혀보세요. 모든 구간은 처음부터 펼쳐져 있습니다.</p>
         <div class="boss-filter-panel">
           <label class="field boss-search-field">
             <span>보스명 검색</span>
@@ -142,9 +154,15 @@
             <datalist id="bossNameOptions"></datalist>
           </label>
           <label class="field compact-field"><span>추가 필터</span><select id="bossRangeFilter"><option value="all">전체 미션</option><option value="low">500점 이하</option><option value="mid">1,000~3,000점</option><option value="high">5,000점 이상</option><option value="checked">체크한 미션만</option></select></label>
-          <div class="boss-expand-actions" aria-label="보스 구간 펼침 설정">
-            <button type="button" class="button secondary small" id="expandAllBossesButton">전체 펼치기</button>
-            <button type="button" class="button ghost small" id="collapseAllBossesButton">전체 접기</button>
+          <div class="boss-action-stack">
+            <div class="boss-bulk-actions">
+              <button type="button" class="button primary small" id="checkAllBossesButton">전체 체크</button>
+              <button type="button" class="button ghost small" id="clearBossesButton">전체 체크해제</button>
+            </div>
+            <div class="boss-expand-actions" aria-label="보스 구간 펼침 설정">
+              <button type="button" class="button secondary small" id="expandAllBossesButton">전체 펼치기</button>
+              <button type="button" class="button ghost small" id="collapseAllBossesButton">전체 접기</button>
+            </div>
           </div>
         </div>
         <div id="bossGroups" class="boss-groups"></div><div class="empty-state" id="bossEmptyState" hidden>검색 조건에 맞는 보스 미션이 없습니다.</div>
