@@ -6,4 +6,9 @@
 @media(max-width:430px){.score-grid,.recommendation-controls{grid-template-columns:1fr}.boss-card-grid,.admin-boss-picker{grid-template-columns:1fr}.boss-check:nth-child(n),.admin-boss-check:nth-child(n){border-right:0}.preset-filters,.boss-tools{grid-template-columns:1fr}.admin-preset-row{grid-template-columns:1fr}}
 `;
   document.head.append(style);
+  ['./theme-kiraki-base.js?v=0.3.0','./theme-kiraki-components.js?v=0.3.0'].forEach((src) => {
+    const script = document.createElement('script');
+    script.src = src;
+    document.head.append(script);
+  });
 })();
