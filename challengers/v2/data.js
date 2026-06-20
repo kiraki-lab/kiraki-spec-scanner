@@ -78,6 +78,16 @@
       .map((boss) => boss.id);
   };
 
+  const idsAtOrBelowExceptSeries = (points, excludedSeries = []) => {
+    const excluded = new Set(excludedSeries);
+    return bossMissions
+      .filter((boss) => boss.points <= points && !excluded.has(boss.series))
+      .map((boss) => boss.id);
+  };
+
+  const fortyKBase = idsAtOrBelowExceptSeries(3000, ['will', 'verus-hilla']);
+  const fiftyKBase = idsAtOrBelow(3000);
+
   const presets = [
     { id: 'bronze-stable-v01', name: '브론즈 안정형', type: 'newbie', tierId: 'bronze', level: 260, includeAtOrBelow: 400, extraBossIds: [], status: 'draft', summary: 'Lv.260 + 400점 이하 보스 미션 전체', note: '첫 참여용 초안. 최고 보스 난이도 점수를 400점으로 제한합니다.' },
     { id: 'silver-stable-v01', name: '실버 밸런스형', type: 'balanced', tierId: 'silver', level: 264, includeAtOrBelow: 500, extraBossIds: ['lucid-normal', 'will-normal'], status: 'draft', summary: 'Lv.264 + 500점 이하 전체 + 1,000점 보스 2종', note: '1,000점 보스 2종은 같은 점수의 다른 보스로 교체할 수 있습니다.' },
@@ -88,9 +98,13 @@
     { id: 'emerald-video-30k-v01', name: '3만점 200레벨 비약형', type: 'boss', tierId: 'emerald', level: 280, bossIds: [...idsAtOrBelow(1000), 'lotus-hard', 'damien-hard', 'dusk-chaos'], status: 'reference', summary: 'Lv.280 + 하드 스우·데미안 + 카오스 더스크 + 나머지 노멀', note: '노멀 진 힐라 제외. 총 30,000점.' },
 
     { id: 'sapphire-reference-v01', name: '사파이어 기준 빌드', type: 'balanced', tierId: 'sapphire', level: 276, includeAtOrBelow: 3000, extraBossIds: [], status: 'reference', summary: 'Lv.276 + 3,000점 이하 보스 미션 전체', note: 'Lv.276 기준 레벨 11,200점 + 보스 29,300점 = 40,500점.' },
-    { id: 'sapphire-video-40k-no-hilla-v01', name: '4만점 진 힐라 제외형', type: 'boss', tierId: 'sapphire', level: 280, bossIds: idsAtOrBelow(3000, ['verus-hilla-normal', 'verus-hilla-hard']), status: 'reference', summary: 'Lv.280 + 하드 듄켈·루시드·윌', note: '진 힐라를 제외하고 3,000점 이하 나머지 미션 전체. 총 40,000점.' },
+    { id: 'sapphire-video-40k-no-hilla-v01', name: '4만점 Lv.280 하드 윌형', type: 'boss', tierId: 'sapphire', level: 280, bossIds: [...fortyKBase, 'will-hard'], status: 'reference', summary: 'Lv.280 + 하드 윌 · 진 힐라 제외', note: '3,000점 이하 나머지 미션 완료. 총 40,000점.' },
+    { id: 'sapphire-video-40k-normal-will-hilla-v01', name: '4만점 Lv.281 노멀 윌·진 힐라형', type: 'boss', tierId: 'sapphire', level: 281, bossIds: [...fortyKBase, 'will-normal', 'verus-hilla-normal'], status: 'reference', summary: 'Lv.281 + 노멀 윌 + 노멀 진 힐라', note: '하드 윌 대신 노멀 윌과 노멀 진 힐라 선택. 총 41,000점.' },
+    { id: 'sapphire-video-40k-normal-will-no-hilla-v01', name: '4만점 Lv.282 노멀 윌형', type: 'boss', tierId: 'sapphire', level: 282, bossIds: [...fortyKBase, 'will-normal'], status: 'reference', summary: 'Lv.282 + 노멀 윌 · 진 힐라 제외', note: '3,000점 이하 나머지 미션 완료. 총 40,500점.' },
 
-    { id: 'diamond-video-50k-mayrin-v01', name: '5만점 메이린형', type: 'boss', tierId: 'diamond', level: 280, bossIds: [...idsAtOrBelow(3000), 'mayrin-normal'], status: 'reference', summary: 'Lv.280 + 하드 진 힐라 이하 전체 + 노멀 메이린', note: '총 50,000점.' },
+    { id: 'diamond-video-50k-mayrin-v01', name: '5만점 노멀 메이린형', type: 'boss', tierId: 'diamond', level: 280, bossIds: [...fiftyKBase, 'mayrin-normal'], status: 'reference', summary: 'Lv.280 + 3,000점 이하 전체 + 노멀 메이린', note: '마지막 보스 택1 구성. 총 50,000점.' },
+    { id: 'diamond-video-50k-black-mage-v01', name: '5만점 하드 검은 마법사형', type: 'boss', tierId: 'diamond', level: 280, bossIds: [...fiftyKBase, 'black-mage-hard'], status: 'reference', summary: 'Lv.280 + 3,000점 이하 전체 + 하드 검은 마법사', note: '마지막 보스 택1 구성. 총 51,000점.' },
+    { id: 'diamond-video-50k-seren-v01', name: '5만점 노멀 세렌형', type: 'boss', tierId: 'diamond', level: 280, bossIds: [...fiftyKBase, 'seren-normal'], status: 'reference', summary: 'Lv.280 + 3,000점 이하 전체 + 노멀 세렌', note: '마지막 보스 택1 구성. 총 51,000점.' },
 
     { id: 'master-video-adversary-v01', name: '마스터 이지 대적자형', type: 'boss', tierId: 'master', level: 280, bossIds: [...idsAtOrBelow(3000), 'mayrin-normal', 'black-mage-hard', 'adversary-easy', 'kalos-easy'], status: 'reference', summary: 'Lv.280 + 이지 대적자 + 7,000점 동점 슬롯 1종', note: '노멀 메이린·검은 마법사와 3,000점 이하 전체. 이지 칼로스는 하드 세렌으로 교체 가능. 총 70,000점.' },
     { id: 'master-video-kalos-v01', name: '마스터 이지 칼로스형', type: 'boss', tierId: 'master', level: 281, bossIds: [...idsAtOrBelow(3000), 'mayrin-normal', 'black-mage-hard', 'seren-normal', 'kalos-easy'], status: 'reference', summary: 'Lv.281 + 검은 마법사 + 노멀 세렌 + 이지 칼로스 + 노멀 메이린', note: '3,000점 이하 미션 전체 포함. 총 70,500점.' },
@@ -98,5 +112,5 @@
     { id: 'challenger-video-hard-mayrin-v01', name: '슈퍼 챌린저 하드 메이린형', type: 'boss', tierId: 'challenger', level: 284, bossIds: [...idsAtOrBelow(3000, ['kai-normal']), 'mayrin-hard', 'black-mage-hard', 'seren-normal', 'adversary-easy', 'kalos-easy'], status: 'reference', summary: 'Lv.284 + 하드 메이린 + 하드 검은 마법사', note: '노멀 세렌과 7,000점 슬롯 2종 포함. 1,000점 슬롯 1종 제외 기준으로 총 90,000점.' }
   ];
 
-  window.CHALLENGERS_DATA = { version: '0.6.0', levelMissions, bossMissions, tiers, buildTypes, presets };
+  window.CHALLENGERS_DATA = { version: '0.7.0', levelMissions, bossMissions, tiers, buildTypes, presets };
 })();
