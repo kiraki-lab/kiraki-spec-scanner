@@ -16,7 +16,7 @@
     { id: 'zakum-chaos', boss: '자쿰', difficulty: '카오스', points: 100, series: 'zakum', rank: 1 },
     { id: 'pierre-chaos', boss: '피에르', difficulty: '카오스', points: 200, series: 'pierre', rank: 1 },
     { id: 'vonbon-chaos', boss: '반반', difficulty: '카오스', points: 200, series: 'vonbon', rank: 1 },
-    { id: 'bloodyqueen-chaos', boss: '블러디 퀸', difficulty: '카오스', points: 200, series: 'bloodyqueen', rank: 1 },
+    { id: 'bloodyqueen-chaos', boss: '블러디 퀸', shortBoss: '블퀸', difficulty: '카오스', points: 200, series: 'bloodyqueen', rank: 1 },
     { id: 'magnus-hard', boss: '매그너스', difficulty: '하드', points: 250, series: 'magnus', rank: 1 },
     { id: 'vellum-chaos', boss: '벨룸', difficulty: '카오스', points: 250, series: 'vellum', rank: 1 },
     { id: 'papulatus-chaos', boss: '파풀라투스', difficulty: '카오스', points: 300, series: 'papulatus', rank: 1 },
@@ -68,7 +68,7 @@
     { id: 'hunting', name: '사냥 중심', description: '레벨 비중을 높여 보스 요구량을 줄인 빌드' },
     { id: 'boss', name: '보스 중심', description: '레벨 부담을 줄이고 보스 미션 비중을 높인 빌드' },
     { id: 'newbie', name: '뉴비 안전형', description: '낮은 점수 보스를 우선 사용하는 입문 빌드' },
-    { id: 'custom', name: '직접 설계', description: '관리자가 직접 구성한 기타 빌드' }
+    { id: 'custom', name: '직접 설계', description: '키라키 모드에서 직접 구성한 빌드' }
   ];
 
   const presets = [
@@ -77,8 +77,8 @@
     { id: 'gold-stable-v01', name: '골드 밸런스형', type: 'balanced', tierId: 'gold', level: 266, includeAtOrBelow: 1000, extraBossIds: ['lotus-hard'], status: 'draft', summary: 'Lv.266 + 1,000점 이하 전체 + 1,500점 보스 1종', note: '1,500점 슬롯은 하드 스우와 하드 데미안 중 교체 가능합니다.' },
     { id: 'platinum-stable-v01', name: '플래티넘 밸런스형', type: 'balanced', tierId: 'platinum', level: 270, includeAtOrBelow: 1500, extraBossIds: ['lucid-hard'], status: 'draft', summary: 'Lv.270 + 1,500점 이하 전체 + 2,000점 보스 1종', note: '2,000점 슬롯은 같은 점수 보스로 교체할 수 있습니다.' },
     { id: 'emerald-stable-v01', name: '에메랄드 밸런스형', type: 'balanced', tierId: 'emerald', level: 274, includeAtOrBelow: 2000, extraBossIds: ['will-hard', 'guardian-angel-slime-chaos'], status: 'draft', summary: 'Lv.274 + 2,000점 이하 전체 + 2,500점 보스 2종', note: '2,500점 보스 3종 가운데 가능한 2종으로 교체할 수 있습니다.' },
-    { id: 'sapphire-reference-v01', name: '사파이어 기준 빌드', type: 'balanced', tierId: 'sapphire', level: 276, includeAtOrBelow: 3000, extraBossIds: [], status: 'reference', summary: 'Lv.276 + 3,000점 이하 보스 미션 전체', note: '사용자가 제공한 기준 빌드입니다. 레벨 11,200점 + 보스 29,300점 = 총 40,500점.' }
+    { id: 'sapphire-reference-v01', name: '사파이어 기준 빌드', type: 'balanced', tierId: 'sapphire', level: 276, includeAtOrBelow: 3000, extraBossIds: [], status: 'reference', summary: 'Lv.276 + 3,000점 이하 보스 미션 전체', note: 'Lv.276 기준 레벨 11,200점 + 보스 29,300점 = 40,500점.' }
   ];
 
-  window.CHALLENGERS_DATA = { version: '0.2.0', levelMissions, bossMissions, tiers, buildTypes, presets };
+  window.CHALLENGERS_DATA = { version: '0.5.0', levelMissions, bossMissions, tiers, buildTypes, presets };
 })();
