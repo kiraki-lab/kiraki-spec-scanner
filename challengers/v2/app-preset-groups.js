@@ -57,6 +57,10 @@
 
   renderPresets = function groupedPresetRender() {
     const filteredPresets = typeFilteredPresets();
+    const availableTierIds = new Set(filteredPresets.map((preset) => preset.tierId));
+    [...selectedTierIds].forEach((tierId) => {
+      if (!availableTierIds.has(tierId)) selectedTierIds.delete(tierId);
+    });
     renderChecklist(filteredPresets);
 
     if (!selectedTierIds.size) {
