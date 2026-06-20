@@ -84,11 +84,36 @@ function bindEvents() {
     renderRecommendation();
   });
 
+  el.recommendationResult.addEventListener('click', (event) => {
+    const button = event.target.closest('[data-select-recommendation-plan]');
+    if (!button) return;
+
+    const index = Number(button.dataset.selectRecommendationPlan);
+    const plan = recommendationOptions[index];
+    if (!plan) return;
+
+    selectedRecommendationIndex = index;
+    recommendationIds = plan.ids;
+
+    el.recommendationResult.querySelectorAll('[data-recommendation-plan]').forEach((card) => {
+      const cardIndex = Number(card.dataset.recommendationPlan);
+      const selected = cardIndex === index;
+      card.classList.toggle('selected', selected);
+      const selectButton = card.querySelector('[data-select-recommendation-plan]');
+      if (selectButton) {
+        selectButton.setAttribute('aria-pressed', String(selected));
+        selectButton.textContent = selected ? '선택됨' : '이 안 선택';
+      }
+    });
+
+    el.applyRecommendationButton.textContent = index === 0 ? '추천안 1 적용' : `대체안 ${index + 1} 적용`;
+  });
+
   el.applyRecommendationButton.addEventListener('click', () => {
     if (!recommendationIds.length) return;
     patchProfile({ clearedBossIds: normalizeBosses([...activeProfile().clearedBossIds, ...recommendationIds]) }, '추천 미션 적용됨');
     render();
-    toast('추천 미션을 진행도에 적용했습니다.');
+    toast('선택한 추천 미션을 진행도에 적용했습니다.');
   });
 
   el.presetTypeFilter.addEventListener('change', renderPresets);
