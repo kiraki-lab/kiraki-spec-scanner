@@ -101,10 +101,117 @@
     });
   }
 
+  function levelCoinReward(level) {
+    if (level === 260) return 3000;
+    if (level <= 269) return 300;
+    if (level <= 274) return 600;
+    if (level <= 279) return 900;
+    if (level <= 284) return 1200;
+    if (level <= 289) return 1500;
+    return 2500;
+  }
+
+  function levelCoinTotal(level) {
+    const capped = Math.min(Math.max(Math.round(Number(level) || 260), 260), 290);
+    let total = 0;
+    for (let current = 260; current <= capped; current += 1) total += levelCoinReward(current);
+    return total;
+  }
+
+  function parseCoinText(value) {
+    return Number(String(value || '').replace(/[^0-9-]/g, '')) || 0;
+  }
+
+  let coinCorrectionQueued = false;
+  let coinCorrectionActive = false;
+
+  function correctCoinShopLevelCoins() {
+    if (coinCorrectionActive) return;
+    const levelNode = document.querySelector('#coinShopLevelCoins');
+    const totalNode = document.querySelector('#coinShopEstimatedTotal');
+    const normalSummary = document.querySelector('#coinShopNormalSummary');
+    if (!levelNode || !totalNode || typeof activeProfile !== 'function') return;
+
+    coinCorrectionActive = true;
+    try {
+      const correctLevelCoins = levelCoinTotal(activeProfile().level);
+      const bossCoins = parseCoinText(document.querySelector('#coinShopBossCoins')?.textContent);
+      const seasonCoins = parseCoinText(document.querySelector('#coinShopSeasonCoins')?.textContent);
+      const adjustCoins = parseCoinText(document.querySelector('#coinShopAdjustCoins')?.textContent);
+      const correctTotal = correctLevelCoins + bossCoins + seasonCoins + adjustCoins;
+
+      levelNode.textContent = number.format(correctLevelCoins);
+      totalNode.textContent = number.format(correctTotal);
+
+      if (normalSummary) {
+        const spent = parseCoinText(normalSummary.textContent.split('/')[0]);
+        const left = correctTotal - spent;
+        normalSummary.textContent = `${number.format(spent)} / ${number.format(left)}`;
+        normalSummary.classList.toggle('negative', left < 0);
+      }
+    } finally {
+      coinCorrectionActive = false;
+    }
+  }
+
+  function scheduleCoinShopLevelCorrection() {
+    if (coinCorrectionQueued) return;
+    coinCorrectionQueued = true;
+    setTimeout(() => {
+      coinCorrectionQueued = false;
+      correctCoinShopLevelCoins();
+    }, 0);
+  }
+
+  function installCoinShopLevelCoinCorrection() {
+    if (window.__kirakiCoinShopLevelCoinCorrectionInstalled) return;
+    window.__kirakiCoinShopLevelCoinCorrectionInstalled = true;
+
+    if (typeof render === 'function') {
+      const baseRender = render;
+      render = function levelCoinAwareRender(...args) {
+        const result = baseRender.apply(this, args);
+        scheduleCoinShopLevelCorrection();
+        return result;
+      };
+    }
+
+    if (typeof setView === 'function') {
+      const baseSetView = setView;
+      setView = function levelCoinAwareSetView(...args) {
+        const result = baseSetView.apply(this, args);
+        scheduleCoinShopLevelCorrection();
+        return result;
+      };
+    }
+
+    document.addEventListener('input', (event) => {
+      if (event.target.closest?.('.coinshop-panel,#levelInput')) scheduleCoinShopLevelCorrection();
+    }, true);
+    document.addEventListener('change', (event) => {
+      if (event.target.closest?.('.coinshop-panel,#levelInput,[data-boss-checkbox]')) scheduleCoinShopLevelCorrection();
+    }, true);
+    document.addEventListener('click', (event) => {
+      if (event.target.closest?.('.coinshop-panel,[data-boss-floor-toggle],[data-apply-preset]')) scheduleCoinShopLevelCorrection();
+    }, true);
+
+    const panel = document.querySelector('[data-view-panel="coinshop"]');
+    if (panel && typeof MutationObserver !== 'undefined') {
+      const observer = new MutationObserver(() => {
+        if (!coinCorrectionActive) scheduleCoinShopLevelCorrection();
+      });
+      observer.observe(panel, { childList: true, subtree: true, characterData: true });
+    }
+
+    scheduleCoinShopLevelCorrection();
+    setTimeout(scheduleCoinShopLevelCorrection, 120);
+  }
+
   function boot() {
     installStyles();
     installButtons();
     bindEvents();
+    installCoinShopLevelCoinCorrection();
 
     if (typeof renderBosses === 'function' && !window.__kirakiBossFloorRenderWrapped) {
       window.__kirakiBossFloorRenderWrapped = true;
@@ -113,11 +220,13 @@
         const result = baseRenderBosses(forceOpen);
         installButtons();
         syncButtons();
+        scheduleCoinShopLevelCorrection();
         return result;
       };
     }
 
     syncButtons();
+    scheduleCoinShopLevelCorrection();
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot, { once: true });
