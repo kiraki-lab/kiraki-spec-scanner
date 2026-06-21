@@ -8,6 +8,9 @@
   const equalDifficultySet = new Set(equalDifficultyIds);
   const equalDifficultyPool = () => equalDifficultyIds.map((id) => byId.get(id)).filter(Boolean);
   const bossLabel = (boss) => `${boss.difficulty} ${boss.shortBoss || boss.boss}`;
+  const bossIcon = (boss, size = 32) => (
+    typeof window.kirakiBossIconHtml === 'function' ? window.kirakiBossIconHtml(boss, size) : ''
+  );
   const copyOverrides = {
     'emerald-stable-v01': {
       summary: 'Lv.274 + 2,000~3,000점대 동난이도 보스 선택',
@@ -43,6 +46,13 @@
       .sort((a, b) => b.points - a.points || bossLabel(a).localeCompare(bossLabel(b), 'ko'));
   }
 
+  function bossByVisibleLabel(label) {
+    for (const boss of byId.values()) {
+      if (bossLabel(boss) === label) return boss;
+    }
+    return null;
+  }
+
   function applyCopyOverrides(card, preset) {
     const override = copyOverrides[preset.id];
     if (!override) return;
@@ -50,6 +60,17 @@
     const note = card.querySelector('.preset-note');
     if (summary && override.summary) summary.textContent = override.summary;
     if (note && override.note) note.textContent = override.note;
+  }
+
+  function decorateKeyBossChips(card) {
+    card.querySelectorAll('.preset-boss-chip:not(.more)').forEach((chip) => {
+      if (chip.querySelector('.boss-photo-icon')) return;
+      const label = chip.textContent.trim();
+      const boss = bossByVisibleLabel(label);
+      if (!boss) return;
+      chip.classList.add('has-boss-icon');
+      chip.innerHTML = `${bossIcon(boss, 28)}<span>${escapeHtml(label)}</span>`;
+    });
   }
 
   function groupedBosses(targets) {
@@ -80,7 +101,7 @@
         <strong>2,000~3,000점대는 진 힐라를 제외하고 동난이도 선택군으로 봅니다.</strong>
         <p>체감은 사람마다 다르지만, 이 구간에서는 카오스 더스크를 가장 편한 우선 후보로 표시했습니다.</p>
         <div class="preset-flex-list">
-          ${bosses.map((boss) => `<span class="${boss.id === 'dusk-chaos' ? 'preferred' : ''}">${escapeHtml(bossLabel(boss))}</span>`).join('')}
+          ${bosses.map((boss) => `<span class="has-boss-icon ${boss.id === 'dusk-chaos' ? 'preferred' : ''}">${bossIcon(boss, 24)}<span>${escapeHtml(bossLabel(boss))}</span></span>`).join('')}
         </div>
       </div>`;
   }
@@ -108,7 +129,8 @@
               <div class="preset-build-boss-list">
                 ${bosses.map((boss) => `
                   <span class="preset-build-boss${boss.id === 'dusk-chaos' ? ' preferred' : ''}${equalDifficultySet.has(boss.id) ? ' equal' : ''}${boss.series === 'verus-hilla' ? ' excluded' : ''}">
-                    ${escapeHtml(bossLabel(boss))}
+                    ${bossIcon(boss, 34)}
+                    <span class="preset-build-boss-label">${escapeHtml(bossLabel(boss))}</span>
                     <small>${number.format(boss.points)}점${boss.id === 'dusk-chaos' ? ' · 우선 추천' : ''}${boss.series === 'verus-hilla' ? ' · 별도 취급' : ''}</small>
                   </span>`).join('')}
               </div>
@@ -135,6 +157,7 @@
     const targets = targetBossesForPreset(preset);
     const equalContext = hasEqualDifficultyContext(preset, targets);
     applyCopyOverrides(card, preset);
+    decorateKeyBossChips(card);
 
     if (equalContext) {
       const keyLabel = card.querySelector('.preset-key-bosses-label');
