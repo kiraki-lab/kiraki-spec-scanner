@@ -53,9 +53,10 @@ window.MYSTERY_BARRIER_DATA = {
       appliesTo: '사파이어 구간',
       minPoints: 40000,
       recommendation: {
-        gradeId: 'epic',
-        stretchGradeId: 'unique',
-        note: '노멀은 더 이상 나오지 않고 에픽 이상이 70.05%입니다. 뉴비 기준으로는 에픽 이상을 충분히 좋은 결과로 볼 수 있습니다.'
+        gradeId: 'unique',
+        label: '유니크 이상',
+        stretchGradeId: 'legendary',
+        note: '사파이어부터는 유니크 이상을 추천 기준으로 봅니다. 유니크 이상 확률은 7.17%이고, 레전드리는 0.52%입니다.'
       },
       probabilities: { normal: 0.000, rare: 29.950, epic: 62.880, unique: 6.650, legendary: 0.520 }
     },
@@ -66,9 +67,11 @@ window.MYSTERY_BARRIER_DATA = {
       appliesTo: '다이아몬드·마스터·챌린저',
       minPoints: 50000,
       recommendation: {
-        gradeId: 'epic',
-        stretchGradeId: 'unique',
-        note: '에픽 이상은 확정입니다. 에픽을 기본값으로 보고, 유니크 이상 8.15%를 상향 목표로 생각하면 이해하기 쉽습니다.'
+        gradeId: 'unique',
+        label: '유니크~레전드리',
+        stretchGradeId: 'legendary',
+        stretchLabel: '레전드리',
+        note: '다이아몬드부터는 유니크~레전드리를 추천 범위로 봅니다. 유니크 이상 확률은 8.15%, 레전드리는 1.05%입니다.'
       },
       probabilities: { normal: 0.000, rare: 0.000, epic: 91.850, unique: 7.100, legendary: 1.050 }
     }
