@@ -40,6 +40,69 @@
     { id: 'karma-white-additional-cube', shop: 'special', name: '카르마 화이트 에디셔널 큐브', cost: 2, limit: 20, icon: '화에', group: '큐브' }
   ];
 
+  const SEASON_MISSION_GROUPS = [
+    { id: 'authentic-symbol', category: '어센틱', name: '어센틱심볼 성장', steps: [
+      { label: '어센틱심볼 5레벨 달성', coins: 100 },
+      { label: '어센틱심볼 추가 성장 달성', coins: 300 }
+    ] },
+    { id: 'authentic-daily', category: '어센틱', name: '어센틱 일일 퀘스트', steps: [
+      { label: '어센틱 지역 일일 퀘스트 보상 획득', coins: 500 }
+    ] },
+    { id: 'arcane-force', category: '아케인포스', name: '아케인심볼 총합', steps: [
+      { label: '아케인심볼 성장 레벨 총합 60레벨', coins: 100 },
+      { label: '아케인심볼 성장 레벨 총합 80레벨', coins: 300 },
+      { label: '아케인심볼 성장 레벨 총합 100레벨', coins: 500 },
+      { label: '아케인심볼 성장 레벨 총합 120레벨', coins: 1000 }
+    ] },
+    { id: 'authentic-force', category: '어센틱포스', name: '어센틱심볼 총합', steps: [
+      { label: '어센틱심볼 성장 레벨 총합 20레벨', coins: 100 },
+      { label: '어센틱심볼 성장 레벨 총합 25레벨', coins: 100 },
+      { label: '어센틱심볼 성장 레벨 총합 30레벨', coins: 300 },
+      { label: '어센틱심볼 성장 레벨 총합 35레벨', coins: 300 },
+      { label: '어센틱심볼 성장 레벨 총합 40레벨', coins: 500 }
+    ] },
+    { id: 'gear-emblem-legendary', category: '장비', name: '엠블렘 잠재', steps: [
+      { label: '잠재능력 레전드리 엠블렘 장착', coins: 1000 }
+    ] },
+    { id: 'gear-secondary-legendary', category: '장비', name: '보조무기 잠재', steps: [
+      { label: '잠재능력 레전드리 보조 무기 장착', coins: 1000 }
+    ] },
+    { id: 'gear-emblem-additional', category: '장비', name: '엠블렘 에디', steps: [
+      { label: '에디셔널 잠재능력 유니크 이상 엠블렘 장착', coins: 500 }
+    ] },
+    { id: 'gear-secondary-additional', category: '장비', name: '보조무기 에디', steps: [
+      { label: '에디셔널 잠재능력 유니크 이상 보조 무기 장착', coins: 500 }
+    ] },
+    { id: 'fifth-job-core', category: '5차 스킬', name: '직업 코어', steps: [
+      { label: '직업 코어 2개 이상 30레벨', coins: 100 },
+      { label: '직업 코어 4개 이상 30레벨', coins: 300 }
+    ] },
+    { id: 'fifth-enhance-core', category: '5차 스킬', name: '강화 코어', steps: [
+      { label: '강화 코어 2개 이상 60레벨', coins: 100 },
+      { label: '강화 코어 4개 이상 60레벨', coins: 300 }
+    ] },
+    { id: 'hexa-skill', category: 'HEXA 스킬', name: 'HEXA 스킬', steps: [
+      { label: 'HEXA 스킬 활성화', coins: 300 },
+      { label: '솔 에르다 조각 300개 이상 사용', coins: 100 },
+      { label: '솔 에르다 조각 600개 이상 사용', coins: 300 },
+      { label: '솔 에르다 조각 900개 이상 사용', coins: 300 },
+      { label: '솔 에르다 조각 1,200개 이상 사용', coins: 500 },
+      { label: '솔 에르다 조각 1,500개 이상 사용', coins: 500 },
+      { label: '솔 에르다 조각 1,800개 이상 사용', coins: 1000 }
+    ] },
+    { id: 'combat-power', category: '전투력', name: '전투력', steps: [
+      { label: '전투력 100만 달성', coins: 100 },
+      { label: '전투력 3,000만 달성', coins: 300 },
+      { label: '전투력 5,000만 달성', coins: 300 },
+      { label: '전투력 7,000만 달성', coins: 500 },
+      { label: '전투력 1억 달성', coins: 1000 }
+    ] },
+    { id: 'genesis-liberation', category: '무기 해방', name: '제네시스 해방', steps: [
+      { label: '제네시스 1차 해방하기', coins: 500 },
+      { label: '제네시스 2차 해방하기', coins: 1000 }
+    ] }
+  ];
+
   const nf = typeof number !== 'undefined' ? number : new Intl.NumberFormat('ko-KR');
   const safeText = typeof escapeHtml === 'function'
     ? escapeHtml
@@ -53,15 +116,25 @@
     const style = document.createElement('style');
     style.id = 'kirakiCoinShopStyles';
     style.textContent = `
-.view-tabs{grid-template-columns:repeat(auto-fit,minmax(132px,1fr))}.coinshop-tab{position:relative;display:flex;align-items:center;justify-content:center;gap:7px}.coinshop-lock-badge{display:inline-flex;align-items:center;min-height:21px;padding:2px 7px;border-radius:999px;background:#fff1c7;color:#765300;font-size:.62rem;font-weight:900}.coinshop-tab.unlocked .coinshop-lock-badge{background:#e8f7ef;color:#176b46}.coinshop-panel{display:grid;gap:14px}.coinshop-panel *{box-sizing:border-box}.coinshop-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}.coinshop-head h2{margin:0 0 6px;font-size:1.35rem;font-weight:900;letter-spacing:0}.coinshop-head p{margin:0;color:var(--muted);font-size:.86rem;line-height:1.65}.coinshop-private-badge{display:inline-flex;align-items:center;min-height:31px;padding:5px 10px;border:1px solid #ead49a;border-radius:999px;background:#fff7dd;color:#795500;font-size:.73rem;font-weight:900;white-space:nowrap}.coinshop-dashboard{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(300px,.92fr);gap:12px}.coinshop-budget-card,.coinshop-draft-card,.coinshop-memo-card{padding:16px;border:1px solid var(--line);border-radius:14px;background:var(--soft)}.coinshop-card-title{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}.coinshop-card-title strong{font-size:.96rem;font-weight:900}.coinshop-card-title span{color:var(--muted);font-size:.72rem}.coinshop-budget-inputs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.coinshop-budget-inputs label{display:grid;gap:6px;color:var(--ink);font-size:.78rem;font-weight:800}.coinshop-budget-inputs input{width:100%;min-height:44px;padding:0 11px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);font-weight:800;outline:none}.coinshop-budget-inputs input:focus,.coinshop-memo-card textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 15%,transparent)}.coinshop-summary-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:10px}.coinshop-summary{display:grid;gap:3px;padding:10px;border:1px solid var(--line);border-radius:10px;background:var(--surface)}.coinshop-summary span{color:var(--muted);font-size:.68rem;font-weight:700}.coinshop-summary strong{font-size:1rem;font-weight:900}.coinshop-summary strong.negative{color:var(--danger)}.coinshop-draft-card{background:linear-gradient(135deg,color-mix(in srgb,var(--accent2) 65%,var(--surface)),var(--surface))}.coinshop-draft-card h3{margin:0 0 7px;font-size:1.03rem;font-weight:900;letter-spacing:0}.coinshop-draft-card p{margin:0 0 12px;color:var(--muted);font-size:.82rem;line-height:1.65}.coinshop-draft-actions{display:flex;flex-wrap:wrap;gap:7px}.coinshop-category-tabs{display:grid;grid-template-columns:repeat(2,1fr);gap:6px;padding:5px;border:1px solid var(--line);border-radius:12px;background:var(--soft)}.coinshop-category-tab{min-height:40px;border:0;border-radius:8px;background:transparent;color:var(--muted);font-weight:900;cursor:pointer}.coinshop-category-tab.active{background:var(--surface);color:var(--ink);box-shadow:0 5px 13px rgba(31,41,55,.07)}.coinshop-list{display:grid;gap:8px}.coinshop-item{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center;padding:12px 13px;border:1px solid var(--line);border-radius:13px;background:var(--surface)}.coinshop-item.priority{border-color:color-mix(in srgb,var(--accent) 55%,var(--line));box-shadow:inset 3px 0 0 var(--accent)}.coinshop-item-main{display:flex;align-items:center;gap:11px;min-width:0}.coinshop-icon{display:grid;place-items:center;width:44px;height:44px;flex:0 0 44px;border:1px solid var(--line);border-radius:10px;background:var(--soft);font-size:.72rem;font-weight:900;line-height:1.1;text-align:center}.coinshop-item-copy{display:grid;gap:4px;min-width:0}.coinshop-item-copy strong{font-size:.88rem;font-weight:900;line-height:1.35}.coinshop-item-meta{display:flex;flex-wrap:wrap;gap:5px 9px;color:var(--muted);font-size:.7rem;font-weight:700}.coinshop-priority-tag{display:inline-flex;align-items:center;margin-left:5px;padding:2px 7px;border-radius:999px;background:var(--accent2);color:var(--accent);font-size:.65rem;font-weight:900}.coinshop-qty{display:grid;grid-template-columns:32px 68px 32px auto;gap:5px;align-items:center}.coinshop-qty button,.coinshop-qty input{min-height:34px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);font-weight:900}.coinshop-qty button{cursor:pointer}.coinshop-qty button:hover{border-color:var(--accent);color:var(--accent)}.coinshop-qty input{width:68px;padding:0 6px;text-align:center;outline:none}.coinshop-line-total{min-width:78px;text-align:right;color:var(--accent);font-size:.78rem;font-weight:900}.coinshop-memo-card textarea{width:100%;min-height:118px;padding:11px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);font:inherit;font-size:.82rem;line-height:1.65;resize:vertical;outline:none}.coinshop-footnote{margin:0;color:var(--muted);font-size:.72rem;line-height:1.55}
+.view-tabs{grid-template-columns:repeat(auto-fit,minmax(132px,1fr))}.coinshop-tab{position:relative;display:flex;align-items:center;justify-content:center;gap:7px}.coinshop-lock-badge{display:inline-flex;align-items:center;min-height:21px;padding:2px 7px;border-radius:999px;background:#fff1c7;color:#765300;font-size:.62rem;font-weight:900}.coinshop-tab.unlocked .coinshop-lock-badge{background:#e8f7ef;color:#176b46}.coinshop-panel{display:grid;gap:14px}.coinshop-panel *{box-sizing:border-box}.coinshop-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}.coinshop-head h2{margin:0 0 6px;font-size:1.35rem;font-weight:900;letter-spacing:0}.coinshop-head p{margin:0;color:var(--muted);font-size:.86rem;line-height:1.65}.coinshop-private-badge{display:inline-flex;align-items:center;min-height:31px;padding:5px 10px;border:1px solid #ead49a;border-radius:999px;background:#fff7dd;color:#795500;font-size:.73rem;font-weight:900;white-space:nowrap}.coinshop-income-card,.coinshop-budget-card,.coinshop-draft-card,.coinshop-memo-card{padding:16px;border:1px solid var(--line);border-radius:14px;background:var(--soft)}.coinshop-income-card{display:grid;gap:13px;background:linear-gradient(135deg,color-mix(in srgb,#e8fbff 72%,var(--surface)),var(--surface));border-color:color-mix(in srgb,#38bdf8 34%,var(--line))}.coinshop-card-title{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}.coinshop-card-title strong{font-size:.96rem;font-weight:900}.coinshop-card-title span{color:var(--muted);font-size:.72rem}.coinshop-income-card .coinshop-card-title{margin-bottom:0}.coinshop-income-card .coinshop-card-title span{color:#036985;font-weight:850}.coinshop-income-main{display:grid;grid-template-columns:minmax(210px,.72fr) minmax(0,1.28fr);gap:12px}.coinshop-income-total{display:grid;align-content:center;gap:6px;min-height:132px;padding:16px;border:1px solid color-mix(in srgb,#38bdf8 38%,var(--line));border-radius:12px;background:var(--surface)}.coinshop-income-total span{color:var(--muted);font-size:.76rem;font-weight:850}.coinshop-income-total strong{color:#036985;font-size:2rem;font-weight:950;line-height:1}.coinshop-income-total small{color:var(--muted);font-size:.72rem;font-weight:750;line-height:1.45}.coinshop-income-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.coinshop-income-metric{display:grid;gap:4px;min-height:72px;padding:10px;border:1px solid var(--line);border-radius:10px;background:var(--surface)}.coinshop-income-metric span{color:var(--muted);font-size:.68rem;font-weight:850}.coinshop-income-metric strong{font-size:1rem;font-weight:950}.coinshop-season-panel{display:grid;gap:10px}.coinshop-season-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:12px}.coinshop-season-heading strong{font-size:.9rem;font-weight:950}.coinshop-season-heading span{color:var(--muted);font-size:.7rem;font-weight:800}.coinshop-season-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.coinshop-season-select{display:grid;gap:7px;padding:10px;border:1px solid var(--line);border-radius:10px;background:var(--surface)}.coinshop-season-select-title{display:flex;align-items:center;justify-content:space-between;gap:8px}.coinshop-season-select-title strong{font-size:.76rem;font-weight:950}.coinshop-season-select-title small{display:inline-flex;align-items:center;min-height:20px;padding:2px 7px;border-radius:999px;background:color-mix(in srgb,#38bdf8 14%,var(--soft));color:#036985;font-size:.62rem;font-weight:950;white-space:nowrap}.coinshop-season-select select{width:100%;min-height:38px;padding:0 9px;border:1px solid var(--line);border-radius:8px;background:var(--soft);color:var(--ink);font-weight:850;outline:none}.coinshop-season-select select:focus{border-color:#38bdf8;box-shadow:0 0 0 3px rgba(56,189,248,.16)}.coinshop-season-earned{color:#036985;font-size:.68rem;font-weight:950}.coinshop-dashboard{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(300px,.92fr);gap:12px}.coinshop-budget-inputs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.coinshop-budget-inputs label{display:grid;gap:6px;color:var(--ink);font-size:.78rem;font-weight:800}.coinshop-budget-inputs input{width:100%;min-height:44px;padding:0 11px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);font-weight:800;outline:none}.coinshop-budget-inputs input:focus,.coinshop-memo-card textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 15%,transparent)}.coinshop-summary-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:10px}.coinshop-summary{display:grid;gap:3px;padding:10px;border:1px solid var(--line);border-radius:10px;background:var(--surface)}.coinshop-summary span{color:var(--muted);font-size:.68rem;font-weight:700}.coinshop-summary strong{font-size:1rem;font-weight:900}.coinshop-summary strong.negative{color:var(--danger)}.coinshop-draft-card{background:linear-gradient(135deg,color-mix(in srgb,var(--accent2) 65%,var(--surface)),var(--surface))}.coinshop-draft-card h3{margin:0 0 7px;font-size:1.03rem;font-weight:900;letter-spacing:0}.coinshop-draft-card p{margin:0 0 12px;color:var(--muted);font-size:.82rem;line-height:1.65}.coinshop-draft-actions{display:flex;flex-wrap:wrap;gap:7px}.coinshop-category-tabs{display:grid;grid-template-columns:repeat(2,1fr);gap:6px;padding:5px;border:1px solid var(--line);border-radius:12px;background:var(--soft)}.coinshop-category-tab{min-height:40px;border:0;border-radius:8px;background:transparent;color:var(--muted);font-weight:900;cursor:pointer}.coinshop-category-tab.active{background:var(--surface);color:var(--ink);box-shadow:0 5px 13px rgba(31,41,55,.07)}.coinshop-list{display:grid;gap:8px}.coinshop-item{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center;padding:12px 13px;border:1px solid var(--line);border-radius:13px;background:var(--surface)}.coinshop-item.priority{border-color:color-mix(in srgb,var(--accent) 55%,var(--line));box-shadow:inset 3px 0 0 var(--accent)}.coinshop-item-main{display:flex;align-items:center;gap:11px;min-width:0}.coinshop-icon{display:grid;place-items:center;width:44px;height:44px;flex:0 0 44px;border:1px solid var(--line);border-radius:10px;background:var(--soft);font-size:.72rem;font-weight:900;line-height:1.1;text-align:center}.coinshop-item-copy{display:grid;gap:4px;min-width:0}.coinshop-item-copy strong{font-size:.88rem;font-weight:900;line-height:1.35}.coinshop-item-meta{display:flex;flex-wrap:wrap;gap:5px 9px;color:var(--muted);font-size:.7rem;font-weight:700}.coinshop-priority-tag{display:inline-flex;align-items:center;margin-left:5px;padding:2px 7px;border-radius:999px;background:var(--accent2);color:var(--accent);font-size:.65rem;font-weight:900}.coinshop-qty{display:grid;grid-template-columns:32px 68px 32px auto;gap:5px;align-items:center}.coinshop-qty button,.coinshop-qty input{min-height:34px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);font-weight:900}.coinshop-qty button{cursor:pointer}.coinshop-qty button:hover{border-color:var(--accent);color:var(--accent)}.coinshop-qty input{width:68px;padding:0 6px;text-align:center;outline:none}.coinshop-line-total{min-width:78px;text-align:right;color:var(--accent);font-size:.78rem;font-weight:900}.coinshop-memo-card textarea{width:100%;min-height:118px;padding:11px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);font:inherit;font-size:.82rem;line-height:1.65;resize:vertical;outline:none}.coinshop-footnote{margin:0;color:var(--muted);font-size:.72rem;line-height:1.55}
+@media(max-width:1020px){.coinshop-income-main{grid-template-columns:1fr}.coinshop-season-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.coinshop-income-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:900px){.coinshop-dashboard{grid-template-columns:1fr}.coinshop-item{grid-template-columns:1fr}.coinshop-qty{justify-content:start}.coinshop-line-total{text-align:left}}
-@media(max-width:700px){.view-tabs{grid-template-columns:repeat(2,minmax(0,1fr))}.coinshop-head{flex-direction:column}.coinshop-budget-inputs{grid-template-columns:1fr}.coinshop-item-main{align-items:flex-start}.coinshop-qty{grid-template-columns:36px 72px 36px auto}.coinshop-item-copy strong{font-size:.84rem}}
+@media(max-width:700px){.view-tabs{grid-template-columns:repeat(2,minmax(0,1fr))}.coinshop-head{flex-direction:column}.coinshop-budget-inputs,.coinshop-season-grid,.coinshop-income-grid{grid-template-columns:1fr}.coinshop-item-main{align-items:flex-start}.coinshop-qty{grid-template-columns:36px 72px 36px auto}.coinshop-item-copy strong{font-size:.84rem}.coinshop-income-total strong{font-size:1.65rem}}
 @media(max-width:430px){.view-tabs{grid-template-columns:1fr}.coinshop-qty{grid-template-columns:34px 64px 34px}.coinshop-line-total{grid-column:1/-1}.coinshop-draft-actions{display:grid}.coinshop-draft-actions .button{width:100%}}`;
     document.head.append(style);
   }
 
+  function normalizeSeasonSelections(raw) {
+    const source = raw && typeof raw === 'object' ? raw : {};
+    return Object.fromEntries(SEASON_MISSION_GROUPS.map((group) => {
+      const value = Math.round(Number(source[group.id]));
+      const selected = Number.isFinite(value) ? Math.min(Math.max(value, -1), group.steps.length - 1) : -1;
+      return [group.id, selected];
+    }));
+  }
+
   function makeDefaultState() {
-    return { category: 'normal', budgets: { normal: 0, special: 0 }, quantities: {}, memo: DEFAULT_MEMO };
+    return { category: 'normal', budgets: { normal: 0, special: 0 }, seasonMissions: normalizeSeasonSelections(), quantities: {}, memo: DEFAULT_MEMO };
   }
 
   function loadState() {
@@ -74,6 +147,7 @@
           normal: Math.max(0, Math.round(Number(parsed.budgets?.normal) || 0)),
           special: Math.max(0, Math.round(Number(parsed.budgets?.special) || 0))
         },
+        seasonMissions: normalizeSeasonSelections(parsed.seasonMissions),
         quantities: parsed.quantities && typeof parsed.quantities === 'object' ? parsed.quantities : {},
         memo: typeof parsed.memo === 'string' ? parsed.memo : DEFAULT_MEMO
       };
@@ -111,6 +185,53 @@
     return ITEMS.filter((item) => item.shop === shop).reduce((sum, item) => sum + quantityFor(item) * item.cost, 0);
   }
 
+  function activeProfileSafe() {
+    try { return typeof activeProfile === 'function' ? activeProfile() : null; } catch { return null; }
+  }
+
+  function levelMissionCoins() {
+    const profile = activeProfileSafe();
+    if (!profile) return 0;
+    if (typeof levelPoints === 'function') return levelPoints(profile.level);
+    const data = typeof DATA !== 'undefined' ? DATA : window.CHALLENGERS_DATA;
+    return (data?.levelMissions || [])
+      .filter((mission) => mission.level <= profile.level)
+      .reduce((sum, mission) => sum + (Number(mission.points) || 0), 0);
+  }
+
+  function bossMissionCoins() {
+    const profile = activeProfileSafe();
+    if (!profile) return 0;
+    if (typeof bossPoints === 'function') return bossPoints(profile.clearedBossIds);
+    const data = typeof DATA !== 'undefined' ? DATA : window.CHALLENGERS_DATA;
+    const byBossId = new Map((data?.bossMissions || []).map((boss) => [boss.id, boss]));
+    return [...new Set(profile.clearedBossIds || [])].reduce((sum, id) => sum + (Number(byBossId.get(id)?.points) || 0), 0);
+  }
+
+  function selectedSeasonIndex(group) {
+    const value = Math.round(Number(state.seasonMissions?.[group.id]));
+    if (!Number.isFinite(value)) return -1;
+    return Math.min(Math.max(value, -1), group.steps.length - 1);
+  }
+
+  function seasonCoinsForGroup(group) {
+    const index = selectedSeasonIndex(group);
+    if (index < 0) return 0;
+    return group.steps.slice(0, index + 1).reduce((sum, step) => sum + step.coins, 0);
+  }
+
+  function seasonMissionCoins() {
+    return SEASON_MISSION_GROUPS.reduce((sum, group) => sum + seasonCoinsForGroup(group), 0);
+  }
+
+  function completedSeasonMissionCount() {
+    return SEASON_MISSION_GROUPS.reduce((sum, group) => sum + Math.max(0, selectedSeasonIndex(group) + 1), 0);
+  }
+
+  function availableNormalBudget() {
+    return levelMissionCoins() + bossMissionCoins() + seasonMissionCoins() + state.budgets.normal;
+  }
+
   function insertUi() {
     const nav = document.querySelector('.view-tabs');
     const footer = document.querySelector('.page-note');
@@ -134,16 +255,36 @@
           <div>
             <p class="section-kicker">코인샵 기획</p>
             <h2 id="coinShopTitle">챌섭 코인샵</h2>
-            <p>구매 수량과 예산을 맞춰보는 내부 작업 화면입니다. 공개 전까지 키라키 모드에서만 열립니다.</p>
+            <p>현재 캐릭터의 레벨·보스 진행도와 시즌 미션 선택을 합쳐 구매 예산을 계산합니다.</p>
           </div>
           <span class="coinshop-private-badge">키라키 모드 전용 · 공개 준비 중</span>
         </div>
+        <article class="coinshop-income-card" aria-labelledby="coinShopIncomeTitle">
+          <div class="coinshop-card-title"><strong id="coinShopIncomeTitle">코인 지급 계산</strong><span>레벨·보스 자동 반영 + 시즌 미션 선택</span></div>
+          <div class="coinshop-income-main">
+            <div class="coinshop-income-total">
+              <span>예상 챌린저스 코인</span>
+              <strong id="coinShopEstimatedTotal">0</strong>
+              <small id="coinShopEstimatedMeta">시즌 미션 0개 반영</small>
+            </div>
+            <div class="coinshop-income-grid">
+              <div class="coinshop-income-metric"><span>레벨 미션</span><strong id="coinShopLevelCoins">0</strong></div>
+              <div class="coinshop-income-metric"><span>보스 미션</span><strong id="coinShopBossCoins">0</strong></div>
+              <div class="coinshop-income-metric"><span>시즌 미션</span><strong id="coinShopSeasonCoins">0</strong></div>
+              <div class="coinshop-income-metric"><span>수동 보정</span><strong id="coinShopAdjustCoins">0</strong></div>
+            </div>
+          </div>
+          <div class="coinshop-season-panel">
+            <div class="coinshop-season-heading"><strong>시즌 미션 입력</strong><span>선택한 단계까지 같은 파트 하위 미션을 자동 합산합니다.</span></div>
+            <div class="coinshop-season-grid" id="coinShopSeasonMissions"></div>
+          </div>
+        </article>
         <div class="coinshop-dashboard">
           <article class="coinshop-budget-card">
-            <div class="coinshop-card-title"><strong>보유 코인과 구매 합계</strong><span>직접 입력</span></div>
+            <div class="coinshop-card-title"><strong>보유 코인과 구매 합계</strong><span>예상 지급 + 보정값</span></div>
             <div class="coinshop-budget-inputs">
-              <label>챌린저스 코인<input id="coinShopNormalBudget" type="number" min="0" step="1" inputmode="numeric" /></label>
-              <label>상급 챌린저스 코인<input id="coinShopSpecialBudget" type="number" min="0" step="1" inputmode="numeric" /></label>
+              <label><span>수동 보정 코인</span><input id="coinShopNormalBudget" type="number" min="0" step="1" inputmode="numeric" /></label>
+              <label><span>상급 챌린저스 코인</span><input id="coinShopSpecialBudget" type="number" min="0" step="1" inputmode="numeric" /></label>
             </div>
             <div class="coinshop-summary-grid">
               <div class="coinshop-summary"><span>일반 사용 / 잔여</span><strong id="coinShopNormalSummary">0 / 0</strong></div>
@@ -168,7 +309,7 @@
           <div class="coinshop-card-title"><strong>영상 메모</strong><span>짧은 지연 저장</span></div>
           <textarea id="coinShopMemo" aria-label="코인샵 영상 메모"></textarea>
         </article>
-        <p class="coinshop-footnote">상품과 가격은 제공된 코인샵 이미지 기준 1차 입력입니다. 수량 제한이 화면에 표시되지 않은 항목은 추후 확인할 수 있습니다.</p>
+        <p class="coinshop-footnote">레벨·보스 미션은 현재 계산기의 미션 지급값을 그대로 합산합니다. 시즌 미션은 표 기준 1차 입력이며, 애매한 항목명은 추후 원본 표에 맞춰 더 다듬을 수 있습니다.</p>
       </section>`;
     footer.parentNode.insertBefore(panel, footer);
     tab.addEventListener('click', () => setView('coinshop', { scroll: true }));
@@ -183,10 +324,57 @@
     if (badge) badge.textContent = unlocked ? '전용 열림' : '키라키';
   }
 
+  function renderIncome() {
+    const levelCoins = levelMissionCoins();
+    const bossCoins = bossMissionCoins();
+    const seasonCoins = seasonMissionCoins();
+    const adjusted = state.budgets.normal;
+    const total = levelCoins + bossCoins + seasonCoins + adjusted;
+    const fields = [
+      ['#coinShopEstimatedTotal', total],
+      ['#coinShopLevelCoins', levelCoins],
+      ['#coinShopBossCoins', bossCoins],
+      ['#coinShopSeasonCoins', seasonCoins],
+      ['#coinShopAdjustCoins', adjusted]
+    ];
+    fields.forEach(([selector, value]) => {
+      const node = document.querySelector(selector);
+      if (node) node.textContent = nf.format(value);
+    });
+    const meta = document.querySelector('#coinShopEstimatedMeta');
+    if (meta) meta.textContent = `시즌 미션 ${completedSeasonMissionCount()}개 반영`;
+  }
+
+  function renderSeasonMissions() {
+    const wrap = document.querySelector('#coinShopSeasonMissions');
+    if (!wrap) return;
+    wrap.innerHTML = SEASON_MISSION_GROUPS.map((group) => {
+      const selected = selectedSeasonIndex(group);
+      const earned = seasonCoinsForGroup(group);
+      let cumulative = 0;
+      const options = [`<option value="-1"${selected < 0 ? ' selected' : ''}>미완료</option>`]
+        .concat(group.steps.map((step, index) => {
+          cumulative += step.coins;
+          const label = group.steps.length === 1
+            ? `${step.label} 완료 · +${nf.format(cumulative)}`
+            : `${step.label}까지 · 누적 ${nf.format(cumulative)}`;
+          return `<option value="${index}"${selected === index ? ' selected' : ''}>${safeText(label)}</option>`;
+        })).join('');
+      return `
+        <label class="coinshop-season-select">
+          <span class="coinshop-season-select-title"><strong>${safeText(group.name)}</strong><small>${safeText(group.category)}</small></span>
+          <select data-season-mission="${safeText(group.id)}" aria-label="${safeText(group.name)} 시즌 미션 진행도">
+            ${options}
+          </select>
+          <span class="coinshop-season-earned">반영 ${nf.format(earned)} 코인</span>
+        </label>`;
+    }).join('');
+  }
+
   function renderSummary() {
     const normalSpent = spentFor('normal');
     const specialSpent = spentFor('special');
-    const normalLeft = state.budgets.normal - normalSpent;
+    const normalLeft = availableNormalBudget() - normalSpent;
     const specialLeft = state.budgets.special - specialSpent;
     const normal = document.querySelector('#coinShopNormalSummary');
     const special = document.querySelector('#coinShopSpecialSummary');
@@ -238,6 +426,8 @@
     if (normalBudget) normalBudget.value = state.budgets.normal;
     if (specialBudget) specialBudget.value = state.budgets.special;
     if (memo) memo.value = state.memo;
+    renderIncome();
+    renderSeasonMissions();
     renderItems();
   }
 
@@ -246,7 +436,7 @@
     if (!item) return;
     let qty = Math.max(0, Math.round(Number(nextValue) || 0));
     if (item.limit !== null) qty = Math.min(qty, item.limit);
-    state.quantities[id] = qty;
+    state.quantities[item.id] = qty;
     saveStateNow();
     renderItems();
   }
@@ -255,6 +445,7 @@
     document.querySelector('#coinShopNormalBudget')?.addEventListener('input', (event) => {
       state.budgets.normal = Math.max(0, Math.round(Number(event.target.value) || 0));
       saveStateSoon();
+      renderIncome();
       renderSummary();
     });
     document.querySelector('#coinShopSpecialBudget')?.addEventListener('input', (event) => {
@@ -265,6 +456,15 @@
     document.querySelector('#coinShopMemo')?.addEventListener('input', (event) => {
       state.memo = event.target.value;
       saveStateSoon();
+    });
+    document.querySelector('#coinShopSeasonMissions')?.addEventListener('change', (event) => {
+      const select = event.target.closest('[data-season-mission]');
+      if (!select) return;
+      const group = SEASON_MISSION_GROUPS.find((item) => item.id === select.dataset.seasonMission);
+      if (!group) return;
+      state.seasonMissions[group.id] = Math.min(Math.max(Math.round(Number(select.value)), -1), group.steps.length - 1);
+      saveStateNow();
+      renderState();
     });
     document.querySelector('.coinshop-category-tabs')?.addEventListener('click', (event) => {
       const button = event.target.closest('[data-coinshop-category]');
@@ -304,8 +504,20 @@
     });
   }
 
+  function wrapRender() {
+    if (window.__kirakiCoinShopRenderWrapped || typeof render !== 'function') return;
+    window.__kirakiCoinShopRenderWrapped = true;
+    const baseRender = render;
+    render = function coinShopAwareRender(...args) {
+      const result = baseRender.apply(this, args);
+      renderState();
+      return result;
+    };
+  }
+
   installStyles();
   insertUi();
+  wrapRender();
 
   const baseSetView = setView;
   setView = function coinShopAwareSetView(nextView, options = {}) {
