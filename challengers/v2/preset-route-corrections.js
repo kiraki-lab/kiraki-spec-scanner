@@ -7,13 +7,13 @@
   const routeFixes = {
     'sapphire-video-40k-normal-will-no-hilla-v01': {
       name: '4만점 Lv.282 노멀 윌형 (하드 윌 제외)',
-      summary: 'Lv.282 + 포함: 노멀 윌 (제외: 하드 윌)',
-      note: '노멀 윌을 포함하고 하드 윌은 제외하는 루트입니다. 진 힐라는 이 루트에 포함하지 않고, 3,000점 이하 나머지 보스는 완료 기준입니다. 총 40,500점.',
-      noticeTitle: '이 빌드는 하드 윌 제외, 노멀 윌 포함 루트입니다.',
-      noticeBody: '사용자 기준: Lv.282에서 노멀 윌을 포함하고 하드 윌은 잡지 않는 40,500점 빌드입니다.',
-      groupTitle: '동난이도 선택군 · 하드 윌 제외 루트',
+      summary: 'Lv.282 + 포함: 노멀 윌 (제외: 하드 윌·진 힐라)',
+      note: '노멀 윌을 포함하고 하드 윌은 제외하는 루트입니다. 진 힐라는 노멀·하드 모두 제외하고, 3,000점 이하 나머지 보스는 완료 기준입니다. 총 40,500점.',
+      noticeTitle: '이 빌드는 노멀 윌 포함, 하드 윌 제외 루트입니다.',
+      noticeBody: 'Lv.282에서 노멀 윌을 잡고 하드 윌은 제외합니다. 진 힐라도 노멀·하드 모두 제외 기준입니다.',
+      groupTitle: '동난이도 선택군 · 하드 윌/진 힐라 제외',
       includedIds: ['will-normal'],
-      excludedIds: ['will-hard']
+      excludedIds: ['will-hard', 'verus-hilla-normal', 'verus-hilla-hard']
     }
   };
 
@@ -70,7 +70,8 @@
 
   function applyCardFixes() {
     Object.entries(routeFixes).forEach(([presetId, fix]) => {
-      const applyButton = document.querySelector(`[data-apply-preset="${CSS.escape(presetId)}"]`);
+      const escapedId = typeof CSS !== 'undefined' && CSS.escape ? CSS.escape(presetId) : presetId.replace(/"/g, '\\"');
+      const applyButton = document.querySelector(`[data-apply-preset="${escapedId}"]`);
       const card = applyButton?.closest('.preset-card, .preset-card-readable');
       if (!card) return;
 
@@ -85,7 +86,7 @@
       if (flexNote) flexNote.innerHTML = routeNoticeHtml(fix);
 
       card.querySelectorAll('.preset-build-group-title span:first-child').forEach((label) => {
-        if (label.textContent.includes('진 힐라 제외')) label.textContent = fix.groupTitle;
+        if (label.textContent.includes('진 힐라 제외') || label.textContent.includes('하드 윌')) label.textContent = fix.groupTitle;
       });
     });
   }
@@ -108,7 +109,7 @@
       };
     }
 
-    if (el?.presetGrid) {
+    if (typeof el !== 'undefined' && el?.presetGrid) {
       const observer = new MutationObserver(() => requestAnimationFrame(applyCardFixes));
       observer.observe(el.presetGrid, { childList: true, subtree: true });
     }
