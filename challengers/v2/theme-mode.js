@@ -24,19 +24,33 @@
     }
   }
 
-  function loadCoinShop() {
-    if (document.querySelector('script[data-kiraki-coinshop]')) return;
+  function loadScript(src, marker, callback) {
+    const attribute = `data-feature-${marker}`;
+    if (document.querySelector(`script[${attribute}]`)) {
+      callback?.();
+      return;
+    }
     const script = document.createElement('script');
-    script.src = './coinshop.js?v=0.1.0';
-    script.dataset.kirakiCoinshop = 'true';
+    script.src = src;
+    script.setAttribute(attribute, 'true');
     script.async = false;
+    script.addEventListener('load', () => callback?.(), { once: true });
+    script.addEventListener('error', () => callback?.(), { once: true });
     document.body.append(script);
+  }
+
+  function loadFeatureModules() {
+    loadScript('./mystery-barrier-data.js?v=1.1.0', 'mystery-barrier-data', () => {
+      loadScript('./mystery-barrier.js?v=1.1.0', 'mystery-barrier', () => {
+        loadScript('./coinshop.js?v=0.1.0', 'kiraki-coinshop');
+      });
+    });
   }
 
   const initialTheme = root.classList.contains('theme-kiraki') ? 'kiraki' : 'clean';
   applyTheme(initialTheme, false);
   button?.addEventListener('click', () => applyTheme(root.classList.contains('theme-kiraki') ? 'clean' : 'kiraki'));
 
-  if (document.readyState === 'complete') loadCoinShop();
-  else window.addEventListener('load', loadCoinShop, { once: true });
+  if (document.readyState === 'complete') loadFeatureModules();
+  else window.addEventListener('load', loadFeatureModules, { once: true });
 })();
