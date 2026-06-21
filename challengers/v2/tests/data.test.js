@@ -53,12 +53,11 @@ assert.equal(levelPoints(282), 18700);
 assert.equal(levelPoints(284), 21700);
 assert.equal(bossPointsAtOrBelow(3000), 29300);
 assert.equal(levelPoints(276) + bossPointsAtOrBelow(3000), 40500);
-assert.deepEqual(
-  data.buildTypes.map((type) => type.id),
-  ['balanced', 'hunting', 'boss', 'newbie', 'custom']
-);
+assert.deepEqual(data.buildTypes.map((type) => type.id), ['hunting', 'boss']);
+assert.deepEqual(data.buildTypes.map((type) => type.name), ['사냥 빌드', '보스 빌드']);
 assert.equal(new Set(data.bossMissions.map((boss) => boss.id)).size, data.bossMissions.length);
 assert.equal(new Set(data.presets.map((preset) => preset.id)).size, data.presets.length);
+assert.ok(data.presets.every((preset) => ['hunting', 'boss'].includes(preset.type)), '모든 빌드는 두 유형 중 하나여야 합니다.');
 
 const expected = {
   'bronze-stable-v01': 5300,
