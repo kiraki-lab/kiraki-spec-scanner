@@ -23,6 +23,10 @@
     },
     'sapphire-video-40k-no-hilla-v01': {
       note: '포함 보스는 하드 윌입니다. 진 힐라는 노멀·하드 모두 제외하고, 3,000점 이하 나머지 보스는 완료 기준입니다. 총 40,000점.'
+    },
+    'sapphire-video-40k-normal-will-no-hilla-v01': {
+      summary: 'Lv.282 + 포함: 노멀 윌 (제외: 하드 윌·진 힐라)',
+      note: '노멀 윌을 포함하고 하드 윌은 제외하는 루트입니다. 진 힐라는 노멀·하드 모두 제외하고, 3,000점 이하 나머지 보스는 완료 기준입니다. 총 40,500점.'
     }
   };
 
@@ -71,8 +75,10 @@
   function applyCopyOverrides(card, preset) {
     const override = copyOverrides[preset.id];
     if (!override) return;
+    const title = card.querySelector('h3');
     const summary = card.querySelector('.preset-summary');
     const note = card.querySelector('.preset-note');
+    if (title && override.name) title.textContent = override.name;
     if (summary && override.summary) summary.textContent = override.summary;
     if (note && override.note) note.textContent = override.note;
   }
@@ -124,6 +130,20 @@
         </div>`;
     }
 
+    if (preset.id === 'sapphire-video-40k-normal-will-no-hilla-v01') {
+      const includedBosses = ['will-normal'].map((id) => byId.get(id)).filter(Boolean);
+      const excludedBosses = ['will-hard', 'verus-hilla-normal', 'verus-hilla-hard'].map((id) => byId.get(id)).filter(Boolean);
+      return `
+        <div class="preset-flex-note" data-preset-flex-note>
+          <strong>이 빌드는 노멀 윌 포함, 하드 윌 제외 루트입니다.</strong>
+          <p>Lv.282에서 노멀 윌을 잡고 하드 윌은 제외합니다. 진 힐라도 노멀·하드 모두 제외 기준입니다.</p>
+          <div class="preset-flex-list">
+            ${includedBosses.map((boss) => statusChipHtml(boss, 'included', inclusionBadgeHtml())).join('')}
+            ${excludedBosses.map((boss) => statusChipHtml(boss, 'excluded', exclusionBadgeHtml())).join('')}
+          </div>
+        </div>`;
+    }
+
     const bosses = equalDifficultyPool();
     const excludedBosses = excludedDifficultyPool();
     return `
@@ -139,6 +159,7 @@
 
   function buildGroupTitle(key, preset) {
     if (key === '2000-3000' && preset?.id === 'sapphire-video-40k-normal-will-hilla-v01') return '동난이도 선택군 · 하드 윌 제외 루트';
+    if (key === '2000-3000' && preset?.id === 'sapphire-video-40k-normal-will-no-hilla-v01') return '동난이도 선택군 · 하드 윌/진 힐라 제외';
     if (key === '2000-3000') return '동난이도 선택군 · 진 힐라 제외';
     return `${number.format(Number(key))}점 구간`;
   }
