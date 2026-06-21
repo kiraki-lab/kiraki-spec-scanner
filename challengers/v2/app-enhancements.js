@@ -58,20 +58,33 @@
     el.adminOpenButton.textContent = unlocked ? '키라키 모드 열림' : '키라키 모드';
   };
 
+  let labelSyncing = false;
+
   function syncKirakiLabels() {
-    document.querySelectorAll('.status-badge.custom').forEach((badge) => { badge.textContent = '키라키 추가'; });
-    const targets = [el.adminPresetList, el.saveStatus].filter(Boolean);
-    targets.forEach((target) => {
-      const walker = document.createTreeWalker(target, NodeFilter.SHOW_TEXT);
-      const nodes = [];
-      while (walker.nextNode()) nodes.push(walker.currentNode);
-      nodes.forEach((node) => {
-        if (node.nodeValue?.includes('관리자')) node.nodeValue = replaceModeWord(node.nodeValue);
+    if (labelSyncing) return;
+    labelSyncing = true;
+
+    try {
+      document.querySelectorAll('.status-badge.custom').forEach((badge) => {
+        if (badge.textContent !== '키라키 추가') badge.textContent = '키라키 추가';
       });
-    });
+
+      const targets = [el.adminPresetList, el.saveStatus].filter(Boolean);
+      targets.forEach((target) => {
+        const walker = document.createTreeWalker(target, NodeFilter.SHOW_TEXT);
+        const nodes = [];
+        while (walker.nextNode()) nodes.push(walker.currentNode);
+        nodes.forEach((node) => {
+          const nextValue = replaceModeWord(node.nodeValue);
+          if (nextValue !== node.nodeValue) node.nodeValue = nextValue;
+        });
+      });
+    } finally {
+      labelSyncing = false;
+    }
   }
 
-  const labelObserver = new MutationObserver(syncKirakiLabels);
+  const labelObserver = new MutationObserver(() => requestAnimationFrame(syncKirakiLabels));
   if (el.presetGrid) labelObserver.observe(el.presetGrid, { childList: true, subtree: true });
   if (el.adminPresetList) labelObserver.observe(el.adminPresetList, { childList: true, subtree: true });
 
