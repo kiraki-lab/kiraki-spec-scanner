@@ -7,6 +7,7 @@ const STORAGE_KEY = 'kiraki-challengers-calculator:v1';
 const ADMIN_SESSION_KEY = 'kiraki-challengers-admin-unlocked';
 const VIEW_SESSION_KEY = 'kiraki-challengers-active-view';
 const STORE_VERSION = 2;
+const AUTO_SAVE_INTERVAL = 5 * 60 * 1000;
 const ADMIN_KEY_HASH = 'e0bc60c82713f64ef8a57c0c40d02ce24fd0141d5cc3086259c19b1e62a62bea';
 const number = new Intl.NumberFormat('ko-KR');
 const byId = new Map(DATA.bossMissions.map((boss) => [boss.id, boss]));
@@ -19,6 +20,8 @@ let adminDraftBossIds = [];
 let saveTimer = null;
 let levelTimer = null;
 let toastTimer = null;
+let storeDirty = false;
+let lastSaveReason = '';
 
 DATA.bossMissions.forEach((boss) => {
   if (!bySeries.has(boss.series)) bySeries.set(boss.series, []);
@@ -181,15 +184,84 @@ function loadStore() {
 
 let store = loadStore();
 function activeProfile() { return store.profiles.find((profile) => profile.id === store.activeProfileId) || store.profiles[0]; }
-function save(message = '자동 저장됨') {
-  if (!canStore) { el.saveStatus.textContent = '브라우저 저장 제한'; return; }
+
+function updateSaveStatus(text) {
+  if (el.saveStatus) el.saveStatus.textContent = text;
+}
+
+function manualSaveButton() {
+  let button = document.querySelector('#manualSaveButton');
+  if (button) return button;
+  const popover = document.querySelector('.utility-popover');
+  if (!popover) return null;
+
+  button = document.createElement('button');
+  button.type = 'button';
+  button.id = 'manualSaveButton';
+  button.className = 'button ghost small';
+  button.textContent = '수동 저장';
+  button.addEventListener('click', () => persistStore('수동 저장됨'));
+  popover.prepend(button);
+  return button;
+}
+
+function updateManualSaveButton() {
+  const button = manualSaveButton();
+  if (!button) return;
+  button.classList.toggle('primary', storeDirty);
+  button.classList.toggle('ghost', !storeDirty);
+  button.textContent = storeDirty ? '수동 저장 필요' : '수동 저장';
+}
+
+function persistStore(message = '저장됨', options = {}) {
+  if (!canStore) {
+    if (!options.silent) updateSaveStatus('브라우저 저장 제한');
+    return false;
+  }
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(store));
-    el.saveStatus.textContent = message;
-    clearTimeout(saveTimer);
-    saveTimer = setTimeout(() => { el.saveStatus.textContent = '자동 저장 켜짐'; }, 1400);
-  } catch { el.saveStatus.textContent = '저장 실패 · 백업 권장'; }
+    storeDirty = false;
+    lastSaveReason = '';
+    updateManualSaveButton();
+    if (!options.silent) {
+      updateSaveStatus(message);
+      clearTimeout(saveTimer);
+      saveTimer = setTimeout(() => updateSaveStatus('5분 자동 저장 · 수동 저장 가능'), 1800);
+    }
+    return true;
+  } catch {
+    if (!options.silent) updateSaveStatus('저장 실패 · 백업 권장');
+    return false;
+  }
 }
+
+function save(message = '변경됨') {
+  manualSaveButton();
+  if (message === '자동 저장 켜짐') {
+    updateManualSaveButton();
+    updateSaveStatus('5분 자동 저장 · 수동 저장 가능');
+    return;
+  }
+  storeDirty = true;
+  lastSaveReason = message;
+  updateManualSaveButton();
+  updateSaveStatus('변경됨 · 수동 저장 필요');
+}
+
+function flushPendingStore() {
+  if (!storeDirty) return;
+  persistStore('', { silent: true });
+}
+
+setInterval(() => {
+  if (!storeDirty) return;
+  persistStore(lastSaveReason ? `5분 자동 저장됨 · ${lastSaveReason}` : '5분 자동 저장됨');
+}, AUTO_SAVE_INTERVAL);
+window.addEventListener('pagehide', flushPendingStore);
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'hidden') flushPendingStore();
+});
+
 function patchProfile(patch, message) { Object.assign(activeProfile(), patch, { updatedAt: new Date().toISOString() }); save(message); }
 function levelPoints(level) { return DATA.levelMissions.filter((mission) => mission.level <= level).reduce((sum, mission) => sum + mission.points, 0); }
 function bossPoints(ids) { return [...new Set(ids || [])].reduce((sum, id) => sum + (byId.get(id)?.points || 0), 0); }
