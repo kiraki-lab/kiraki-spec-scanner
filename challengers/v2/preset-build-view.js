@@ -1,41 +1,31 @@
 (() => {
   'use strict';
 
-  if (window.__kirakiPresetBuildViewLoaded) return;
+  if (window.__kirakiPresetBuildViewVersion === '0.1.8') return;
+  window.__kirakiPresetBuildViewVersion = '0.1.8';
   window.__kirakiPresetBuildViewLoaded = true;
 
   const equalDifficultyIds = ['dusk-chaos', 'lucid-hard', 'will-hard', 'guardian-angel-slime-chaos', 'gloom-hard'];
-  const excludedDifficultyIds = ['verus-hilla-normal', 'verus-hilla-hard'];
   const equalDifficultySet = new Set(equalDifficultyIds);
-  const equalDifficultyPool = () => equalDifficultyIds.map((id) => byId.get(id)).filter(Boolean);
-  const excludedDifficultyPool = () => excludedDifficultyIds.map((id) => byId.get(id)).filter(Boolean);
+  const titleOverrides = {
+    'bronze-stable-v01': '브론즈 Lv.260 400점 이하형',
+    'silver-stable-v01': '실버 Lv.264 노멀 루시드·윌형',
+    'gold-stable-v01': '골드 Lv.266 하드 스우형',
+    'platinum-stable-v01': '플래티넘 Lv.270 하드 루시드형',
+    'emerald-stable-v01': '에메랄드 Lv.274 하드 윌·카오스 가엔슬형'
+  };
+
   const bossLabel = (boss) => `${boss.difficulty} ${boss.shortBoss || boss.boss}`;
   const bossIcon = (boss, size = 32) => (
     typeof window.kirakiBossIconHtml === 'function' ? window.kirakiBossIconHtml(boss, size) : ''
   );
-  const copyOverrides = {
-    'emerald-stable-v01': {
-      summary: 'Lv.274 + 2,000~3,000점대 동난이도 보스 선택',
-      note: '진 힐라를 제외하면 2,000~3,000점대는 동난이도 선택군으로 봅니다. 가장 편한 우선 후보는 카오스 더스크이며, 하드 루시드·하드 윌·카오스 가엔슬·하드 듄켈 중 가능한 보스로 조정하세요.'
-    },
-    'emerald-video-30k-v01': {
-      note: '포함 보스는 하드 스우·하드 데미안·카오스 더스크입니다. 진 힐라는 노멀·하드 모두 제외하고, 나머지는 노멀 구간 위주로 채우는 30,000점 루트입니다.'
-    },
-    'sapphire-video-40k-no-hilla-v01': {
-      note: '포함 보스는 하드 윌입니다. 진 힐라는 노멀·하드 모두 제외하고, 3,000점 이하 나머지 보스는 완료 기준입니다. 총 40,000점.'
-    },
-    'sapphire-video-40k-normal-will-no-hilla-v01': {
-      summary: 'Lv.282 + 포함: 노멀 윌 (제외: 하드 윌·진 힐라)',
-      note: '노멀 윌을 포함하고 하드 윌은 제외하는 루트입니다. 진 힐라는 노멀·하드 모두 제외하고, 3,000점 이하 나머지 보스는 완료 기준입니다. 총 40,500점.'
-    }
-  };
 
   function installStyles() {
     if (document.querySelector('#kirakiPresetBuildViewStyles')) return;
     const style = document.createElement('style');
     style.id = 'kirakiPresetBuildViewStyles';
     style.textContent = `
-.preset-card-readable{position:relative}.preset-card-readable .preset-actions{display:flex;flex-wrap:wrap;gap:8px}.preset-card-readable .preset-actions .button{min-width:126px}.preset-card-readable .status-badge:not(.reference):not(.custom){background:color-mix(in srgb,var(--accent2) 58%,var(--surface));color:var(--accent);border-color:color-mix(in srgb,var(--accent) 24%,var(--line))}.preset-card-readable .preset-status-helper{display:inline-flex;align-items:center;min-height:24px;padding:3px 8px;border-radius:999px;background:var(--soft);color:var(--muted);font-size:.67rem;font-weight:900;white-space:nowrap}.preset-flex-note{display:grid;gap:8px;margin-top:10px;padding:10px 11px;border:1px solid color-mix(in srgb,var(--accent) 24%,var(--line));border-radius:12px;background:linear-gradient(135deg,color-mix(in srgb,var(--accent2) 46%,var(--surface)),var(--surface))}.preset-flex-note strong{color:var(--ink);font-size:.78rem}.preset-flex-note p{margin:0;color:var(--muted);font-size:.74rem;line-height:1.55}.preset-flex-list{display:flex;flex-wrap:wrap;gap:5px}.preset-flex-list>span{display:inline-flex;align-items:center;min-height:26px;padding:4px 8px;border:1px solid var(--line);border-radius:999px;background:var(--surface);color:var(--ink);font-size:.68rem;font-weight:850}.preset-flex-list>span.preferred{border-color:color-mix(in srgb,var(--accent) 44%,var(--line));background:var(--accent);color:#fff}.preset-flex-list>span.included{border-color:color-mix(in srgb,#16a34a 42%,var(--line));background:color-mix(in srgb,#16a34a 10%,var(--surface));color:color-mix(in srgb,#166534 78%,var(--ink))}.preset-flex-list>span.excluded,.preset-boss-chip.is-excluded{border-style:dashed;background:color-mix(in srgb,var(--surface) 76%,var(--line));color:var(--muted);opacity:.58;filter:grayscale(.82)}.preset-flex-list>span.excluded .boss-photo-icon,.preset-boss-chip.is-excluded .boss-photo-icon,.preset-build-boss.excluded .boss-photo-icon{filter:grayscale(1);opacity:.58}.preset-exclusion-badge,.preset-inclusion-badge{display:inline-flex;align-items:center;min-height:18px;padding:1px 5px;border-radius:999px;font-size:.58rem;font-style:normal;font-weight:900;line-height:1}.preset-exclusion-badge{background:color-mix(in srgb,#ef4444 10%,var(--surface));color:color-mix(in srgb,#ef4444 82%,var(--muted))}.preset-inclusion-badge{background:color-mix(in srgb,#16a34a 12%,var(--surface));color:color-mix(in srgb,#166534 82%,var(--muted))}.preset-build-detail{display:grid;gap:12px;margin-top:12px;padding:13px;border:1px solid color-mix(in srgb,var(--accent) 26%,var(--line));border-radius:14px;background:color-mix(in srgb,var(--soft) 74%,var(--surface))}.preset-build-detail[hidden]{display:none!important}.preset-build-detail-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}.preset-build-detail-head strong{color:var(--ink);font-size:.9rem;font-weight:900}.preset-build-detail-head span{color:var(--muted);font-size:.72rem;font-weight:800;white-space:nowrap}.preset-build-groups{display:grid;gap:9px}.preset-build-group{display:grid;gap:6px}.preset-build-group-title{display:flex;align-items:center;justify-content:space-between;gap:8px;color:var(--muted);font-size:.7rem;font-weight:900}.preset-build-boss-list{display:flex;flex-wrap:wrap;gap:6px}.preset-build-boss{display:inline-grid;gap:1px;min-height:42px;align-content:center;padding:7px 9px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);font-size:.75rem;font-weight:900}.preset-build-boss small{color:var(--muted);font-size:.64rem;font-weight:800}.preset-build-boss.preferred{border-color:color-mix(in srgb,var(--accent) 52%,var(--line));box-shadow:inset 3px 0 0 var(--accent)}.preset-build-boss.equal{background:linear-gradient(135deg,var(--surface),color-mix(in srgb,var(--accent2) 38%,var(--surface)))}.preset-build-boss.excluded{opacity:.52;filter:grayscale(.85);border-style:dashed;box-shadow:none}.preset-build-auto{margin:0;color:var(--muted);font-size:.7rem;line-height:1.5}.preset-view-button[aria-expanded="true"]{border-color:var(--accent);color:var(--accent)}
+.preset-card-readable{position:relative}.preset-card-readable .preset-actions{display:flex;flex-wrap:wrap;gap:8px}.preset-card-readable .preset-actions .button{min-width:126px}.preset-card-readable .status-badge:not(.reference):not(.custom){background:color-mix(in srgb,var(--accent2) 58%,var(--surface));color:var(--accent);border-color:color-mix(in srgb,var(--accent) 24%,var(--line))}.preset-card-readable .preset-summary,.preset-card-readable .preset-key-bosses,.preset-card-readable .preset-detail-row,.preset-card-readable .preset-note,.preset-card-readable [data-preset-flex-note],.preset-card-readable [data-view-preset-build]{display:none!important}.preset-build-detail{display:grid;gap:10px;margin:12px 0;padding:12px;border:1px solid color-mix(in srgb,var(--accent) 22%,var(--line));border-radius:12px;background:color-mix(in srgb,var(--soft) 70%,var(--surface))}.preset-build-detail[hidden]{display:grid!important}.preset-build-detail-head{display:flex;align-items:center;justify-content:space-between;gap:10px}.preset-build-detail-head strong{color:var(--ink);font-size:.85rem;font-weight:900}.preset-build-detail-head span{color:var(--muted);font-size:.68rem;font-weight:850;white-space:nowrap}.preset-build-groups{display:grid;gap:8px}.preset-build-group{display:grid;gap:6px}.preset-build-group-title{display:flex;align-items:center;justify-content:space-between;gap:8px;color:var(--muted);font-size:.68rem;font-weight:900}.preset-build-boss-list{display:flex;flex-wrap:wrap;gap:6px}.preset-build-boss{display:inline-grid;grid-template-columns:auto 1fr;grid-template-areas:'icon label' 'icon meta';column-gap:7px;align-items:center;min-height:42px;padding:6px 8px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);font-size:.73rem;font-weight:900}.preset-build-boss .boss-photo-icon{grid-area:icon}.preset-build-boss-label{grid-area:label;line-height:1.2}.preset-build-boss small{grid-area:meta;color:var(--muted);font-size:.62rem;font-weight:800;line-height:1.2}.preset-build-boss.preferred{border-color:color-mix(in srgb,var(--accent) 52%,var(--line));box-shadow:inset 3px 0 0 var(--accent)}.preset-build-boss.equal{background:linear-gradient(135deg,var(--surface),color-mix(in srgb,var(--accent2) 34%,var(--surface)))}
 @media(max-width:620px){.preset-card-readable .preset-actions .button{flex:1 1 100%}.preset-build-detail-head{display:grid}.preset-build-detail-head span{white-space:normal}.preset-build-boss{flex:1 1 calc(50% - 6px)}}
 `;
     document.head.append(style);
@@ -50,48 +40,6 @@
       .map((entry) => entry.target)
       .filter(Boolean)
       .sort((a, b) => b.points - a.points || bossLabel(a).localeCompare(bossLabel(b), 'ko'));
-  }
-
-  function bossByVisibleLabel(label) {
-    for (const boss of byId.values()) {
-      if (bossLabel(boss) === label) return boss;
-    }
-    return null;
-  }
-
-  function inclusionBadgeHtml(label = '포함') {
-    return `<em class="preset-inclusion-badge">${escapeHtml(label)}</em>`;
-  }
-
-  function exclusionBadgeHtml(label = '제외') {
-    return `<em class="preset-exclusion-badge">${escapeHtml(label)}</em>`;
-  }
-
-  function statusChipHtml(boss, className, badgeHtml) {
-    if (!boss) return '';
-    return `<span class="has-boss-icon ${className}">${bossIcon(boss, 24)}<span>${escapeHtml(bossLabel(boss))}</span>${badgeHtml}</span>`;
-  }
-
-  function applyCopyOverrides(card, preset) {
-    const override = copyOverrides[preset.id];
-    if (!override) return;
-    const title = card.querySelector('h3');
-    const summary = card.querySelector('.preset-summary');
-    const note = card.querySelector('.preset-note');
-    if (title && override.name) title.textContent = override.name;
-    if (summary && override.summary) summary.textContent = override.summary;
-    if (note && override.note) note.textContent = override.note;
-  }
-
-  function decorateKeyBossChips(card) {
-    card.querySelectorAll('.preset-boss-chip:not(.more)').forEach((chip) => {
-      if (chip.querySelector('.boss-photo-icon')) return;
-      const label = chip.textContent.trim();
-      const boss = bossByVisibleLabel(label);
-      if (!boss) return;
-      chip.classList.add('has-boss-icon');
-      chip.innerHTML = `${bossIcon(boss, 28)}<span>${escapeHtml(label)}</span>`;
-    });
   }
 
   function groupedBosses(targets) {
@@ -110,87 +58,44 @@
     });
   }
 
-  function hasEqualDifficultyContext(preset, targets) {
-    if (['emerald', 'sapphire', 'diamond'].includes(preset.tierId)) return true;
-    return targets.some((boss) => equalDifficultySet.has(boss.id));
-  }
-
-  function equalDifficultyNoticeHtml(preset) {
-    if (preset.id === 'sapphire-video-40k-normal-will-hilla-v01') {
-      const includedBosses = ['will-normal', 'verus-hilla-normal'].map((id) => byId.get(id)).filter(Boolean);
-      const excludedBosses = ['will-hard'].map((id) => byId.get(id)).filter(Boolean);
-      return `
-        <div class="preset-flex-note" data-preset-flex-note>
-          <strong>이 빌드는 하드 윌 제외 루트입니다.</strong>
-          <p>사용자 기준: Lv.281에서 노멀 윌과 노멀 진 힐라를 포함해 41,000점을 맞춥니다.</p>
-          <div class="preset-flex-list">
-            ${includedBosses.map((boss) => statusChipHtml(boss, 'included', inclusionBadgeHtml())).join('')}
-            ${excludedBosses.map((boss) => statusChipHtml(boss, 'excluded', exclusionBadgeHtml())).join('')}
-          </div>
-        </div>`;
-    }
-
-    if (preset.id === 'sapphire-video-40k-normal-will-no-hilla-v01') {
-      const includedBosses = ['will-normal'].map((id) => byId.get(id)).filter(Boolean);
-      const excludedBosses = ['will-hard', 'verus-hilla-normal', 'verus-hilla-hard'].map((id) => byId.get(id)).filter(Boolean);
-      return `
-        <div class="preset-flex-note" data-preset-flex-note>
-          <strong>이 빌드는 노멀 윌 포함, 하드 윌 제외 루트입니다.</strong>
-          <p>Lv.282에서 노멀 윌을 잡고 하드 윌은 제외합니다. 진 힐라도 노멀·하드 모두 제외 기준입니다.</p>
-          <div class="preset-flex-list">
-            ${includedBosses.map((boss) => statusChipHtml(boss, 'included', inclusionBadgeHtml())).join('')}
-            ${excludedBosses.map((boss) => statusChipHtml(boss, 'excluded', exclusionBadgeHtml())).join('')}
-          </div>
-        </div>`;
-    }
-
-    const bosses = equalDifficultyPool();
-    const excludedBosses = excludedDifficultyPool();
-    return `
-      <div class="preset-flex-note" data-preset-flex-note>
-        <strong>2,000~3,000점대는 진 힐라를 제외하고 동난이도 선택군으로 봅니다.</strong>
-        <p>체감은 사람마다 다르지만, 이 구간에서는 카오스 더스크를 가장 편한 우선 후보로 표시했습니다.</p>
-        <div class="preset-flex-list">
-          ${bosses.map((boss) => `<span class="has-boss-icon ${boss.id === 'dusk-chaos' ? 'preferred' : ''}">${bossIcon(boss, 24)}<span>${escapeHtml(bossLabel(boss))}</span></span>`).join('')}
-          ${excludedBosses.map((boss) => statusChipHtml(boss, 'excluded', exclusionBadgeHtml())).join('')}
-        </div>
-      </div>`;
-  }
-
-  function buildGroupTitle(key, preset) {
-    if (key === '2000-3000' && preset?.id === 'sapphire-video-40k-normal-will-hilla-v01') return '동난이도 선택군 · 하드 윌 제외 루트';
-    if (key === '2000-3000' && preset?.id === 'sapphire-video-40k-normal-will-no-hilla-v01') return '동난이도 선택군 · 하드 윌/진 힐라 제외';
-    if (key === '2000-3000') return '동난이도 선택군 · 진 힐라 제외';
+  function buildGroupTitle(key) {
+    if (key === '2000-3000') return '2,000~3,000점 선택군';
     return `${number.format(Number(key))}점 구간`;
   }
 
   function buildDetailHtml(preset) {
-    const ids = presetBossIds(preset);
     const targets = targetBossesForPreset(preset);
-    const autoIncluded = Math.max(0, ids.length - targets.length);
     const groups = groupedBosses(targets);
     return `
-      <div class="preset-build-detail" data-preset-build-detail="${escapeHtml(preset.id)}" hidden>
+      <div class="preset-build-detail" data-preset-build-detail="${escapeHtml(preset.id)}">
         <div class="preset-build-detail-head">
-          <strong>이 빌드에서 실제로 잡을 보스</strong>
-          <span>격파 ${targets.length}종 · 자동 포함 미션 ${autoIncluded}개</span>
+          <strong>잡을 보스</strong>
+          <span>실제 격파 ${targets.length}종</span>
         </div>
         <div class="preset-build-groups">
           ${groups.map(([key, bosses]) => `
             <div class="preset-build-group">
-              <div class="preset-build-group-title"><span>${escapeHtml(buildGroupTitle(key, preset))}</span><span>${bosses.length}종</span></div>
+              <div class="preset-build-group-title"><span>${escapeHtml(buildGroupTitle(key))}</span><span>${bosses.length}종</span></div>
               <div class="preset-build-boss-list">
                 ${bosses.map((boss) => `
                   <span class="preset-build-boss${boss.id === 'dusk-chaos' ? ' preferred' : ''}${equalDifficultySet.has(boss.id) ? ' equal' : ''}">
                     ${bossIcon(boss, 34)}
                     <span class="preset-build-boss-label">${escapeHtml(bossLabel(boss))}</span>
-                    <small>${number.format(boss.points)}점${boss.id === 'dusk-chaos' ? ' · 우선 추천' : ''}</small>
+                    <small>${number.format(boss.points)}점${boss.id === 'dusk-chaos' ? ' · 우선' : ''}</small>
                   </span>`).join('')}
               </div>
             </div>`).join('')}
         </div>
-        ${autoIncluded ? `<p class="preset-build-auto">상위 난이도를 잡으면 같은 보스의 하위 미션은 자동 완료로 반영됩니다.</p>` : ''}
       </div>`;
+  }
+
+  function removeExtraCopy(card) {
+    card.querySelectorAll('.preset-summary, .preset-key-bosses, .preset-detail-row, .preset-note, [data-preset-flex-note], [data-view-preset-build]').forEach((node) => node.remove());
+  }
+
+  function applyTitle(card, preset) {
+    const title = card.querySelector('h3');
+    if (title && titleOverrides[preset.id]) title.textContent = titleOverrides[preset.id];
   }
 
   function decorateCard(card) {
@@ -207,61 +112,25 @@
       statusBadge.textContent = '선택형';
     }
 
-    const targets = targetBossesForPreset(preset);
-    const equalContext = hasEqualDifficultyContext(preset, targets);
-    applyCopyOverrides(card, preset);
-    decorateKeyBossChips(card);
+    applyTitle(card, preset);
+    removeExtraCopy(card);
 
-    if (equalContext) {
-      const keyLabel = card.querySelector('.preset-key-bosses-label');
-      if (keyLabel) keyLabel.textContent = '동난이도 선택 보스';
-    }
-
-    if (equalContext && !card.querySelector('[data-preset-flex-note]')) {
-      const note = document.createElement('div');
-      note.innerHTML = equalDifficultyNoticeHtml(preset);
-      const target = card.querySelector('.preset-key-bosses') || card.querySelector('.preset-summary');
-      target?.insertAdjacentElement('afterend', note.firstElementChild);
-    }
-
-    if (!card.querySelector('[data-view-preset-build]')) {
-      const viewButton = document.createElement('button');
-      viewButton.type = 'button';
-      viewButton.className = 'button ghost small preset-view-button';
-      viewButton.dataset.viewPresetBuild = preset.id;
-      viewButton.setAttribute('aria-expanded', 'false');
-      viewButton.textContent = '빌드 보기';
-      applyButton.insertAdjacentElement('beforebegin', viewButton);
-    }
-
-    if (!card.querySelector('[data-preset-build-detail]')) {
-      const wrapper = document.createElement('div');
-      wrapper.innerHTML = buildDetailHtml(preset);
-      card.querySelector('.preset-actions')?.insertAdjacentElement('beforebegin', wrapper.firstElementChild);
+    const wrapper = document.createElement('div');
+    wrapper.innerHTML = buildDetailHtml(preset);
+    const nextDetail = wrapper.firstElementChild;
+    const currentDetail = card.querySelector('[data-preset-build-detail]');
+    if (currentDetail) {
+      currentDetail.replaceWith(nextDetail);
+    } else {
+      const metricGrid = card.querySelector('.preset-metric-grid');
+      if (metricGrid) metricGrid.insertAdjacentElement('beforebegin', nextDetail);
+      else card.querySelector('.preset-actions')?.insertAdjacentElement('beforebegin', nextDetail);
     }
   }
 
   function decoratePresetCards() {
     installStyles();
     document.querySelectorAll('.preset-card-readable').forEach(decorateCard);
-  }
-
-  function bindEvents() {
-    if (window.__kirakiPresetBuildViewEventsBound) return;
-    window.__kirakiPresetBuildViewEventsBound = true;
-    el.presetGrid?.addEventListener('click', (event) => {
-      const button = event.target.closest('[data-view-preset-build]');
-      if (!button) return;
-      event.preventDefault();
-      event.stopPropagation();
-      const card = button.closest('.preset-card-readable');
-      const detail = card?.querySelector(`[data-preset-build-detail="${CSS.escape(button.dataset.viewPresetBuild)}"]`);
-      if (!detail) return;
-      const open = detail.hidden;
-      detail.hidden = !open;
-      button.textContent = open ? '빌드 접기' : '빌드 보기';
-      button.setAttribute('aria-expanded', String(open));
-    });
   }
 
   function wrapRenderPresets() {
@@ -290,7 +159,6 @@
 
   function boot() {
     installStyles();
-    bindEvents();
     wrapApplyPreset();
     wrapRenderPresets();
     decoratePresetCards();
