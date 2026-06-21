@@ -1,7 +1,8 @@
 (() => {
   'use strict';
 
-  if (window.__kirakiTierBenefitDeltaLoaded) return;
+  if (window.__kirakiTierBenefitDeltaVersion === '0.1.1') return;
+  window.__kirakiTierBenefitDeltaVersion = '0.1.1';
   window.__kirakiTierBenefitDeltaLoaded = true;
 
   const benefitOrder = ['beginner', 'bronze', 'silver', 'gold', 'platinum', 'emerald', 'sapphire'];
@@ -28,23 +29,21 @@
   };
 
   const fields = [
-    { key: 'attack', label: '공격력/마력', unit: '', suffix: ' 증가' },
-    { key: 'normalDamage', label: '일반 몬스터 데미지', unit: '%', suffix: ' 증가' },
-    { key: 'bossDamage', label: '보스 몬스터 데미지', unit: '%', suffix: ' 증가' },
-    { key: 'ignoreDefense', label: '방어율 무시', unit: '%', suffix: ' 증가' },
-    { key: 'buffDuration', label: '버프 지속시간', unit: '%', suffix: ' 증가' },
-    { key: 'critRate', label: '크리티컬 확률', unit: '%', suffix: ' 증가' },
-    { key: 'critDamage', label: '크리티컬 데미지', unit: '%', suffix: ' 증가' },
-    { key: 'allStat', label: '올스탯', unit: '', suffix: ' 증가' },
-    { key: 'hpMp', label: '최대 HP/MP', unit: '', suffix: ' 증가' },
-    { key: 'mesoExtra', label: '메소 획득량', unit: '%', suffix: ' 증가', hideWhenZero: true },
-    { key: 'itemDropExtra', label: '아이템 드롭률', unit: '%', suffix: ' 증가', hideWhenZero: true },
-    { key: 'exp', label: '경험치 획득량', unit: '배', suffix: '로 증가' },
-    { key: 'statusResist', label: '상태이상 내성', unit: '%', suffix: ' 증가' },
-    { key: 'summonDuration', label: '소환수 지속시간', unit: '%', suffix: ' 증가' },
-    { key: 'stanceDuration', label: '스탠스 지속시간', unit: '%', suffix: ' 증가' },
-    { key: 'dropMesoMultiplier', label: '아이템 드롭/메소 기본 배율', unit: '배', suffix: '' },
-    { key: 'runeDuration', label: '해방된 룬의 힘 지속시간', unit: '%', suffix: ' 증가' }
+    { key: 'attack', label: '공격력/마력', unit: '' },
+    { key: 'normalDamage', label: '일반 몬스터 데미지', unit: '%' },
+    { key: 'bossDamage', label: '보스 몬스터 데미지', unit: '%' },
+    { key: 'ignoreDefense', label: '방어율 무시', unit: '%' },
+    { key: 'buffDuration', label: '버프 지속시간', unit: '%' },
+    { key: 'critRate', label: '크리티컬 확률', unit: '%' },
+    { key: 'critDamage', label: '크리티컬 데미지', unit: '%' },
+    { key: 'allStat', label: '올스탯', unit: '' },
+    { key: 'hpMp', label: '최대 HP/MP', unit: '' },
+    { key: 'mesoExtra', label: '메소 획득량', unit: '%', hideWhenZero: true },
+    { key: 'itemDropExtra', label: '아이템 드롭률', unit: '%', hideWhenZero: true },
+    { key: 'statusResist', label: '상태이상 내성', unit: '%' },
+    { key: 'summonDuration', label: '소환수 지속시간', unit: '%' },
+    { key: 'stanceDuration', label: '스탠스 지속시간', unit: '%' },
+    { key: 'runeDuration', label: '해방된 룬 지속시간', unit: '%' }
   ];
 
   function installStyles() {
@@ -52,12 +51,11 @@
     const style = document.createElement('style');
     style.id = 'kirakiTierBenefitDeltaStyles';
     style.textContent = `
-.tier-benefit-panel{display:grid;gap:11px;margin:12px 0 14px;padding:13px;border:1px solid color-mix(in srgb,#38bdf8 38%,var(--line));border-radius:13px;background:linear-gradient(135deg,color-mix(in srgb,#e0f7ff 56%,var(--surface)),var(--surface));box-shadow:0 10px 24px rgba(14,116,144,.08)}
-.tier-benefit-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}.tier-benefit-head strong{color:var(--ink);font-size:.92rem;font-weight:900}.tier-benefit-head span{color:color-mix(in srgb,#0ea5e9 76%,var(--muted));font-size:.72rem;font-weight:900;white-space:nowrap}
-.tier-benefit-route{display:flex;align-items:center;flex-wrap:wrap;gap:6px;color:var(--muted);font-size:.75rem;font-weight:850}.tier-benefit-route b{color:var(--ink);font-weight:900}.tier-benefit-arrow{color:#0ea5e9;font-weight:900}
-.tier-benefit-delta-list{display:flex;flex-wrap:wrap;gap:6px}.tier-benefit-delta{display:inline-flex;align-items:center;gap:5px;min-height:28px;padding:4px 8px;border:1px solid color-mix(in srgb,#38bdf8 34%,var(--line));border-radius:999px;background:color-mix(in srgb,#ecfeff 72%,var(--surface));font-size:.7rem;font-weight:850;color:var(--ink)}.tier-benefit-delta em{font-style:normal;color:#0284c7;font-weight:950}.tier-benefit-empty{margin:0;color:var(--muted);font-size:.75rem;font-weight:800;line-height:1.5}
-.tier-benefit-values{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}.tier-benefit-value{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:31px;padding:6px 8px;border:1px solid color-mix(in srgb,var(--line) 82%,transparent);border-radius:9px;background:color-mix(in srgb,var(--soft) 72%,var(--surface));font-size:.7rem}.tier-benefit-value span{color:var(--muted);font-weight:800;min-width:0}.tier-benefit-value strong{color:var(--ink);font-weight:950;white-space:nowrap}.tier-benefit-value strong.changed{color:#0284c7;text-shadow:0 0 12px rgba(56,189,248,.28)}
-@media(max-width:560px){.tier-benefit-head{display:grid}.tier-benefit-head span{white-space:normal}.tier-benefit-values{grid-template-columns:1fr}}
+.tier-benefit-panel{display:grid;gap:10px;margin:15px 0 0;padding:13px;border:1px solid color-mix(in srgb,#38bdf8 36%,var(--line));border-radius:13px;background:linear-gradient(135deg,color-mix(in srgb,#ecfeff 68%,var(--surface)),var(--surface));box-shadow:0 10px 22px rgba(14,116,144,.07)}
+.tier-benefit-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}.tier-benefit-head strong{color:var(--ink);font-size:.92rem;font-weight:900}.tier-benefit-head span{color:#0284c7;font-size:.72rem;font-weight:900;white-space:nowrap}
+.tier-benefit-route{display:flex;align-items:center;flex-wrap:wrap;gap:6px;color:var(--muted);font-size:.76rem;font-weight:850}.tier-benefit-route b{color:var(--ink);font-weight:900}.tier-benefit-arrow{color:#0ea5e9;font-weight:900}
+.tier-benefit-delta-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.tier-benefit-delta{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:34px;padding:7px 9px;border:1px solid color-mix(in srgb,#38bdf8 28%,var(--line));border-radius:10px;background:color-mix(in srgb,#f0fdff 70%,var(--surface));font-size:.72rem;font-weight:850;color:var(--ink)}.tier-benefit-delta span{min-width:0;color:var(--muted)}.tier-benefit-delta em{flex:0 0 auto;font-style:normal;color:#0284c7;font-weight:950;white-space:nowrap}.tier-benefit-empty{margin:0;color:var(--muted);font-size:.78rem;font-weight:800;line-height:1.55}
+@media(max-width:760px){.tier-benefit-delta-list{grid-template-columns:1fr}.tier-benefit-head{display:grid}.tier-benefit-head span{white-space:normal}}
 `;
     document.head.append(style);
   }
@@ -81,41 +79,34 @@
     return benefitIdForTier(activeProfile().targetTierId || el.targetTierSelect?.value);
   }
 
-  function previousBenefitId(id) {
-    const index = benefitIndex(id);
-    return benefitOrder[Math.max(0, index - 1)] || 'beginner';
-  }
-
-  function valueText(field, value) {
-    const formatted = Number.isInteger(value) ? number.format(value) : String(value);
-    return `${formatted}${field.unit}${field.suffix}`;
-  }
-
-  function deltaText(field, before, after) {
+  function deltaText(before, after, unit) {
     const diff = after - before;
     if (!diff) return '';
     const sign = diff > 0 ? '+' : '';
     const formatted = Number.isInteger(diff) ? number.format(diff) : String(diff);
-    return `${sign}${formatted}${field.unit}`;
+    return `${sign}${formatted}${unit}`;
   }
 
   function ensurePanel() {
     let panel = document.querySelector('#tierBenefitDelta');
-    if (panel) return panel;
-    const anchor = document.querySelector('.recommendation-controls');
-    if (!anchor) return null;
-    panel = document.createElement('section');
-    panel.id = 'tierBenefitDelta';
-    panel.className = 'tier-benefit-panel';
-    panel.setAttribute('aria-live', 'polite');
-    anchor.insertAdjacentElement('afterend', panel);
+    const anchor = document.querySelector('.progress-panel .tier-scale') || document.querySelector('.progress-panel .progress-track');
+    if (!anchor) return panel;
+    if (!panel) {
+      panel = document.createElement('section');
+      panel.id = 'tierBenefitDelta';
+      panel.className = 'tier-benefit-panel';
+      panel.setAttribute('aria-live', 'polite');
+    }
+    if (panel.parentElement !== anchor.parentElement || panel.previousElementSibling !== anchor) {
+      anchor.insertAdjacentElement('afterend', panel);
+    }
     return panel;
   }
 
-  function rowLabel(id, appTierId) {
+  function labelFor(id, appTierId) {
     const row = benefitRows[id] || benefitRows.beginner;
     const appTier = DATA.tiers.find((tier) => tier.id === appTierId);
-    if (id === 'sapphire' && appTier && !['sapphire'].includes(appTier.id)) return `${appTier.name} (${row.name})`;
+    if (id === 'sapphire' && appTier && appTier.id !== 'sapphire') return `${appTier.name} (${row.name})`;
     return appTier?.name || row.name;
   }
 
@@ -128,38 +119,27 @@
     const targetId = targetBenefitId();
     const currentRow = benefitRows[currentId] || benefitRows.beginner;
     const targetRow = benefitRows[targetId] || benefitRows.beginner;
-    const previousRow = benefitRows[previousBenefitId(targetId)] || benefitRows.beginner;
     const currentIndex = benefitIndex(currentId);
     const targetIndex = benefitIndex(targetId);
     const targetTierId = activeProfile().targetTierId || el.targetTierSelect?.value;
 
-    const changedFromCurrent = fields
-      .filter((field) => targetRow.values[field.key] !== currentRow.values[field.key])
-      .filter((field) => !(field.hideWhenZero && targetRow.values[field.key] === 0));
-    const deltaHtml = changedFromCurrent.length && targetIndex > currentIndex
-      ? changedFromCurrent.map((field) => `
-        <span class="tier-benefit-delta"><span>${escapeHtml(field.label)}</span><em>${escapeHtml(deltaText(field, currentRow.values[field.key], targetRow.values[field.key]))}</em></span>`).join('')
-      : '<p class="tier-benefit-empty">목표 티어가 현재 혜택 이하라 추가 상승 수치는 없습니다.</p>';
+    const changed = fields
+      .map((field) => ({ field, before: currentRow.values[field.key], after: targetRow.values[field.key] }))
+      .filter((item) => item.after !== item.before)
+      .filter((item) => !(item.field.hideWhenZero && item.after === 0));
 
-    const valueHtml = fields
-      .filter((field) => !(field.hideWhenZero && targetRow.values[field.key] === 0))
-      .map((field) => {
-        const changedFromPrevious = targetRow.values[field.key] !== previousRow.values[field.key];
-        return `
-          <div class="tier-benefit-value">
-            <span>${escapeHtml(field.label)}</span>
-            <strong class="${changedFromPrevious ? 'changed' : ''}">${escapeHtml(valueText(field, targetRow.values[field.key]))}</strong>
-          </div>`;
-      }).join('');
+    const deltaHtml = changed.length && targetIndex > currentIndex
+      ? changed.map(({ field, before, after }) => `
+        <span class="tier-benefit-delta"><span>${escapeHtml(field.label)}</span><em>${escapeHtml(deltaText(before, after, field.unit))}</em></span>`).join('')
+      : '<p class="tier-benefit-empty">현재 티어와 목표 티어의 버프 차이가 없습니다.</p>';
 
     panel.innerHTML = `
       <div class="tier-benefit-head">
-        <strong>티어 버프 변화</strong>
-        <span>하늘색: 전 단계 대비 상승</span>
+        <strong>티어 버프 변화량</strong>
+        <span>내 티어 → 목표 티어</span>
       </div>
-      <div class="tier-benefit-route"><b>${escapeHtml(currentRow.name)}</b><span class="tier-benefit-arrow">→</span><b>${escapeHtml(rowLabel(targetId, targetTierId))}</b></div>
-      <div class="tier-benefit-delta-list">${deltaHtml}</div>
-      <div class="tier-benefit-values">${valueHtml}</div>`;
+      <div class="tier-benefit-route"><b>${escapeHtml(labelFor(currentId))}</b><span class="tier-benefit-arrow">→</span><b>${escapeHtml(labelFor(targetId, targetTierId))}</b></div>
+      <div class="tier-benefit-delta-list">${deltaHtml}</div>`;
   }
 
   function wrapRenderers() {
