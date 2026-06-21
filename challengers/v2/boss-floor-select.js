@@ -122,6 +122,10 @@
     return Number(String(value || '').replace(/[^0-9-]/g, '')) || 0;
   }
 
+  function setTextIfChanged(node, text) {
+    if (node && node.textContent !== text) node.textContent = text;
+  }
+
   let coinCorrectionQueued = false;
   let coinCorrectionActive = false;
 
@@ -140,13 +144,13 @@
       const adjustCoins = parseCoinText(document.querySelector('#coinShopAdjustCoins')?.textContent);
       const correctTotal = correctLevelCoins + bossCoins + seasonCoins + adjustCoins;
 
-      levelNode.textContent = number.format(correctLevelCoins);
-      totalNode.textContent = number.format(correctTotal);
+      setTextIfChanged(levelNode, number.format(correctLevelCoins));
+      setTextIfChanged(totalNode, number.format(correctTotal));
 
       if (normalSummary) {
         const spent = parseCoinText(normalSummary.textContent.split('/')[0]);
         const left = correctTotal - spent;
-        normalSummary.textContent = `${number.format(spent)} / ${number.format(left)}`;
+        setTextIfChanged(normalSummary, `${number.format(spent)} / ${number.format(left)}`);
         normalSummary.classList.toggle('negative', left < 0);
       }
     } finally {
@@ -194,14 +198,6 @@
     document.addEventListener('click', (event) => {
       if (event.target.closest?.('.coinshop-panel,[data-boss-floor-toggle],[data-apply-preset]')) scheduleCoinShopLevelCorrection();
     }, true);
-
-    const panel = document.querySelector('[data-view-panel="coinshop"]');
-    if (panel && typeof MutationObserver !== 'undefined') {
-      const observer = new MutationObserver(() => {
-        if (!coinCorrectionActive) scheduleCoinShopLevelCorrection();
-      });
-      observer.observe(panel, { childList: true, subtree: true, characterData: true });
-    }
 
     scheduleCoinShopLevelCorrection();
     setTimeout(scheduleCoinShopLevelCorrection, 120);
