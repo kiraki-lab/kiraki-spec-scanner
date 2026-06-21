@@ -40,8 +40,8 @@
   }
 
   function loadFeatureModules() {
-    loadScript('./mystery-barrier-data.js?v=1.1.0', 'mystery-barrier-data', () => {
-      loadScript('./mystery-barrier.js?v=1.1.0', 'mystery-barrier', () => {
+    loadScript('./mystery-barrier-data.js?v=1.2.0', 'mystery-barrier-data', () => {
+      loadScript('./mystery-barrier.js?v=1.2.0', 'mystery-barrier', () => {
         loadScript('./coinshop.js?v=0.1.0', 'kiraki-coinshop');
       });
     });
