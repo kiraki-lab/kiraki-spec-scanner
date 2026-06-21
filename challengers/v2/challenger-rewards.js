@@ -5,7 +5,7 @@
   window.__kirakiChallengerRewardsLoaded = true;
 
   const view = 'tierRewards';
-  const base = './assets/challenger-rewards';
+  const base = '.';
   const tiers = [
     ['bronze', 'BRONZE', '브론즈', 5000, '168,98,52', ['브론즈 티어 보상', '전용 보상 상자', '이벤트 재화', '치장 보상']],
     ['silver', 'SILVER', '실버', 10000, '176,190,204', ['실버 티어 보상', '전용 보상 상자', '이벤트 재화', '치장 보상']],
