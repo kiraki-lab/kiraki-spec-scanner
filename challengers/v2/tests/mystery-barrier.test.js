@@ -10,7 +10,9 @@ const data = context.window.MYSTERY_BARRIER_DATA;
 assert.equal(data.stages.length, 5);
 assert.deepEqual(data.stages.map((stage) => stage.minPoints), [0, 15000, 30000, 40000, 50000]);
 assert.deepEqual(data.stages.map((stage) => stage.condition), ['골드 미만', '골드 이상', '에메랄드 이상', '사파이어 이상', '다이아몬드 이상']);
-assert.deepEqual(data.stages.map((stage) => stage.recommendation.gradeId), ['rare', 'epic', 'epic', 'epic', 'epic']);
+assert.deepEqual(data.stages.map((stage) => stage.recommendation.gradeId), ['rare', 'epic', 'epic', 'unique', 'unique']);
+assert.equal(data.stages[3].recommendation.label, '유니크 이상');
+assert.equal(data.stages[4].recommendation.label, '유니크~레전드리');
 
 const rarityIds = data.rarities.map((rarity) => rarity.id);
 const cumulativeChance = (stage, rarityId) => {
@@ -33,7 +35,7 @@ assert.equal(data.stages[4].probabilities.legendary, 1.05);
 assert.ok(Math.abs(cumulativeChance(data.stages[0], 'rare') - 32.51) < 0.000001);
 assert.ok(Math.abs(cumulativeChance(data.stages[1], 'epic') - 16) < 0.000001);
 assert.ok(Math.abs(cumulativeChance(data.stages[2], 'epic') - 20.1) < 0.000001);
-assert.ok(Math.abs(cumulativeChance(data.stages[3], 'epic') - 70.05) < 0.000001);
-assert.ok(Math.abs(cumulativeChance(data.stages[4], 'epic') - 100) < 0.000001);
+assert.ok(Math.abs(cumulativeChance(data.stages[3], 'unique') - 7.17) < 0.000001);
+assert.ok(Math.abs(cumulativeChance(data.stages[4], 'unique') - 8.15) < 0.000001);
 
 console.log('mystery barrier data tests passed');
