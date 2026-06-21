@@ -251,6 +251,75 @@ function recommendationPlanHtml(plan, index, current) {
     </article>`;
 }
 
+function compactRecommendationGroup(plans) {
+  if (plans.length < 2) return null;
+  const commonKeys = new Set(
+    plans[0].actions
+      .map((action) => action.target.id)
+      .filter((key) => plans.every((plan) => plan.actions.some((action) => action.target.id === key)))
+  );
+  const commonActions = plans[0].actions.filter((action) => commonKeys.has(action.target.id));
+  if (!commonActions.length) return null;
+
+  const choices = plans.map((plan, index) => ({
+    index,
+    plan,
+    actions: plan.actions.filter((action) => !commonKeys.has(action.target.id))
+  }));
+  if (!choices.every((choice) => choice.actions.length === 1)) return null;
+
+  return {
+    commonActions,
+    choices,
+    commonPoints: commonActions.reduce((sum, action) => sum + action.points, 0),
+    commonMissionCount: commonActions.reduce((sum, action) => sum + action.missionCount, 0)
+  };
+}
+
+function compactRecommendationChoiceHtml(choice, current) {
+  const selected = choice.index === selectedRecommendationIndex;
+  const action = choice.actions[0];
+  const expected = current + choice.plan.points;
+
+  return `
+    <article class="recommendation-plan${selected ? ' selected' : ''}" data-recommendation-plan="${choice.index}">
+      <div class="recommendation-plan-header">
+        <div>
+          <strong>${escapeHtml(bossMissionName(action.target))}</strong>
+          <small>선택 보스 · 이 보스만 고르면 됩니다.</small>
+        </div>
+        <span>예상 ${number.format(expected)}점</span>
+      </div>
+      <ul class="recommendation-list">${recommendationActionHtml(action)}</ul>
+      <button type="button" class="recommendation-plan-select" data-select-recommendation-plan="${choice.index}" aria-pressed="${selected}">${selected ? '선택됨' : '이 안 선택'}</button>
+    </article>`;
+}
+
+function renderCompactRecommendation(target, needed, compact, current) {
+  const selectedPlan = compact.choices.find((choice) => choice.index === selectedRecommendationIndex)?.plan || compact.choices[0].plan;
+  const expected = current + selectedPlan.points;
+
+  el.recommendationResult.classList.add('recommendation-merged');
+  el.recommendationResult.innerHTML = `
+    <h3>${escapeHtml(target.name)}까지 ${number.format(needed)}점 필요</h3>
+    <p>겹치는 보스는 한 번만 표시했습니다. 공통 미션을 잡고, 아래 선택 보스 중 하나만 고르면 됩니다.</p>
+    <div class="recommendation-plan-list">
+      <article class="recommendation-plan recommendation-common-plan">
+        <div class="recommendation-plan-header">
+          <div>
+            <strong>공통 미션</strong>
+            <small>모든 선택안 공통 · 완료 미션 ${compact.commonMissionCount}개</small>
+          </div>
+          <span>+${number.format(compact.commonPoints)}</span>
+        </div>
+        <ul class="recommendation-list">${compact.commonActions.map(recommendationActionHtml).join('')}</ul>
+      </article>
+      <div class="recommendation-plan-list">${compact.choices.map((choice) => compactRecommendationChoiceHtml(choice, current)).join('')}</div>
+    </div>`;
+  el.applyRecommendationButton.textContent = `선택안 적용 · 예상 ${number.format(expected)}점`;
+  el.applyRecommendationButton.disabled = false;
+}
+
 function renderRecommendation() {
   const profile = activeProfile();
   const target = DATA.tiers.find((tier) => tier.id === profile.targetTierId) || DATA.tiers[1];
@@ -261,6 +330,7 @@ function renderRecommendation() {
     recommendationIds = [];
     recommendationOptions = [];
     selectedRecommendationIndex = 0;
+    el.recommendationResult.classList.remove('recommendation-merged');
     el.recommendationResult.innerHTML = `<h3>${escapeHtml(target.name)} 포인트 기준 달성</h3><p>현재 총점이 목표 이상입니다. 더 높은 티어를 선택해 보세요.</p>`;
     el.applyRecommendationButton.textContent = '추천 적용';
     el.applyRecommendationButton.disabled = true;
@@ -273,12 +343,20 @@ function renderRecommendation() {
   recommendationIds = plans[0]?.ids || [];
 
   if (!plans.length) {
+    el.recommendationResult.classList.remove('recommendation-merged');
     el.recommendationResult.innerHTML = `<h3>${escapeHtml(target.name)}까지 ${number.format(needed)}점 필요</h3><p>현재 입력된 보스 데이터만으로는 목표에 도달하지 못합니다. 레벨 또는 상위 미션 데이터가 더 필요합니다.</p>`;
     el.applyRecommendationButton.textContent = '추천 적용';
     el.applyRecommendationButton.disabled = true;
     return;
   }
 
+  const compact = compactRecommendationGroup(plans);
+  if (compact) {
+    renderCompactRecommendation(target, needed, compact, current);
+    return;
+  }
+
+  el.recommendationResult.classList.remove('recommendation-merged');
   const choiceCopy = plans.length > 1
     ? `아래 ${plans.length}가지 중 편한 조합을 선택할 수 있습니다.`
     : '필요한 미션을 정확한 이름으로 표시했습니다.';
