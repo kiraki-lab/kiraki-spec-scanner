@@ -1,18 +1,42 @@
 (() => {
   'use strict';
 
-  if (window.__kirakiPresetBuildViewVersion === '0.1.8') return;
-  window.__kirakiPresetBuildViewVersion = '0.1.8';
+  if (window.__kirakiPresetBuildViewVersion === '0.1.9') return;
+  window.__kirakiPresetBuildViewVersion = '0.1.9';
   window.__kirakiPresetBuildViewLoaded = true;
 
   const equalDifficultyIds = ['dusk-chaos', 'lucid-hard', 'will-hard', 'guardian-angel-slime-chaos', 'gloom-hard'];
   const equalDifficultySet = new Set(equalDifficultyIds);
+  const equalDifficultyRank = new Map(equalDifficultyIds.map((id, index) => [id, equalDifficultyIds.length - index]));
+  const bossDifficultyRank = new Map(Object.entries({
+    'kaling-easy': 9900,
+    'mayrin-hard': 9600,
+    'kalos-normal': 9450,
+    'adversary-normal': 9400,
+    'seren-hard': 7600,
+    'adversary-easy': 7500,
+    'kalos-easy': 7400,
+    'seren-normal': 6500,
+    'black-mage-hard': 6400,
+    'mayrin-normal': 5000
+  }));
   const titleOverrides = {
-    'bronze-stable-v01': '브론즈 Lv.260 400점 이하형',
+    'bronze-stable-v01': '브론즈 Lv.260 노멀 스우·데미안형',
     'silver-stable-v01': '실버 Lv.264 노멀 루시드·윌형',
     'gold-stable-v01': '골드 Lv.266 하드 스우형',
     'platinum-stable-v01': '플래티넘 Lv.270 하드 루시드형',
-    'emerald-stable-v01': '에메랄드 Lv.274 하드 윌·카오스 가엔슬형'
+    'emerald-stable-v01': '에메랄드 Lv.274 하드 윌·카오스 가엔슬형',
+    'emerald-video-30k-v01': '3만점 Lv.280 카오스 더스크형',
+    'sapphire-reference-v01': '사파이어 Lv.276 하드 진 힐라 포함형',
+    'sapphire-video-40k-no-hilla-v01': '4만점 Lv.280 하드 윌형 (진 힐라 제외)',
+    'sapphire-video-40k-normal-will-hilla-v01': '4만점 Lv.281 노멀 윌·진 힐라형 (하드 윌 제외)',
+    'sapphire-video-40k-normal-will-no-hilla-v01': '4만점 Lv.282 노멀 윌형 (하드 윌 제외)',
+    'diamond-video-50k-mayrin-v01': '다이아몬드 Lv.280 노멀 메이린형',
+    'diamond-video-50k-black-mage-v01': '다이아몬드 Lv.280 하드 검은 마법사형',
+    'diamond-video-50k-seren-v01': '다이아몬드 Lv.280 노멀 세렌형',
+    'master-video-adversary-v01': '마스터 Lv.280 이지 대적자형',
+    'master-video-kalos-v01': '마스터 Lv.281 이지 칼로스형',
+    'challenger-video-hard-mayrin-v01': '챌린저 Lv.284 하드 메이린형'
   };
 
   const bossLabel = (boss) => `${boss.difficulty} ${boss.shortBoss || boss.boss}`;
@@ -35,19 +59,36 @@
     return allPresets().find((preset) => preset.id === id) || null;
   }
 
+  function isEqualDifficultyBoss(boss) {
+    return boss.points >= 2000 && boss.points <= 3000 && boss.series !== 'verus-hilla';
+  }
+
+  function groupSortValue(boss) {
+    return isEqualDifficultyBoss(boss) ? 2600 : boss.points;
+  }
+
+  function displayRank(boss) {
+    if (isEqualDifficultyBoss(boss)) return equalDifficultyRank.get(boss.id) || 0;
+    return bossDifficultyRank.get(boss.id) || (boss.points * 10 + (boss.rank || 0));
+  }
+
+  function compareBossDisplay(a, b) {
+    return groupSortValue(b) - groupSortValue(a)
+      || displayRank(b) - displayRank(a)
+      || bossLabel(a).localeCompare(bossLabel(b), 'ko');
+  }
+
   function targetBossesForPreset(preset) {
     return collapseTargets(presetBossIds(preset))
       .map((entry) => entry.target)
       .filter(Boolean)
-      .sort((a, b) => b.points - a.points || bossLabel(a).localeCompare(bossLabel(b), 'ko'));
+      .sort(compareBossDisplay);
   }
 
   function groupedBosses(targets) {
     const groups = new Map();
     targets.forEach((boss) => {
-      const key = boss.points >= 2000 && boss.points <= 3000 && boss.series !== 'verus-hilla'
-        ? '2000-3000'
-        : String(boss.points);
+      const key = isEqualDifficultyBoss(boss) ? '2000-3000' : String(boss.points);
       if (!groups.has(key)) groups.set(key, []);
       groups.get(key).push(boss);
     });
