@@ -8,6 +8,18 @@
   const equalDifficultySet = new Set(equalDifficultyIds);
   const equalDifficultyPool = () => equalDifficultyIds.map((id) => byId.get(id)).filter(Boolean);
   const bossLabel = (boss) => `${boss.difficulty} ${boss.shortBoss || boss.boss}`;
+  const copyOverrides = {
+    'emerald-stable-v01': {
+      summary: 'Lv.274 + 2,000~3,000점대 동난이도 보스 선택',
+      note: '진 힐라를 제외하면 2,000~3,000점대는 동난이도 선택군으로 봅니다. 가장 편한 우선 후보는 카오스 더스크이며, 하드 루시드·하드 윌·카오스 가엔슬·하드 듄켈 중 가능한 보스로 조정하세요.'
+    },
+    'emerald-video-30k-v01': {
+      note: '진 힐라를 제외하고 레벨을 더 올려 3만 점을 맞추는 구성입니다. 이 구간에서는 카오스 더스크를 가장 편한 우선 후보로 표시했습니다.'
+    },
+    'sapphire-video-40k-no-hilla-v01': {
+      note: '진 힐라를 제외한 동난이도 선택군 기준입니다. 하드 윌 대신 카오스 더스크·카오스 가엔슬·하드 듄켈 체감도 함께 비교하세요.'
+    }
+  };
 
   function installStyles() {
     if (document.querySelector('#kirakiPresetBuildViewStyles')) return;
@@ -29,6 +41,15 @@
       .map((entry) => entry.target)
       .filter(Boolean)
       .sort((a, b) => b.points - a.points || bossLabel(a).localeCompare(bossLabel(b), 'ko'));
+  }
+
+  function applyCopyOverrides(card, preset) {
+    const override = copyOverrides[preset.id];
+    if (!override) return;
+    const summary = card.querySelector('.preset-summary');
+    const note = card.querySelector('.preset-note');
+    if (summary && override.summary) summary.textContent = override.summary;
+    if (note && override.note) note.textContent = override.note;
   }
 
   function groupedBosses(targets) {
@@ -64,7 +85,7 @@
       </div>`;
   }
 
-  function buildGroupTitle(key, bosses) {
+  function buildGroupTitle(key) {
     if (key === '2000-3000') return '동난이도 선택군 · 진 힐라 제외';
     return `${number.format(Number(key))}점 구간`;
   }
@@ -83,7 +104,7 @@
         <div class="preset-build-groups">
           ${groups.map(([key, bosses]) => `
             <div class="preset-build-group">
-              <div class="preset-build-group-title"><span>${escapeHtml(buildGroupTitle(key, bosses))}</span><span>${bosses.length}종</span></div>
+              <div class="preset-build-group-title"><span>${escapeHtml(buildGroupTitle(key))}</span><span>${bosses.length}종</span></div>
               <div class="preset-build-boss-list">
                 ${bosses.map((boss) => `
                   <span class="preset-build-boss${boss.id === 'dusk-chaos' ? ' preferred' : ''}${equalDifficultySet.has(boss.id) ? ' equal' : ''}${boss.series === 'verus-hilla' ? ' excluded' : ''}">
@@ -112,7 +133,15 @@
     }
 
     const targets = targetBossesForPreset(preset);
-    if (hasEqualDifficultyContext(preset, targets) && !card.querySelector('[data-preset-flex-note]')) {
+    const equalContext = hasEqualDifficultyContext(preset, targets);
+    applyCopyOverrides(card, preset);
+
+    if (equalContext) {
+      const keyLabel = card.querySelector('.preset-key-bosses-label');
+      if (keyLabel) keyLabel.textContent = '동난이도 선택 보스';
+    }
+
+    if (equalContext && !card.querySelector('[data-preset-flex-note]')) {
       const note = document.createElement('div');
       note.innerHTML = equalDifficultyNoticeHtml();
       const target = card.querySelector('.preset-key-bosses') || card.querySelector('.preset-summary');
