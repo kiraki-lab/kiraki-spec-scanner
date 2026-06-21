@@ -40,9 +40,11 @@
   }
 
   function loadFeatureModules() {
-    loadScript('./mystery-barrier-data.js?v=1.2.0', 'mystery-barrier-data', () => {
-      loadScript('./mystery-barrier.js?v=1.2.0', 'mystery-barrier', () => {
-        loadScript('./coinshop.js?v=0.1.0', 'kiraki-coinshop');
+    loadScript('./app-polish-v2.js?v=1.4.0', 'app-polish-v2', () => {
+      loadScript('./mystery-barrier-data.js?v=1.2.0', 'mystery-barrier-data', () => {
+        loadScript('./mystery-barrier.js?v=1.2.0', 'mystery-barrier', () => {
+          loadScript('./coinshop.js?v=0.1.0', 'kiraki-coinshop');
+        });
       });
     });
   }
