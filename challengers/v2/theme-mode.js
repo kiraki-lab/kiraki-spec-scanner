@@ -25,13 +25,14 @@
   }
 
   function loadScript(src, marker, callback) {
-    if (document.querySelector(`script[data-${marker}]`)) {
+    const attribute = `data-feature-${marker}`;
+    if (document.querySelector(`script[${attribute}]`)) {
       callback?.();
       return;
     }
     const script = document.createElement('script');
     script.src = src;
-    script.dataset[marker] = 'true';
+    script.setAttribute(attribute, 'true');
     script.async = false;
     script.addEventListener('load', () => callback?.(), { once: true });
     script.addEventListener('error', () => callback?.(), { once: true });
@@ -39,9 +40,9 @@
   }
 
   function loadFeatureModules() {
-    loadScript('./mystery-barrier-data.js?v=1.1.0', 'mysteryBarrierData', () => {
-      loadScript('./mystery-barrier.js?v=1.1.0', 'mysteryBarrier', () => {
-        loadScript('./coinshop.js?v=0.1.0', 'kirakiCoinshop');
+    loadScript('./mystery-barrier-data.js?v=1.1.0', 'mystery-barrier-data', () => {
+      loadScript('./mystery-barrier.js?v=1.1.0', 'mystery-barrier', () => {
+        loadScript('./coinshop.js?v=0.1.0', 'kiraki-coinshop');
       });
     });
   }
