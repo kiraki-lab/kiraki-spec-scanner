@@ -75,10 +75,18 @@
   setButtonDirty(document.querySelector('#manualSaveButton'));
   status('5분 자동 저장 · 수동 저장 가능');
 
-  window.addEventListener('beforeunload', (event) => {
-    if (!dirty) return;
-    event.preventDefault();
-    event.returnValue = '';
+  function flushBeforePageLeaves() {
+    if (!dirty || !canStore) return;
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(store));
+      dirty = false;
+      lastReason = '';
+    } catch {}
+  }
+
+  window.addEventListener('pagehide', flushBeforePageLeaves);
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'hidden') flushBeforePageLeaves();
   });
 
   setInterval(() => {
