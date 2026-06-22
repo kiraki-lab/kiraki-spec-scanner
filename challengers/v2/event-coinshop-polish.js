@@ -63,7 +63,8 @@
   function loadAuxiliaryScripts() {
     const scripts = [
       { src: './event-coin-week-presets.js?v=0.1.0', flag: '__kirakiEventCoinWeekPresetsLoaded' },
-      { src: './roadmap-journal.js?v=0.1.0', flag: '__kirakiRoadmapJournalLoaded' }
+      { src: './roadmap-journal.js?v=0.1.0', flag: '__kirakiRoadmapJournalLoaded' },
+      { src: './personal-schedule.js?v=0.1.0', flag: '__kirakiPersonalScheduleLoaded' }
     ];
     scripts.forEach(({ src, flag }) => {
       if (window[flag] || document.querySelector(`script[src="${src}"]`)) return;
