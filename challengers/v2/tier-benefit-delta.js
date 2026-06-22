@@ -1,8 +1,8 @@
 (() => {
   'use strict';
 
-  if (window.__kirakiTierBenefitDeltaVersion === '0.1.1') return;
-  window.__kirakiTierBenefitDeltaVersion = '0.1.1';
+  if (window.__kirakiTierBenefitDeltaVersion === '0.1.2') return;
+  window.__kirakiTierBenefitDeltaVersion = '0.1.2';
   window.__kirakiTierBenefitDeltaLoaded = true;
 
   const benefitOrder = ['beginner', 'bronze', 'silver', 'gold', 'platinum', 'emerald', 'sapphire'];
@@ -18,14 +18,45 @@
     challenger: 'sapphire'
   };
 
+  const zeroValues = {
+    attack: 0,
+    normalDamage: 0,
+    bossDamage: 0,
+    ignoreDefense: 0,
+    buffDuration: 0,
+    critDamage: 0,
+    allStat: 0,
+    hpMp: 0,
+    mesoExtra: 0,
+    itemDropExtra: 0
+  };
+
   const benefitRows = {
-    beginner: { name: '비기너', values: { exp: 1.5, attack: 50, normalDamage: 100, bossDamage: 30, ignoreDefense: 30, buffDuration: 30, critRate: 30, critDamage: 30, statusResist: 30, allStat: 50, hpMp: 2500, summonDuration: 10, stanceDuration: 10, dropMesoMultiplier: 2, runeDuration: 50, mesoExtra: 0, itemDropExtra: 0 } },
-    bronze: { name: '브론즈', values: { exp: 1.5, attack: 50, normalDamage: 150, bossDamage: 30, ignoreDefense: 30, buffDuration: 30, critRate: 30, critDamage: 30, statusResist: 30, allStat: 100, hpMp: 2500, summonDuration: 10, stanceDuration: 10, dropMesoMultiplier: 2, runeDuration: 50, mesoExtra: 0, itemDropExtra: 0 } },
-    silver: { name: '실버', values: { exp: 1.5, attack: 55, normalDamage: 150, bossDamage: 40, ignoreDefense: 40, buffDuration: 30, critRate: 30, critDamage: 30, statusResist: 30, allStat: 100, hpMp: 3000, summonDuration: 10, stanceDuration: 10, dropMesoMultiplier: 2, runeDuration: 50, mesoExtra: 0, itemDropExtra: 0 } },
-    gold: { name: '골드', values: { exp: 1.5, attack: 55, normalDamage: 150, bossDamage: 50, ignoreDefense: 50, buffDuration: 30, critRate: 30, critDamage: 30, statusResist: 30, allStat: 100, hpMp: 3500, summonDuration: 10, stanceDuration: 10, dropMesoMultiplier: 2, runeDuration: 50, mesoExtra: 0, itemDropExtra: 0 } },
-    platinum: { name: '플래티넘', values: { exp: 1.5, attack: 70, normalDamage: 150, bossDamage: 60, ignoreDefense: 50, buffDuration: 30, critRate: 30, critDamage: 35, statusResist: 30, allStat: 100, hpMp: 4500, summonDuration: 10, stanceDuration: 10, dropMesoMultiplier: 2, runeDuration: 50, mesoExtra: 0, itemDropExtra: 0 } },
-    emerald: { name: '에메랄드', values: { exp: 1.5, attack: 80, normalDamage: 150, bossDamage: 70, ignoreDefense: 70, buffDuration: 40, critRate: 30, critDamage: 40, statusResist: 30, allStat: 100, hpMp: 5000, summonDuration: 10, stanceDuration: 10, dropMesoMultiplier: 2, runeDuration: 50, mesoExtra: 0, itemDropExtra: 0 } },
-    sapphire: { name: '사파이어 이상', values: { exp: 1.5, attack: 80, normalDamage: 150, bossDamage: 70, ignoreDefense: 70, buffDuration: 60, critRate: 30, critDamage: 40, statusResist: 30, allStat: 100, hpMp: 5000, summonDuration: 10, stanceDuration: 10, dropMesoMultiplier: 2, runeDuration: 50, mesoExtra: 20, itemDropExtra: 20 } }
+    beginner: { name: '비기너', values: { ...zeroValues } },
+    bronze: {
+      name: '브론즈',
+      values: { ...zeroValues, normalDamage: 50 }
+    },
+    silver: {
+      name: '실버',
+      values: { ...zeroValues, normalDamage: 50, attack: 5, bossDamage: 10, ignoreDefense: 10, hpMp: 500, allStat: 10 }
+    },
+    gold: {
+      name: '골드',
+      values: { ...zeroValues, normalDamage: 50, attack: 10, bossDamage: 20, ignoreDefense: 20, hpMp: 1000, allStat: 20 }
+    },
+    platinum: {
+      name: '플래티넘',
+      values: { ...zeroValues, normalDamage: 50, attack: 20, bossDamage: 30, ignoreDefense: 30, critDamage: 5, hpMp: 2000, allStat: 40 }
+    },
+    emerald: {
+      name: '에메랄드',
+      values: { ...zeroValues, normalDamage: 50, attack: 30, bossDamage: 40, ignoreDefense: 40, critDamage: 10, buffDuration: 30, hpMp: 2500, allStat: 50 }
+    },
+    sapphire: {
+      name: '사파이어 이상',
+      values: { ...zeroValues, normalDamage: 50, attack: 30, bossDamage: 40, ignoreDefense: 40, critDamage: 10, buffDuration: 30, hpMp: 2500, allStat: 50, mesoExtra: 20, itemDropExtra: 20 }
+    }
   };
 
   const fields = [
@@ -33,17 +64,12 @@
     { key: 'normalDamage', label: '일반 몬스터 데미지', unit: '%' },
     { key: 'bossDamage', label: '보스 몬스터 데미지', unit: '%' },
     { key: 'ignoreDefense', label: '방어율 무시', unit: '%' },
-    { key: 'buffDuration', label: '버프 지속시간', unit: '%' },
-    { key: 'critRate', label: '크리티컬 확률', unit: '%' },
     { key: 'critDamage', label: '크리티컬 데미지', unit: '%' },
+    { key: 'buffDuration', label: '버프 지속시간', unit: '%' },
     { key: 'allStat', label: '올스탯', unit: '' },
     { key: 'hpMp', label: '최대 HP/MP', unit: '' },
     { key: 'mesoExtra', label: '메소 획득량', unit: '%', hideWhenZero: true },
-    { key: 'itemDropExtra', label: '아이템 드롭률', unit: '%', hideWhenZero: true },
-    { key: 'statusResist', label: '상태이상 내성', unit: '%' },
-    { key: 'summonDuration', label: '소환수 지속시간', unit: '%' },
-    { key: 'stanceDuration', label: '스탠스 지속시간', unit: '%' },
-    { key: 'runeDuration', label: '해방된 룬 지속시간', unit: '%' }
+    { key: 'itemDropExtra', label: '아이템 드롭률', unit: '%', hideWhenZero: true }
   ];
 
   function installStyles() {
@@ -124,7 +150,7 @@
     const targetTierId = activeProfile().targetTierId || el.targetTierSelect?.value;
 
     const changed = fields
-      .map((field) => ({ field, before: currentRow.values[field.key], after: targetRow.values[field.key] }))
+      .map((field) => ({ field, before: currentRow.values[field.key] || 0, after: targetRow.values[field.key] || 0 }))
       .filter((item) => item.after !== item.before)
       .filter((item) => !(item.field.hideWhenZero && item.after === 0));
 
