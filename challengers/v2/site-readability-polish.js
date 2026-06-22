@@ -44,9 +44,31 @@ html:not([data-kiraki-admin-open="1"]) #bossCoinSyncCard{display:none!important}
     };
   }
 
+  function parseNumber(value) {
+    return Number(String(value || '').replace(/[^0-9-]/g, '')) || 0;
+  }
+
+  function syncCoinShopSeasonMeta() {
+    const meta = document.querySelector('#coinShopEstimatedMeta');
+    if (!meta) return;
+    const completed = [...document.querySelectorAll('#coinShopSeasonMissions [data-season-mission]')]
+      .reduce((sum, select) => sum + Math.max(0, Math.round(Number(select.value) || -1) + 1), 0);
+    const special = parseNumber(document.querySelector('#coinShopBossSpecialCoins')?.textContent);
+    meta.textContent = `시즌 미션 ${completed}개 · 상급 ${new Intl.NumberFormat('ko-KR').format(special)}개`;
+  }
+
+  function scheduleCoinShopSeasonMeta() {
+    requestAnimationFrame(syncCoinShopSeasonMeta);
+  }
+
   syncAdminOpenState();
-  document.addEventListener('click', () => setTimeout(syncAdminOpenState, 0), true);
+  document.addEventListener('click', () => {
+    setTimeout(syncAdminOpenState, 0);
+    setTimeout(scheduleCoinShopSeasonMeta, 0);
+  }, true);
+  document.addEventListener('input', scheduleCoinShopSeasonMeta, true);
+  document.addEventListener('change', scheduleCoinShopSeasonMeta, true);
   document.addEventListener('visibilitychange', syncAdminOpenState);
-  setTimeout(() => { wrapAdminUnlock(); syncAdminOpenState(); }, 0);
-  setTimeout(() => { wrapAdminUnlock(); syncAdminOpenState(); }, 250);
+  setTimeout(() => { wrapAdminUnlock(); syncAdminOpenState(); syncCoinShopSeasonMeta(); }, 0);
+  setTimeout(() => { wrapAdminUnlock(); syncAdminOpenState(); syncCoinShopSeasonMeta(); }, 250);
 })();
