@@ -63,7 +63,7 @@
     return {
       currentWeek: 1,
       totalWeeks: 12,
-      weeklyCoins: 2000,
+      weeklyCoins: 4000,
       heldCoins: 0,
       bonusCoins: 0,
       budgetMode: 'current',
