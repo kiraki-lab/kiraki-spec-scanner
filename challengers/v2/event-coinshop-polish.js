@@ -60,6 +60,20 @@
     try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch {}
   }
 
+  function loadAuxiliaryScripts() {
+    const scripts = [
+      { src: './event-coin-week-presets.js?v=0.1.0', flag: '__kirakiEventCoinWeekPresetsLoaded' },
+      { src: './roadmap-journal.js?v=0.1.0', flag: '__kirakiRoadmapJournalLoaded' }
+    ];
+    scripts.forEach(({ src, flag }) => {
+      if (window[flag] || document.querySelector(`script[src="${src}"]`)) return;
+      const script = document.createElement('script');
+      script.src = src;
+      script.defer = true;
+      document.head.append(script);
+    });
+  }
+
   function migrateWeeklyCoins() {
     const state = readState();
     if (Number(state.weeklyCoins) === 2000 && !state.weeklyCoinsMigrated4000) {
@@ -211,6 +225,7 @@
   }
 
   function boot() {
+    loadAuxiliaryScripts();
     migrateWeeklyCoins();
     installStyles();
     scheduleRender();
