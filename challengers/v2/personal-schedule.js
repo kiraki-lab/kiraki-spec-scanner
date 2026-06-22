@@ -14,7 +14,7 @@
     ? escapeHtml
     : (value) => String(value).replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#039;');
 
-  const CATEGORIES = ['코인샵', '레벨', '보스', '해방', '아이템버닝', '아버', '기타'];
+  const CATEGORIES = ['코인샵', '레벨', '보스', '해방', '아이템버닝', '도전의 문장', '기타'];
   let pendingScheduleView = false;
   let saveTimer = null;
 
@@ -44,7 +44,8 @@
 
   function normalizeWeek(raw, index) {
     const base = defaultWeek(index);
-    const category = CATEGORIES.includes(raw?.category) ? raw.category : base.category;
+    const rawCategory = raw?.category === '아버' ? '도전의 문장' : raw?.category;
+    const category = CATEGORIES.includes(rawCategory) ? rawCategory : base.category;
     return {
       week: index,
       category,
@@ -136,7 +137,7 @@
           <div>
             <p class="section-kicker">키라키 모드</p>
             <h2 id="personalScheduleTitle">개인 일정표</h2>
-            <p>12주 동안의 코인샵, 레벨, 보스, 해방, 아이템버닝, 아버 진행상황을 주차별로 기록합니다.</p>
+            <p>12주 동안의 코인샵, 레벨, 보스, 해방, 아이템버닝, 도전의 문장 진행상황을 주차별로 기록합니다.</p>
           </div>
           <span class="schedule-badge">비공개 준비 중</span>
         </div>
