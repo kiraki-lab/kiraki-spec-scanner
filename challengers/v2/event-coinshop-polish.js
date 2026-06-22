@@ -224,9 +224,6 @@
     document.addEventListener('click', (event) => {
       if (event.target.closest?.('.event-coinshop-panel,[data-view-button="eventCoinshop"]')) setTimeout(scheduleRender, 0);
     }, true);
-
-    const panel = document.querySelector('[data-view-panel="eventCoinshop"]');
-    if (panel) new MutationObserver(scheduleRender).observe(panel, { childList: true, subtree: true });
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot, { once: true });
