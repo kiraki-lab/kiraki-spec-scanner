@@ -1,8 +1,8 @@
 (() => {
   'use strict';
 
-  if (window.__kirakiPresetBuildViewVersion === '0.1.9') return;
-  window.__kirakiPresetBuildViewVersion = '0.1.9';
+  if (window.__kirakiPresetBuildViewVersion === '0.1.10') return;
+  window.__kirakiPresetBuildViewVersion = '0.1.10';
   window.__kirakiPresetBuildViewLoaded = true;
 
   const equalDifficultyIds = ['dusk-chaos', 'lucid-hard', 'will-hard', 'guardian-angel-slime-chaos', 'gloom-hard'];
@@ -30,7 +30,7 @@
     'sapphire-reference-v01': '사파이어 Lv.276 하드 진 힐라 포함형',
     'sapphire-video-40k-no-hilla-v01': '4만점 Lv.280 하드 윌형 (진 힐라 제외)',
     'sapphire-video-40k-normal-will-hilla-v01': '4만점 Lv.281 노멀 윌·진 힐라형 (하드 윌 제외)',
-    'sapphire-video-40k-normal-will-no-hilla-v01': '4만점 Lv.282 노멀 윌형 (하드 윌 제외)',
+    'sapphire-video-40k-normal-will-no-hilla-v01': '4만점 Lv.282 노멀 윌O · 하드 윌X · 진 힐라X',
     'diamond-video-50k-mayrin-v01': '다이아몬드 Lv.280 노멀 메이린형',
     'diamond-video-50k-black-mage-v01': '다이아몬드 Lv.280 하드 검은 마법사형',
     'diamond-video-50k-seren-v01': '다이아몬드 Lv.280 노멀 세렌형',
