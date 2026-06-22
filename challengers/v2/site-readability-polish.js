@@ -17,6 +17,7 @@ body{letter-spacing:0;text-rendering:optimizeLegibility}.panel{box-shadow:var(--
 .dashboard-grid{align-items:start}.score-grid{gap:9px}.score-card{min-height:88px}.tier-result{gap:10px}.tier-scale span{line-height:1.3}.quick-guide{gap:12px}.quick-guide span{line-height:1.5}
 .recommendation-panel{align-self:start}.recommendation-controls{align-items:end}.recommendation-result h3{line-height:1.35}.recommendation-result p{line-height:1.65}.recommendation-action-item{min-height:52px}.recommendation-action-copy small{line-height:1.45}
 .boss-filter-panel,.preset-tier-filter-panel{box-shadow:none}.boss-search-field input{font-weight:850}.boss-group{border-radius:14px}.boss-group>summary{gap:10px}.boss-card-grid{gap:9px}.boss-check{border-radius:12px}.boss-check input{width:19px;height:19px;flex:0 0 19px}.boss-copy{gap:4px}.boss-copy strong{line-height:1.35}.boss-copy span{line-height:1.35}
+html:not([data-kiraki-admin-open="1"]) #bossCoinSyncCard{display:none!important}
 .preset-card,.preset-card-readable{overflow:hidden}.preset-note,.preset-summary,.preset-target-count{word-break:keep-all}.preset-actions{gap:8px;flex-wrap:wrap}.preset-boss-chip{word-break:keep-all}
 .coinshop-panel,.event-coinshop-panel,.personal-schedule-panel,.item-burning-panel,.roadmap-journal-panel{word-break:keep-all}.coinshop-card-title,.event-roadmap-head,.schedule-head,.item-burning-head{gap:12px}.coinshop-card-title strong,.event-roadmap-head strong{line-height:1.35}.coinshop-item{box-shadow:0 6px 16px rgba(15,23,42,.035)}.coinshop-item-copy strong{line-height:1.45}.coinshop-item-meta{line-height:1.4}.coinshop-summary strong,.coinshop-income-metric strong{letter-spacing:0}.coinshop-season-select{min-height:104px}.coinshop-season-select-title strong{line-height:1.35}.coinshop-season-earned{line-height:1.35}
 .field input,.field select,.field textarea,.coinshop-budget-inputs input,.coinshop-season-select select{font-size:.9rem}.field>span,.coinshop-budget-inputs label span{line-height:1.35}.utility-popover{box-shadow:0 18px 36px rgba(15,23,42,.16)}
@@ -25,4 +26,27 @@ body{letter-spacing:0;text-rendering:optimizeLegibility}.panel{box-shadow:var(--
 @media(max-width:420px){.button.small{width:100%}.preset-detail-row{grid-template-columns:1fr}.coinshop-draft-actions,.input-inline-actions,.profile-input-row{display:grid;grid-template-columns:1fr}.level-stepper{grid-template-columns:42px minmax(0,1fr) 42px}}
 `;
   document.head.append(style);
+
+  function syncAdminOpenState() {
+    let unlocked = false;
+    try { unlocked = typeof isAdminUnlocked === 'function' && isAdminUnlocked(); } catch {}
+    document.documentElement.dataset.kirakiAdminOpen = unlocked ? '1' : '0';
+  }
+
+  function wrapAdminUnlock() {
+    if (window.__kirakiReadabilityAdminGuardWrapped || typeof setAdminUnlocked !== 'function') return;
+    window.__kirakiReadabilityAdminGuardWrapped = true;
+    const baseSetAdminUnlocked = setAdminUnlocked;
+    setAdminUnlocked = function readabilityAdminGuard(unlocked) {
+      const result = baseSetAdminUnlocked.apply(this, arguments);
+      syncAdminOpenState();
+      return result;
+    };
+  }
+
+  syncAdminOpenState();
+  document.addEventListener('click', () => setTimeout(syncAdminOpenState, 0), true);
+  document.addEventListener('visibilitychange', syncAdminOpenState);
+  setTimeout(() => { wrapAdminUnlock(); syncAdminOpenState(); }, 0);
+  setTimeout(() => { wrapAdminUnlock(); syncAdminOpenState(); }, 250);
 })();
