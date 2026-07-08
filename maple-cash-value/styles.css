@@ -497,12 +497,29 @@ summary {
 }
 
 .component-list span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
   border-radius: 999px;
   background: #eef3ff;
   color: #32518f;
   padding: 4px 8px;
   font-size: 11px;
   font-weight: 800;
+}
+
+.component-list span.bonus {
+  background: #fff4df;
+  color: var(--amber);
+}
+
+.component-list em {
+  border-left: 1px solid rgba(154, 101, 0, .24);
+  color: inherit;
+  font-size: 10px;
+  font-style: normal;
+  opacity: .72;
+  padding-left: 5px;
 }
 
 .empty {
