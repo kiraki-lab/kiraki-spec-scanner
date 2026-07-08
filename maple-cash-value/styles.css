@@ -280,6 +280,7 @@ main {
   border-radius: 8px;
   padding: 10px;
   background: #fbfcff;
+  text-decoration: none;
 }
 
 .notice-item strong {
@@ -292,6 +293,30 @@ main {
   color: var(--muted);
   font-size: 11px;
   font-weight: 800;
+}
+
+.notice-summary {
+  margin: 7px 0 0;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.notice-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 8px;
+}
+
+.notice-tag {
+  display: inline-flex;
+  max-width: 100%;
+  border-radius: 999px;
+  background: #eef3ff;
+  color: #32518f !important;
+  padding: 4px 8px;
+  overflow-wrap: anywhere;
 }
 
 .table-wrap {
