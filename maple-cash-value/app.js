@@ -21,6 +21,11 @@ const state = {
   metadata: {},
   rankMode: 'listingLowestMeso',
   search: '',
+  categoryFilter: '',
+  saleSearch: '',
+  saleGroupFilter: '',
+  saleTypeFilter: '',
+  saleReviewFilter: 'all',
   settings: { ...DEFAULT_SETTINGS }
 };
 
@@ -96,6 +101,8 @@ async function loadData() {
     state.auctionRows = normalizeAuctionRows(auctionDoc.prices);
     state.notices = normalizeNotices(noticeDoc.notices || noticeDoc.cashshopNotice || []);
     state.saleCatalog = normalizeSaleCatalog(saleDoc.sales || []);
+    syncCategoryFilterOptions();
+    syncSaleFilterOptions();
     setSyncState('ready', '데이터 로딩 완료', `${state.metadata.world} 기준 데이터를 불러왔습니다.`);
   } catch (error) {
     console.error(error);
@@ -144,9 +151,13 @@ function normalizeSaleCatalog(raw) {
   return raw.map(sale => ({
     id: sale.id,
     title: sale.title || `판매글 ${sale.id}`,
+    label: saleTitleLabel(sale.title || `판매글 ${sale.id}`),
     url: sale.url || null,
     bodyImages: Array.isArray(sale.bodyImages) ? sale.bodyImages : [],
-    items: normalizeSaleSearchItems(sale)
+    items: normalizeSaleSearchItems(sale).map(item => ({
+      ...item,
+      type: classifySaleItem(item.name, sale)
+    }))
   })).filter(sale => sale.items.length);
 }
 
@@ -167,8 +178,38 @@ function normalizeSaleSearchItems(sale) {
   return [...seen.values()];
 }
 
-function flattenSaleSearchItems() {
-  return state.saleCatalog.flatMap(sale => sale.items.map(item => ({ ...item, saleId: sale.id })));
+function saleTitleLabel(title) {
+  return String(title || '').replace(/^6월 18일 캐시아이템 업데이트 -\s*/, '');
+}
+
+function classifySaleItem(name, sale) {
+  const text = `${name} ${sale.title || ''}`;
+  if (name.includes('패키지')) return '패키지';
+  if (name.includes('쿠폰')) return '쿠폰';
+  if (/원더베리|루나 크리스탈|로얄 스타일|마스터피스/.test(name)) return '확률형';
+  if (/서약|사인|아메리카노|업무 자료|크리스탈 키|모자|간식|머리띠/.test(name) && /원더베리|루나|펫|쁘띠/.test(text)) return '펫장비';
+  if (/사원|치치|카카|랑랑|정령|백야|설아|쁘띠|펫/.test(text)) return '펫';
+  if (/투구|햇|크라운|가면|써클릿|아머|슈트|로브|드레스|부츠|슈즈|소드|스태프|보우|표창|너클|도서|폴암|샤이닝로드|듀얼보우건|케인|엑스|윙|스피어|완드|활|석궁|단검|건|갑옷|헤어핀|헤어밴드|바이저|이어피스|크레스트|인시그니아|클로크|멜로디|후디|스카프|마들렌|마카롱|에리|쇼트케이크|렐름|도미넌스|해머|캐논|무기/.test(name)) return '치장';
+  return '기타';
+}
+
+function flattenSaleSearchItems(catalog = state.saleCatalog) {
+  return catalog.flatMap(sale => sale.items.map(item => ({ ...item, saleId: sale.id })));
+}
+
+function filteredSaleCatalog() {
+  const q = normalizeKey(state.saleSearch);
+  return state.saleCatalog.map(sale => {
+    const items = sale.items.filter(item => {
+      if (state.saleGroupFilter && String(sale.id) !== state.saleGroupFilter) return false;
+      if (state.saleTypeFilter && item.type !== state.saleTypeFilter) return false;
+      if (state.saleReviewFilter === 'review' && !item.needsReview) return false;
+      if (state.saleReviewFilter === 'confirmed' && item.needsReview) return false;
+      if (!q) return true;
+      return normalizeKey(`${sale.title} ${item.name} ${item.type}`).includes(q);
+    });
+    return { ...sale, items };
+  }).filter(sale => sale.items.length);
 }
 
 function buildPriceIndex() {
@@ -263,21 +304,31 @@ function enrichItems() {
   });
 }
 
-function render() {
+function filteredRows() {
   const q = normalizeKey(state.search);
+  return enrichItems().filter(item => {
+    if (state.categoryFilter && item.category !== state.categoryFilter) return false;
+    if (!q) return true;
+    const componentText = Array.isArray(item.components) ? item.components.map(component => component.name).join(' ') : '';
+    return normalizeKey([item.name, item.category, componentText, ...(item.aliases || [])].join(' ')).includes(q);
+  });
+}
+
+function render() {
   const rankKey = state.rankMode === 'marketTabLowestMeso' ? 'marketEfficiency' : 'listingEfficiency';
-  const rows = enrichItems()
-    .filter(item => normalizeKey([item.name, ...(item.aliases || [])].join(' ')).includes(q))
-    .sort((a, b) => a[rankKey] - b[rankKey]);
+  const rows = filteredRows().sort((a, b) => a[rankKey] - b[rankKey]);
+  const visibleSaleCatalog = filteredSaleCatalog();
+  const visibleSaleCount = flattenSaleSearchItems(visibleSaleCatalog).length;
+  const totalSaleCount = flattenSaleSearchItems().length;
 
   $('#rank-mode-label').textContent = state.rankMode === 'marketTabLowestMeso' ? '시세탭 최저' : '매물 최저가';
   $('#row-count').textContent = `${rows.length}개`;
-  $('#sale-item-count').textContent = `${flattenSaleSearchItems().length}개`;
+  $('#sale-item-count').textContent = visibleSaleCount === totalSaleCount ? `${totalSaleCount}개` : `${visibleSaleCount}/${totalSaleCount}개`;
   $('#auction-updated').textContent = formatDate(state.metadata.auctionUpdatedAt);
   $('#best-efficiency').textContent = rows.length ? formatWon(rows[0][rankKey]) : '-';
 
   renderNotices();
-  renderSaleItems();
+  renderSaleItems(visibleSaleCatalog);
   renderTable(rows);
 }
 
@@ -304,23 +355,22 @@ function renderNoticeItems(items) {
   return `<div class="notice-tags">${items.map(item => `<span class="notice-tag">${escapeHtml(item)}</span>`).join('')}</div>`;
 }
 
-function renderSaleItems() {
+function renderSaleItems(catalog) {
   const list = $('#sale-item-list');
-  if (!state.saleCatalog.length) {
-    list.innerHTML = '<div class="sale-item"><strong>세부품목 없음</strong><span>Chrome OCR 수집 후 표시됩니다.</span></div>';
+  if (!catalog.length) {
+    list.innerHTML = '<div class="sale-item"><strong>검색 결과 없음</strong><span>다른 분류나 검색어를 선택해보세요.</span></div>';
     return;
   }
-  list.innerHTML = state.saleCatalog.map(sale => {
-    const preview = sale.items.slice(0, 8).map(item => (
-      `<span class="sale-tag${item.needsReview ? ' review' : ''}">${escapeHtml(item.name)}</span>`
+  list.innerHTML = catalog.map(sale => {
+    const chips = sale.items.map(item => (
+      `<span class="sale-tag${item.needsReview ? ' review' : ''}" title="${escapeAttribute(item.type)}">${escapeHtml(item.name)}<em>${escapeHtml(item.type)}</em></span>`
     )).join('');
-    const more = sale.items.length > 8 ? `<span class="sale-tag more">+${sale.items.length - 8}</span>` : '';
     const reviewCount = sale.items.filter(item => item.needsReview).length;
-    const meta = `${sale.items.length}개 검색 후보${reviewCount ? ` · 검수 ${reviewCount}` : ''}`;
-    const body = `<strong>${escapeHtml(sale.title)}</strong><span>${escapeHtml(meta)}</span><div class="sale-tags">${preview}${more}</div>`;
+    const meta = `${sale.items.length}개${reviewCount ? ` · 검수 ${reviewCount}` : ''}`;
+    const body = `<summary><strong>${escapeHtml(sale.label)}</strong><span>${escapeHtml(meta)}</span></summary><div class="sale-tags">${chips}</div>`;
     return sale.url
-      ? `<a class="sale-item" href="${escapeAttribute(sale.url)}" target="_blank" rel="noreferrer">${body}</a>`
-      : `<div class="sale-item">${body}</div>`;
+      ? `<details class="sale-item" open>${body}<a class="sale-link" href="${escapeAttribute(sale.url)}" target="_blank" rel="noreferrer">공지 열기</a></details>`
+      : `<details class="sale-item" open>${body}</details>`;
   }).join('');
 }
 
@@ -386,6 +436,24 @@ function syncInputs() {
   $('#base-mp-rate').value = state.settings.baseMpRate;
 }
 
+function syncCategoryFilterOptions() {
+  const select = $('#category-filter');
+  const categories = [...new Set(state.items.map(item => item.category || '캐시 아이템'))]
+    .sort((a, b) => a.localeCompare(b, 'ko-KR'));
+  select.innerHTML = '<option value="">전체</option>' + categories
+    .map(category => `<option value="${escapeAttribute(category)}">${escapeHtml(category)}</option>`)
+    .join('');
+  select.value = state.categoryFilter;
+}
+
+function syncSaleFilterOptions() {
+  const group = $('#sale-group-filter');
+  group.innerHTML = '<option value="">전체 판매글</option>' + state.saleCatalog
+    .map(sale => `<option value="${escapeAttribute(sale.id)}">${escapeHtml(sale.label)}</option>`)
+    .join('');
+  group.value = state.saleGroupFilter;
+}
+
 function escapeHtml(value) {
   return String(value ?? '').replace(/[&<>"']/g, char => ({
     '&': '&amp;',
@@ -405,11 +473,36 @@ $('#search-input').addEventListener('input', event => {
   render();
 });
 
+$('#category-filter').addEventListener('change', event => {
+  state.categoryFilter = event.target.value;
+  render();
+});
+
 document.querySelectorAll('input[name="rank-mode"]').forEach(input => {
   input.addEventListener('change', event => {
     state.rankMode = event.target.value;
     render();
   });
+});
+
+$('#sale-search-input').addEventListener('input', event => {
+  state.saleSearch = event.target.value;
+  render();
+});
+
+$('#sale-group-filter').addEventListener('change', event => {
+  state.saleGroupFilter = event.target.value;
+  render();
+});
+
+$('#sale-type-filter').addEventListener('change', event => {
+  state.saleTypeFilter = event.target.value;
+  render();
+});
+
+$('#sale-review-filter').addEventListener('change', event => {
+  state.saleReviewFilter = event.target.value;
+  render();
 });
 
 $('#discount-rate').addEventListener('input', event => {
