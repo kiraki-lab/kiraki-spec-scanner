@@ -1,9 +1,65 @@
 {
   "version": 1,
-  "generatedAt": "2026-07-08T09:59:31.417Z",
+  "generatedAt": "2026-07-08T10:05:12.659Z",
   "source": "nexon-open-api",
   "endpoint": "/maplestory/v1/notice-cashshop",
-  "status": "api-error",
-  "error": "Nexon API 400: {\"error\":{\"name\":\"OPENAPI00005\",\"message\":\"The apikey is not valid.\"}}",
-  "notices": []
+  "status": "ok",
+  "notices": [
+    {
+      "id": 632,
+      "title": "6월 18일 캐시아이템 업데이트 - 제네시스 패스 & 제네시스 패스 PLUS",
+      "date": "2026-06-18T08:51+09:00",
+      "url": "https://maplestory.nexon.com/News/CashShop/632",
+      "summary": "제네시스 패스 &nbsp;PLUS 에 아래 안내 문구가 추가되었습니다 . - 제네시스 무기 해방을 완료한 주간 / 월간에 이미 미션이 오픈된 주간 / 월간 보스를 처치한 경우 ,&nbsp; 해당 미션은 자동으로 완료됩니다 . &nbsp; (2026 년 &nbsp;6 월 &nbsp;22 일 ( 월 )&nbsp; 오전 &nbsp;10 시 45 분 수정 ) ------------------------------------------"
+    },
+    {
+      "id": 631,
+      "title": "6월 18일 캐시아이템 업데이트 - 블레어 살롱 헤어 쿠폰",
+      "date": "2026-06-18T08:50+09:00",
+      "url": "https://maplestory.nexon.com/News/CashShop/631",
+      "summary": ""
+    },
+    {
+      "id": 630,
+      "title": "6월 18일 캐시아이템 업데이트 - 위습의 원더베리 & 루나 크리스탈",
+      "date": "2026-06-18T08:50+09:00",
+      "url": "https://maplestory.nexon.com/News/CashShop/630",
+      "summary": ""
+    },
+    {
+      "id": 629,
+      "title": "6월 18일 캐시아이템 업데이트 - 스페셜 루나 크리스탈",
+      "date": "2026-06-18T08:50+09:00",
+      "url": "https://maplestory.nexon.com/News/CashShop/629",
+      "summary": ""
+    },
+    {
+      "id": 628,
+      "title": "6월 18일 캐시아이템 업데이트 - 로얄스타일 & 마스터피스",
+      "date": "2026-06-18T08:50+09:00",
+      "url": "https://maplestory.nexon.com/News/CashShop/628",
+      "summary": ""
+    },
+    {
+      "id": 627,
+      "title": "6월 18일 캐시아이템 업데이트 - 전 직업 일러스트 컬렉션 : 모험가",
+      "date": "2026-06-18T08:50+09:00",
+      "url": "https://maplestory.nexon.com/News/CashShop/627",
+      "summary": ""
+    },
+    {
+      "id": 626,
+      "title": "6월 18일 캐시아이템 업데이트 - 전 직업 일러스트 컬렉션 : 시그너스 & 영웅",
+      "date": "2026-06-18T08:50+09:00",
+      "url": "https://maplestory.nexon.com/News/CashShop/626",
+      "summary": ""
+    },
+    {
+      "id": 625,
+      "title": "6월 18일 캐시아이템 업데이트 - 전 직업 일러스트 컬렉션 : 데몬 & 레지스탕스",
+      "date": "2026-06-18T08:50+09:00",
+      "url": "https://maplestory.nexon.com/News/CashShop/625",
+      "summary": ""
+    }
+  ]
 }
