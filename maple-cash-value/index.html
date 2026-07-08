@@ -37,8 +37,8 @@
         <strong id="auction-updated">-</strong>
       </article>
       <article class="metric">
-        <span class="metric-label">캐시샵 공지</span>
-        <strong id="notice-count">-</strong>
+        <span class="metric-label">검색 후보</span>
+        <strong id="sale-item-count">-</strong>
       </article>
     </section>
 
@@ -78,13 +78,23 @@
     </section>
 
     <main>
-      <section class="notice-panel" aria-label="캐시샵 공지">
-        <div class="section-title">
-          <h2>캐시샵 업데이트</h2>
-          <a id="notice-source-link" href="https://openapi.nexon.com/ko/game/maplestory/?id=24" target="_blank" rel="noreferrer">NEXON Open API</a>
-        </div>
-        <div id="notice-list" class="notice-list"></div>
-      </section>
+      <div class="side-stack">
+        <section class="notice-panel" aria-label="캐시샵 공지">
+          <div class="section-title">
+            <h2>캐시샵 업데이트</h2>
+            <a id="notice-source-link" href="https://openapi.nexon.com/ko/game/maplestory/?id=24" target="_blank" rel="noreferrer">NEXON Open API</a>
+          </div>
+          <div id="notice-list" class="notice-list"></div>
+        </section>
+
+        <section class="sale-panel" aria-label="세부품목 검색 후보">
+          <div class="section-title">
+            <h2>세부품목 후보</h2>
+            <span class="count-pill">Chrome OCR</span>
+          </div>
+          <div id="sale-item-list" class="sale-list"></div>
+        </section>
+      </div>
 
       <section class="table-panel" aria-label="효율 목록">
         <div class="section-title">
@@ -111,7 +121,7 @@
     </main>
 
     <footer class="footer-note">
-      <span>Data based on NEXON Open API</span>
+      <span>Data based on NEXON Open API and MapleStory sale-page images</span>
     </footer>
   </div>
 
