@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>메이플 캐시 효율 계산기</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">스카니아 · 월드 통합 경매장</p>
+        <h1>메이플 캐시 효율 계산기</h1>
+      </div>
+      <div class="sync-card" aria-live="polite">
+        <span class="sync-dot"></span>
+        <div>
+          <strong id="sync-state">데이터 로딩 중</strong>
+          <span id="sync-detail">자동 갱신 JSON을 확인하고 있습니다.</span>
+        </div>
+      </div>
+    </header>
+
+    <section class="summary-grid" aria-label="요약">
+      <article class="metric">
+        <span class="metric-label">랭킹 기준</span>
+        <strong id="rank-mode-label">매물 최저가</strong>
+      </article>
+      <article class="metric">
+        <span class="metric-label">최고 효율</span>
+        <strong id="best-efficiency">-</strong>
+      </article>
+      <article class="metric">
+        <span class="metric-label">경매장 갱신</span>
+        <strong id="auction-updated">-</strong>
+      </article>
+      <article class="metric">
+        <span class="metric-label">캐시샵 공지</span>
+        <strong id="notice-count">-</strong>
+      </article>
+    </section>
+
+    <section class="controls" aria-label="계산 기준">
+      <label class="search">
+        <span>검색</span>
+        <input id="search-input" type="search" placeholder="아이템명 검색" autocomplete="off">
+      </label>
+
+      <fieldset class="segmented">
+        <legend>랭킹 기준</legend>
+        <label>
+          <input type="radio" name="rank-mode" value="listingLowestMeso" checked>
+          <span>매물 최저가</span>
+        </label>
+        <label>
+          <input type="radio" name="rank-mode" value="marketTabLowestMeso">
+          <span>시세탭 최저</span>
+        </label>
+      </fieldset>
+
+      <label>
+        <span>상품권 할인율</span>
+        <input id="discount-rate" type="number" min="0" max="100" step="0.1">
+      </label>
+      <label>
+        <span>수수료</span>
+        <select id="ah-fee-rate">
+          <option value="5">5% 일반</option>
+          <option value="3">3% MVP</option>
+        </select>
+      </label>
+      <label>
+        <span>1억당 마일리지 시세</span>
+        <input id="base-mp-rate" type="number" min="0" step="10">
+      </label>
+    </section>
+
+    <main>
+      <section class="notice-panel" aria-label="캐시샵 공지">
+        <div class="section-title">
+          <h2>캐시샵 업데이트</h2>
+          <a id="notice-source-link" href="https://openapi.nexon.com/ko/game/maplestory/?id=24" target="_blank" rel="noreferrer">NEXON Open API</a>
+        </div>
+        <div id="notice-list" class="notice-list"></div>
+      </section>
+
+      <section class="table-panel" aria-label="효율 목록">
+        <div class="section-title">
+          <h2>효율 목록</h2>
+          <span id="row-count" class="count-pill">0개</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">순위</th>
+                <th scope="col">아이템</th>
+                <th scope="col">캐시</th>
+                <th scope="col">매물 최저가</th>
+                <th scope="col">매물 효율</th>
+                <th scope="col">시세탭 최저</th>
+                <th scope="col">시세탭 효율</th>
+              </tr>
+            </thead>
+            <tbody id="item-rows"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer-note">
+      <span>Data based on NEXON Open API</span>
+    </footer>
+  </div>
+
+  <template id="empty-template">
+    <tr>
+      <td colspan="7" class="empty">표시할 항목이 없습니다.</td>
+    </tr>
+  </template>
+
+  <script type="module" src="./app.js"></script>
+</body>
+</html>

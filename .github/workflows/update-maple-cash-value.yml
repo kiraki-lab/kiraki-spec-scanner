@@ -1,0 +1,46 @@
+name: Update Maple Cash Value
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'maple-cash-value/**'
+      - '.github/workflows/update-maple-cash-value.yml'
+  workflow_dispatch:
+  schedule:
+    - cron: '20 18 * * *'
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  update-and-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/configure-pages@v5
+
+      - name: Update cashshop notices
+        working-directory: maple-cash-value
+        env:
+          NEXON_OPEN_API_KEY: ${{ secrets.NEXON_OPEN_API_KEY }}
+        run: node scripts/update-cashshop-notices.mjs
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
