@@ -1,6 +1,9 @@
 {
   "version": 1,
-  "generatedAt": null,
-  "source": "seed",
+  "generatedAt": "2026-07-08T09:59:31.417Z",
+  "source": "nexon-open-api",
+  "endpoint": "/maplestory/v1/notice-cashshop",
+  "status": "api-error",
+  "error": "Nexon API 400: {\"error\":{\"name\":\"OPENAPI00005\",\"message\":\"The apikey is not valid.\"}}",
   "notices": []
 }
