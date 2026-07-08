@@ -13,37 +13,53 @@ if (!API_KEY) {
     version: 1,
     generatedAt: new Date().toISOString(),
     source: 'nexon-open-api',
+    endpoint: '/maplestory/v1/notice-cashshop',
     status: 'missing-api-key',
     notices: []
   });
   process.exit(0);
 }
 
-const listPayload = await requestJson(LIST_URL);
-const list = pickNoticeArray(listPayload).slice(0, LIMIT);
-const notices = [];
+try {
+  const listPayload = await requestJson(LIST_URL);
+  const list = pickNoticeArray(listPayload).slice(0, LIMIT);
+  const notices = [];
 
-for (const raw of list) {
-  const notice = normalizeNotice(raw);
-  if (notice.id) {
-    await sleep(250);
-    try {
-      const detail = await requestJson(`${DETAIL_URL}?notice_id=${encodeURIComponent(notice.id)}`);
-      Object.assign(notice, normalizeNoticeDetail(detail));
-    } catch (error) {
-      notice.detailError = error.message;
+  for (const raw of list) {
+    const notice = normalizeNotice(raw);
+    if (notice.id) {
+      await sleep(250);
+      try {
+        const detail = await requestJson(`${DETAIL_URL}?notice_id=${encodeURIComponent(notice.id)}`);
+        Object.assign(notice, normalizeNoticeDetail(detail));
+      } catch (error) {
+        notice.detailError = toPublicError(error);
+      }
     }
+    notices.push(notice);
   }
-  notices.push(notice);
-}
 
-await writeJson({
-  version: 1,
-  generatedAt: new Date().toISOString(),
-  source: 'nexon-open-api',
-  endpoint: '/maplestory/v1/notice-cashshop',
-  notices
-});
+  await writeJson({
+    version: 1,
+    generatedAt: new Date().toISOString(),
+    source: 'nexon-open-api',
+    endpoint: '/maplestory/v1/notice-cashshop',
+    status: 'ok',
+    notices
+  });
+} catch (error) {
+  const message = toPublicError(error);
+  console.warn(`Cashshop notice update failed: ${message}`);
+  await writeJson({
+    version: 1,
+    generatedAt: new Date().toISOString(),
+    source: 'nexon-open-api',
+    endpoint: '/maplestory/v1/notice-cashshop',
+    status: 'api-error',
+    error: message,
+    notices: []
+  });
+}
 
 async function requestJson(url) {
   const response = await fetch(url, {
@@ -85,6 +101,12 @@ function normalizeNoticeDetail(payload) {
 
 function stripHtml(value) {
   return String(value || '').replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+}
+
+function toPublicError(error) {
+  return String(error?.message || error || 'Unknown error')
+    .replaceAll(API_KEY || '', '[redacted]')
+    .slice(0, 320);
 }
 
 async function writeJson(value) {
