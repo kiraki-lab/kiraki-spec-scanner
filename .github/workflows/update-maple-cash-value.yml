@@ -1,6 +1,11 @@
 name: Update Maple Cash Value
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - 'maple-cash-value/**'
+      - '.github/workflows/update-maple-cash-value.yml'
   workflow_dispatch:
   schedule:
     - cron: '20 18 * * *'
