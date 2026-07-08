@@ -5,7 +5,8 @@ const DATA_PATHS = {
   saleItems: './data/cashshop-sale-items.json'
 };
 
-const STORAGE_KEY = 'maple-cash-value-settings-v1';
+const SETTINGS_KEY = 'maple-cash-value-settings-v2';
+const LOCAL_DATA_KEY = 'maple-cash-value-local-data-v1';
 const FIXED_MILEAGE_MESO_RATE = 10000;
 const DEFAULT_SETTINGS = {
   baseMpRate: 6990,
@@ -13,24 +14,32 @@ const DEFAULT_SETTINGS = {
   ahFeeRate: 5
 };
 
-const state = {
-  items: [],
-  auctionRows: [],
-  auctionSkips: [],
-  notices: [],
-  saleCatalog: [],
-  metadata: {},
-  search: '',
-  hiddenCategories: new Set(),
-  hiddenAuctionStatuses: new Set(),
-  saleSearch: '',
-  saleGroupFilter: '',
-  saleTypeFilter: '',
-  saleReviewFilter: 'all',
-  settings: { ...DEFAULT_SETTINGS }
-};
+const MODE_PASSWORDS = Object.freeze({
+  '0322': 'admin',
+  '0722': 'member'
+});
 
-// BONUS 구성품은 넥슨 공지 기준 교환 불가라 효율 계산에는 넣지 않고, 패키지 확인용으로만 보여준다.
+const MODE_LABELS = Object.freeze({
+  public: '공개 모드',
+  member: '멤버십 모드',
+  admin: '관리자 모드'
+});
+
+const MODE_DETAILS = Object.freeze({
+  public: '수동 계산 가능 · 저장 잠김',
+  member: '가격 저장 · 가격 JSON 연동',
+  admin: '항목 수정 · 가격 저장 · JSON 연동'
+});
+
+const AUCTION_STATUS_OPTIONS = Object.freeze([
+  ['live', '가격 있음'],
+  ['seed', '기본값'],
+  ['no_listing', '매물 없음'],
+  ['no_candidate', '후보 없음'],
+  ['unverified', '미확인']
+]);
+
+const AUCTION_STATUS_LABELS = Object.freeze(Object.fromEntries(AUCTION_STATUS_OPTIONS));
 const BONUS_COMPONENTS_BY_PACKAGE = Object.freeze({
   '레지스탕스 와일드헌터 패키지(남)': ['레지스탕스 와일드헌터 글러브'],
   '레지스탕스 와일드헌터 패키지(여)': ['레지스탕스 와일드헌터 글러브'],
@@ -52,40 +61,43 @@ const BONUS_COMPONENTS_BY_PACKAGE = Object.freeze({
   '영웅 메르세데스 패키지(남)': ['영웅 메르세데스 핀'],
   '영웅 메르세데스 패키지(여)': ['영웅 메르세데스 핀'],
   '영웅 팬텀 패키지(남)': ['영웅 팬텀 햇'],
-  '영웅 팬텀 패키지(여)': ['영웅 팬텀 햇'],
-  '모험가 썬콜 패키지(여)': ['모험가 썬콜 머리띠(여)'],
-  '모험가 비숍 패키지(남)': ['모험가 비숍 모자'],
-  '모험가 비숍 패키지(여)': ['모험가 비숍 모자'],
-  '모험가 보우마스터 패키지(남)': ['모험가 보우마스터 귀고리(남)'],
-  '모험가 보우마스터 패키지(여)': ['모험가 보우마스터 깃털(여)'],
-  '모험가 신궁 패키지(남)': ['모험가 신궁 모자'],
-  '모험가 신궁 패키지(여)': ['모험가 신궁 모자'],
-  '모험가 패스파인더 패키지': ['모험가 패스파인더 후드'],
-  '모험가 나이트로드 패키지(남)': ['모험가 나이트로드 헤어밴드(남)'],
-  '모험가 나이트로드 패키지(여)': ['모험가 나이트로드 헤어밴드(여)'],
-  '모험가 듀얼블레이드 패키지': ['모험가 듀얼블레이드 헤어밴드'],
-  '모험가 섀도어 패키지': ['모험가 섀도어 마스크'],
-  '모험가 캐논슈터 패키지(남)': ['모험가 캐논슈터 헤어밴드(남)', '모험가 캐논슈터 귀고리'],
-  '모험가 캐논슈터 패키지(여)': ['모험가 캐논슈터 헤어밴드(여)', '모험가 캐논슈터 귀고리'],
-  '모험가 캡틴 패키지(남)': ['모험가 캡틴 모자(남)'],
-  '모험가 캡틴 패키지(여)': ['모험가 캡틴 모자(여)']
+  '영웅 팬텀 패키지(여)': ['영웅 팬텀 햇']
 });
 
-const AUCTION_STATUS_OPTIONS = Object.freeze([
-  ['live', '가격 있음'],
-  ['seed', '기본값'],
-  ['no_listing', '매물 없음'],
-  ['no_candidate', '후보 없음'],
-  ['unverified', '미확인']
-]);
+const state = {
+  mode: 'public',
+  baseItems: [],
+  items: [],
+  hasLocalItems: false,
+  auctionRows: [],
+  auctionSkips: [],
+  localAuctionRows: [],
+  localDataUpdatedAt: null,
+  notices: [],
+  saleCatalog: [],
+  metadata: {},
+  search: '',
+  categoryFilter: '',
+  statusFilter: '',
+  saleSearch: '',
+  saleGroupFilter: '',
+  saleTypeFilter: '',
+  saleReviewFilter: 'all',
+  adminItemId: '',
+  priceTargetName: '',
+  settings: { ...DEFAULT_SETTINGS }
+};
 
-const AUCTION_STATUS_LABELS = Object.freeze(Object.fromEntries(AUCTION_STATUS_OPTIONS));
 const $ = selector => document.querySelector(selector);
 const nf = new Intl.NumberFormat('ko-KR');
 const won = new Intl.NumberFormat('ko-KR', { maximumFractionDigits: 0 });
 
 function normalizeKey(value) {
   return String(value || '').replace(/\s+/g, '').toLowerCase();
+}
+
+function nowIso() {
+  return new Date().toISOString();
 }
 
 function formatDate(value) {
@@ -112,9 +124,22 @@ function formatWon(value) {
   return Number.isFinite(value) ? `${won.format(value)}원` : '-';
 }
 
+function toNumber(value, fallback = 0) {
+  const number = Number(value);
+  return Number.isFinite(number) ? number : fallback;
+}
+
+function canEditPrices() {
+  return state.mode === 'member' || state.mode === 'admin';
+}
+
+function canEditItems() {
+  return state.mode === 'admin';
+}
+
 function loadStoredSettings() {
   try {
-    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+    const saved = JSON.parse(localStorage.getItem(SETTINGS_KEY) || '{}');
     state.settings = {
       ...DEFAULT_SETTINGS,
       ...Object.fromEntries(Object.entries(saved).filter(([, value]) => Number.isFinite(Number(value))))
@@ -125,7 +150,32 @@ function loadStoredSettings() {
 }
 
 function persistSettings() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(state.settings));
+  localStorage.setItem(SETTINGS_KEY, JSON.stringify(state.settings));
+}
+
+function loadLocalData() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(LOCAL_DATA_KEY) || '{}');
+    state.hasLocalItems = Array.isArray(saved.items);
+    state.items = state.hasLocalItems ? normalizeItemList(saved.items) : [...state.baseItems];
+    state.localAuctionRows = normalizeAuctionRows(saved.auctionPrices || saved.prices || []);
+    state.localDataUpdatedAt = saved.updatedAt || null;
+  } catch (_) {
+    state.hasLocalItems = false;
+    state.items = [...state.baseItems];
+    state.localAuctionRows = [];
+    state.localDataUpdatedAt = null;
+  }
+}
+
+function persistLocalData() {
+  state.localDataUpdatedAt = nowIso();
+  localStorage.setItem(LOCAL_DATA_KEY, JSON.stringify({
+    version: 1,
+    updatedAt: state.localDataUpdatedAt,
+    items: state.hasLocalItems ? state.items : null,
+    auctionPrices: state.localAuctionRows
+  }));
 }
 
 async function loadJson(path, fallback) {
@@ -137,6 +187,7 @@ async function loadJson(path, fallback) {
 async function loadData() {
   loadStoredSettings();
   syncInputs();
+  renderMode();
   try {
     const [itemsDoc, auctionDoc, noticeDoc, saleDoc] = await Promise.all([
       loadJson(DATA_PATHS.items, { items: [], settings: DEFAULT_SETTINGS }),
@@ -144,7 +195,10 @@ async function loadData() {
       loadJson(DATA_PATHS.notices, { notices: [] }),
       loadJson(DATA_PATHS.saleItems, { sales: [] })
     ]);
-    state.items = Array.isArray(itemsDoc.items) ? itemsDoc.items : [];
+
+    state.baseItems = normalizeItemList(itemsDoc.items || []);
+    state.items = [...state.baseItems];
+    loadLocalData();
     state.metadata.itemsUpdatedAt = itemsDoc.updatedAt;
     state.metadata.auctionUpdatedAt = auctionDoc.generatedAt || auctionDoc.updatedAt;
     state.metadata.saleItemsUpdatedAt = saleDoc.generatedAt;
@@ -162,10 +216,24 @@ async function loadData() {
   render();
 }
 
+function normalizeItemList(items) {
+  if (!Array.isArray(items)) return [];
+  return items.map(item => ({
+    ...item,
+    category: item.category || '캐시 아이템',
+    cashPrice: toNumber(item.cashPrice, 0),
+    seedMesoPrice: toNumber(item.seedMesoPrice || item.defaultMesoPrice, 0),
+    mileageType: item.mileageType || 'none',
+    aliases: Array.isArray(item.aliases) ? item.aliases.map(String).filter(Boolean) : [],
+    components: componentList(item.components),
+    bonusComponents: componentList(item.bonusComponents)
+  })).filter(item => item.name);
+}
+
 function normalizeAuctionRows(rawPrices) {
-  if (Array.isArray(rawPrices)) return rawPrices;
+  if (Array.isArray(rawPrices)) return rawPrices.filter(Boolean);
   if (rawPrices && typeof rawPrices === 'object') {
-    return Object.entries(rawPrices).map(([key, value]) => ({ itemId: key, ...value }));
+    return Object.entries(rawPrices).map(([key, value]) => ({ itemId: key, ...value })).filter(Boolean);
   }
   return [];
 }
@@ -238,9 +306,9 @@ function classifySaleItem(name, sale) {
   if (name.includes('패키지')) return '패키지';
   if (name.includes('쿠폰')) return '쿠폰';
   if (/원더베리|루나 크리스탈|로얄 스타일|마스터피스/.test(name)) return '확률형';
-  if (/서약|사인|아메리카노|업무 자료|크리스탈 키|모자|간식|머리띠/.test(name) && /원더베리|루나|펫|쁘띠/.test(text)) return '펫장비';
+  if (/펫장비|서약|사인|아메리카노|업무 자료|크리스탈 키|간식/.test(name) && /원더베리|루나|펫|쁘띠/.test(text)) return '펫장비';
   if (/사원|치치|카카|랑랑|정령|백야|설아|쁘띠|펫/.test(text)) return '펫';
-  if (/투구|햇|모자|크라운|가면|써클릿|머리띠|모노클|아머|슈트|로브|드레스|부츠|슈즈|소드|스태프|보우|표창|너클|도서|폴암|샤이닝로드|듀얼보우건|케인|엑스|윙|골든윙즈|스피어|완드|활|석궁|단검|건|갑옷|방패|이펙트|케이프|핀|깃털|귀고리|후드|마스크|얼굴장식|글러브|데스페라도|건틀렛|리볼버|에너지소드|부름|헤어핀|헤어밴드|바이저|이어피스|크레스트|인시그니아|클로크|멜로디|후디|스카프|마들렌|마카롱|에리|쇼트케이크|렐름|도미넌스|해머|캐논|무기|환영지화|환호지선|청야립|청몽장|청야운율|정몽선율|청야운|청몽운/.test(name)) return '치장';
+  if (/투구|햇|모자|크라운|가면|써클릿|머리띠|슈트|로브|드레스|부츠|슈즈|소드|스태프|보우|표창|너클|도서|폴암|완드|활|석궁|단검|건|갑옷|방패|이펙트|케이프|핀|깃털|귀고리|후드|마스크|무기/.test(name)) return '치장';
   return '기타';
 }
 
@@ -252,7 +320,13 @@ function componentList(raw) {
   if (!Array.isArray(raw)) return [];
   return raw
     .map(component => (typeof component === 'string' ? { name: component } : component))
-    .filter(component => component && component.name);
+    .filter(component => component && component.name)
+    .map(component => ({
+      ...component,
+      name: String(component.name).trim(),
+      aliases: Array.isArray(component.aliases) ? component.aliases.map(String).filter(Boolean) : [],
+      seedMesoPrice: toNumber(component.seedMesoPrice || component.defaultMesoPrice, 0)
+    }));
 }
 
 function bonusComponentsFor(item) {
@@ -282,13 +356,28 @@ function filteredSaleCatalog() {
   }).filter(sale => sale.items.length);
 }
 
+function rowKey(row) {
+  return row.itemId != null
+    ? `id:${row.itemId}`
+    : `name:${normalizeKey(row.itemName || row.name || row.query)}`;
+}
+
+function mergedAuctionRows() {
+  const rows = new Map();
+  [...state.auctionRows, ...state.localAuctionRows].forEach(row => {
+    const key = rowKey(row);
+    if (key !== 'name:') rows.set(key, row);
+  });
+  return [...rows.values()];
+}
+
 function buildPriceIndex() {
   const byId = new Map();
   const byName = new Map();
   const skippedById = new Map();
   const skippedByName = new Map();
 
-  for (const row of state.auctionRows) {
+  for (const row of mergedAuctionRows()) {
     if (row.itemId != null) byId.set(String(row.itemId), row);
     const names = [row.itemName, row.name, row.query, ...(row.aliases || [])].filter(Boolean);
     for (const name of names) byName.set(normalizeKey(name), row);
@@ -328,12 +417,22 @@ function priceFor(target, index) {
   const rowByName = names.map(name => index.byName.get(normalizeKey(name))).find(Boolean);
   const row = rowById || rowByName;
   const liveValue = Number(row?.listingLowestMeso || 0);
+
   if (liveValue > 0) {
     return {
       meso: liveValue,
-      source: 'live',
+      source: row.source === 'manual' ? 'manual' : 'live',
       auctionStatus: 'live',
-      collectedAt: row.collectedAt || row.updatedAt || state.metadata.auctionUpdatedAt
+      collectedAt: row.collectedAt || row.updatedAt || state.localDataUpdatedAt || state.metadata.auctionUpdatedAt
+    };
+  }
+
+  if (row?.status && row.status !== 'ok' && row.status !== 'manual') {
+    return {
+      meso: 0,
+      source: row.status,
+      auctionStatus: row.status,
+      collectedAt: row.collectedAt || null
     };
   }
 
@@ -357,18 +456,21 @@ function totalPriceFor(item, index) {
   }
 
   let liveCount = 0;
+  let manualCount = 0;
   let latest = null;
   const componentPrices = item.components.map(component => {
     const price = priceFor(component, index);
     if (price.source === 'live') liveCount += 1;
+    if (price.source === 'manual') manualCount += 1;
     if (price.collectedAt && (!latest || new Date(price.collectedAt) > new Date(latest))) latest = price.collectedAt;
     return price;
   });
   const meso = componentPrices.reduce((sum, price) => sum + price.meso, 0);
+  const filledCount = liveCount + manualCount;
 
   return {
     meso,
-    source: liveCount === item.components.length ? 'live' : liveCount > 0 ? 'mixed' : 'seed',
+    source: filledCount === item.components.length ? (manualCount ? 'manual' : 'live') : filledCount > 0 ? 'mixed' : 'seed',
     auctionStatus: summarizeAuctionStatus(componentPrices),
     collectedAt: latest
   };
@@ -414,8 +516,8 @@ function enrichItems() {
 function filteredRows(sourceRows = enrichItems()) {
   const q = normalizeKey(state.search);
   return sourceRows.filter(item => {
-    if (state.hiddenCategories.has(categoryFor(item))) return false;
-    if (state.hiddenAuctionStatuses.has(item.auctionStatus || 'unverified')) return false;
+    if (state.categoryFilter && categoryFor(item) !== state.categoryFilter) return false;
+    if (state.statusFilter && (item.auctionStatus || 'unverified') !== state.statusFilter) return false;
     if (!q) return true;
     const componentText = Array.isArray(item.components) ? item.components.map(component => component.name).join(' ') : '';
     const bonusText = bonusComponentsFor(item).map(component => component.name).join(' ');
@@ -425,21 +527,44 @@ function filteredRows(sourceRows = enrichItems()) {
 
 function render() {
   const allRows = enrichItems();
-  renderFilterChips(allRows);
   const rows = filteredRows(allRows).sort((a, b) => a.listingEfficiency - b.listingEfficiency);
   const visibleSaleCatalog = filteredSaleCatalog();
   const visibleSaleCount = flattenSaleSearchItems(visibleSaleCatalog).length;
   const totalSaleCount = flattenSaleSearchItems().length;
 
+  syncCategoryOptions(allRows);
+  syncPriceTargetOptions();
+  syncAdminItemOptions();
+
   $('#rank-mode-label').textContent = '매물 최저가';
   $('#row-count').textContent = `${rows.length}개`;
   $('#sale-item-count').textContent = visibleSaleCount === totalSaleCount ? `${totalSaleCount}개` : `${visibleSaleCount}/${totalSaleCount}개`;
-  $('#auction-updated').textContent = formatDate(state.metadata.auctionUpdatedAt);
+  $('#auction-updated').textContent = formatDate(state.localAuctionRows.length ? state.localDataUpdatedAt : state.metadata.auctionUpdatedAt);
   $('#best-efficiency').textContent = rows.length ? formatWon(rows[0].listingEfficiency) : '-';
+  $('#local-price-count').textContent = `${state.localAuctionRows.length}개`;
+  $('#item-override-state').textContent = state.hasLocalItems ? '수정 데이터' : '기본 데이터';
 
+  renderMode();
+  renderManualResult();
   renderNotices();
   renderSaleItems(visibleSaleCatalog);
   renderTable(rows);
+}
+
+function renderMode() {
+  document.body.dataset.mode = state.mode;
+  $('#mode-label').textContent = MODE_LABELS[state.mode];
+  $('#mode-detail').textContent = MODE_DETAILS[state.mode];
+  $('#management-mode').textContent = MODE_LABELS[state.mode];
+  $('#manual-save-state').textContent = canEditItems() ? '항목 저장 가능' : canEditPrices() ? '가격 저장 가능' : '저장 잠김';
+  $('#management-panel').hidden = state.mode === 'public';
+  $('#lock-mode').hidden = state.mode === 'public';
+  document.querySelectorAll('.member-only').forEach(element => {
+    element.hidden = !canEditPrices();
+  });
+  document.querySelectorAll('.admin-only').forEach(element => {
+    element.hidden = !canEditItems();
+  });
 }
 
 function renderNotices() {
@@ -507,8 +632,14 @@ function renderTable(rows) {
 
 function renderPrice(price) {
   const status = price.auctionStatus || 'unverified';
-  const label = price.source === 'live' ? '수집값' : price.source === 'mixed' ? '일부 수집' : auctionStatusLabel(status);
-  const klass = price.source === 'live' || price.source === 'mixed' ? 'live' : status;
+  const label = price.source === 'manual'
+    ? '수동입력'
+    : price.source === 'live'
+      ? '수집값'
+      : price.source === 'mixed'
+        ? '일부 수집'
+        : auctionStatusLabel(status);
+  const klass = ['live', 'manual', 'mixed'].includes(price.source) ? price.source : status;
   const date = price.collectedAt ? `<span class="price-meta">${escapeHtml(formatDate(price.collectedAt))}</span>` : '';
   return `<span class="price-value">${formatMeso(price.meso)}</span>${date}<span class="source-pill ${klass}">${label}</span>`;
 }
@@ -533,10 +664,84 @@ function renderComponents(item) {
   `;
 }
 
+function renderManualResult() {
+  const item = readManualDraft();
+  const detail = $('#manual-detail');
+  if (!item.name && !item.cashPrice && !item.seedMesoPrice) {
+    $('#manual-efficiency').textContent = '-';
+    detail.textContent = '값을 입력하면 바로 계산됩니다.';
+    return;
+  }
+  const efficiency = calculateEfficiency(item, item.seedMesoPrice);
+  $('#manual-efficiency').textContent = formatWon(efficiency);
+  const netMeso = item.seedMesoPrice * (1 - Number(state.settings.ahFeeRate || 0) / 100);
+  detail.textContent = `${formatMeso(item.seedMesoPrice)} · 수수료 후 ${formatMeso(netMeso)}`;
+}
+
 function mileageLabel(type) {
   if (type === 'full') return '100%';
   if (type === 'partial') return '30%';
   return '불가';
+}
+
+function syncInputs() {
+  $('#discount-rate').value = state.settings.discountRate;
+  $('#ah-fee-rate').value = state.settings.ahFeeRate;
+  $('#base-mp-rate').value = state.settings.baseMpRate;
+}
+
+function syncSaleFilterOptions() {
+  const group = $('#sale-group-filter');
+  group.innerHTML = '<option value="">전체 판매글</option>' + state.saleCatalog
+    .map(sale => `<option value="${escapeAttribute(sale.id)}">${escapeHtml(sale.label)}</option>`)
+    .join('');
+  group.value = state.saleGroupFilter;
+}
+
+function syncCategoryOptions(rows) {
+  const select = $('#category-filter');
+  const categories = [...new Set(rows.map(categoryFor))].sort((a, b) => a.localeCompare(b, 'ko-KR'));
+  const current = state.categoryFilter;
+  select.innerHTML = '<option value="">전체</option>' + categories
+    .map(category => `<option value="${escapeAttribute(category)}">${escapeHtml(category)}</option>`)
+    .join('');
+  select.value = categories.includes(current) ? current : '';
+  if (select.value !== current) state.categoryFilter = '';
+}
+
+function allPriceTargets() {
+  const targets = new Map();
+  const add = value => {
+    const name = String(value?.name || '').trim();
+    if (!name) return;
+    const key = normalizeKey(name);
+    if (!targets.has(key)) targets.set(key, name);
+  };
+  state.items.forEach(item => {
+    add(item);
+    componentList(item.components).forEach(add);
+  });
+  return [...targets.values()].sort((a, b) => a.localeCompare(b, 'ko-KR'));
+}
+
+function syncPriceTargetOptions() {
+  const select = $('#price-target-select');
+  if (!select) return;
+  const current = state.priceTargetName;
+  select.innerHTML = '<option value="">직접 입력</option>' + allPriceTargets()
+    .map(name => `<option value="${escapeAttribute(name)}">${escapeHtml(name)}</option>`)
+    .join('');
+  select.value = current;
+}
+
+function syncAdminItemOptions() {
+  const select = $('#admin-item-select');
+  if (!select) return;
+  const current = state.adminItemId;
+  select.innerHTML = '<option value="">새 항목</option>' + state.items
+    .map(item => `<option value="${escapeAttribute(item.id)}">${escapeHtml(item.name)}</option>`)
+    .join('');
+  select.value = current;
 }
 
 function setSyncState(kind, title, detail) {
@@ -547,70 +752,313 @@ function setSyncState(kind, title, detail) {
   $('#sync-detail').textContent = detail;
 }
 
-function syncInputs() {
-  $('#discount-rate').value = state.settings.discountRate;
-  $('#ah-fee-rate').value = state.settings.ahFeeRate;
-  $('#base-mp-rate').value = state.settings.baseMpRate;
-}
-
-
-function syncSaleFilterOptions() {
-  const group = $('#sale-group-filter');
-  group.innerHTML = '<option value="">전체 판매글</option>' + state.saleCatalog
-    .map(sale => `<option value="${escapeAttribute(sale.id)}">${escapeHtml(sale.label)}</option>`)
-    .join('');
-  group.value = state.saleGroupFilter;
-}
-
-function renderFilterChips(rows) {
-  renderCategoryFilterChips(rows);
-  renderStatusFilterChips(rows);
-}
-
-function renderCategoryFilterChips(rows) {
-  const counts = new Map();
-  for (const item of rows) {
-    const category = categoryFor(item);
-    counts.set(category, (counts.get(category) || 0) + 1);
+function unlockMode() {
+  const input = $('#mode-password');
+  const mode = MODE_PASSWORDS[input.value.trim()];
+  if (!mode) {
+    input.value = '';
+    setSyncState('error', '모드 잠금', '비밀번호를 확인해 주세요.');
+    return;
   }
-  const categories = [...counts.keys()].sort((a, b) => a.localeCompare(b, 'ko-KR'));
-  $('#category-filter-list').innerHTML = categories.map(category => renderFilterChip({
-    group: 'category',
-    value: category,
-    label: category,
-    count: counts.get(category),
-    checked: !state.hiddenCategories.has(category)
-  })).join('');
+  state.mode = mode;
+  input.value = '';
+  setSyncState('ready', MODE_LABELS[mode], MODE_DETAILS[mode]);
+  render();
 }
 
-function renderStatusFilterChips(rows) {
-  const counts = new Map(AUCTION_STATUS_OPTIONS.map(([status]) => [status, 0]));
-  for (const item of rows) {
-    const status = item.auctionStatus || 'unverified';
-    counts.set(status, (counts.get(status) || 0) + 1);
+function lockMode() {
+  state.mode = 'public';
+  setSyncState('ready', '공개 모드', MODE_DETAILS.public);
+  render();
+}
+
+function readManualDraft() {
+  return {
+    id: 'manual',
+    name: $('#manual-name').value.trim(),
+    category: $('#manual-category').value.trim() || '수동 계산',
+    cashPrice: toNumber($('#manual-cash-price').value, 0),
+    seedMesoPrice: toNumber($('#manual-meso-price').value, 0),
+    mileageType: $('#manual-mileage-type').value || 'none'
+  };
+}
+
+function clearManualDraft() {
+  ['#manual-name', '#manual-category', '#manual-cash-price', '#manual-meso-price'].forEach(selector => {
+    $(selector).value = '';
+  });
+  $('#manual-mileage-type').value = 'none';
+  renderManualResult();
+}
+
+function saveManualPrice() {
+  if (!canEditPrices()) return;
+  const item = readManualDraft();
+  if (!item.name || item.seedMesoPrice <= 0) {
+    setSyncState('error', '가격 저장 실패', '아이템명과 경매장 가격을 입력해 주세요.');
+    return;
   }
-  $('#status-filter-list').innerHTML = AUCTION_STATUS_OPTIONS.map(([status, label]) => renderFilterChip({
-    group: 'status',
-    value: status,
-    label,
-    count: counts.get(status) || 0,
-    checked: !state.hiddenAuctionStatuses.has(status)
-  })).join('');
+  upsertLocalPrice(item.name, item.seedMesoPrice, 'live');
+  setSyncState('ready', '가격 저장 완료', `${item.name} 가격을 수동 데이터에 반영했습니다.`);
+  render();
 }
 
-function renderFilterChip({ group, value, label, count, checked }) {
-  return `
-    <label class="filter-chip ${checked ? 'active' : ''}">
-      <input type="checkbox" data-filter-group="${escapeAttribute(group)}" value="${escapeAttribute(value)}" ${checked ? 'checked' : ''}>
-      <span>${escapeHtml(label)}<em>${nf.format(count)}</em></span>
-    </label>
-  `;
+function saveManualItem() {
+  if (!canEditItems()) return;
+  const item = readManualDraft();
+  if (!item.name || item.cashPrice <= 0) {
+    setSyncState('error', '항목 저장 실패', '아이템명과 캐시 가격을 입력해 주세요.');
+    return;
+  }
+  const key = normalizeKey(item.name);
+  const existing = state.items.find(row => normalizeKey(row.name) === key);
+  const next = { ...item, id: existing?.id || nextItemId() };
+  upsertItem(next);
+  if (item.seedMesoPrice > 0) upsertLocalPrice(item.name, item.seedMesoPrice, 'live');
+  setSyncState('ready', '항목 저장 완료', `${item.name} 항목을 저장했습니다.`);
+  render();
 }
 
-function updateHiddenFilter(set, value, visible) {
-  if (visible) set.delete(value);
-  else set.add(value);
+function nextItemId() {
+  const maxId = state.items.reduce((max, item) => Math.max(max, Number(item.id) || 0), 0);
+  return maxId + 1;
 }
+
+function upsertItem(item) {
+  const id = String(item.id);
+  const index = state.items.findIndex(row => String(row.id) === id);
+  const normalized = normalizeItemList([item])[0];
+  if (index >= 0) state.items.splice(index, 1, normalized);
+  else state.items.push(normalized);
+  state.hasLocalItems = true;
+  persistLocalData();
+}
+
+function deleteSelectedItem() {
+  if (!canEditItems() || !state.adminItemId) return;
+  const item = state.items.find(row => String(row.id) === String(state.adminItemId));
+  if (!item || !confirm(`${item.name} 항목을 삭제할까요?`)) return;
+  state.items = state.items.filter(row => String(row.id) !== String(state.adminItemId));
+  state.adminItemId = '';
+  state.hasLocalItems = true;
+  persistLocalData();
+  writeItemEditor(null);
+  render();
+}
+
+function resetAdminItems() {
+  if (!canEditItems() || !confirm('항목 수정 데이터를 기본값으로 되돌릴까요?')) return;
+  state.items = [...state.baseItems];
+  state.hasLocalItems = false;
+  state.adminItemId = '';
+  persistLocalData();
+  writeItemEditor(null);
+  render();
+}
+
+function upsertLocalPrice(name, meso, status = 'live') {
+  const cleanName = String(name || '').trim();
+  if (!cleanName) return;
+  const key = normalizeKey(cleanName);
+  const row = {
+    itemName: cleanName,
+    query: cleanName,
+    listingLowestMeso: status === 'live' || status === 'seed' ? toNumber(meso, 0) : 0,
+    listingLowestText: status === 'live' || status === 'seed' ? formatMeso(meso) : '',
+    status,
+    source: 'manual',
+    filter: '수동',
+    collectedAt: nowIso()
+  };
+  const index = state.localAuctionRows.findIndex(price => normalizeKey(price.itemName || price.name || price.query) === key);
+  if (index >= 0) state.localAuctionRows.splice(index, 1, row);
+  else state.localAuctionRows.push(row);
+  persistLocalData();
+}
+
+function clearLocalPrice() {
+  if (!canEditPrices()) return;
+  const name = $('#price-item-name').value.trim() || state.priceTargetName;
+  const key = normalizeKey(name);
+  if (!key) return;
+  state.localAuctionRows = state.localAuctionRows.filter(row => normalizeKey(row.itemName || row.name || row.query) !== key);
+  persistLocalData();
+  writePriceEditor(name);
+  setSyncState('ready', '가격 해제 완료', `${name} 수동 가격을 해제했습니다.`);
+  render();
+}
+
+function savePriceEditor() {
+  if (!canEditPrices()) return;
+  const name = $('#price-item-name').value.trim() || state.priceTargetName;
+  const status = $('#price-status').value || 'live';
+  const meso = toNumber($('#price-meso').value, 0);
+  if (!name) {
+    setSyncState('error', '가격 저장 실패', '품목명을 입력해 주세요.');
+    return;
+  }
+  if ((status === 'live' || status === 'seed') && meso <= 0) {
+    setSyncState('error', '가격 저장 실패', '가격을 입력해 주세요.');
+    return;
+  }
+  upsertLocalPrice(name, meso, status);
+  setSyncState('ready', '가격 저장 완료', `${name} 가격을 저장했습니다.`);
+  render();
+}
+
+function findPriceRow(name) {
+  const key = normalizeKey(name);
+  return state.localAuctionRows.find(row => normalizeKey(row.itemName || row.name || row.query) === key)
+    || state.auctionRows.find(row => normalizeKey(row.itemName || row.name || row.query) === key)
+    || null;
+}
+
+function writePriceEditor(name) {
+  const row = findPriceRow(name);
+  $('#price-item-name').value = name || '';
+  $('#price-meso').value = row?.listingLowestMeso || '';
+  $('#price-status').value = row?.listingLowestMeso > 0 ? 'live' : row?.status || 'live';
+}
+
+function writeItemEditor(item) {
+  $('#admin-item-name').value = item?.name || '';
+  $('#admin-item-category').value = item?.category || '';
+  $('#admin-item-cash').value = item?.cashPrice || '';
+  $('#admin-item-seed').value = item?.seedMesoPrice || '';
+  $('#admin-item-mileage').value = item?.mileageType || 'none';
+  $('#admin-item-aliases').value = Array.isArray(item?.aliases) ? item.aliases.join('\n') : '';
+  $('#admin-item-components').value = componentList(item?.components).map(component => {
+    return component.seedMesoPrice ? `${component.name} | ${component.seedMesoPrice}` : component.name;
+  }).join('\n');
+}
+
+function readItemEditor() {
+  const selected = state.items.find(item => String(item.id) === String(state.adminItemId));
+  return {
+    id: selected?.id || nextItemId(),
+    name: $('#admin-item-name').value.trim(),
+    category: $('#admin-item-category').value.trim() || '캐시 아이템',
+    cashPrice: toNumber($('#admin-item-cash').value, 0),
+    seedMesoPrice: toNumber($('#admin-item-seed').value, 0),
+    mileageType: $('#admin-item-mileage').value || 'none',
+    aliases: parseAliasText($('#admin-item-aliases').value),
+    components: parseComponentsText($('#admin-item-components').value)
+  };
+}
+
+function parseAliasText(text) {
+  return String(text || '').split(/[\n,]+/).map(value => value.trim()).filter(Boolean);
+}
+
+function parseComponentsText(text) {
+  return String(text || '').split(/\n+/).map(line => line.trim()).filter(Boolean).map(line => {
+    const [name, price] = line.split('|').map(value => value.trim());
+    const component = { name };
+    const seedMesoPrice = toNumber(price, 0);
+    if (seedMesoPrice > 0) component.seedMesoPrice = seedMesoPrice;
+    return component;
+  }).filter(component => component.name);
+}
+
+function saveAdminItem() {
+  if (!canEditItems()) return;
+  const item = readItemEditor();
+  if (!item.name || item.cashPrice <= 0) {
+    setSyncState('error', '항목 저장 실패', '아이템명과 캐시 가격을 입력해 주세요.');
+    return;
+  }
+  upsertItem(item);
+  state.adminItemId = String(item.id);
+  setSyncState('ready', '항목 저장 완료', `${item.name} 항목을 저장했습니다.`);
+  render();
+}
+
+function exportItems() {
+  const doc = {
+    version: 3,
+    world: state.metadata.world || '스카니아',
+    updatedAt: nowIso(),
+    settings: {
+      ...state.settings,
+      mileageMesoRate: FIXED_MILEAGE_MESO_RATE
+    },
+    items: state.items
+  };
+  downloadJson('items.local.json', doc);
+}
+
+function exportPrices() {
+  const doc = {
+    version: 2,
+    world: state.metadata.world || '스카니아',
+    generatedAt: nowIso(),
+    source: 'manual-browser-overrides',
+    policy: {
+      priceBasis: 'listingLowestMeso',
+      manualEditable: true
+    },
+    prices: mergedAuctionRows(),
+    skipped: state.auctionSkips
+  };
+  downloadJson('auction-prices.local.json', doc);
+}
+
+function importItems() {
+  if (!canEditItems()) return;
+  const doc = parseImportJson();
+  const items = Array.isArray(doc) ? doc : doc.items;
+  if (!Array.isArray(items)) {
+    setImportState('항목 배열 없음');
+    return;
+  }
+  state.items = normalizeItemList(items);
+  state.hasLocalItems = true;
+  persistLocalData();
+  state.adminItemId = '';
+  writeItemEditor(null);
+  setImportState(`${state.items.length}개 항목 반영`);
+  render();
+}
+
+function importPrices() {
+  if (!canEditPrices()) return;
+  const doc = parseImportJson();
+  const prices = Array.isArray(doc) ? doc : doc.prices || doc.auctionPrices;
+  if (!Array.isArray(prices)) {
+    setImportState('가격 배열 없음');
+    return;
+  }
+  state.localAuctionRows = normalizeAuctionRows(prices);
+  persistLocalData();
+  setImportState(`${state.localAuctionRows.length}개 가격 반영`);
+  render();
+}
+
+function parseImportJson() {
+  try {
+    return JSON.parse($('#data-import').value || '{}');
+  } catch (_) {
+    setImportState('JSON 형식 오류');
+    return {};
+  }
+}
+
+function setImportState(text) {
+  $('#import-state').textContent = text;
+}
+
+function downloadJson(filename, doc) {
+  const blob = new Blob([JSON.stringify(doc, null, 2)], { type: 'application/json;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  URL.revokeObjectURL(url);
+}
+
 function escapeHtml(value) {
   return String(value ?? '').replace(/[&<>"']/g, char => ({
     '&': '&amp;',
@@ -625,71 +1073,104 @@ function escapeAttribute(value) {
   return escapeHtml(value).replace(/`/g, '&#96;');
 }
 
-$('#search-input').addEventListener('input', event => {
+function on(selector, eventName, handler) {
+  const element = $(selector);
+  if (element) element.addEventListener(eventName, handler);
+}
+
+on('#unlock-mode', 'click', unlockMode);
+on('#lock-mode', 'click', lockMode);
+on('#mode-password', 'keydown', event => {
+  if (event.key === 'Enter') unlockMode();
+});
+
+on('#search-input', 'input', event => {
   state.search = event.target.value;
   render();
 });
 
-
-$('#category-filter-list').addEventListener('change', event => {
-  const input = event.target.closest('input[data-filter-group="category"]');
-  if (!input) return;
-  updateHiddenFilter(state.hiddenCategories, input.value, input.checked);
+on('#category-filter', 'change', event => {
+  state.categoryFilter = event.target.value;
   render();
 });
 
-$('#status-filter-list').addEventListener('change', event => {
-  const input = event.target.closest('input[data-filter-group="status"]');
-  if (!input) return;
-  updateHiddenFilter(state.hiddenAuctionStatuses, input.value, input.checked);
+on('#status-filter', 'change', event => {
+  state.statusFilter = event.target.value;
   render();
 });
 
-$('#category-filter-reset').addEventListener('click', () => {
-  state.hiddenCategories.clear();
-  render();
-});
-
-$('#status-filter-reset').addEventListener('click', () => {
-  state.hiddenAuctionStatuses.clear();
-  render();
-});
-$('#sale-search-input').addEventListener('input', event => {
+on('#sale-search-input', 'input', event => {
   state.saleSearch = event.target.value;
   render();
 });
 
-$('#sale-group-filter').addEventListener('change', event => {
+on('#sale-group-filter', 'change', event => {
   state.saleGroupFilter = event.target.value;
   render();
 });
 
-$('#sale-type-filter').addEventListener('change', event => {
+on('#sale-type-filter', 'change', event => {
   state.saleTypeFilter = event.target.value;
   render();
 });
 
-$('#sale-review-filter').addEventListener('change', event => {
+on('#sale-review-filter', 'change', event => {
   state.saleReviewFilter = event.target.value;
   render();
 });
 
-$('#discount-rate').addEventListener('input', event => {
+on('#discount-rate', 'input', event => {
   state.settings.discountRate = Number(event.target.value || 0);
   persistSettings();
   render();
 });
 
-$('#ah-fee-rate').addEventListener('change', event => {
+on('#ah-fee-rate', 'change', event => {
   state.settings.ahFeeRate = Number(event.target.value || 5);
   persistSettings();
   render();
 });
 
-$('#base-mp-rate').addEventListener('input', event => {
+on('#base-mp-rate', 'input', event => {
   state.settings.baseMpRate = Number(event.target.value || 0);
   persistSettings();
   render();
+});
+
+['#manual-name', '#manual-category', '#manual-cash-price', '#manual-meso-price', '#manual-mileage-type'].forEach(selector => {
+  on(selector, 'input', renderManualResult);
+  on(selector, 'change', renderManualResult);
+});
+
+on('#calculate-manual', 'click', renderManualResult);
+on('#save-manual-price', 'click', saveManualPrice);
+on('#save-manual-item', 'click', saveManualItem);
+on('#clear-manual', 'click', clearManualDraft);
+
+on('#price-target-select', 'change', event => {
+  state.priceTargetName = event.target.value;
+  writePriceEditor(state.priceTargetName);
+});
+
+on('#save-price-row', 'click', savePriceEditor);
+on('#clear-price-row', 'click', clearLocalPrice);
+on('#export-prices', 'click', exportPrices);
+
+on('#admin-item-select', 'change', event => {
+  state.adminItemId = event.target.value;
+  const item = state.items.find(row => String(row.id) === String(state.adminItemId));
+  writeItemEditor(item || null);
+});
+
+on('#save-admin-item', 'click', saveAdminItem);
+on('#delete-admin-item', 'click', deleteSelectedItem);
+on('#reset-admin-items', 'click', resetAdminItems);
+on('#export-items', 'click', exportItems);
+on('#import-prices', 'click', importPrices);
+on('#import-items', 'click', importItems);
+on('#clear-import', 'click', () => {
+  $('#data-import').value = '';
+  setImportState('대기');
 });
 
 loadData();
