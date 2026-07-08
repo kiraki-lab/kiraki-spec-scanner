@@ -55,18 +55,6 @@
         </select>
       </label>
 
-      <fieldset class="segmented">
-        <legend>랭킹 기준</legend>
-        <label>
-          <input type="radio" name="rank-mode" value="listingLowestMeso" checked>
-          <span>매물 최저가</span>
-        </label>
-        <label>
-          <input type="radio" name="rank-mode" value="marketTabLowestMeso">
-          <span>시세탭 최저</span>
-        </label>
-      </fieldset>
-
       <label>
         <span>상품권 할인율</span>
         <input id="discount-rate" type="number" min="0" max="100" step="0.1">
@@ -150,8 +138,6 @@
                 <th scope="col">캐시</th>
                 <th scope="col">매물 최저가</th>
                 <th scope="col">매물 효율</th>
-                <th scope="col">시세탭 최저</th>
-                <th scope="col">시세탭 효율</th>
               </tr>
             </thead>
             <tbody id="item-rows"></tbody>
@@ -167,10 +153,10 @@
 
   <template id="empty-template">
     <tr>
-      <td colspan="7" class="empty">표시할 항목이 없습니다.</td>
+      <td colspan="5" class="empty">표시할 항목이 없습니다.</td>
     </tr>
   </template>
 
-  <script type="module" src="./app.js?v=0.3.1"></script>
+  <script type="module" src="./app.js?v=0.4.0"></script>
 </body>
 </html>
