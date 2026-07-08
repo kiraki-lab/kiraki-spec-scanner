@@ -19,7 +19,6 @@ const state = {
   notices: [],
   saleCatalog: [],
   metadata: {},
-  rankMode: 'listingLowestMeso',
   search: '',
   categoryFilter: '',
   saleSearch: '',
@@ -283,13 +282,13 @@ function buildPriceIndex() {
   return { byId, byName };
 }
 
-function priceFor(target, mode, index) {
+function priceFor(target, index) {
   const id = target.id != null ? String(target.id) : null;
   const rowById = id ? index.byId.get(id) : null;
   const names = [target.name, ...(target.aliases || [])].filter(Boolean);
   const rowByName = names.map(name => index.byName.get(normalizeKey(name))).find(Boolean);
   const row = rowById || rowByName;
-  const liveValue = Number(row?.[mode] || 0);
+  const liveValue = Number(row?.listingLowestMeso || 0);
   if (liveValue > 0) {
     return {
       meso: liveValue,
@@ -304,15 +303,15 @@ function priceFor(target, mode, index) {
   };
 }
 
-function totalPriceFor(item, mode, index) {
+function totalPriceFor(item, index) {
   if (!Array.isArray(item.components) || !item.components.length) {
-    return priceFor(item, mode, index);
+    return priceFor(item, index);
   }
 
   let liveCount = 0;
   let latest = null;
   const meso = item.components.reduce((sum, component) => {
-    const price = priceFor(component, mode, index);
+    const price = priceFor(component, index);
     if (price.source === 'live') liveCount += 1;
     if (price.collectedAt && (!latest || new Date(price.collectedAt) > new Date(latest))) latest = price.collectedAt;
     return sum + price.meso;
@@ -352,14 +351,11 @@ function calculateEfficiency(item, mesoPrice) {
 function enrichItems() {
   const index = buildPriceIndex();
   return state.items.map(item => {
-    const listing = totalPriceFor(item, 'listingLowestMeso', index);
-    const market = totalPriceFor(item, 'marketTabLowestMeso', index);
+    const listing = totalPriceFor(item, index);
     return {
       ...item,
       listingPrice: listing,
-      marketPrice: market,
-      listingEfficiency: calculateEfficiency(item, listing.meso),
-      marketEfficiency: calculateEfficiency(item, market.meso)
+      listingEfficiency: calculateEfficiency(item, listing.meso)
     };
   });
 }
@@ -376,17 +372,16 @@ function filteredRows() {
 }
 
 function render() {
-  const rankKey = state.rankMode === 'marketTabLowestMeso' ? 'marketEfficiency' : 'listingEfficiency';
-  const rows = filteredRows().sort((a, b) => a[rankKey] - b[rankKey]);
+  const rows = filteredRows().sort((a, b) => a.listingEfficiency - b.listingEfficiency);
   const visibleSaleCatalog = filteredSaleCatalog();
   const visibleSaleCount = flattenSaleSearchItems(visibleSaleCatalog).length;
   const totalSaleCount = flattenSaleSearchItems().length;
 
-  $('#rank-mode-label').textContent = state.rankMode === 'marketTabLowestMeso' ? '시세탭 최저' : '매물 최저가';
+  $('#rank-mode-label').textContent = '매물 최저가';
   $('#row-count').textContent = `${rows.length}개`;
   $('#sale-item-count').textContent = visibleSaleCount === totalSaleCount ? `${totalSaleCount}개` : `${visibleSaleCount}/${totalSaleCount}개`;
   $('#auction-updated').textContent = formatDate(state.metadata.auctionUpdatedAt);
-  $('#best-efficiency').textContent = rows.length ? formatWon(rows[0][rankKey]) : '-';
+  $('#best-efficiency').textContent = rows.length ? formatWon(rows[0].listingEfficiency) : '-';
 
   renderNotices();
   renderSaleItems(visibleSaleCatalog);
@@ -452,8 +447,6 @@ function renderTable(rows) {
       <td>${nf.format(Number(item.cashPrice || 0))}원</td>
       <td>${renderPrice(item.listingPrice)}</td>
       <td><span class="eff-value">${formatWon(item.listingEfficiency)}</span><span class="price-meta">1억당 현금</span></td>
-      <td>${renderPrice(item.marketPrice)}</td>
-      <td><span class="eff-value">${formatWon(item.marketEfficiency)}</span><span class="price-meta">1억당 현금</span></td>
     </tr>
   `).join('');
 }
@@ -545,13 +538,6 @@ $('#search-input').addEventListener('input', event => {
 $('#category-filter').addEventListener('change', event => {
   state.categoryFilter = event.target.value;
   render();
-});
-
-document.querySelectorAll('input[name="rank-mode"]').forEach(input => {
-  input.addEventListener('change', event => {
-    state.rankMode = event.target.value;
-    render();
-  });
 });
 
 $('#sale-search-input').addEventListener('input', event => {
