@@ -16,11 +16,13 @@ const DEFAULT_SETTINGS = {
 const state = {
   items: [],
   auctionRows: [],
+  auctionSkips: [],
   notices: [],
   saleCatalog: [],
   metadata: {},
   search: '',
-  categoryFilter: '',
+  hiddenCategories: new Set(),
+  hiddenAuctionStatuses: new Set(),
   saleSearch: '',
   saleGroupFilter: '',
   saleTypeFilter: '',
@@ -69,6 +71,15 @@ const BONUS_COMPONENTS_BY_PACKAGE = Object.freeze({
   '모험가 캡틴 패키지(여)': ['모험가 캡틴 모자(여)']
 });
 
+const AUCTION_STATUS_OPTIONS = Object.freeze([
+  ['live', '가격 있음'],
+  ['seed', '기본값'],
+  ['no_listing', '매물 없음'],
+  ['no_candidate', '후보 없음'],
+  ['unverified', '미확인']
+]);
+
+const AUCTION_STATUS_LABELS = Object.freeze(Object.fromEntries(AUCTION_STATUS_OPTIONS));
 const $ = selector => document.querySelector(selector);
 const nf = new Intl.NumberFormat('ko-KR');
 const won = new Intl.NumberFormat('ko-KR', { maximumFractionDigits: 0 });
@@ -129,7 +140,7 @@ async function loadData() {
   try {
     const [itemsDoc, auctionDoc, noticeDoc, saleDoc] = await Promise.all([
       loadJson(DATA_PATHS.items, { items: [], settings: DEFAULT_SETTINGS }),
-      loadJson(DATA_PATHS.auction, { prices: [] }),
+      loadJson(DATA_PATHS.auction, { prices: [], skipped: [] }),
       loadJson(DATA_PATHS.notices, { notices: [] }),
       loadJson(DATA_PATHS.saleItems, { sales: [] })
     ]);
@@ -139,9 +150,9 @@ async function loadData() {
     state.metadata.saleItemsUpdatedAt = saleDoc.generatedAt;
     state.metadata.world = auctionDoc.world || saleDoc.world || itemsDoc.world || '스카니아';
     state.auctionRows = normalizeAuctionRows(auctionDoc.prices);
+    state.auctionSkips = normalizeAuctionRows(auctionDoc.skipped);
     state.notices = normalizeNotices(noticeDoc.notices || noticeDoc.cashshopNotice || []);
     state.saleCatalog = normalizeSaleCatalog(saleDoc.sales || []);
-    syncCategoryFilterOptions();
     syncSaleFilterOptions();
     setSyncState('ready', '데이터 로딩 완료', `${state.metadata.world} 기준 데이터를 불러왔습니다.`);
   } catch (error) {
@@ -274,12 +285,40 @@ function filteredSaleCatalog() {
 function buildPriceIndex() {
   const byId = new Map();
   const byName = new Map();
+  const skippedById = new Map();
+  const skippedByName = new Map();
+
   for (const row of state.auctionRows) {
     if (row.itemId != null) byId.set(String(row.itemId), row);
     const names = [row.itemName, row.name, row.query, ...(row.aliases || [])].filter(Boolean);
     for (const name of names) byName.set(normalizeKey(name), row);
   }
-  return { byId, byName };
+
+  for (const row of state.auctionSkips) {
+    if (row.itemId != null) skippedById.set(String(row.itemId), row);
+    const names = [row.itemName, row.name, row.query, ...(row.aliases || [])].filter(Boolean);
+    for (const name of names) skippedByName.set(normalizeKey(name), row);
+  }
+
+  return { byId, byName, skippedById, skippedByName };
+}
+
+function categoryFor(item) {
+  return item.category || '캐시 아이템';
+}
+
+function auctionStatusLabel(status) {
+  return AUCTION_STATUS_LABELS[status] || '미확인';
+}
+
+function summarizeAuctionStatus(prices) {
+  const statuses = prices.map(price => price.auctionStatus).filter(Boolean);
+  if (!statuses.length) return 'unverified';
+  if (statuses.includes('live')) return 'live';
+  if (statuses.includes('no_listing')) return 'no_listing';
+  if (statuses.every(status => status === 'no_candidate')) return 'no_candidate';
+  if (statuses.includes('seed')) return 'seed';
+  return 'unverified';
 }
 
 function priceFor(target, index) {
@@ -293,12 +332,21 @@ function priceFor(target, index) {
     return {
       meso: liveValue,
       source: 'live',
+      auctionStatus: 'live',
       collectedAt: row.collectedAt || row.updatedAt || state.metadata.auctionUpdatedAt
     };
   }
+
+  const skippedById = id ? index.skippedById.get(id) : null;
+  const skippedByName = names.map(name => index.skippedByName.get(normalizeKey(name))).find(Boolean);
+  const skipped = skippedById || skippedByName;
+  const seedMeso = Number(target.seedMesoPrice || target.defaultMesoPrice || 0);
+  const auctionStatus = skipped?.status || (seedMeso > 0 ? 'seed' : 'unverified');
+
   return {
-    meso: Number(target.seedMesoPrice || target.defaultMesoPrice || 0),
-    source: 'seed',
+    meso: seedMeso,
+    source: seedMeso > 0 ? 'seed' : auctionStatus,
+    auctionStatus,
     collectedAt: null
   };
 }
@@ -310,16 +358,18 @@ function totalPriceFor(item, index) {
 
   let liveCount = 0;
   let latest = null;
-  const meso = item.components.reduce((sum, component) => {
+  const componentPrices = item.components.map(component => {
     const price = priceFor(component, index);
     if (price.source === 'live') liveCount += 1;
     if (price.collectedAt && (!latest || new Date(price.collectedAt) > new Date(latest))) latest = price.collectedAt;
-    return sum + price.meso;
-  }, 0);
+    return price;
+  });
+  const meso = componentPrices.reduce((sum, price) => sum + price.meso, 0);
 
   return {
     meso,
     source: liveCount === item.components.length ? 'live' : liveCount > 0 ? 'mixed' : 'seed',
+    auctionStatus: summarizeAuctionStatus(componentPrices),
     collectedAt: latest
   };
 }
@@ -355,24 +405,28 @@ function enrichItems() {
     return {
       ...item,
       listingPrice: listing,
+      auctionStatus: listing.auctionStatus || 'unverified',
       listingEfficiency: calculateEfficiency(item, listing.meso)
     };
   });
 }
 
-function filteredRows() {
+function filteredRows(sourceRows = enrichItems()) {
   const q = normalizeKey(state.search);
-  return enrichItems().filter(item => {
-    if (state.categoryFilter && item.category !== state.categoryFilter) return false;
+  return sourceRows.filter(item => {
+    if (state.hiddenCategories.has(categoryFor(item))) return false;
+    if (state.hiddenAuctionStatuses.has(item.auctionStatus || 'unverified')) return false;
     if (!q) return true;
     const componentText = Array.isArray(item.components) ? item.components.map(component => component.name).join(' ') : '';
     const bonusText = bonusComponentsFor(item).map(component => component.name).join(' ');
-    return normalizeKey([item.name, item.category, componentText, bonusText, ...(item.aliases || [])].join(' ')).includes(q);
+    return normalizeKey([item.name, item.category, auctionStatusLabel(item.auctionStatus), componentText, bonusText, ...(item.aliases || [])].join(' ')).includes(q);
   });
 }
 
 function render() {
-  const rows = filteredRows().sort((a, b) => a.listingEfficiency - b.listingEfficiency);
+  const allRows = enrichItems();
+  renderFilterChips(allRows);
+  const rows = filteredRows(allRows).sort((a, b) => a.listingEfficiency - b.listingEfficiency);
   const visibleSaleCatalog = filteredSaleCatalog();
   const visibleSaleCount = flattenSaleSearchItems(visibleSaleCatalog).length;
   const totalSaleCount = flattenSaleSearchItems().length;
@@ -452,8 +506,9 @@ function renderTable(rows) {
 }
 
 function renderPrice(price) {
-  const label = price.source === 'live' ? '수집값' : price.source === 'mixed' ? '일부 수집' : '기본값';
-  const klass = price.source === 'seed' ? 'seed' : 'live';
+  const status = price.auctionStatus || 'unverified';
+  const label = price.source === 'live' ? '수집값' : price.source === 'mixed' ? '일부 수집' : auctionStatusLabel(status);
+  const klass = price.source === 'live' || price.source === 'mixed' ? 'live' : status;
   const date = price.collectedAt ? `<span class="price-meta">${escapeHtml(formatDate(price.collectedAt))}</span>` : '';
   return `<span class="price-value">${formatMeso(price.meso)}</span>${date}<span class="source-pill ${klass}">${label}</span>`;
 }
@@ -498,15 +553,6 @@ function syncInputs() {
   $('#base-mp-rate').value = state.settings.baseMpRate;
 }
 
-function syncCategoryFilterOptions() {
-  const select = $('#category-filter');
-  const categories = [...new Set(state.items.map(item => item.category || '캐시 아이템'))]
-    .sort((a, b) => a.localeCompare(b, 'ko-KR'));
-  select.innerHTML = '<option value="">전체</option>' + categories
-    .map(category => `<option value="${escapeAttribute(category)}">${escapeHtml(category)}</option>`)
-    .join('');
-  select.value = state.categoryFilter;
-}
 
 function syncSaleFilterOptions() {
   const group = $('#sale-group-filter');
@@ -516,6 +562,55 @@ function syncSaleFilterOptions() {
   group.value = state.saleGroupFilter;
 }
 
+function renderFilterChips(rows) {
+  renderCategoryFilterChips(rows);
+  renderStatusFilterChips(rows);
+}
+
+function renderCategoryFilterChips(rows) {
+  const counts = new Map();
+  for (const item of rows) {
+    const category = categoryFor(item);
+    counts.set(category, (counts.get(category) || 0) + 1);
+  }
+  const categories = [...counts.keys()].sort((a, b) => a.localeCompare(b, 'ko-KR'));
+  $('#category-filter-list').innerHTML = categories.map(category => renderFilterChip({
+    group: 'category',
+    value: category,
+    label: category,
+    count: counts.get(category),
+    checked: !state.hiddenCategories.has(category)
+  })).join('');
+}
+
+function renderStatusFilterChips(rows) {
+  const counts = new Map(AUCTION_STATUS_OPTIONS.map(([status]) => [status, 0]));
+  for (const item of rows) {
+    const status = item.auctionStatus || 'unverified';
+    counts.set(status, (counts.get(status) || 0) + 1);
+  }
+  $('#status-filter-list').innerHTML = AUCTION_STATUS_OPTIONS.map(([status, label]) => renderFilterChip({
+    group: 'status',
+    value: status,
+    label,
+    count: counts.get(status) || 0,
+    checked: !state.hiddenAuctionStatuses.has(status)
+  })).join('');
+}
+
+function renderFilterChip({ group, value, label, count, checked }) {
+  return `
+    <label class="filter-chip ${checked ? 'active' : ''}">
+      <input type="checkbox" data-filter-group="${escapeAttribute(group)}" value="${escapeAttribute(value)}" ${checked ? 'checked' : ''}>
+      <span>${escapeHtml(label)}<em>${nf.format(count)}</em></span>
+    </label>
+  `;
+}
+
+function updateHiddenFilter(set, value, visible) {
+  if (visible) set.delete(value);
+  else set.add(value);
+}
 function escapeHtml(value) {
   return String(value ?? '').replace(/[&<>"']/g, char => ({
     '&': '&amp;',
@@ -535,11 +630,30 @@ $('#search-input').addEventListener('input', event => {
   render();
 });
 
-$('#category-filter').addEventListener('change', event => {
-  state.categoryFilter = event.target.value;
+
+$('#category-filter-list').addEventListener('change', event => {
+  const input = event.target.closest('input[data-filter-group="category"]');
+  if (!input) return;
+  updateHiddenFilter(state.hiddenCategories, input.value, input.checked);
   render();
 });
 
+$('#status-filter-list').addEventListener('change', event => {
+  const input = event.target.closest('input[data-filter-group="status"]');
+  if (!input) return;
+  updateHiddenFilter(state.hiddenAuctionStatuses, input.value, input.checked);
+  render();
+});
+
+$('#category-filter-reset').addEventListener('click', () => {
+  state.hiddenCategories.clear();
+  render();
+});
+
+$('#status-filter-reset').addEventListener('click', () => {
+  state.hiddenAuctionStatuses.clear();
+  render();
+});
 $('#sale-search-input').addEventListener('input', event => {
   state.saleSearch = event.target.value;
   render();
