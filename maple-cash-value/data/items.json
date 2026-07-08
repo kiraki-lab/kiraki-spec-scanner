@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "world": "스카니아",
   "updatedAt": "2026-07-08T00:00:00+09:00",
   "settings": {
@@ -12,58 +12,10 @@
     {
       "id": 1,
       "name": "플래티넘 카르마의 가위",
-      "category": "소비",
+      "category": "기본",
       "cashPrice": 5900,
       "seedMesoPrice": 240000000,
       "mileageType": "full"
-    },
-    {
-      "id": 3,
-      "name": "세레나데 헤어쿠폰",
-      "category": "쿠폰",
-      "cashPrice": 20000,
-      "seedMesoPrice": 900000000,
-      "mileageType": "none"
-    },
-    {
-      "id": 15,
-      "name": "세레나데 성형쿠폰",
-      "category": "쿠폰",
-      "cashPrice": 10000,
-      "seedMesoPrice": 470000000,
-      "mileageType": "none"
-    },
-    {
-      "id": 4,
-      "name": "NPC 진 가발",
-      "category": "치장",
-      "cashPrice": 4900,
-      "seedMesoPrice": 240000000,
-      "mileageType": "none"
-    },
-    {
-      "id": 16,
-      "name": "달려라 용사",
-      "category": "치장",
-      "cashPrice": 4900,
-      "seedMesoPrice": 230000000,
-      "mileageType": "none"
-    },
-    {
-      "id": 5,
-      "name": "슈퍼참치 (무기)",
-      "category": "치장",
-      "cashPrice": 9900,
-      "seedMesoPrice": 430000000,
-      "mileageType": "none"
-    },
-    {
-      "id": 8,
-      "name": "진 친필싸인",
-      "category": "치장",
-      "cashPrice": 9900,
-      "seedMesoPrice": 450000000,
-      "mileageType": "none"
     },
     {
       "id": 7,
@@ -100,10 +52,801 @@
     {
       "id": 19,
       "name": "잠재능력 전승스크롤",
-      "category": "소비",
+      "category": "기본",
       "cashPrice": 99000,
       "seedMesoPrice": 5100000000,
       "mileageType": "none"
+    },
+    {
+      "id": 20,
+      "name": "블레어 살롱 헤어 쿠폰",
+      "category": "쿠폰",
+      "cashPrice": 20000,
+      "seedMesoPrice": 0,
+      "mileageType": "none"
+    },
+    {
+      "id": 21,
+      "name": "위습의 원더베리",
+      "category": "랜덤",
+      "cashPrice": 5400,
+      "seedMesoPrice": 0,
+      "mileageType": "none"
+    },
+    {
+      "id": 22,
+      "name": "위습의 원더베리 11개",
+      "category": "랜덤",
+      "cashPrice": 54000,
+      "seedMesoPrice": 0,
+      "mileageType": "none"
+    },
+    {
+      "id": 23,
+      "name": "스페셜 루나 크리스탈",
+      "category": "랜덤",
+      "cashPrice": 3900,
+      "seedMesoPrice": 0,
+      "mileageType": "none"
+    },
+    {
+      "id": 101,
+      "name": "데몬 슬레이어 패키지(남)",
+      "category": "패키지 · 데몬",
+      "cashPrice": 12900,
+      "mileageType": "none",
+      "components": [
+        { "name": "데몬 슬레이어 슈트(남)", "seedMesoPrice": 0 },
+        { "name": "데몬 슬레이어 슈즈", "seedMesoPrice": 0 },
+        { "name": "데몬 슬레이어 엑스", "seedMesoPrice": 0 },
+        { "name": "데몬 슬레이어 윙", "seedMesoPrice": 0 }
+      ]
+    },
+    {
+      "id": 102,
+      "name": "데몬 슬레이어 패키지(여)",
+      "category": "패키지 · 데몬",
+      "cashPrice": 15900,
+      "mileageType": "none",
+      "components": [
+        { "name": "데몬 슬레이어 머리띠(여)", "seedMesoPrice": 0 },
+        { "name": "데몬 슬레이어 슈트(여)", "seedMesoPrice": 0 },
+        { "name": "데몬 슬레이어 슈즈", "seedMesoPrice": 0 },
+        { "name": "데몬 슬레이어 엑스", "seedMesoPrice": 0 },
+        { "name": "데몬 슬레이어 윙", "seedMesoPrice": 0 }
+      ]
+    },
+    {
+      "id": 103,
+      "name": "데몬 어벤져 패키지(남)",
+      "category": "패키지 · 데몬",
+      "cashPrice": 12900,
+      "mileageType": "none",
+      "components": [
+        { "name": "데몬 어벤져 슈트(남)", "seedMesoPrice": 0 },
+        { "name": "데몬 어벤져 슈즈", "seedMesoPrice": 0 },
+        { "name": "데몬 어벤져 데스페라도", "seedMesoPrice": 0 },
+        { "name": "데몬 어벤져 윙", "seedMesoPrice": 0 }
+      ]
+    },
+    {
+      "id": 104,
+      "name": "데몬 어벤져 패키지(여)",
+      "category": "패키지 · 데몬",
+      "cashPrice": 15900,
+      "mileageType": "none",
+      "components": [
+        { "name": "데몬 어벤져 머리띠(여)", "seedMesoPrice": 0 },
+        { "name": "데몬 어벤져 슈트(여)", "seedMesoPrice": 0 },
+        { "name": "데몬 어벤져 슈즈", "seedMesoPrice": 0 },
+        { "name": "데몬 어벤져 데스페라도", "seedMesoPrice": 0 },
+        { "name": "데몬 어벤져 윙", "seedMesoPrice": 0 }
+      ]
+    },
+    {
+      "id": 111,
+      "name": "레지스탕스 블래스터 패키지(남)",
+      "category": "패키지 · 레지스탕스",
+      "cashPrice": 12900,
+      "mileageType": "none",
+      "components": [
+        { "name": "레지스탕스 블래스터 헤어밴드(남)", "seedMesoPrice": 0 },
+        { "name": "레지스탕스 블래스터 슈트(남)", "seedMesoPrice": 0 },
+        { "name": "레지스탕스 블래스터 슈즈(남)", "seedMesoPrice": 0 },
+        { "name": "레지스탕스 블래스터 건틀렛 리볼버", "seedMesoPrice": 0 }
+      ]
+    },
+    {
+      "id": 112,
+      "name": "레지스탕스 블래스터 패키지(여)",
+      "category": "패키지 · 레지스탕스",
+      "cashPrice": 12900,
+      "mileageType": "none",
+      "components": [
+        { "name": "레지스탕스 블래스터 헤어핀(여)", "seedMesoPrice": 0 },
+        { "name": "레지스탕스 블래스터 슈트(여)", "seedMesoPrice": 0 },
+        { "name": "레지스탕스 블래스터 슈즈(여)", "seedMesoPrice": 0 },
+        { "name": "레지스탕스 블래스터 건틀렛 리볼버", "seedMesoPrice": 0 }
+      ]
+    },
+    {
+      "id": 113,
+      "name": "레지스탕스 배틀메이지 패키지(남)",
+      "category": "패키지 · 레지스탕스",
+      "cashPrice": 12900,
+      "mileageType": "none",
+      "components": [
+        { "name": "레지스탕스 배틀메이지 모자", "seedMesoPrice": 0 },
+        { "name": "레지스탕스 배틀메이지 슈트(남)", "seedMesoPrice": 0 },
+        { "name": "레지스탕스 배틀메이지 슈즈", "seedMesoPrice": 0 },
+        { "name": "레지스탕스 배틀메이지 스태프", "seedMesoPrice": 0 }
+      ]
+    },
+    {
+      "id": 114,
+      "name": "레지스탕스 배틀메이지 패키지(여)",
+      "category": "패키지 · 레지스탕스",
+      "cashPrice": 12900,
+      "mileageType": "none",
+      "components": [
+        { "name": "레지스탕스 배틀메이지 모자", "seedMesoPrice": 0 },
+        { "name": "레지스탕스 배틀메이지 슈트(여)", "seedMesoPrice": 0 },
+        { "name": "레지스탕스 배틀메이지 슈즈", "seedMesoPrice": 0 },
+        { "name": "레지스탕스 배틀메이지 스태프", "seedMesoPrice": 0 }
+      ]
+    },
+    {
+      "id": 115,
+      "name": "레지스탕스 와일드헌터 패키지(남)",
+      "category": "패키지 · 레지스탕스",
+      "cashPrice": 12900,
+      "mileageType": "none",
+      "components": [
+        { "name": "레지스탕스 와일드헌터 헤어핀", "seedMesoPrice": 0 },
+        { "name": "레지스탕스 와일드헌터 슈트(남)", "seedMesoPrice": 0 },
+        { "name": "레지스탕스 와일드헌터 슈즈", "seedMesoPrice": 0 },
+        { "name": "레지스탕스 와일드헌터 석궁", "seedMesoPrice": 0 }
+      ]
+    },
+    {
+      "id": 116,
+      "name": "레지스탕스 와일드헌터 패키지(여)",
+      "category": "패키지 · 레지스탕스",
+      "cashPrice": 12900,
+      "mileageType": "none",
+      "components": [
+        { "name": "레지스탕스 와일드헌터 헤어핀", "seedMesoPrice": 0 },
+        { "name": "레지스탕스 와일드헌터 슈트(여)", "seedMesoPrice": 0 },
+        { "name": "레지스탕스 와일드헌터 슈즈", "seedMesoPrice": 0 },
+        { "name": "레지스탕스 와일드헌터 석궁", "seedMesoPrice": 0 }
+      ]
+    },
+    {
+      "id": 117,
+      "name": "레지스탕스 제논 패키지(남)",
+      "category": "패키지 · 레지스탕스",
+      "cashPrice": 12900,
+      "mileageType": "none",
+      "components": [
+        { "name": "레지스탕스 제논 이어피스", "seedMesoPrice": 0 },
+        { "name": "레지스탕스 제논 슈트(남)", "seedMesoPrice": 0 },
+        { "name": "레지스탕스 제논 슈즈", "seedMesoPrice": 0 },
+        { "name": "레지스탕스 제논 에너지소드", "seedMesoPrice": 0 }
+      ]
+    },
+    {
+      "id": 118,
+      "name": "레지스탕스 제논 패키지(여)",
+      "category": "패키지 · 레지스탕스",
+      "cashPrice": 12900,
+      "mileageType": "none",
+      "components": [
+        { "name": "레지스탕스 제논 이어피스", "seedMesoPrice": 0 },
+        { "name": "레지스탕스 제논 슈트(여)", "seedMesoPrice": 0 },
+        { "name": "레지스탕스 제논 슈즈", "seedMesoPrice": 0 },
+        { "name": "레지스탕스 제논 에너지소드", "seedMesoPrice": 0 }
+      ]
+    },
+    {
+      "id": 119,
+      "name": "레지스탕스 메카닉 패키지(남)",
+      "category": "패키지 · 레지스탕스",
+      "cashPrice": 12900,
+      "mileageType": "none",
+      "components": [
+        { "name": "레지스탕스 메카닉 바이저", "seedMesoPrice": 0 },
+        { "name": "레지스탕스 메카닉 슈트(남)", "seedMesoPrice": 0 },
+        { "name": "레지스탕스 메카닉 슈즈", "seedMesoPrice": 0 },
+        { "name": "레지스탕스 메카닉 무기", "seedMesoPrice": 0 }
+      ]
+    },
+    {
+      "id": 120,
+      "name": "레지스탕스 메카닉 패키지(여)",
+      "category": "패키지 · 레지스탕스",
+      "cashPrice": 12900,
+      "mileageType": "none",
+      "components": [
+        { "name": "레지스탕스 메카닉 바이저", "seedMesoPrice": 0 },
+        { "name": "레지스탕스 메카닉 슈트(여)", "seedMesoPrice": 0 },
+        { "name": "레지스탕스 메카닉 슈즈", "seedMesoPrice": 0 },
+        { "name": "레지스탕스 메카닉 무기", "seedMesoPrice": 0 }
+      ]
+    },
+    {
+      "id": 201,
+      "name": "빛의 기사단장 미하일 패키지",
+      "category": "패키지 · 시그너스",
+      "cashPrice": 13000,
+      "mileageType": "none",
+      "components": [
+        { "name": "기사단장 미하일 투구", "seedMesoPrice": 0 },
+        { "name": "기사단장 미하일 아머", "seedMesoPrice": 0 },
+        { "name": "기사단장 미하일 부츠", "seedMesoPrice": 0 },
+        { "name": "기사단장 미하일 소드", "seedMesoPrice": 0 }
+      ]
+    },
+    {
+      "id": 202,
+      "name": "불의 기사단장 오즈 패키지(남)",
+      "category": "패키지 · 시그너스",
+      "cashPrice": 13000,
+      "mileageType": "none",
+      "components": [
+        { "name": "기사단장 오즈 햇", "seedMesoPrice": 0 },
+        { "name": "기사단장 오즈 로브(남)", "seedMesoPrice": 0 },
+        { "name": "기사단장 오즈 부츠", "seedMesoPrice": 0 },
+        { "name": "기사단장 오즈 스태프", "seedMesoPrice": 0 }
+      ]
+    },
+    {
+      "id": 203,
+      "name": "불의 기사단장 오즈 패키지(여)",
+      "category": "패키지 · 시그너스",
+      "cashPrice": 13000,
+      "mileageType": "none",
+      "components": [
+        { "name": "기사단장 오즈 햇", "seedMesoPrice": 0 },
+        { "name": "기사단장 오즈 로브(여)", "seedMesoPrice": 0 },
+        { "name": "기사단장 오즈 부츠", "seedMesoPrice": 0 },
+        { "name": "기사단장 오즈 스태프", "seedMesoPrice": 0 }
+      ]
+    },
+    {
+      "id": 204,
+      "name": "바람의 기사단장 이리나 패키지(남)",
+      "category": "패키지 · 시그너스",
+      "cashPrice": 13000,
+      "mileageType": "none",
+      "components": [
+        { "name": "기사단장 이리나 크라운", "seedMesoPrice": 0 },
+        { "name": "기사단장 이리나 슈트(남)", "seedMesoPrice": 0 },
+        { "name": "기사단장 이리나 슈즈(남)", "seedMesoPrice": 0 },
+        { "name": "기사단장 이리나 보우", "seedMesoPrice": 0 }
+      ]
+    },
+    {
+      "id": 205,
+      "name": "바람의 기사단장 이리나 패키지(여)",
+      "category": "패키지 · 시그너스",
+      "cashPrice": 13000,
+      "mileageType": "none",
+      "components": [
+        { "name": "기사단장 이리나 크라운", "seedMesoPrice": 0 },
+        { "name": "기사단장 이리나 슈트(여)", "seedMesoPrice": 0 },
+        { "name": "기사단장 이리나 슈즈(여)", "seedMesoPrice": 0 },
+        { "name": "기사단장 이리나 보우", "seedMesoPrice": 0 }
+      ]
+    },
+    {
+      "id": 206,
+      "name": "어둠의 기사단장 이카르트 패키지(남)",
+      "category": "패키지 · 시그너스",
+      "cashPrice": 13000,
+      "mileageType": "none",
+      "components": [
+        { "name": "기사단장 이카르트 가면", "seedMesoPrice": 0 },
+        { "name": "기사단장 이카르트 슈트(남)", "seedMesoPrice": 0 },
+        { "name": "기사단장 이카르트 부츠", "seedMesoPrice": 0 },
+        { "name": "기사단장 이카르트 표창", "seedMesoPrice": 0 }
+      ]
+    },
+    {
+      "id": 207,
+      "name": "어둠의 기사단장 이카르트 패키지(여)",
+      "category": "패키지 · 시그너스",
+      "cashPrice": 13000,
+      "mileageType": "none",
+      "components": [
+        { "name": "기사단장 이카르트 가면", "seedMesoPrice": 0 },
+        { "name": "기사단장 이카르트 슈트(여)", "seedMesoPrice": 0 },
+        { "name": "기사단장 이카르트 부츠", "seedMesoPrice": 0 },
+        { "name": "기사단장 이카르트 표창", "seedMesoPrice": 0 }
+      ]
+    },
+    {
+      "id": 208,
+      "name": "번개의 기사단장 호크아이 패키지(남)",
+      "category": "패키지 · 시그너스",
+      "cashPrice": 13000,
+      "mileageType": "none",
+      "components": [
+        { "name": "기사단장 호크아이 햇", "seedMesoPrice": 0 },
+        { "name": "기사단장 호크아이 슈트(남)", "seedMesoPrice": 0 },
+        { "name": "기사단장 호크아이 부츠", "seedMesoPrice": 0 },
+        { "name": "기사단장 호크아이 너클", "seedMesoPrice": 0 }
+      ]
+    },
+    {
+      "id": 209,
+      "name": "번개의 기사단장 호크아이 패키지(여)",
+      "category": "패키지 · 시그너스",
+      "cashPrice": 13000,
+      "mileageType": "none",
+      "components": [
+        { "name": "기사단장 호크아이 햇", "seedMesoPrice": 0 },
+        { "name": "기사단장 호크아이 슈트(여)", "seedMesoPrice": 0 },
+        { "name": "기사단장 호크아이 부츠", "seedMesoPrice": 0 },
+        { "name": "기사단장 호크아이 너클", "seedMesoPrice": 0 }
+      ]
+    },
+    {
+      "id": 210,
+      "name": "책사 나인하트 패키지",
+      "category": "패키지 · 시그너스",
+      "cashPrice": 13000,
+      "mileageType": "none",
+      "components": [
+        { "name": "책사 나인하트 모노클", "seedMesoPrice": 0 },
+        { "name": "책사 나인하트 로브", "seedMesoPrice": 0 },
+        { "name": "책사 나인하트 슈즈", "seedMesoPrice": 0 },
+        { "name": "책사 나인하트 도서", "seedMesoPrice": 0 }
+      ]
+    },
+    {
+      "id": 211,
+      "name": "여제 시그너스 패키지(여)",
+      "category": "패키지 · 시그너스",
+      "cashPrice": 13000,
+      "mileageType": "none",
+      "components": [
+        { "name": "여제 시그너스 써클릿", "seedMesoPrice": 0 },
+        { "name": "여제 시그너스 드레스(여)", "seedMesoPrice": 0 },
+        { "name": "여제 시그너스 슈즈", "seedMesoPrice": 0 },
+        { "name": "신수의 부름", "seedMesoPrice": 0 }
+      ]
+    },
+    {
+      "id": 221,
+      "name": "영웅 아란 패키지(남)",
+      "category": "패키지 · 영웅",
+      "cashPrice": 10000,
+      "mileageType": "none",
+      "components": [
+        { "name": "영웅 아란 아머(남)", "seedMesoPrice": 0 },
+        { "name": "영웅 아란 부츠", "seedMesoPrice": 0 },
+        { "name": "영웅 아란 폴암", "seedMesoPrice": 0 }
+      ]
+    },
+    {
+      "id": 222,
+      "name": "영웅 아란 패키지(여)",
+      "category": "패키지 · 영웅",
+      "cashPrice": 10000,
+      "mileageType": "none",
+      "components": [
+        { "name": "영웅 아란 아머(여)", "seedMesoPrice": 0 },
+        { "name": "영웅 아란 부츠", "seedMesoPrice": 0 },
+        { "name": "영웅 아란 폴암", "seedMesoPrice": 0 }
+      ]
+    },
+    {
+      "id": 223,
+      "name": "영웅 은월 패키지(남)",
+      "category": "패키지 · 영웅",
+      "cashPrice": 10000,
+      "mileageType": "none",
+      "components": [
+        { "name": "영웅 은월 슈트(남)", "seedMesoPrice": 0 },
+        { "name": "영웅 은월 부츠", "seedMesoPrice": 0 },
+        { "name": "영웅 은월 너클", "seedMesoPrice": 0 }
+      ]
+    },
+    {
+      "id": 224,
+      "name": "영웅 은월 패키지(여)",
+      "category": "패키지 · 영웅",
+      "cashPrice": 10000,
+      "mileageType": "none",
+      "components": [
+        { "name": "영웅 은월 슈트(여)", "seedMesoPrice": 0 },
+        { "name": "영웅 은월 부츠", "seedMesoPrice": 0 },
+        { "name": "영웅 은월 너클", "seedMesoPrice": 0 }
+      ]
+    },
+    {
+      "id": 225,
+      "name": "영웅 루미너스 패키지(남)",
+      "category": "패키지 · 영웅",
+      "cashPrice": 10000,
+      "mileageType": "none",
+      "components": [
+        { "name": "영웅 루미너스 로브(남)", "seedMesoPrice": 0 },
+        { "name": "영웅 루미너스 부츠", "seedMesoPrice": 0 },
+        { "name": "영웅 루미너스 샤이닝로드", "seedMesoPrice": 0 }
+      ]
+    },
+    {
+      "id": 226,
+      "name": "영웅 루미너스 패키지(여)",
+      "category": "패키지 · 영웅",
+      "cashPrice": 10000,
+      "mileageType": "none",
+      "components": [
+        { "name": "영웅 루미너스 로브(여)", "seedMesoPrice": 0 },
+        { "name": "영웅 루미너스 부츠", "seedMesoPrice": 0 },
+        { "name": "영웅 루미너스 샤이닝로드", "seedMesoPrice": 0 }
+      ]
+    },
+    {
+      "id": 227,
+      "name": "영웅 에반 패키지(남)",
+      "category": "패키지 · 영웅",
+      "cashPrice": 10000,
+      "mileageType": "none",
+      "components": [
+        { "name": "영웅 에반 로브(남)", "seedMesoPrice": 0 },
+        { "name": "영웅 에반 부츠", "seedMesoPrice": 0 },
+        { "name": "영웅 에반 스태프", "seedMesoPrice": 0 }
+      ]
+    },
+    {
+      "id": 228,
+      "name": "영웅 에반 패키지(여)",
+      "category": "패키지 · 영웅",
+      "cashPrice": 10000,
+      "mileageType": "none",
+      "components": [
+        { "name": "영웅 에반 로브(여)", "seedMesoPrice": 0 },
+        { "name": "영웅 에반 부츠", "seedMesoPrice": 0 },
+        { "name": "영웅 에반 스태프", "seedMesoPrice": 0 }
+      ]
+    },
+    {
+      "id": 229,
+      "name": "영웅 메르세데스 패키지(남)",
+      "category": "패키지 · 영웅",
+      "cashPrice": 10000,
+      "mileageType": "none",
+      "components": [
+        { "name": "영웅 메르세데스 슈트(남)", "seedMesoPrice": 0 },
+        { "name": "영웅 메르세데스 슈즈(남)", "seedMesoPrice": 0 },
+        { "name": "영웅 메르세데스 듀얼보우건", "seedMesoPrice": 0 }
+      ]
+    },
+    {
+      "id": 230,
+      "name": "영웅 메르세데스 패키지(여)",
+      "category": "패키지 · 영웅",
+      "cashPrice": 10000,
+      "mileageType": "none",
+      "components": [
+        { "name": "영웅 메르세데스 슈트(여)", "seedMesoPrice": 0 },
+        { "name": "영웅 메르세데스 슈즈(여)", "seedMesoPrice": 0 },
+        { "name": "영웅 메르세데스 듀얼보우건", "seedMesoPrice": 0 }
+      ]
+    },
+    {
+      "id": 231,
+      "name": "영웅 팬텀 패키지(남)",
+      "category": "패키지 · 영웅",
+      "cashPrice": 10000,
+      "mileageType": "none",
+      "components": [
+        { "name": "영웅 팬텀 슈트(남)", "seedMesoPrice": 0 },
+        { "name": "영웅 팬텀 부츠", "seedMesoPrice": 0 },
+        { "name": "영웅 팬텀 케인", "seedMesoPrice": 0 }
+      ]
+    },
+    {
+      "id": 232,
+      "name": "영웅 팬텀 패키지(여)",
+      "category": "패키지 · 영웅",
+      "cashPrice": 10000,
+      "mileageType": "none",
+      "components": [
+        { "name": "영웅 팬텀 슈트(여)", "seedMesoPrice": 0 },
+        { "name": "영웅 팬텀 부츠", "seedMesoPrice": 0 },
+        { "name": "영웅 팬텀 케인", "seedMesoPrice": 0 }
+      ]
+    },
+    {
+      "id": 301,
+      "name": "모험가 히어로 패키지",
+      "category": "패키지 · 모험가",
+      "cashPrice": 10000,
+      "mileageType": "none",
+      "components": [
+        { "name": "모험가 히어로 아머", "seedMesoPrice": 0 },
+        { "name": "모험가 히어로 부츠", "seedMesoPrice": 0 },
+        { "name": "모험가 히어로 소드", "seedMesoPrice": 0 }
+      ]
+    },
+    {
+      "id": 302,
+      "name": "모험가 팔라딘 패키지",
+      "category": "패키지 · 모험가",
+      "cashPrice": 10000,
+      "mileageType": "none",
+      "components": [
+        { "name": "모험가 팔라딘 아머", "seedMesoPrice": 0 },
+        { "name": "모험가 팔라딘 부츠", "seedMesoPrice": 0 },
+        { "name": "모험가 팔라딘 해머", "seedMesoPrice": 0 }
+      ]
+    },
+    {
+      "id": 303,
+      "name": "모험가 다크나이트 패키지",
+      "category": "패키지 · 모험가",
+      "cashPrice": 10000,
+      "mileageType": "none",
+      "components": [
+        { "name": "모험가 다크나이트 아머", "seedMesoPrice": 0 },
+        { "name": "모험가 다크나이트 부츠", "seedMesoPrice": 0 },
+        { "name": "모험가 다크나이트 스피어", "seedMesoPrice": 0 }
+      ]
+    },
+    {
+      "id": 304,
+      "name": "모험가 불독 패키지(남)",
+      "category": "패키지 · 모험가",
+      "cashPrice": 10000,
+      "mileageType": "none",
+      "components": [
+        { "name": "모험가 불독 로브(남)", "seedMesoPrice": 0 },
+        { "name": "모험가 불독 부츠(남)", "seedMesoPrice": 0 },
+        { "name": "모험가 불독 완드", "seedMesoPrice": 0 }
+      ]
+    },
+    {
+      "id": 305,
+      "name": "모험가 불독 패키지(여)",
+      "category": "패키지 · 모험가",
+      "cashPrice": 10000,
+      "mileageType": "none",
+      "components": [
+        { "name": "모험가 불독 로브(여)", "seedMesoPrice": 0 },
+        { "name": "모험가 불독 부츠(여)", "seedMesoPrice": 0 },
+        { "name": "모험가 불독 완드", "seedMesoPrice": 0 }
+      ]
+    },
+    {
+      "id": 306,
+      "name": "모험가 썬콜 패키지(남)",
+      "category": "패키지 · 모험가",
+      "cashPrice": 10000,
+      "mileageType": "none",
+      "components": [
+        { "name": "모험가 썬콜 로브(남)", "seedMesoPrice": 0 },
+        { "name": "모험가 썬콜 부츠(남)", "seedMesoPrice": 0 },
+        { "name": "모험가 썬콜 스태프", "seedMesoPrice": 0 }
+      ]
+    },
+    {
+      "id": 307,
+      "name": "모험가 썬콜 패키지(여)",
+      "category": "패키지 · 모험가",
+      "cashPrice": 10000,
+      "mileageType": "none",
+      "components": [
+        { "name": "모험가 썬콜 로브(여)", "seedMesoPrice": 0 },
+        { "name": "모험가 썬콜 부츠(여)", "seedMesoPrice": 0 },
+        { "name": "모험가 썬콜 스태프", "seedMesoPrice": 0 }
+      ]
+    },
+    {
+      "id": 308,
+      "name": "모험가 비숍 패키지(남)",
+      "category": "패키지 · 모험가",
+      "cashPrice": 10000,
+      "mileageType": "none",
+      "components": [
+        { "name": "모험가 비숍 로브(남)", "seedMesoPrice": 0 },
+        { "name": "모험가 비숍 부츠(남)", "seedMesoPrice": 0 },
+        { "name": "모험가 비숍 완드", "seedMesoPrice": 0 }
+      ]
+    },
+    {
+      "id": 309,
+      "name": "모험가 비숍 패키지(여)",
+      "category": "패키지 · 모험가",
+      "cashPrice": 10000,
+      "mileageType": "none",
+      "components": [
+        { "name": "모험가 비숍 로브(여)", "seedMesoPrice": 0 },
+        { "name": "모험가 비숍 부츠(여)", "seedMesoPrice": 0 },
+        { "name": "모험가 비숍 완드", "seedMesoPrice": 0 }
+      ]
+    },
+    {
+      "id": 310,
+      "name": "모험가 보우마스터 패키지(남)",
+      "category": "패키지 · 모험가",
+      "cashPrice": 10000,
+      "mileageType": "none",
+      "components": [
+        { "name": "모험가 보우마스터 슈트(남)", "seedMesoPrice": 0 },
+        { "name": "모험가 보우마스터 부츠", "seedMesoPrice": 0 },
+        { "name": "모험가 보우마스터 활", "seedMesoPrice": 0 }
+      ]
+    },
+    {
+      "id": 311,
+      "name": "모험가 보우마스터 패키지(여)",
+      "category": "패키지 · 모험가",
+      "cashPrice": 10000,
+      "mileageType": "none",
+      "components": [
+        { "name": "모험가 보우마스터 슈트(여)", "seedMesoPrice": 0 },
+        { "name": "모험가 보우마스터 부츠", "seedMesoPrice": 0 },
+        { "name": "모험가 보우마스터 활", "seedMesoPrice": 0 }
+      ]
+    },
+    {
+      "id": 312,
+      "name": "모험가 신궁 패키지(남)",
+      "category": "패키지 · 모험가",
+      "cashPrice": 10000,
+      "mileageType": "none",
+      "components": [
+        { "name": "모험가 신궁 슈트(남)", "seedMesoPrice": 0 },
+        { "name": "모험가 신궁 부츠", "seedMesoPrice": 0 },
+        { "name": "모험가 신궁 석궁", "seedMesoPrice": 0 }
+      ]
+    },
+    {
+      "id": 313,
+      "name": "모험가 신궁 패키지(여)",
+      "category": "패키지 · 모험가",
+      "cashPrice": 10000,
+      "mileageType": "none",
+      "components": [
+        { "name": "모험가 신궁 슈트(여)", "seedMesoPrice": 0 },
+        { "name": "모험가 신궁 부츠", "seedMesoPrice": 0 },
+        { "name": "모험가 신궁 석궁", "seedMesoPrice": 0 }
+      ]
+    },
+    {
+      "id": 314,
+      "name": "모험가 패스파인더 패키지",
+      "category": "패키지 · 모험가",
+      "cashPrice": 10000,
+      "mileageType": "none",
+      "components": [
+        { "name": "모험가 패스파인더 슈트", "seedMesoPrice": 0 },
+        { "name": "모험가 패스파인더 부츠", "seedMesoPrice": 0 },
+        { "name": "모험가 패스파인더 활", "seedMesoPrice": 0 }
+      ]
+    },
+    {
+      "id": 315,
+      "name": "모험가 나이트로드 패키지(남)",
+      "category": "패키지 · 모험가",
+      "cashPrice": 10000,
+      "mileageType": "none",
+      "components": [
+        { "name": "모험가 나이트로드 슈트", "seedMesoPrice": 0 },
+        { "name": "모험가 나이트로드 부츠", "seedMesoPrice": 0 },
+        { "name": "모험가 나이트로드 표창", "seedMesoPrice": 0 }
+      ]
+    },
+    {
+      "id": 316,
+      "name": "모험가 나이트로드 패키지(여)",
+      "category": "패키지 · 모험가",
+      "cashPrice": 10000,
+      "mileageType": "none",
+      "components": [
+        { "name": "모험가 나이트로드 슈트", "seedMesoPrice": 0 },
+        { "name": "모험가 나이트로드 부츠", "seedMesoPrice": 0 },
+        { "name": "모험가 나이트로드 표창", "seedMesoPrice": 0 }
+      ]
+    },
+    {
+      "id": 317,
+      "name": "모험가 듀얼블레이드 패키지",
+      "category": "패키지 · 모험가",
+      "cashPrice": 10000,
+      "mileageType": "none",
+      "components": [
+        { "name": "모험가 듀얼블레이드 슈트", "seedMesoPrice": 0 },
+        { "name": "모험가 듀얼블레이드 부츠", "seedMesoPrice": 0 },
+        { "name": "모험가 듀얼블레이드 단검", "seedMesoPrice": 0 }
+      ]
+    },
+    {
+      "id": 318,
+      "name": "모험가 섀도어 패키지",
+      "category": "패키지 · 모험가",
+      "cashPrice": 10000,
+      "mileageType": "none",
+      "components": [
+        { "name": "모험가 섀도어 슈트", "seedMesoPrice": 0 },
+        { "name": "모험가 섀도어 부츠", "seedMesoPrice": 0 },
+        { "name": "모험가 섀도어 단검", "seedMesoPrice": 0 }
+      ]
+    },
+    {
+      "id": 319,
+      "name": "모험가 캐논슈터 패키지(남)",
+      "category": "패키지 · 모험가",
+      "cashPrice": 10000,
+      "mileageType": "none",
+      "components": [
+        { "name": "모험가 캐논슈터 슈트(남)", "seedMesoPrice": 0 },
+        { "name": "모험가 캐논슈터 부츠", "seedMesoPrice": 0 },
+        { "name": "모험가 캐논슈터 캐논", "seedMesoPrice": 0 }
+      ]
+    },
+    {
+      "id": 320,
+      "name": "모험가 캐논슈터 패키지(여)",
+      "category": "패키지 · 모험가",
+      "cashPrice": 10000,
+      "mileageType": "none",
+      "components": [
+        { "name": "모험가 캐논슈터 슈트(여)", "seedMesoPrice": 0 },
+        { "name": "모험가 캐논슈터 부츠", "seedMesoPrice": 0 },
+        { "name": "모험가 캐논슈터 캐논", "seedMesoPrice": 0 }
+      ]
+    },
+    {
+      "id": 321,
+      "name": "모험가 바이퍼 패키지(남)",
+      "category": "패키지 · 모험가",
+      "cashPrice": 10000,
+      "mileageType": "none",
+      "components": [
+        { "name": "모험가 바이퍼 갑옷(남)", "seedMesoPrice": 0 },
+        { "name": "모험가 바이퍼 부츠", "seedMesoPrice": 0 },
+        { "name": "모험가 바이퍼 너클", "seedMesoPrice": 0 }
+      ]
+    },
+    {
+      "id": 322,
+      "name": "모험가 바이퍼 패키지(여)",
+      "category": "패키지 · 모험가",
+      "cashPrice": 10000,
+      "mileageType": "none",
+      "components": [
+        { "name": "모험가 바이퍼 갑옷(여)", "seedMesoPrice": 0 },
+        { "name": "모험가 바이퍼 부츠", "seedMesoPrice": 0 },
+        { "name": "모험가 바이퍼 너클", "seedMesoPrice": 0 }
+      ]
+    },
+    {
+      "id": 323,
+      "name": "모험가 캡틴 패키지(남)",
+      "category": "패키지 · 모험가",
+      "cashPrice": 10000,
+      "mileageType": "none",
+      "components": [
+        { "name": "모험가 캡틴 갑옷(남)", "seedMesoPrice": 0 },
+        { "name": "모험가 캡틴 부츠(남)", "seedMesoPrice": 0 },
+        { "name": "모험가 캡틴 건", "seedMesoPrice": 0 }
+      ]
+    },
+    {
+      "id": 324,
+      "name": "모험가 캡틴 패키지(여)",
+      "category": "패키지 · 모험가",
+      "cashPrice": 10000,
+      "mileageType": "none",
+      "components": [
+        { "name": "모험가 캡틴 갑옷(여)", "seedMesoPrice": 0 },
+        { "name": "모험가 캡틴 부츠(여)", "seedMesoPrice": 0 },
+        { "name": "모험가 캡틴 건", "seedMesoPrice": 0 }
+      ]
     }
   ]
 }
