@@ -1,0 +1,11 @@
+{
+  "url": "https://example.com/maple-auction",
+  "selectors": {
+    "searchInput": "[data-auction-search-input]",
+    "searchButton": "[data-auction-search-button]",
+    "listingLowest": "[data-auction-listing-lowest]",
+    "marketTab": "[data-auction-market-tab]",
+    "marketTabLowest": "[data-auction-market-lowest]",
+    "blockedText": "잠시 후 다시 시도"
+  }
+}
