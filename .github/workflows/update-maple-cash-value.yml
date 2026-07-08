@@ -11,7 +11,7 @@ on:
     - cron: '20 18 * * *'
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -35,6 +35,18 @@ jobs:
         env:
           NEXON_OPEN_API_KEY: ${{ secrets.NEXON_OPEN_API_KEY }}
         run: node scripts/update-cashshop-notices.mjs
+
+      - name: Commit generated cashshop data
+        run: |
+          if git diff --quiet -- maple-cash-value/data/cashshop-notices.json; then
+            echo "No cashshop notice changes."
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add maple-cash-value/data/cashshop-notices.json
+            git commit -m "Update Maple cashshop notices [skip ci]"
+            git push
+          fi
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
