@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-07-08T10:10:40.901Z",
+  "generatedAt": "2026-07-08T10:11:59.339Z",
   "source": "nexon-open-api",
   "endpoint": "/maplestory/v1/notice-cashshop",
   "status": "ok",
@@ -84,8 +84,7 @@
       "date": "2026-06-18T08:50+09:00",
       "url": "https://maplestory.nexon.com/News/CashShop/625",
       "items": [
-        "전 직업 일러스트 컬렉션 : 데몬",
-        "레지스탕스"
+        "전 직업 일러스트 컬렉션 : 데몬 & 레지스탕스"
       ],
       "summary": ""
     }
