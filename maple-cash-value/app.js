@@ -113,8 +113,25 @@ function normalizeNotices(raw) {
     id: notice.id || notice.noticeId || notice.notice_id,
     title: notice.title || notice.noticeTitle || notice.notice_title || '제목 없음',
     date: notice.date || notice.noticeDate || notice.date_event || notice.updatedAt,
-    url: notice.url || notice.link || null
+    url: notice.url || notice.link || null,
+    summary: notice.summary || '',
+    items: normalizeNoticeItems(notice.items || notice.products || notice.productNames || [])
   })).slice(0, 5);
+}
+
+function normalizeNoticeItems(items) {
+  if (!Array.isArray(items)) return [];
+  const seen = new Set();
+  return items
+    .map(item => String(item || '').trim())
+    .filter(Boolean)
+    .filter(item => {
+      const key = normalizeKey(item);
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    })
+    .slice(0, 8);
 }
 
 function buildPriceIndex() {
@@ -234,11 +251,19 @@ function renderNotices() {
   }
   list.innerHTML = state.notices.map(notice => {
     const title = escapeHtml(notice.title);
-    const body = `<strong>${title}</strong><span>${escapeHtml(formatDate(notice.date))}</span>`;
+    const meta = `<span>${escapeHtml(formatDate(notice.date))}</span>`;
+    const tags = renderNoticeItems(notice.items);
+    const summary = !tags && notice.summary ? `<p class="notice-summary">${escapeHtml(notice.summary)}</p>` : '';
+    const body = `<strong>${title}</strong>${meta}${tags}${summary}`;
     return notice.url
       ? `<a class="notice-item" href="${escapeAttribute(notice.url)}" target="_blank" rel="noreferrer">${body}</a>`
       : `<div class="notice-item">${body}</div>`;
   }).join('');
+}
+
+function renderNoticeItems(items) {
+  if (!Array.isArray(items) || !items.length) return '';
+  return `<div class="notice-tags">${items.map(item => `<span class="notice-tag">${escapeHtml(item)}</span>`).join('')}</div>`;
 }
 
 function renderTable(rows) {
