@@ -1,7 +1,8 @@
 const DATA_PATHS = {
   items: './data/items.json',
   auction: './data/auction-prices.json',
-  notices: './data/cashshop-notices.json'
+  notices: './data/cashshop-notices.json',
+  saleItems: './data/cashshop-sale-items.json'
 };
 
 const STORAGE_KEY = 'maple-cash-value-settings-v1';
@@ -16,6 +17,7 @@ const state = {
   items: [],
   auctionRows: [],
   notices: [],
+  saleCatalog: [],
   metadata: {},
   rankMode: 'listingLowestMeso',
   search: '',
@@ -80,17 +82,20 @@ async function loadData() {
   loadStoredSettings();
   syncInputs();
   try {
-    const [itemsDoc, auctionDoc, noticeDoc] = await Promise.all([
+    const [itemsDoc, auctionDoc, noticeDoc, saleDoc] = await Promise.all([
       loadJson(DATA_PATHS.items, { items: [], settings: DEFAULT_SETTINGS }),
       loadJson(DATA_PATHS.auction, { prices: [] }),
-      loadJson(DATA_PATHS.notices, { notices: [] })
+      loadJson(DATA_PATHS.notices, { notices: [] }),
+      loadJson(DATA_PATHS.saleItems, { sales: [] })
     ]);
     state.items = Array.isArray(itemsDoc.items) ? itemsDoc.items : [];
     state.metadata.itemsUpdatedAt = itemsDoc.updatedAt;
     state.metadata.auctionUpdatedAt = auctionDoc.generatedAt || auctionDoc.updatedAt;
-    state.metadata.world = auctionDoc.world || itemsDoc.world || '스카니아';
+    state.metadata.saleItemsUpdatedAt = saleDoc.generatedAt;
+    state.metadata.world = auctionDoc.world || saleDoc.world || itemsDoc.world || '스카니아';
     state.auctionRows = normalizeAuctionRows(auctionDoc.prices);
     state.notices = normalizeNotices(noticeDoc.notices || noticeDoc.cashshopNotice || []);
+    state.saleCatalog = normalizeSaleCatalog(saleDoc.sales || []);
     setSyncState('ready', '데이터 로딩 완료', `${state.metadata.world} 기준 데이터를 불러왔습니다.`);
   } catch (error) {
     console.error(error);
@@ -132,6 +137,38 @@ function normalizeNoticeItems(items) {
       return true;
     })
     .slice(0, 8);
+}
+
+function normalizeSaleCatalog(raw) {
+  if (!Array.isArray(raw)) return [];
+  return raw.map(sale => ({
+    id: sale.id,
+    title: sale.title || `판매글 ${sale.id}`,
+    url: sale.url || null,
+    bodyImages: Array.isArray(sale.bodyImages) ? sale.bodyImages : [],
+    items: normalizeSaleSearchItems(sale)
+  })).filter(sale => sale.items.length);
+}
+
+function normalizeSaleSearchItems(sale) {
+  const seen = new Map();
+  const add = (value, needsReview) => {
+    const name = String(value || '').trim();
+    if (!name) return;
+    const key = normalizeKey(name);
+    if (seen.has(key)) {
+      seen.get(key).needsReview = seen.get(key).needsReview || needsReview;
+      return;
+    }
+    seen.set(key, { name, needsReview });
+  };
+  (sale.auctionSearchItems || []).forEach(item => add(item, false));
+  (sale.reviewSearchItems || []).forEach(item => add(item, true));
+  return [...seen.values()];
+}
+
+function flattenSaleSearchItems() {
+  return state.saleCatalog.flatMap(sale => sale.items.map(item => ({ ...item, saleId: sale.id })));
 }
 
 function buildPriceIndex() {
@@ -235,11 +272,12 @@ function render() {
 
   $('#rank-mode-label').textContent = state.rankMode === 'marketTabLowestMeso' ? '시세탭 최저' : '매물 최저가';
   $('#row-count').textContent = `${rows.length}개`;
-  $('#notice-count').textContent = `${state.notices.length}건`;
+  $('#sale-item-count').textContent = `${flattenSaleSearchItems().length}개`;
   $('#auction-updated').textContent = formatDate(state.metadata.auctionUpdatedAt);
   $('#best-efficiency').textContent = rows.length ? formatWon(rows[0][rankKey]) : '-';
 
   renderNotices();
+  renderSaleItems();
   renderTable(rows);
 }
 
@@ -264,6 +302,26 @@ function renderNotices() {
 function renderNoticeItems(items) {
   if (!Array.isArray(items) || !items.length) return '';
   return `<div class="notice-tags">${items.map(item => `<span class="notice-tag">${escapeHtml(item)}</span>`).join('')}</div>`;
+}
+
+function renderSaleItems() {
+  const list = $('#sale-item-list');
+  if (!state.saleCatalog.length) {
+    list.innerHTML = '<div class="sale-item"><strong>세부품목 없음</strong><span>Chrome OCR 수집 후 표시됩니다.</span></div>';
+    return;
+  }
+  list.innerHTML = state.saleCatalog.map(sale => {
+    const preview = sale.items.slice(0, 8).map(item => (
+      `<span class="sale-tag${item.needsReview ? ' review' : ''}">${escapeHtml(item.name)}</span>`
+    )).join('');
+    const more = sale.items.length > 8 ? `<span class="sale-tag more">+${sale.items.length - 8}</span>` : '';
+    const reviewCount = sale.items.filter(item => item.needsReview).length;
+    const meta = `${sale.items.length}개 검색 후보${reviewCount ? ` · 검수 ${reviewCount}` : ''}`;
+    const body = `<strong>${escapeHtml(sale.title)}</strong><span>${escapeHtml(meta)}</span><div class="sale-tags">${preview}${more}</div>`;
+    return sale.url
+      ? `<a class="sale-item" href="${escapeAttribute(sale.url)}" target="_blank" rel="noreferrer">${body}</a>`
+      : `<div class="sale-item">${body}</div>`;
+  }).join('');
 }
 
 function renderTable(rows) {
