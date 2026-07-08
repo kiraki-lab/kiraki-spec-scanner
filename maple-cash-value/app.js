@@ -29,6 +29,47 @@ const state = {
   settings: { ...DEFAULT_SETTINGS }
 };
 
+// BONUS 구성품은 넥슨 공지 기준 교환 불가라 효율 계산에는 넣지 않고, 패키지 확인용으로만 보여준다.
+const BONUS_COMPONENTS_BY_PACKAGE = Object.freeze({
+  '레지스탕스 와일드헌터 패키지(남)': ['레지스탕스 와일드헌터 글러브'],
+  '레지스탕스 와일드헌터 패키지(여)': ['레지스탕스 와일드헌터 글러브'],
+  '레지스탕스 제논 패키지(남)': ['레지스탕스 제논 얼굴장식'],
+  '레지스탕스 제논 패키지(여)': ['레지스탕스 제논 얼굴장식'],
+  '빛의 기사단장 미하일 패키지': ['기사단장 미하일 방패', '기사단장 미하일 이펙트'],
+  '불의 기사단장 오즈 패키지(남)': ['기사단장 오즈 이펙트'],
+  '불의 기사단장 오즈 패키지(여)': ['기사단장 오즈 이펙트'],
+  '바람의 기사단장 이리나 패키지(남)': ['기사단장 이리나 이펙트'],
+  '바람의 기사단장 이리나 패키지(여)': ['기사단장 이리나 이펙트'],
+  '어둠의 기사단장 이카르트 패키지(남)': ['기사단장 이카르트 이펙트'],
+  '어둠의 기사단장 이카르트 패키지(여)': ['기사단장 이카르트 이펙트'],
+  '번개의 기사단장 호크아이 패키지(남)': ['기사단장 호크아이 이펙트'],
+  '번개의 기사단장 호크아이 패키지(여)': ['기사단장 호크아이 이펙트'],
+  '책사 나인하트 패키지': ['책사 나인하트 이펙트'],
+  '여제 시그너스 패키지(여)': ['여제 시그너스 케이프', '여제 시그너스 이펙트'],
+  '영웅 에반 패키지(남)': ['영웅 에반 골든윙즈'],
+  '영웅 에반 패키지(여)': ['영웅 에반 골든윙즈'],
+  '영웅 메르세데스 패키지(남)': ['영웅 메르세데스 핀'],
+  '영웅 메르세데스 패키지(여)': ['영웅 메르세데스 핀'],
+  '영웅 팬텀 패키지(남)': ['영웅 팬텀 햇'],
+  '영웅 팬텀 패키지(여)': ['영웅 팬텀 햇'],
+  '모험가 썬콜 패키지(여)': ['모험가 썬콜 머리띠(여)'],
+  '모험가 비숍 패키지(남)': ['모험가 비숍 모자'],
+  '모험가 비숍 패키지(여)': ['모험가 비숍 모자'],
+  '모험가 보우마스터 패키지(남)': ['모험가 보우마스터 귀고리(남)'],
+  '모험가 보우마스터 패키지(여)': ['모험가 보우마스터 깃털(여)'],
+  '모험가 신궁 패키지(남)': ['모험가 신궁 모자'],
+  '모험가 신궁 패키지(여)': ['모험가 신궁 모자'],
+  '모험가 패스파인더 패키지': ['모험가 패스파인더 후드'],
+  '모험가 나이트로드 패키지(남)': ['모험가 나이트로드 헤어밴드(남)'],
+  '모험가 나이트로드 패키지(여)': ['모험가 나이트로드 헤어밴드(여)'],
+  '모험가 듀얼블레이드 패키지': ['모험가 듀얼블레이드 헤어밴드'],
+  '모험가 섀도어 패키지': ['모험가 섀도어 마스크'],
+  '모험가 캐논슈터 패키지(남)': ['모험가 캐논슈터 헤어밴드(남)', '모험가 캐논슈터 귀고리'],
+  '모험가 캐논슈터 패키지(여)': ['모험가 캐논슈터 헤어밴드(여)', '모험가 캐논슈터 귀고리'],
+  '모험가 캡틴 패키지(남)': ['모험가 캡틴 모자(남)'],
+  '모험가 캡틴 패키지(여)': ['모험가 캡틴 모자(여)']
+});
+
 const $ = selector => document.querySelector(selector);
 const nf = new Intl.NumberFormat('ko-KR');
 const won = new Intl.NumberFormat('ko-KR', { maximumFractionDigits: 0 });
@@ -197,6 +238,25 @@ function flattenSaleSearchItems(catalog = state.saleCatalog) {
   return catalog.flatMap(sale => sale.items.map(item => ({ ...item, saleId: sale.id })));
 }
 
+function componentList(raw) {
+  if (!Array.isArray(raw)) return [];
+  return raw
+    .map(component => (typeof component === 'string' ? { name: component } : component))
+    .filter(component => component && component.name);
+}
+
+function bonusComponentsFor(item) {
+  const explicit = componentList(item.bonusComponents);
+  const inferred = componentList(BONUS_COMPONENTS_BY_PACKAGE[item.name] || []);
+  const seen = new Set();
+  return [...explicit, ...inferred].filter(component => {
+    const key = normalizeKey(component.name);
+    if (!key || seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
 function filteredSaleCatalog() {
   const q = normalizeKey(state.saleSearch);
   return state.saleCatalog.map(sale => {
@@ -310,7 +370,8 @@ function filteredRows() {
     if (state.categoryFilter && item.category !== state.categoryFilter) return false;
     if (!q) return true;
     const componentText = Array.isArray(item.components) ? item.components.map(component => component.name).join(' ') : '';
-    return normalizeKey([item.name, item.category, componentText, ...(item.aliases || [])].join(' ')).includes(q);
+    const bonusText = bonusComponentsFor(item).map(component => component.name).join(' ');
+    return normalizeKey([item.name, item.category, componentText, bonusText, ...(item.aliases || [])].join(' ')).includes(q);
   });
 }
 
@@ -405,12 +466,20 @@ function renderPrice(price) {
 }
 
 function renderComponents(item) {
-  if (!Array.isArray(item.components) || !item.components.length) return '';
+  const tradable = componentList(item.components);
+  const bonus = bonusComponentsFor(item);
+  if (!tradable.length && !bonus.length) return '';
+
+  const label = bonus.length
+    ? `구성품 ${tradable.length + bonus.length}개 · 경매 후보 ${tradable.length} / BONUS ${bonus.length}`
+    : `구성품 ${tradable.length}개`;
+
   return `
     <details>
-      <summary>구성품 ${item.components.length}개</summary>
+      <summary>${escapeHtml(label)}</summary>
       <div class="component-list">
-        ${item.components.map(component => `<span>${escapeHtml(component.name)}</span>`).join('')}
+        ${tradable.map(component => `<span>${escapeHtml(component.name)}</span>`).join('')}
+        ${bonus.map(component => `<span class="bonus">${escapeHtml(component.name)}<em>BONUS</em></span>`).join('')}
       </div>
     </details>
   `;
