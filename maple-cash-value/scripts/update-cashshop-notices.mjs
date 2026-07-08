@@ -150,6 +150,7 @@ function extractTextItems(text) {
 function splitProductPhrase(value) {
   const cleaned = cleanProductName(value);
   if (!cleaned) return [];
+  if (/컬렉션\s*:/u.test(cleaned)) return [cleaned];
   const parts = cleaned
     .replace(/\s+(?:및|그리고)\s+/gu, ' & ')
     .split(/\s*(?:&|\+|,|·|ㆍ|\/|\|)\s*/u)
