@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light">
   <title>메이플 캐시 효율 계산기</title>
-  <link rel="stylesheet" href="./styles.css?v=0.3.0">
+  <link rel="stylesheet" href="./styles.css?v=0.5.0">
 </head>
 <body>
   <div class="app-shell">
@@ -14,11 +14,22 @@
         <p class="eyebrow">스카니아 · 월드 통합 경매장</p>
         <h1>메이플 캐시 효율 계산기</h1>
       </div>
-      <div class="sync-card" aria-live="polite">
-        <span class="sync-dot"></span>
-        <div>
-          <strong id="sync-state">데이터 로딩 중</strong>
-          <span id="sync-detail">자동 갱신 JSON을 확인하고 있습니다.</span>
+      <div class="topbar-actions">
+        <div class="mode-card" aria-live="polite">
+          <span class="mode-label" id="mode-label">공개 모드</span>
+          <div class="mode-form">
+            <input id="mode-password" type="password" inputmode="numeric" placeholder="비밀번호" autocomplete="off" aria-label="모드 비밀번호">
+            <button id="unlock-mode" type="button">열기</button>
+            <button id="lock-mode" type="button" hidden>잠금</button>
+          </div>
+          <small id="mode-detail">수동 계산 가능 · 저장 잠김</small>
+        </div>
+        <div class="sync-card" aria-live="polite">
+          <span class="sync-dot"></span>
+          <div>
+            <strong id="sync-state">데이터 로딩 중</strong>
+            <span id="sync-detail">자동 갱신 JSON을 확인하고 있습니다.</span>
+          </div>
         </div>
       </div>
     </header>
@@ -56,6 +67,18 @@
       </label>
 
       <label>
+        <span>가격 상태</span>
+        <select id="status-filter">
+          <option value="">전체</option>
+          <option value="live">가격 있음</option>
+          <option value="seed">기본값</option>
+          <option value="no_listing">매물 없음</option>
+          <option value="no_candidate">후보 없음</option>
+          <option value="unverified">미확인</option>
+        </select>
+      </label>
+
+      <label>
         <span>상품권 할인율</span>
         <input id="discount-rate" type="number" min="0" max="100" step="0.1">
       </label>
@@ -70,6 +93,165 @@
         <span>1억당 마일리지 시세</span>
         <input id="base-mp-rate" type="number" min="0" step="10">
       </label>
+    </section>
+
+    <section class="manual-panel" aria-label="수동 계산">
+      <div class="section-title">
+        <h2>수동 계산</h2>
+        <span id="manual-save-state" class="count-pill">저장 잠김</span>
+      </div>
+      <div class="manual-grid">
+        <label>
+          <span>아이템명</span>
+          <input id="manual-name" type="text" placeholder="예: 메이플 로얄 스타일" autocomplete="off">
+        </label>
+        <label>
+          <span>분류</span>
+          <input id="manual-category" type="text" placeholder="기본 · 랜덤 · 패키지" autocomplete="off">
+        </label>
+        <label>
+          <span>캐시 가격</span>
+          <input id="manual-cash-price" type="number" min="0" step="100" placeholder="2200">
+        </label>
+        <label>
+          <span>경매장 가격</span>
+          <input id="manual-meso-price" type="number" min="0" step="10000" placeholder="80988444">
+        </label>
+        <label>
+          <span>마일리지</span>
+          <select id="manual-mileage-type">
+            <option value="none">사용 불가</option>
+            <option value="partial">30%</option>
+            <option value="full">100%</option>
+          </select>
+        </label>
+        <article class="result-card" id="manual-result">
+          <span>계산 결과</span>
+          <strong id="manual-efficiency">-</strong>
+          <small id="manual-detail">값을 입력하면 바로 계산됩니다.</small>
+        </article>
+      </div>
+      <div class="action-row">
+        <button id="calculate-manual" type="button">계산</button>
+        <button id="save-manual-price" class="member-only" type="button" hidden>가격 저장</button>
+        <button id="save-manual-item" class="admin-only" type="button" hidden>항목 저장</button>
+        <button id="clear-manual" type="button" class="ghost-button">초기화</button>
+      </div>
+    </section>
+
+    <section id="management-panel" class="management-panel" aria-label="데이터 관리" hidden>
+      <div class="plain-title">
+        <h2>데이터 관리</h2>
+        <span id="management-mode" class="count-pill">공개 모드</span>
+      </div>
+      <div class="manager-grid">
+        <article class="manager-block member-only" hidden>
+          <div class="block-title">
+            <h3>가격 연동</h3>
+            <span id="local-price-count">0개</span>
+          </div>
+          <div class="editor-grid">
+            <label class="wide-field">
+              <span>대상</span>
+              <select id="price-target-select">
+                <option value="">직접 입력</option>
+              </select>
+            </label>
+            <label>
+              <span>품목명</span>
+              <input id="price-item-name" type="text" autocomplete="off">
+            </label>
+            <label>
+              <span>가격</span>
+              <input id="price-meso" type="number" min="0" step="10000">
+            </label>
+            <label>
+              <span>상태</span>
+              <select id="price-status">
+                <option value="live">가격 있음</option>
+                <option value="seed">기본값</option>
+                <option value="no_listing">매물 없음</option>
+                <option value="no_candidate">후보 없음</option>
+                <option value="unverified">미확인</option>
+              </select>
+            </label>
+          </div>
+          <div class="action-row compact">
+            <button id="save-price-row" type="button">가격 저장</button>
+            <button id="clear-price-row" type="button" class="ghost-button">가격 해제</button>
+            <button id="export-prices" type="button" class="ghost-button">가격 JSON</button>
+          </div>
+        </article>
+
+        <article class="manager-block admin-only" hidden>
+          <div class="block-title">
+            <h3>항목 수정</h3>
+            <span id="item-override-state">기본 데이터</span>
+          </div>
+          <div class="editor-grid">
+            <label class="wide-field">
+              <span>항목</span>
+              <select id="admin-item-select">
+                <option value="">새 항목</option>
+              </select>
+            </label>
+            <label>
+              <span>아이템명</span>
+              <input id="admin-item-name" type="text" autocomplete="off">
+            </label>
+            <label>
+              <span>분류</span>
+              <input id="admin-item-category" type="text" autocomplete="off">
+            </label>
+            <label>
+              <span>캐시 가격</span>
+              <input id="admin-item-cash" type="number" min="0" step="100">
+            </label>
+            <label>
+              <span>기본 가격</span>
+              <input id="admin-item-seed" type="number" min="0" step="10000">
+            </label>
+            <label>
+              <span>마일리지</span>
+              <select id="admin-item-mileage">
+                <option value="none">사용 불가</option>
+                <option value="partial">30%</option>
+                <option value="full">100%</option>
+              </select>
+            </label>
+            <label class="wide-field">
+              <span>검색 별칭</span>
+              <textarea id="admin-item-aliases" rows="3" placeholder="줄바꿈 또는 쉼표로 구분"></textarea>
+            </label>
+            <label class="wide-field">
+              <span>구성품</span>
+              <textarea id="admin-item-components" rows="5" placeholder="구성품명 | 기본가격"></textarea>
+            </label>
+          </div>
+          <div class="action-row compact">
+            <button id="save-admin-item" type="button">항목 저장</button>
+            <button id="delete-admin-item" type="button" class="danger-button">삭제</button>
+            <button id="reset-admin-items" type="button" class="ghost-button">기본값</button>
+            <button id="export-items" type="button" class="ghost-button">항목 JSON</button>
+          </div>
+        </article>
+
+        <article class="manager-block member-only" hidden>
+          <div class="block-title">
+            <h3>JSON 가져오기</h3>
+            <span id="import-state">대기</span>
+          </div>
+          <label class="wide-field import-field">
+            <span>JSON</span>
+            <textarea id="data-import" rows="9" placeholder="items.json 또는 auction-prices.json 내용을 붙여넣기"></textarea>
+          </label>
+          <div class="action-row compact">
+            <button id="import-prices" type="button">가격 가져오기</button>
+            <button id="import-items" class="admin-only" type="button" hidden>항목 가져오기</button>
+            <button id="clear-import" type="button" class="ghost-button">비우기</button>
+          </div>
+        </article>
+      </div>
     </section>
 
     <main>
@@ -157,6 +339,6 @@
     </tr>
   </template>
 
-  <script type="module" src="./app.js?v=0.4.0"></script>
+  <script type="module" src="./app.js?v=0.5.0"></script>
 </body>
 </html>
