@@ -1,1 +1,606 @@
-{"version":1,"world":"스카니아","generatedAt":"2026-07-08T23:07:27+09:00","source":"maple-auction-web-purchase-tab","policy":{"searchTab":"구매","priceBasis":"listingLowestMeso","candidateCheckBeforeSearch":true,"officialSearchLimit":100},"prices":[{"itemName":"플래티넘 카르마의 가위","query":"플래티넘 카르마의 가위","listingLowestMeso":208800000,"listingLowestText":"2억 880만","status":"ok","filter":"캐시","collectedAt":"2026-07-08T22:33:24+09:00"},{"itemName":"메이플 로얄 스타일","query":"메이플 로얄 스타일","listingLowestMeso":80988444,"listingLowestText":"8098만 8444","status":"ok","filter":"캐시","collectedAt":"2026-07-08T22:45:10+09:00"},{"itemName":"루나 크리스탈","query":"루나 크리스탈","listingLowestMeso":162790000,"listingLowestText":"1억 6279만","status":"ok","filter":"캐시","collectedAt":"2026-07-08T22:45:32+09:00"},{"itemName":"블레어 살롱 헤어 쿠폰","query":"블레어 살롱 헤어 쿠폰","listingLowestMeso":1279999999,"listingLowestText":"12억 7999만 9999","status":"ok","filter":"캐시","collectedAt":"2026-07-08T22:45:49+09:00"},{"itemName":"위습의 원더베리","query":"위습의 원더베리","listingLowestMeso":210818182,"listingLowestText":"2억 1081만 8182","status":"ok","filter":"캐시","collectedAt":"2026-07-08T22:46:02+09:00"},{"itemName":"스페셜 루나 크리스탈","query":"스페셜 루나 크리스탈","listingLowestMeso":169800000,"listingLowestText":"1억 6980만","status":"ok","filter":"캐시","collectedAt":"2026-07-08T22:46:19+09:00"}],"skipped":[{"itemName":"프리미엄 헤어쿠폰","status":"no_candidate","filter":"캐시"},{"itemName":"프리미엄 성형쿠폰","status":"no_candidate","filter":"캐시"},{"itemName":"잠재능력 전승스크롤","status":"no_candidate","filter":"캐시"},{"itemName":"위습의 원더베리 11개","status":"no_candidate","filter":"캐시"},{"itemName":"데몬 슬레이어 슈트(남)","status":"no_candidate","filter":"캐시"},{"itemName":"데몬 슬레이어 슈즈","status":"no_listing","filter":"캐시"},{"itemName":"데몬 슬레이어 엑스","status":"no_listing","filter":"캐시"},{"itemName":"데몬 슬레이어 윙","status":"no_listing","filter":"캐시"},{"itemName":"데몬 슬레이어 머리띠(여)","status":"no_candidate","filter":"캐시"},{"itemName":"데몬 슬레이어 슈트(여)","status":"no_candidate","filter":"캐시"},{"itemName":"데몬 어벤져 슈트(남)","status":"no_candidate","filter":"캐시"},{"itemName":"데몬 어벤져 슈즈","status":"no_listing","filter":"캐시"},{"itemName":"데몬 어벤져 데스페라도","status":"no_listing","filter":"캐시"},{"itemName":"데몬 어벤져 윙","status":"no_listing","filter":"캐시"},{"itemName":"데몬 어벤져 머리띠(여)","status":"no_candidate","filter":"캐시"},{"itemName":"데몬 어벤져 슈트(여)","status":"no_candidate","filter":"캐시"},{"itemName":"레지스탕스 블래스터 헤어밴드(남)","status":"no_candidate","filter":"캐시"},{"itemName":"레지스탕스 블래스터 슈트(남)","status":"no_candidate","filter":"캐시"},{"itemName":"레지스탕스 블래스터 슈즈(남)","status":"no_candidate","filter":"캐시"},{"itemName":"레지스탕스 블래스터 건틀렛 리볼버","status":"no_listing","filter":"캐시"},{"itemName":"레지스탕스 블래스터 헤어핀(여)","status":"no_candidate","filter":"캐시"},{"itemName":"레지스탕스 블래스터 슈트(여)","status":"no_candidate","filter":"캐시"},{"itemName":"레지스탕스 블래스터 슈즈(여)","status":"no_candidate","filter":"캐시"},{"itemName":"레지스탕스 배틀메이지 모자","status":"no_candidate","filter":"캐시"},{"itemName":"레지스탕스 배틀메이지 슈트(남)","status":"no_candidate","filter":"캐시"},{"itemName":"레지스탕스 배틀메이지 슈즈","status":"no_listing","filter":"캐시"},{"itemName":"레지스탕스 배틀메이지 스태프","status":"no_listing","filter":"캐시"},{"itemName":"레지스탕스 배틀메이지 슈트(여)","status":"no_candidate","filter":"캐시"},{"itemName":"레지스탕스 와일드헌터 헤어핀","status":"no_listing","filter":"캐시"},{"itemName":"레지스탕스 와일드헌터 슈트(남)","status":"no_candidate","filter":"캐시"},{"itemName":"레지스탕스 와일드헌터 슈즈","status":"no_listing","filter":"캐시"},{"itemName":"레지스탕스 와일드헌터 석궁","status":"no_listing","filter":"캐시"},{"itemName":"레지스탕스 와일드헌터 슈트(여)","status":"no_candidate","filter":"캐시"},{"itemName":"레지스탕스 제논 이어피스","status":"no_listing","filter":"캐시"},{"itemName":"레지스탕스 제논 슈트(남)","status":"no_candidate","filter":"캐시"},{"itemName":"레지스탕스 제논 슈즈","status":"no_listing","filter":"캐시"},{"itemName":"레지스탕스 제논 에너지소드","status":"no_listing","filter":"캐시"},{"itemName":"레지스탕스 제논 슈트(여)","status":"no_candidate","filter":"캐시"},{"itemName":"레지스탕스 메카닉 바이저","status":"no_listing","filter":"캐시"},{"itemName":"레지스탕스 메카닉 슈트(남)","status":"no_candidate","filter":"캐시"},{"itemName":"레지스탕스 메카닉 슈즈","status":"no_listing","filter":"캐시"},{"itemName":"레지스탕스 메카닉 무기","status":"no_candidate","filter":"캐시"},{"itemName":"레지스탕스 메카닉 슈트(여)","status":"no_candidate","filter":"캐시"},{"itemName":"기사단장 미하일 투구","status":"no_listing","filter":"캐시"},{"itemName":"기사단장 미하일 아머","status":"no_listing","filter":"캐시"},{"itemName":"기사단장 미하일 부츠","status":"no_listing","filter":"캐시"},{"itemName":"기사단장 미하일 소드","status":"no_listing","filter":"캐시"},{"itemName":"기사단장 오즈 햇","status":"no_listing","filter":"캐시"},{"itemName":"기사단장 오즈 로브(남)","status":"no_candidate","filter":"캐시"},{"itemName":"기사단장 오즈 부츠","status":"no_listing","filter":"캐시"},{"itemName":"기사단장 오즈 스태프","status":"no_listing","filter":"캐시"},{"itemName":"기사단장 오즈 로브(여)","status":"no_candidate","filter":"캐시"},{"itemName":"기사단장 이리나 크라운","status":"no_listing","filter":"캐시"},{"itemName":"기사단장 이리나 슈트(남)","status":"no_candidate","filter":"캐시"},{"itemName":"기사단장 이리나 슈즈(남)","status":"no_candidate","filter":"캐시"},{"itemName":"기사단장 이리나 보우","status":"no_listing","filter":"캐시"},{"itemName":"기사단장 이리나 슈트(여)","status":"no_candidate","filter":"캐시"},{"itemName":"기사단장 이리나 슈즈(여)","status":"no_candidate","filter":"캐시"},{"itemName":"기사단장 이카르트 가면","status":"no_listing","filter":"캐시"},{"itemName":"기사단장 이카르트 슈트(남)","status":"no_candidate","filter":"캐시"},{"itemName":"기사단장 이카르트 부츠","status":"no_listing","filter":"캐시"},{"itemName":"기사단장 이카르트 표창","status":"no_listing","filter":"캐시"},{"itemName":"기사단장 이카르트 슈트(여)","status":"no_candidate","filter":"캐시"},{"itemName":"기사단장 호크아이 햇","status":"no_listing","filter":"캐시"},{"itemName":"기사단장 호크아이 슈트(남)","status":"no_candidate","filter":"캐시"},{"itemName":"기사단장 호크아이 부츠","status":"no_listing","filter":"캐시"},{"itemName":"기사단장 호크아이 너클","status":"no_listing","filter":"캐시"},{"itemName":"기사단장 호크아이 슈트(여)","status":"no_candidate","filter":"캐시"},{"itemName":"책사 나인하트 모노클","status":"no_listing","filter":"캐시"},{"itemName":"책사 나인하트 로브","status":"no_listing","filter":"캐시"},{"itemName":"책사 나인하트 슈즈","status":"no_listing","filter":"캐시"},{"itemName":"책사 나인하트 도서","status":"no_listing","filter":"캐시"},{"itemName":"여제 시그너스 써클릿","status":"no_listing","filter":"캐시"},{"itemName":"여제 시그너스 드레스(여)","status":"no_candidate","filter":"캐시"},{"itemName":"여제 시그너스 슈즈","status":"no_listing","filter":"캐시"},{"itemName":"신수의 부름","status":"no_listing","filter":"캐시"},{"itemName":"영웅 아란 아머(남)","status":"no_candidate","filter":"캐시"},{"itemName":"영웅 아란 부츠","status":"no_listing","filter":"캐시"},{"itemName":"영웅 아란 폴암","status":"no_listing","filter":"캐시"},{"itemName":"영웅 아란 아머(여)","status":"no_candidate","filter":"캐시"},{"itemName":"영웅 은월 슈트(남)","status":"no_candidate","filter":"캐시"},{"itemName":"영웅 은월 부츠","status":"no_listing","filter":"캐시"},{"itemName":"영웅 은월 너클","status":"no_listing","filter":"캐시"},{"itemName":"영웅 은월 슈트(여)","status":"no_candidate","filter":"캐시"},{"itemName":"영웅 루미너스 로브(남)","status":"no_candidate","filter":"캐시"},{"itemName":"영웅 루미너스 부츠","status":"no_listing","filter":"캐시"},{"itemName":"영웅 루미너스 샤이닝로드","status":"no_listing","filter":"캐시"},{"itemName":"영웅 루미너스 로브(여)","status":"no_candidate","filter":"캐시"},{"itemName":"영웅 에반 로브(남)","status":"no_candidate","filter":"캐시"},{"itemName":"영웅 에반 부츠","status":"no_listing","filter":"캐시"},{"itemName":"영웅 에반 스태프","status":"no_listing","filter":"캐시"},{"itemName":"영웅 에반 로브(여)","status":"no_candidate","filter":"캐시"},{"itemName":"영웅 메르세데스 슈트(남)","status":"no_candidate","filter":"캐시"},{"itemName":"영웅 메르세데스 슈즈(남)","status":"no_candidate","filter":"캐시"},{"itemName":"영웅 메르세데스 듀얼보우건","status":"no_listing","filter":"캐시"},{"itemName":"영웅 메르세데스 슈트(여)","status":"no_candidate","filter":"캐시"},{"itemName":"영웅 메르세데스 슈즈(여)","status":"no_candidate","filter":"캐시"},{"itemName":"영웅 팬텀 슈트(남)","status":"no_candidate","filter":"캐시"},{"itemName":"영웅 팬텀 부츠","status":"no_listing","filter":"캐시"},{"itemName":"영웅 팬텀 케인","status":"no_listing","filter":"캐시"},{"itemName":"영웅 팬텀 슈트(여)","status":"no_candidate","filter":"캐시"},{"itemName":"모험가 히어로 아머","status":"no_listing","filter":"캐시"},{"itemName":"모험가 히어로 부츠","status":"no_listing","filter":"캐시"},{"itemName":"모험가 히어로 소드","status":"no_listing","filter":"캐시"},{"itemName":"모험가 팔라딘 아머","status":"no_listing","filter":"캐시"},{"itemName":"모험가 팔라딘 부츠","status":"no_listing","filter":"캐시"},{"itemName":"모험가 팔라딘 해머","status":"no_listing","filter":"캐시"},{"itemName":"모험가 다크나이트 아머","status":"no_listing","filter":"캐시"},{"itemName":"모험가 다크나이트 부츠","status":"no_listing","filter":"캐시"},{"itemName":"모험가 다크나이트 스피어","status":"no_listing","filter":"캐시"},{"itemName":"모험가 불독 로브(남)","status":"no_candidate","filter":"캐시"},{"itemName":"모험가 불독 부츠(남)","status":"no_candidate","filter":"캐시"},{"itemName":"모험가 불독 완드","status":"no_listing","filter":"캐시"},{"itemName":"모험가 불독 로브(여)","status":"no_candidate","filter":"캐시"},{"itemName":"모험가 불독 부츠(여)","status":"no_candidate","filter":"캐시"},{"itemName":"모험가 썬콜 로브(남)","status":"no_candidate","filter":"캐시"},{"itemName":"모험가 썬콜 부츠(남)","status":"no_candidate","filter":"캐시"},{"itemName":"모험가 썬콜 스태프","status":"no_listing","filter":"캐시"},{"itemName":"모험가 썬콜 로브(여)","status":"no_candidate","filter":"캐시"},{"itemName":"모험가 썬콜 부츠(여)","status":"no_candidate","filter":"캐시"},{"itemName":"모험가 비숍 로브(남)","status":"no_candidate","filter":"캐시"},{"itemName":"모험가 비숍 부츠(남)","status":"no_candidate","filter":"캐시"},{"itemName":"모험가 비숍 완드","status":"no_listing","filter":"캐시"},{"itemName":"모험가 비숍 로브(여)","status":"no_candidate","filter":"캐시"},{"itemName":"모험가 비숍 부츠(여)","status":"no_candidate","filter":"캐시"},{"itemName":"모험가 보우마스터 슈트(남)","status":"no_candidate","filter":"캐시"},{"itemName":"모험가 보우마스터 부츠","status":"no_listing","filter":"캐시"},{"itemName":"모험가 보우마스터 활","status":"no_listing","filter":"캐시"},{"itemName":"모험가 보우마스터 슈트(여)","status":"no_candidate","filter":"캐시"},{"itemName":"모험가 신궁 슈트(남)","status":"no_candidate","filter":"캐시"},{"itemName":"모험가 신궁 부츠","status":"no_listing","filter":"캐시"},{"itemName":"모험가 신궁 석궁","status":"no_listing","filter":"캐시"},{"itemName":"모험가 신궁 슈트(여)","status":"no_candidate","filter":"캐시"},{"itemName":"모험가 패스파인더 슈트","status":"no_listing","filter":"캐시"},{"itemName":"모험가 패스파인더 부츠","status":"no_listing","filter":"캐시"},{"itemName":"모험가 패스파인더 활","status":"no_listing","filter":"캐시"},{"itemName":"모험가 나이트로드 슈트","status":"no_listing","filter":"캐시"},{"itemName":"모험가 나이트로드 부츠","status":"no_listing","filter":"캐시"},{"itemName":"모험가 나이트로드 표창","status":"no_listing","filter":"캐시"},{"itemName":"모험가 듀얼블레이드 슈트","status":"no_listing","filter":"캐시"},{"itemName":"모험가 듀얼블레이드 부츠","status":"no_listing","filter":"캐시"},{"itemName":"모험가 듀얼블레이드 단검","status":"no_listing","filter":"캐시"},{"itemName":"모험가 섀도어 슈트","status":"no_listing","filter":"캐시"},{"itemName":"모험가 섀도어 부츠","status":"no_listing","filter":"캐시"},{"itemName":"모험가 섀도어 단검","status":"no_listing","filter":"캐시"},{"itemName":"모험가 캐논슈터 슈트(남)","status":"no_candidate","filter":"캐시"},{"itemName":"모험가 캐논슈터 부츠","status":"no_listing","filter":"캐시"},{"itemName":"모험가 캐논슈터 캐논","status":"no_candidate","filter":"캐시"},{"itemName":"모험가 캐논슈터 슈트(여)","status":"no_candidate","filter":"캐시"},{"itemName":"모험가 바이퍼 갑옷(남)","status":"no_candidate","filter":"캐시"},{"itemName":"모험가 바이퍼 부츠","status":"no_listing","filter":"캐시"}]}
+{
+  "version": 2,
+  "world": "스카니아",
+  "generatedAt": "2026-07-09T23:45:00+09:00",
+  "source": "maple-auction-web-purchase-tab+manual",
+  "policy": {
+    "searchTab": "구매",
+    "priceBasis": "listingLowestMeso",
+    "candidateCheckBeforeSearch": true,
+    "officialSearchLimit": 100,
+    "notes": "2026-07-09 검색 제한 도달 전 확인분만 반영"
+  },
+  "prices": [
+    {
+      "itemName": "플래티넘 카르마의 가위",
+      "query": "플래티넘 카르마의 가위",
+      "listingLowestMeso": 207999999,
+      "listingLowestText": "2억 799만 9999",
+      "status": "ok",
+      "filter": "캐시",
+      "collectedAt": "2026-07-09T22:35:00+09:00"
+    },
+    {
+      "itemName": "메이플 로얄 스타일",
+      "query": "메이플 로얄 스타일",
+      "listingLowestMeso": 78222222,
+      "listingLowestText": "7822만 2222",
+      "status": "ok",
+      "filter": "캐시",
+      "collectedAt": "2026-07-09T22:35:00+09:00"
+    },
+    {
+      "itemName": "루나 크리스탈",
+      "query": "루나 크리스탈",
+      "listingLowestMeso": 159900000,
+      "listingLowestText": "1억 5990만",
+      "status": "ok",
+      "filter": "캐시",
+      "collectedAt": "2026-07-09T22:35:00+09:00"
+    },
+    {
+      "itemName": "스페셜 루나 크리스탈",
+      "query": "스페셜 루나 크리스탈",
+      "listingLowestMeso": 165555555,
+      "listingLowestText": "1억 6555만 5555",
+      "status": "ok",
+      "filter": "캐시",
+      "collectedAt": "2026-07-09T22:35:00+09:00"
+    },
+    {
+      "itemName": "블레어 살롱 헤어 쿠폰",
+      "query": "블레어 살롱 헤어 쿠폰",
+      "listingLowestMeso": 1220000000,
+      "listingLowestText": "12억 2000만",
+      "status": "ok",
+      "filter": "캐시",
+      "collectedAt": "2026-07-09T22:35:00+09:00"
+    },
+    {
+      "itemName": "위습의 원더베리",
+      "query": "위습의 원더베리",
+      "listingLowestMeso": 200000000,
+      "listingLowestText": "2억",
+      "status": "manual",
+      "source": "manual",
+      "filter": "캐시",
+      "collectedAt": "2026-07-09T22:35:00+09:00"
+    },
+    {
+      "itemName": "프리미엄 헤어쿠폰",
+      "query": "프리미엄 헤어 쿠폰",
+      "aliases": ["프리미엄 헤어 쿠폰"],
+      "listingLowestMeso": 193330000,
+      "listingLowestText": "1억 9333만",
+      "status": "manual",
+      "source": "manual",
+      "filter": "캐시",
+      "collectedAt": "2026-07-09T22:35:00+09:00"
+    },
+    {
+      "itemName": "프리미엄 성형쿠폰",
+      "query": "프리미엄 성형 쿠폰",
+      "aliases": ["프리미엄 성형 쿠폰"],
+      "listingLowestMeso": 130000000,
+      "listingLowestText": "1억 3000만",
+      "status": "manual",
+      "source": "manual",
+      "filter": "캐시",
+      "collectedAt": "2026-07-09T22:35:00+09:00"
+    },
+    {
+      "itemName": "잠재능력 전승스크롤",
+      "query": "잠재능력 전승 스크롤",
+      "aliases": ["잠재능력 전승 스크롤"],
+      "listingLowestMeso": 3788888888,
+      "listingLowestText": "37억 8888만 8888",
+      "status": "ok",
+      "filter": "캐시",
+      "collectedAt": "2026-07-09T22:35:00+09:00"
+    },
+    {
+      "itemName": "금손 은손 헤어 쿠폰",
+      "query": "금손 은손 헤어 쿠폰",
+      "listingLowestMeso": 242222222,
+      "listingLowestText": "2억 4222만 2222",
+      "status": "ok",
+      "filter": "캐시",
+      "collectedAt": "2026-07-09T22:35:00+09:00"
+    },
+    {
+      "itemName": "금손 은손 성형외과 쿠폰",
+      "query": "금손 은손 성형외과 쿠폰",
+      "listingLowestMeso": 169999998,
+      "listingLowestText": "1억 6999만 9998",
+      "status": "ok",
+      "filter": "캐시",
+      "collectedAt": "2026-07-09T22:35:00+09:00"
+    },
+    {
+      "itemName": "보스 헤어 쿠폰",
+      "query": "보스 헤어 쿠폰",
+      "listingLowestMeso": 244333333,
+      "listingLowestText": "2억 4433만 3333",
+      "status": "ok",
+      "filter": "캐시",
+      "collectedAt": "2026-07-09T22:35:00+09:00"
+    },
+    {
+      "itemName": "보스 성형 쿠폰",
+      "query": "보스 성형 쿠폰",
+      "listingLowestMeso": 175488877,
+      "listingLowestText": "1억 7548만 8877",
+      "status": "ok",
+      "filter": "캐시",
+      "collectedAt": "2026-07-09T22:35:00+09:00"
+    },
+    {
+      "itemName": "전 직업 헤어 쿠폰",
+      "query": "전 직업 헤어 쿠폰",
+      "listingLowestMeso": 182777777,
+      "listingLowestText": "1억 8277만 7777",
+      "status": "ok",
+      "filter": "캐시",
+      "collectedAt": "2026-07-09T22:35:00+09:00"
+    },
+    {
+      "itemName": "전 직업 성형 쿠폰",
+      "query": "전 직업 성형 쿠폰",
+      "listingLowestMeso": 128500000,
+      "listingLowestText": "1억 2850만",
+      "status": "ok",
+      "filter": "캐시",
+      "collectedAt": "2026-07-09T22:35:00+09:00"
+    },
+    {
+      "itemName": "전 직업 일러스트 컬렉션 헤어 쿠폰",
+      "query": "전 직업 일러스트 컬렉션 헤어 쿠폰",
+      "listingLowestMeso": 254000000,
+      "listingLowestText": "2억 5400만",
+      "status": "ok",
+      "filter": "캐시",
+      "collectedAt": "2026-07-09T22:35:00+09:00"
+    },
+    {
+      "itemName": "데몬 슬레이어 머리띠(여)",
+      "query": "데몬 슬레이어 머리띠 (여)",
+      "aliases": ["데몬 슬레이어 머리띠 (여)"],
+      "listingLowestMeso": 542800000,
+      "listingLowestText": "5억 4280만",
+      "status": "ok",
+      "filter": "캐시",
+      "collectedAt": "2026-07-09T23:05:00+09:00"
+    },
+    {
+      "itemName": "데몬 슬레이어 슈즈",
+      "query": "데몬 슬레이어 슈즈",
+      "listingLowestMeso": 7500000,
+      "listingLowestText": "750만",
+      "status": "ok",
+      "filter": "캐시",
+      "collectedAt": "2026-07-09T23:05:00+09:00"
+    },
+    {
+      "itemName": "데몬 슬레이어 슈트(여)",
+      "query": "데몬 슬레이어 슈트 (여)",
+      "aliases": ["데몬 슬레이어 슈트 (여)"],
+      "listingLowestMeso": 24000000,
+      "listingLowestText": "2400만",
+      "status": "ok",
+      "filter": "캐시",
+      "collectedAt": "2026-07-09T23:05:00+09:00"
+    },
+    {
+      "itemName": "데몬 슬레이어 엑스",
+      "query": "데몬 슬레이어 엑스",
+      "listingLowestMeso": 45000000,
+      "listingLowestText": "4500만",
+      "status": "ok",
+      "filter": "캐시",
+      "collectedAt": "2026-07-09T23:05:00+09:00"
+    },
+    {
+      "itemName": "데몬 슬레이어 윙",
+      "query": "데몬 슬레이어 윙",
+      "listingLowestMeso": 370000000,
+      "listingLowestText": "3억 7000만",
+      "status": "ok",
+      "filter": "캐시",
+      "collectedAt": "2026-07-09T23:05:00+09:00"
+    },
+    {
+      "itemName": "데몬 어벤져 머리띠(여)",
+      "query": "데몬 어벤져 머리띠 (여)",
+      "aliases": ["데몬 어벤져 머리띠 (여)"],
+      "listingLowestMeso": 565900000,
+      "listingLowestText": "5억 6590만",
+      "status": "ok",
+      "filter": "캐시",
+      "collectedAt": "2026-07-09T23:10:00+09:00"
+    },
+    {
+      "itemName": "데몬 어벤져 슈트(남)",
+      "query": "데몬 어벤져 슈트 (남)",
+      "aliases": ["데몬 어벤져 슈트 (남)"],
+      "listingLowestMeso": 799999999,
+      "listingLowestText": "7억 9999만 9999",
+      "status": "ok",
+      "filter": "캐시",
+      "collectedAt": "2026-07-09T23:10:00+09:00"
+    },
+    {
+      "itemName": "데몬 어벤져 슈트(여)",
+      "query": "데몬 어벤져 슈트 (여)",
+      "aliases": ["데몬 어벤져 슈트 (여)"],
+      "listingLowestMeso": 47000000,
+      "listingLowestText": "4700만",
+      "status": "ok",
+      "filter": "캐시",
+      "collectedAt": "2026-07-09T23:10:00+09:00"
+    },
+    {
+      "itemName": "데몬 어벤져 슈즈",
+      "query": "데몬 어벤져 슈즈",
+      "listingLowestMeso": 11999998,
+      "listingLowestText": "1199만 9998",
+      "status": "ok",
+      "filter": "캐시",
+      "collectedAt": "2026-07-09T23:10:00+09:00"
+    },
+    {
+      "itemName": "데몬 어벤져 데스페라도",
+      "query": "데몬 어벤져 데스페라도",
+      "listingLowestMeso": 55950000,
+      "listingLowestText": "5595만",
+      "status": "ok",
+      "filter": "캐시",
+      "collectedAt": "2026-07-09T23:10:00+09:00"
+    },
+    {
+      "itemName": "데몬 어벤져 윙",
+      "query": "데몬 어벤져 윙",
+      "listingLowestMeso": 254900000,
+      "listingLowestText": "2억 5490만",
+      "status": "ok",
+      "filter": "캐시",
+      "collectedAt": "2026-07-09T23:10:00+09:00"
+    },
+    {
+      "itemName": "레지스탕스 블래스터 헤어핀(여)",
+      "query": "레지스탕스 블래스터 헤어핀 (여)",
+      "aliases": ["레지스탕스 블래스터 헤어핀 (여)"],
+      "listingLowestMeso": 375700000,
+      "listingLowestText": "3억 7570만",
+      "status": "ok",
+      "filter": "캐시",
+      "collectedAt": "2026-07-09T23:18:00+09:00"
+    },
+    {
+      "itemName": "레지스탕스 블래스터 슈트(남)",
+      "query": "레지스탕스 블래스터 슈트 (남)",
+      "aliases": ["레지스탕스 블래스터 슈트 (남)"],
+      "listingLowestMeso": 133333332,
+      "listingLowestText": "1억 3333만 3332",
+      "status": "ok",
+      "filter": "캐시",
+      "collectedAt": "2026-07-09T23:18:00+09:00"
+    },
+    {
+      "itemName": "레지스탕스 블래스터 슈트(여)",
+      "query": "레지스탕스 블래스터 슈트 (여)",
+      "aliases": ["레지스탕스 블래스터 슈트 (여)"],
+      "listingLowestMeso": 139888888,
+      "listingLowestText": "1억 3988만 8888",
+      "status": "ok",
+      "filter": "캐시",
+      "collectedAt": "2026-07-09T23:18:00+09:00"
+    },
+    {
+      "itemName": "레지스탕스 블래스터 슈즈(남)",
+      "query": "레지스탕스 블래스터 슈즈 (남)",
+      "aliases": ["레지스탕스 블래스터 슈즈 (남)"],
+      "listingLowestMeso": 59999999,
+      "listingLowestText": "5999만 9999",
+      "status": "ok",
+      "filter": "캐시",
+      "collectedAt": "2026-07-09T23:18:00+09:00"
+    },
+    {
+      "itemName": "레지스탕스 블래스터 슈즈(여)",
+      "query": "레지스탕스 블래스터 슈즈 (여)",
+      "aliases": ["레지스탕스 블래스터 슈즈 (여)"],
+      "listingLowestMeso": 49388888,
+      "listingLowestText": "4938만 8888",
+      "status": "ok",
+      "filter": "캐시",
+      "collectedAt": "2026-07-09T23:18:00+09:00"
+    },
+    {
+      "itemName": "레지스탕스 블래스터 건틀렛 리볼버",
+      "query": "레지스탕스 블래스터 건틀렛 리볼버",
+      "listingLowestMeso": 398900000,
+      "listingLowestText": "3억 9890만",
+      "status": "ok",
+      "filter": "캐시",
+      "collectedAt": "2026-07-09T23:18:00+09:00"
+    },
+    {
+      "itemName": "레지스탕스 배틀메이지 슈트(남)",
+      "query": "레지스탕스 배틀메이지 슈트 (남)",
+      "aliases": ["레지스탕스 배틀메이지 슈트 (남)"],
+      "listingLowestMeso": 111111111,
+      "listingLowestText": "1억 1111만 1111",
+      "status": "ok",
+      "filter": "캐시",
+      "collectedAt": "2026-07-09T23:24:00+09:00"
+    },
+    {
+      "itemName": "레지스탕스 배틀메이지 슈트(여)",
+      "query": "레지스탕스 배틀메이지 슈트 (여)",
+      "aliases": ["레지스탕스 배틀메이지 슈트 (여)"],
+      "listingLowestMeso": 98800000,
+      "listingLowestText": "9880만",
+      "status": "ok",
+      "filter": "캐시",
+      "collectedAt": "2026-07-09T23:24:00+09:00"
+    },
+    {
+      "itemName": "레지스탕스 배틀메이지 슈즈",
+      "query": "레지스탕스 배틀메이지 슈즈",
+      "listingLowestMeso": 33333333,
+      "listingLowestText": "3333만 3333",
+      "status": "ok",
+      "filter": "캐시",
+      "collectedAt": "2026-07-09T23:24:00+09:00"
+    },
+    {
+      "itemName": "레지스탕스 배틀메이지 스태프",
+      "query": "레지스탕스 배틀메이지 스태프",
+      "listingLowestMeso": 144444444,
+      "listingLowestText": "1억 4444만 4444",
+      "status": "ok",
+      "filter": "캐시",
+      "collectedAt": "2026-07-09T23:24:00+09:00"
+    },
+    {
+      "itemName": "레지스탕스 와일드헌터 헤어핀",
+      "query": "레지스탕스 와일드헌터 헤어핀",
+      "listingLowestMeso": 99999999,
+      "listingLowestText": "9999만 9999",
+      "status": "ok",
+      "filter": "캐시",
+      "collectedAt": "2026-07-09T23:31:00+09:00"
+    },
+    {
+      "itemName": "레지스탕스 와일드헌터 슈트(남)",
+      "query": "레지스탕스 와일드헌터 슈트 (남)",
+      "aliases": ["레지스탕스 와일드헌터 슈트 (남)"],
+      "listingLowestMeso": 198888888,
+      "listingLowestText": "1억 9888만 8888",
+      "status": "ok",
+      "filter": "캐시",
+      "collectedAt": "2026-07-09T23:31:00+09:00"
+    },
+    {
+      "itemName": "레지스탕스 와일드헌터 슈즈",
+      "query": "레지스탕스 와일드헌터 슈즈",
+      "listingLowestMeso": 87888888,
+      "listingLowestText": "8788만 8888",
+      "status": "ok",
+      "filter": "캐시",
+      "collectedAt": "2026-07-09T23:31:00+09:00"
+    },
+    {
+      "itemName": "레지스탕스 와일드헌터 석궁",
+      "query": "레지스탕스 와일드헌터 석궁",
+      "listingLowestMeso": 198888888,
+      "listingLowestText": "1억 9888만 8888",
+      "status": "ok",
+      "filter": "캐시",
+      "collectedAt": "2026-07-09T23:31:00+09:00"
+    },
+    {
+      "itemName": "레지스탕스 제논 이어피스",
+      "query": "레지스탕스 제논 이어피스",
+      "listingLowestMeso": 299999999,
+      "listingLowestText": "2억 9999만 9999",
+      "status": "ok",
+      "filter": "캐시",
+      "collectedAt": "2026-07-09T23:36:00+09:00"
+    },
+    {
+      "itemName": "레지스탕스 제논 슈트(남)",
+      "query": "레지스탕스 제논 슈트 (남)",
+      "aliases": ["레지스탕스 제논 슈트 (남)"],
+      "listingLowestMeso": 98888888,
+      "listingLowestText": "9888만 8888",
+      "status": "ok",
+      "filter": "캐시",
+      "collectedAt": "2026-07-09T23:36:00+09:00"
+    },
+    {
+      "itemName": "레지스탕스 제논 슈트(여)",
+      "query": "레지스탕스 제논 슈트 (여)",
+      "aliases": ["레지스탕스 제논 슈트 (여)"],
+      "listingLowestMeso": 99999999,
+      "listingLowestText": "9999만 9999",
+      "status": "ok",
+      "filter": "캐시",
+      "collectedAt": "2026-07-09T23:36:00+09:00"
+    },
+    {
+      "itemName": "레지스탕스 제논 슈즈",
+      "query": "레지스탕스 제논 슈즈",
+      "listingLowestMeso": 9800000,
+      "listingLowestText": "980만",
+      "status": "ok",
+      "filter": "캐시",
+      "collectedAt": "2026-07-09T23:36:00+09:00"
+    },
+    {
+      "itemName": "레지스탕스 제논 에너지소드",
+      "query": "레지스탕스 제논 에너지소드",
+      "listingLowestMeso": 278000000,
+      "listingLowestText": "2억 7800만",
+      "status": "ok",
+      "filter": "캐시",
+      "collectedAt": "2026-07-09T23:36:00+09:00"
+    },
+    {
+      "itemName": "레지스탕스 메카닉 바이저",
+      "query": "레지스탕스 메카닉 바이저",
+      "listingLowestMeso": 632200000,
+      "listingLowestText": "6억 3220만",
+      "status": "ok",
+      "filter": "캐시",
+      "collectedAt": "2026-07-09T23:39:00+09:00"
+    },
+    {
+      "itemName": "레지스탕스 메카닉 슈트(남)",
+      "query": "레지스탕스 메카닉 슈트 (남)",
+      "aliases": ["레지스탕스 메카닉 슈트 (남)"],
+      "listingLowestMeso": 99950000,
+      "listingLowestText": "9995만",
+      "status": "ok",
+      "filter": "캐시",
+      "collectedAt": "2026-07-09T23:39:00+09:00"
+    },
+    {
+      "itemName": "레지스탕스 메카닉 슈트(여)",
+      "query": "레지스탕스 메카닉 슈트 (여)",
+      "aliases": ["레지스탕스 메카닉 슈트 (여)"],
+      "listingLowestMeso": 49999999,
+      "listingLowestText": "4999만 9999",
+      "status": "ok",
+      "filter": "캐시",
+      "collectedAt": "2026-07-09T23:39:00+09:00"
+    },
+    {
+      "itemName": "레지스탕스 메카닉 슈즈",
+      "query": "레지스탕스 메카닉 슈즈",
+      "listingLowestMeso": 6999999,
+      "listingLowestText": "699만 9999",
+      "status": "ok",
+      "filter": "캐시",
+      "collectedAt": "2026-07-09T23:39:00+09:00"
+    },
+    {
+      "itemName": "기사단장 미하일 투구",
+      "query": "기사단장 미하일 투구",
+      "listingLowestMeso": 121111111,
+      "listingLowestText": "1억 2111만 1111",
+      "status": "ok",
+      "filter": "캐시",
+      "collectedAt": "2026-07-09T23:43:00+09:00"
+    },
+    {
+      "itemName": "기사단장 미하일 아머",
+      "query": "기사단장 미하일 아머",
+      "listingLowestMeso": 697777777,
+      "listingLowestText": "6억 9777만 7777",
+      "status": "ok",
+      "filter": "캐시",
+      "collectedAt": "2026-07-09T23:43:00+09:00"
+    },
+    {
+      "itemName": "기사단장 미하일 부츠",
+      "query": "기사단장 미하일 부츠",
+      "listingLowestMeso": 69999999,
+      "listingLowestText": "6999만 9999",
+      "status": "ok",
+      "filter": "캐시",
+      "collectedAt": "2026-07-09T23:43:00+09:00"
+    },
+    {
+      "itemName": "기사단장 미하일 소드",
+      "query": "기사단장 미하일 소드",
+      "listingLowestMeso": 177777777,
+      "listingLowestText": "1억 7777만 7777",
+      "status": "ok",
+      "filter": "캐시",
+      "collectedAt": "2026-07-09T23:43:00+09:00"
+    },
+    {
+      "itemName": "기사단장 오즈 햇",
+      "query": "기사단장 오즈 햇",
+      "listingLowestMeso": 148000000,
+      "listingLowestText": "1억 4800만",
+      "status": "ok",
+      "filter": "캐시",
+      "collectedAt": "2026-07-09T23:45:00+09:00"
+    },
+    {
+      "itemName": "기사단장 오즈 로브(남)",
+      "query": "기사단장 오즈 로브 (남)",
+      "aliases": ["기사단장 오즈 로브 (남)"],
+      "listingLowestMeso": 555400000,
+      "listingLowestText": "5억 5540만",
+      "status": "ok",
+      "filter": "캐시",
+      "collectedAt": "2026-07-09T23:45:00+09:00"
+    },
+    {
+      "itemName": "기사단장 오즈 부츠",
+      "query": "기사단장 오즈 부츠",
+      "listingLowestMeso": 19550000,
+      "listingLowestText": "1955만",
+      "status": "ok",
+      "filter": "캐시",
+      "collectedAt": "2026-07-09T23:45:00+09:00"
+    }
+  ],
+  "skipped": [
+    {
+      "itemName": "추가옵션 전승 스크롤",
+      "status": "unverified",
+      "reason": "경매가 미확인",
+      "filter": "캐시"
+    },
+    {
+      "itemName": "데몬 슬레이어 슈트(남)",
+      "query": "데몬 슬레이어 슈트 (남)",
+      "status": "no_listing",
+      "reason": "후보 선택 후 필터 검색 결과 0건",
+      "filter": "캐시"
+    },
+    {
+      "itemName": "레지스탕스 블래스터 헤어밴드(남)",
+      "query": "레지스탕스 블래스터 헤어밴드 (남)",
+      "status": "no_listing",
+      "reason": "후보 선택 후 필터 검색 결과 0건",
+      "filter": "캐시"
+    },
+    {
+      "itemName": "레지스탕스 배틀메이지 모자",
+      "status": "no_candidate",
+      "reason": "경매장 후보에는 레지스탕스 배틀메이지 고글만 노출됨",
+      "filter": "캐시"
+    },
+    {
+      "itemName": "레지스탕스 와일드헌터 슈트(여)",
+      "query": "레지스탕스 와일드헌터 슈트 (여)",
+      "status": "no_listing",
+      "reason": "후보 선택 후 필터 검색 결과 0건",
+      "filter": "캐시"
+    },
+    {
+      "itemName": "레지스탕스 메카닉 무기",
+      "status": "no_candidate",
+      "reason": "경매장 후보에는 레지스탕스 메카닉 건만 노출됨",
+      "filter": "캐시"
+    },
+    {
+      "itemName": "기사단장 오즈 로브(여)",
+      "query": "기사단장 오즈 로브 (여)",
+      "status": "no_listing",
+      "reason": "후보 선택 후 필터 검색 결과 0건",
+      "filter": "캐시"
+    },
+    {
+      "itemName": "기사단장 오즈 스태프",
+      "status": "unverified",
+      "reason": "검색 제한 도달로 최종 가격 미확인",
+      "filter": "캐시"
+    }
+  ]
+}
