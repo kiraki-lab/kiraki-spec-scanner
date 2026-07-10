@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light">
   <title>메이플 캐시 효율 계산기</title>
-  <link rel="stylesheet" href="./styles.css?v=0.3.0">
+  <link rel="stylesheet" href="./styles.css?v=0.4.0">
 </head>
 <body>
   <div class="app-shell">
@@ -49,13 +49,6 @@
       </label>
 
       <label>
-        <span>표 분류</span>
-        <select id="category-filter">
-          <option value="">전체</option>
-        </select>
-      </label>
-
-      <label>
         <span>상품권 할인율</span>
         <input id="discount-rate" type="number" min="0" max="100" step="0.1">
       </label>
@@ -70,6 +63,23 @@
         <span>1억당 마일리지 시세</span>
         <input id="base-mp-rate" type="number" min="0" step="10">
       </label>
+    </section>
+
+    <section class="filter-panel" aria-label="표시 필터">
+      <div class="filter-group">
+        <div class="filter-heading">
+          <h2>계산기 카테고리</h2>
+          <button id="category-filter-reset" type="button">전체 표시</button>
+        </div>
+        <div id="category-filter-list" class="filter-chip-list"></div>
+      </div>
+      <div class="filter-group">
+        <div class="filter-heading">
+          <h2>경매장 상태</h2>
+          <button id="status-filter-reset" type="button">전체 표시</button>
+        </div>
+        <div id="status-filter-list" class="filter-chip-list"></div>
+      </div>
     </section>
 
     <main>
@@ -157,6 +167,6 @@
     </tr>
   </template>
 
-  <script type="module" src="./app.js?v=0.4.0"></script>
+  <script type="module" src="./app.js?v=0.5.0"></script>
 </body>
 </html>
