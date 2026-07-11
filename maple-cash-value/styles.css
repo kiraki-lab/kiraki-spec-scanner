@@ -1873,3 +1873,192 @@ main {
     font-size: 12px;
   }
 }
+
+/* Package turnover warning and visibility toggle */
+.filter-heading-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  min-width: 0;
+}
+
+.package-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  margin: 0;
+  color: var(--ink);
+  cursor: pointer;
+  user-select: none;
+}
+
+.package-toggle input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.package-toggle .toggle-track {
+  position: relative;
+  display: inline-block;
+  width: 32px;
+  height: 18px;
+  flex: 0 0 auto;
+  border: 1px solid #aeb8c7;
+  border-radius: 999px;
+  background: #dfe4eb;
+  margin: 0;
+  transition: background-color .15s ease, border-color .15s ease;
+}
+
+.package-toggle .toggle-track::after {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(24, 34, 53, .2);
+  content: "";
+  transition: transform .15s ease;
+}
+
+.package-toggle input:checked + .toggle-track {
+  border-color: #5d85d6;
+  background: var(--blue);
+}
+
+.package-toggle input:checked + .toggle-track::after {
+  transform: translateX(14px);
+}
+
+.package-toggle input:focus-visible + .toggle-track {
+  outline: 3px solid rgba(47, 97, 199, .2);
+  outline-offset: 2px;
+}
+
+.package-toggle strong {
+  overflow: hidden;
+  font-family: "Jua", "Noto Sans KR", sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.package-toggle em {
+  min-width: 24px;
+  color: var(--blue);
+  font-family: "Jua", "Noto Sans KR", sans-serif;
+  font-size: 11px;
+  font-style: normal;
+  text-align: center;
+}
+
+.filter-chip.disabled {
+  cursor: not-allowed;
+  opacity: .42;
+}
+
+.turnover-pill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 26px;
+  gap: 5px;
+  margin: 5px 0 0 7px;
+  border: 1px solid #e3c987;
+  border-radius: 6px;
+  background: #fff7df;
+  color: #765000;
+  padding: 3px 7px;
+  font-family: "Jua", "Noto Sans KR", sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 1.2;
+  vertical-align: top;
+}
+
+.turnover-pill::before {
+  display: grid;
+  width: 15px;
+  height: 15px;
+  place-items: center;
+  border-radius: 50%;
+  background: #b07a00;
+  color: #fff;
+  content: "!";
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 10px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.control-field {
+  min-width: 0;
+}
+
+.control-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  min-height: 19px;
+  margin-bottom: 5px;
+}
+
+.controls .control-label-row > label {
+  color: #68758a;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.controls .control-label-row .package-toggle {
+  gap: 4px;
+}
+
+.controls .control-label-row .package-toggle .toggle-track {
+  width: 28px;
+  height: 16px;
+}
+
+.controls .control-label-row .package-toggle .toggle-track::after {
+  width: 10px;
+  height: 10px;
+}
+
+.controls .control-label-row .package-toggle input:checked + .toggle-track::after {
+  transform: translateX(12px);
+}
+
+.controls .control-label-row .package-toggle strong,
+.controls .control-label-row .package-toggle em {
+  font-size: 10px;
+}
+
+@media (max-width: 760px) {
+  .filter-heading {
+    align-items: flex-start;
+  }
+
+  .filter-heading-actions {
+    flex-wrap: wrap;
+  }
+
+  .turnover-pill {
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 420px) {
+  .filter-heading {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .filter-heading-actions {
+    justify-content: space-between;
+  }
+}
