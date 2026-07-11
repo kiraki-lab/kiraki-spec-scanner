@@ -76,7 +76,7 @@ const AUCTION_STATUS_OPTIONS = Object.freeze([
   ['live', '가격 있음'],
   ['seed', '기본값'],
   ['no_listing', '매물 없음'],
-  ['no_candidate', '후보 없음'],
+  ['no_candidate', '정확한 품목 없음'],
   ['unverified', '미확인']
 ]);
 
@@ -166,7 +166,7 @@ async function loadData() {
     setSyncState('ready', '데이터 로딩 완료', `${state.metadata.world} 기준 데이터를 불러왔습니다.`);
   } catch (error) {
     console.error(error);
-    setSyncState('error', '데이터 로딩 실패', error.message || 'JSON 파일을 확인할 수 없습니다.');
+    setSyncState('error', '데이터 로딩 실패', '잠시 후 다시 시도해 주세요.');
   }
   render();
 }
@@ -479,7 +479,7 @@ function render() {
 function renderNotices() {
   const list = $('#notice-list');
   if (!state.notices.length) {
-    list.innerHTML = '<div class="notice-item"><strong>캐시샵 공지 없음</strong><span>API 갱신 후 표시됩니다.</span></div>';
+    list.innerHTML = '<div class="notice-item"><strong>캐시샵 업데이트 없음</strong><span>최근 등록된 내역이 없습니다.</span></div>';
     return;
   }
   list.innerHTML = state.notices.map(notice => {
@@ -513,8 +513,8 @@ function renderSaleItems(catalog) {
     const meta = `${sale.items.length}개${reviewCount ? ` · 검수 ${reviewCount}` : ''}`;
     const body = `<summary><strong>${escapeHtml(sale.label)}</strong><span>${escapeHtml(meta)}</span></summary><div class="sale-tags">${chips}</div>`;
     return sale.url
-      ? `<details class="sale-item" open>${body}<a class="sale-link" href="${escapeAttribute(sale.url)}" target="_blank" rel="noreferrer">공지 열기</a></details>`
-      : `<details class="sale-item" open>${body}</details>`;
+      ? `<details class="sale-item">${body}<a class="sale-link" href="${escapeAttribute(sale.url)}" target="_blank" rel="noreferrer">공지 열기</a></details>`
+      : `<details class="sale-item">${body}</details>`;
   }).join('');
 }
 
