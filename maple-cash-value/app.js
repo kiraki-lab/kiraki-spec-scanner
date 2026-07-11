@@ -341,7 +341,8 @@ function componentList(raw) {
       ...component,
       name: String(component.name).trim(),
       aliases: Array.isArray(component.aliases) ? component.aliases.map(String).filter(Boolean) : [],
-      seedMesoPrice: toNumber(component.seedMesoPrice || component.defaultMesoPrice, 0)
+      seedMesoPrice: toNumber(component.seedMesoPrice || component.defaultMesoPrice, 0),
+      quantity: Math.max(1, Math.floor(toNumber(component.quantity, 1)))
     }));
 }
 
@@ -498,7 +499,7 @@ function totalPriceFor(item, index) {
     return { component, price };
   });
   const componentPrices = components.map(entry => entry.price);
-  const meso = componentPrices.reduce((sum, price) => sum + price.meso, 0);
+  const meso = components.reduce((sum, { component, price }) => sum + price.meso * component.quantity, 0);
   const filledCount = liveCount + manualCount;
 
   return {
@@ -791,6 +792,10 @@ function renderComponentQuote(price) {
   return `<span class="component-quote"><strong>${formatMeso(price.meso)}</strong><em>${escapeHtml(label)}</em></span>`;
 }
 
+function componentDisplayName(component) {
+  return component.quantity > 1 ? `${component.name} ×${nf.format(component.quantity)}` : component.name;
+}
+
 function renderComponents(item) {
   const tradable = componentList(item.components);
   const bonus = bonusComponentsFor(item);
@@ -799,9 +804,11 @@ function renderComponents(item) {
   const breakdown = new Map(
     (item.listingPrice?.components || []).map(entry => [normalizeKey(entry.component?.name), entry.price])
   );
+  const tradableCount = tradable.reduce((sum, component) => sum + component.quantity, 0);
+  const bonusCount = bonus.reduce((sum, component) => sum + component.quantity, 0);
   const label = bonus.length
-    ? `구성품 ${tradable.length + bonus.length}개 · 가격 반영 ${tradable.length} / 계산 제외 ${bonus.length}`
-    : `구성품별 가격 ${tradable.length}개`;
+    ? `구성품 ${tradableCount + bonusCount}개 · 가격 반영 ${tradableCount} / 계산 제외 ${bonusCount}`
+    : `구성품별 가격 ${tradableCount}개`;
 
   return `
     <details>
@@ -809,13 +816,13 @@ function renderComponents(item) {
       <div class="component-list">
         ${tradable.map(component => `
           <div class="component-row">
-            <span class="component-name">${escapeHtml(component.name)}</span>
+            <span class="component-name">${escapeHtml(componentDisplayName(component))}</span>
             ${renderComponentQuote(breakdown.get(normalizeKey(component.name)))}
           </div>
         `).join('')}
         ${bonus.map(component => `
           <div class="component-row bonus">
-            <span class="component-name">${escapeHtml(component.name)}</span>
+            <span class="component-name">${escapeHtml(componentDisplayName(component))}</span>
             <span class="component-quote"><strong>계산 제외</strong><em>추가 구성</em></span>
           </div>
         `).join('')}
@@ -1100,7 +1107,10 @@ function writeItemEditor(item) {
   $('#admin-item-mileage').value = item?.mileageType || 'none';
   $('#admin-item-aliases').value = Array.isArray(item?.aliases) ? item.aliases.join('\n') : '';
   $('#admin-item-components').value = componentList(item?.components).map(component => {
-    return component.seedMesoPrice ? `${component.name} | ${component.seedMesoPrice}` : component.name;
+    const fields = [component.name];
+    if (component.seedMesoPrice || component.quantity > 1) fields.push(component.seedMesoPrice || 0);
+    if (component.quantity > 1) fields.push(component.quantity);
+    return fields.join(' | ');
   }).join('\n');
 }
 
@@ -1125,10 +1135,12 @@ function parseAliasText(text) {
 
 function parseComponentsText(text) {
   return String(text || '').split(/\n+/).map(line => line.trim()).filter(Boolean).map(line => {
-    const [name, price] = line.split('|').map(value => value.trim());
+    const [name, price, rawQuantity] = line.split('|').map(value => value.trim());
     const component = { name };
     const seedMesoPrice = toNumber(price, 0);
+    const quantity = Math.max(1, Math.floor(toNumber(rawQuantity, 1)));
     if (seedMesoPrice > 0) component.seedMesoPrice = seedMesoPrice;
+    if (quantity > 1) component.quantity = quantity;
     return component;
   }).filter(component => component.name);
 }
