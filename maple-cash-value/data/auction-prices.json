@@ -1,7 +1,7 @@
 {
   "version": 2,
   "world": "스카니아",
-  "generatedAt": "2026-07-11T21:44:18.020+09:00",
+  "generatedAt": "2026-07-11T21:46:40.566+09:00",
   "source": "manual-maple-auction-two-account",
   "policy": {
     "searchTab": "구매",
@@ -249,18 +249,6 @@
       "collectedAt": "2026-07-09T23:10:00+09:00"
     },
     {
-      "itemName": "레지스탕스 블래스터 헤어핀(여)",
-      "query": "레지스탕스 블래스터 헤어핀 (여)",
-      "aliases": [
-        "레지스탕스 블래스터 헤어핀 (여)"
-      ],
-      "listingLowestMeso": 375700000,
-      "listingLowestText": "3억 7570만",
-      "status": "ok",
-      "filter": "캐시",
-      "collectedAt": "2026-07-09T23:18:00+09:00"
-    },
-    {
       "itemName": "레지스탕스 블래스터 슈트(남)",
       "query": "레지스탕스 블래스터 슈트 (남)",
       "aliases": [
@@ -273,18 +261,6 @@
       "collectedAt": "2026-07-09T23:18:00+09:00"
     },
     {
-      "itemName": "레지스탕스 블래스터 슈트(여)",
-      "query": "레지스탕스 블래스터 슈트 (여)",
-      "aliases": [
-        "레지스탕스 블래스터 슈트 (여)"
-      ],
-      "listingLowestMeso": 139888888,
-      "listingLowestText": "1억 3988만 8888",
-      "status": "ok",
-      "filter": "캐시",
-      "collectedAt": "2026-07-09T23:18:00+09:00"
-    },
-    {
       "itemName": "레지스탕스 블래스터 슈즈(남)",
       "query": "레지스탕스 블래스터 슈즈 (남)",
       "aliases": [
@@ -292,27 +268,6 @@
       ],
       "listingLowestMeso": 59999999,
       "listingLowestText": "5999만 9999",
-      "status": "ok",
-      "filter": "캐시",
-      "collectedAt": "2026-07-09T23:18:00+09:00"
-    },
-    {
-      "itemName": "레지스탕스 블래스터 슈즈(여)",
-      "query": "레지스탕스 블래스터 슈즈 (여)",
-      "aliases": [
-        "레지스탕스 블래스터 슈즈 (여)"
-      ],
-      "listingLowestMeso": 49388888,
-      "listingLowestText": "4938만 8888",
-      "status": "ok",
-      "filter": "캐시",
-      "collectedAt": "2026-07-09T23:18:00+09:00"
-    },
-    {
-      "itemName": "레지스탕스 블래스터 건틀렛 리볼버",
-      "query": "레지스탕스 블래스터 건틀렛 리볼버",
-      "listingLowestMeso": 398900000,
-      "listingLowestText": "3억 9890만",
       "status": "ok",
       "filter": "캐시",
       "collectedAt": "2026-07-09T23:18:00+09:00"
@@ -1999,6 +1954,63 @@
       "searchAccount": 2,
       "searchIndex": 12,
       "collectedAt": "2026-07-11T21:44:18.020+09:00"
+    },
+    {
+      "itemName": "레지스탕스 블래스터 건틀렛 리볼버",
+      "query": "레지스탕스 블래스터 건틀렛 리볼버",
+      "listingLowestMeso": 378999999,
+      "listingLowestText": "3억 7899만 9999",
+      "resultCount": 5,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 13,
+      "collectedAt": "2026-07-11T21:46:40.566+09:00"
+    },
+    {
+      "itemName": "레지스탕스 블래스터 헤어핀(여)",
+      "query": "레지스탕스 블래스터 헤어핀 (여)",
+      "aliases": [
+        "레지스탕스 블래스터 헤어핀 (여)"
+      ],
+      "listingLowestMeso": 375300000,
+      "listingLowestText": "3억 7530만",
+      "resultCount": 2,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 14,
+      "collectedAt": "2026-07-11T21:46:40.566+09:00"
+    },
+    {
+      "itemName": "레지스탕스 블래스터 슈트(여)",
+      "query": "레지스탕스 블래스터 슈트 (여)",
+      "aliases": [
+        "레지스탕스 블래스터 슈트 (여)"
+      ],
+      "listingLowestMeso": 138499999,
+      "listingLowestText": "1억 3849만 9999",
+      "resultCount": 5,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 15,
+      "collectedAt": "2026-07-11T21:46:40.566+09:00"
+    },
+    {
+      "itemName": "레지스탕스 블래스터 슈즈(여)",
+      "query": "레지스탕스 블래스터 슈즈 (여)",
+      "aliases": [
+        "레지스탕스 블래스터 슈즈 (여)"
+      ],
+      "listingLowestMeso": 49188888,
+      "listingLowestText": "4918만 8888",
+      "resultCount": 4,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 16,
+      "collectedAt": "2026-07-11T21:46:40.566+09:00"
     }
   ],
   "skipped": [
