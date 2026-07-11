@@ -1,7 +1,7 @@
 {
   "version": 2,
   "world": "스카니아",
-  "updatedAt": "2026-07-11T18:40:53.497+09:00",
+  "updatedAt": "2026-07-11T18:59:27.598+09:00",
   "settings": {
     "baseMpRate": 6990,
     "discountRate": 6,
@@ -94,46 +94,70 @@
       "name": "붕어빵 뿌리기 11개",
       "category": "마일리지",
       "cashPrice": 2000,
-      "seedMesoPrice": 82000000,
+      "seedMesoPrice": 0,
       "mileageType": "full",
       "aliases": [
         "붕어빵",
         "붕어빵 11개",
         "붕어빵 뿌리기"
-      ]
+      ],
+      "mileagePrice": 2000,
+      "referenceOnly": true,
+      "tradable": false,
+      "purchaseMode": "mileage_only",
+      "referenceMesoValue": 82000000,
+      "referenceUpdatedAt": "2026-07-11T18:59:27.598+09:00"
     },
     {
       "id": 25,
       "name": "달콤한 붕어빵 11개",
       "category": "마일리지",
       "cashPrice": 4000,
-      "seedMesoPrice": 159000000,
+      "seedMesoPrice": 0,
       "mileageType": "full",
       "aliases": [
         "달콤한 붕어빵"
-      ]
+      ],
+      "mileagePrice": 4000,
+      "referenceOnly": true,
+      "tradable": false,
+      "purchaseMode": "mileage_only",
+      "referenceMesoValue": 159000000,
+      "referenceUpdatedAt": "2026-07-11T18:59:27.598+09:00"
     },
     {
       "id": 26,
       "name": "슈퍼파워버프",
       "category": "마일리지",
       "cashPrice": 3000,
-      "seedMesoPrice": 132000000,
+      "seedMesoPrice": 0,
       "mileageType": "full",
       "aliases": [
         "슈퍼파워 버프"
-      ]
+      ],
+      "mileagePrice": 3000,
+      "referenceOnly": true,
+      "tradable": false,
+      "purchaseMode": "mileage_only",
+      "referenceMesoValue": 132000000,
+      "referenceUpdatedAt": "2026-07-11T18:59:27.598+09:00"
     },
     {
       "id": 27,
       "name": "마슈르의 선물기상효과",
       "category": "마일리지",
       "cashPrice": 3000,
-      "seedMesoPrice": 135000000,
+      "seedMesoPrice": 0,
       "mileageType": "full",
       "aliases": [
         "마슈르의 선물 기상효과"
-      ]
+      ],
+      "mileagePrice": 3000,
+      "referenceOnly": true,
+      "tradable": false,
+      "purchaseMode": "mileage_only",
+      "referenceMesoValue": 135000000,
+      "referenceUpdatedAt": "2026-07-11T18:59:27.598+09:00"
     },
     {
       "id": 101,
