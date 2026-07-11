@@ -1,7 +1,7 @@
 {
   "version": 2,
   "world": "스카니아",
-  "generatedAt": "2026-07-11T18:41:48.971+09:00",
+  "generatedAt": "2026-07-11T19:01:40.802+09:00",
   "source": "maple-auction-web-purchase-tab+manual",
   "policy": {
     "searchTab": "구매",
@@ -589,64 +589,6 @@
       "status": "ok",
       "filter": "캐시",
       "collectedAt": "2026-07-09T23:45:00+09:00"
-    },
-    {
-      "itemId": 24,
-      "itemName": "붕어빵 뿌리기 11개",
-      "query": "붕어빵 뿌리기 11개",
-      "aliases": [
-        "붕어빵",
-        "붕어빵 11개",
-        "붕어빵 뿌리기"
-      ],
-      "listingLowestMeso": 82000000,
-      "listingLowestText": "8200만",
-      "status": "manual",
-      "source": "manual",
-      "filter": "수동",
-      "collectedAt": "2026-07-11T18:41:48.971+09:00"
-    },
-    {
-      "itemId": 25,
-      "itemName": "달콤한 붕어빵 11개",
-      "query": "달콤한 붕어빵 11개",
-      "aliases": [
-        "달콤한 붕어빵"
-      ],
-      "listingLowestMeso": 159000000,
-      "listingLowestText": "1억 5900만",
-      "status": "manual",
-      "source": "manual",
-      "filter": "수동",
-      "collectedAt": "2026-07-11T18:41:48.971+09:00"
-    },
-    {
-      "itemId": 26,
-      "itemName": "슈퍼파워버프",
-      "query": "슈퍼파워버프",
-      "aliases": [
-        "슈퍼파워 버프"
-      ],
-      "listingLowestMeso": 132000000,
-      "listingLowestText": "1억 3200만",
-      "status": "manual",
-      "source": "manual",
-      "filter": "수동",
-      "collectedAt": "2026-07-11T18:41:48.971+09:00"
-    },
-    {
-      "itemId": 27,
-      "itemName": "마슈르의 선물기상효과",
-      "query": "마슈르의 선물기상효과",
-      "aliases": [
-        "마슈르의 선물 기상효과"
-      ],
-      "listingLowestMeso": 135000000,
-      "listingLowestText": "1억 3500만",
-      "status": "manual",
-      "source": "manual",
-      "filter": "수동",
-      "collectedAt": "2026-07-11T18:41:48.971+09:00"
     }
   ],
   "skipped": [
