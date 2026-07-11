@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light">
   <title>메이플 캐시 효율 계산기</title>
-  <link rel="stylesheet" href="./styles.css?v=0.4.0">
+  <link rel="stylesheet" href="./styles.css?v=0.5.4">
 </head>
 <body>
   <div class="app-shell">
@@ -18,7 +18,7 @@
         <span class="sync-dot"></span>
         <div>
           <strong id="sync-state">데이터 로딩 중</strong>
-          <span id="sync-detail">자동 갱신 JSON을 확인하고 있습니다.</span>
+          <span id="sync-detail">최신 가격을 불러오고 있습니다.</span>
         </div>
       </div>
     </header>
@@ -37,7 +37,7 @@
         <strong id="auction-updated">-</strong>
       </article>
       <article class="metric">
-        <span class="metric-label">검색 후보</span>
+        <span class="metric-label">판매 품목</span>
         <strong id="sale-item-count">-</strong>
       </article>
     </section>
@@ -65,75 +65,27 @@
       </label>
     </section>
 
-    <section class="filter-panel" aria-label="표시 필터">
-      <div class="filter-group">
-        <div class="filter-heading">
-          <h2>계산기 카테고리</h2>
-          <button id="category-filter-reset" type="button">전체 표시</button>
+    <details class="filter-panel compact-panel" aria-label="표시 필터">
+      <summary class="compact-summary"><span>표시 필터</span></summary>
+      <div class="filter-panel-body">
+        <div class="filter-group">
+          <div class="filter-heading">
+            <h2>계산기 카테고리</h2>
+            <button id="category-filter-reset" type="button">전체 표시</button>
+          </div>
+          <div id="category-filter-list" class="filter-chip-list"></div>
         </div>
-        <div id="category-filter-list" class="filter-chip-list"></div>
-      </div>
-      <div class="filter-group">
-        <div class="filter-heading">
-          <h2>경매장 상태</h2>
-          <button id="status-filter-reset" type="button">전체 표시</button>
+        <div class="filter-group">
+          <div class="filter-heading">
+            <h2>가격 상태</h2>
+            <button id="status-filter-reset" type="button">전체 표시</button>
+          </div>
+          <div id="status-filter-list" class="filter-chip-list"></div>
         </div>
-        <div id="status-filter-list" class="filter-chip-list"></div>
       </div>
-    </section>
+    </details>
 
     <main>
-      <div class="side-stack">
-        <section class="notice-panel" aria-label="캐시샵 공지">
-          <div class="section-title">
-            <h2>캐시샵 업데이트</h2>
-            <a id="notice-source-link" href="https://openapi.nexon.com/ko/game/maplestory/?id=24" target="_blank" rel="noreferrer">NEXON Open API</a>
-          </div>
-          <div id="notice-list" class="notice-list"></div>
-        </section>
-
-        <section class="sale-panel" aria-label="세부품목 검색 후보">
-          <div class="section-title">
-            <h2>세부품목 후보</h2>
-            <span class="count-pill">Chrome OCR</span>
-          </div>
-          <div class="sale-filters" aria-label="세부품목 후보 필터">
-            <label>
-              <span>후보 검색</span>
-              <input id="sale-search-input" type="search" placeholder="세부품목 검색" autocomplete="off">
-            </label>
-            <label>
-              <span>판매글</span>
-              <select id="sale-group-filter">
-                <option value="">전체 판매글</option>
-              </select>
-            </label>
-            <label>
-              <span>품목 분류</span>
-              <select id="sale-type-filter">
-                <option value="">전체 분류</option>
-                <option value="패키지">패키지</option>
-                <option value="쿠폰">쿠폰</option>
-                <option value="확률형">확률형</option>
-                <option value="펫">펫</option>
-                <option value="펫장비">펫장비</option>
-                <option value="치장">치장</option>
-                <option value="기타">기타</option>
-              </select>
-            </label>
-            <label>
-              <span>검수</span>
-              <select id="sale-review-filter">
-                <option value="all">전체</option>
-                <option value="confirmed">확정 후보</option>
-                <option value="review">검수 필요</option>
-              </select>
-            </label>
-          </div>
-          <div id="sale-item-list" class="sale-list"></div>
-        </section>
-      </div>
-
       <section class="table-panel" aria-label="효율 목록">
         <div class="section-title">
           <h2>효율 목록</h2>
@@ -154,11 +106,59 @@
           </table>
         </div>
       </section>
-    </main>
 
-    <footer class="footer-note">
-      <span>Data based on NEXON Open API and MapleStory sale-page images</span>
-    </footer>
+      <details class="market-info">
+        <summary class="compact-summary"><span>판매 정보</span></summary>
+        <div class="side-stack">
+          <section class="notice-panel" aria-label="캐시샵 업데이트">
+            <div class="section-title">
+              <h2>캐시샵 업데이트</h2>
+            </div>
+            <div id="notice-list" class="notice-list"></div>
+          </section>
+
+          <section class="sale-panel" aria-label="판매 품목">
+            <div class="section-title">
+              <h2>판매 품목</h2>
+            </div>
+            <div class="sale-filters" aria-label="판매 품목 필터">
+              <label>
+                <span>품목 검색</span>
+                <input id="sale-search-input" type="search" placeholder="판매 품목 검색" autocomplete="off">
+              </label>
+              <label>
+                <span>판매글</span>
+                <select id="sale-group-filter">
+                  <option value="">전체 판매글</option>
+                </select>
+              </label>
+              <label>
+                <span>품목 분류</span>
+                <select id="sale-type-filter">
+                  <option value="">전체 분류</option>
+                  <option value="패키지">패키지</option>
+                  <option value="쿠폰">쿠폰</option>
+                  <option value="확률형">확률형</option>
+                  <option value="펫">펫</option>
+                  <option value="펫장비">펫장비</option>
+                  <option value="치장">치장</option>
+                  <option value="기타">기타</option>
+                </select>
+              </label>
+              <label>
+                <span>상태</span>
+                <select id="sale-review-filter">
+                  <option value="all">전체</option>
+                  <option value="confirmed">확인됨</option>
+                  <option value="review">확인 필요</option>
+                </select>
+              </label>
+            </div>
+            <div id="sale-item-list" class="sale-list"></div>
+          </section>
+        </div>
+      </details>
+    </main>
   </div>
 
   <template id="empty-template">
@@ -167,6 +167,6 @@
     </tr>
   </template>
 
-  <script type="module" src="./app.js?v=0.5.2"></script>
+  <script type="module" src="./app.js?v=0.5.4"></script>
 </body>
 </html>
