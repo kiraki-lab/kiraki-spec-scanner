@@ -567,7 +567,7 @@ function renderReferencePrice(item) {
 
 function renderPrice(price) {
   const status = price.auctionStatus || 'unverified';
-  const label = price.source === 'live' ? '수집값' : price.source === 'mixed' ? '일부 수집' : auctionStatusLabel(status);
+  const label = price.source === 'live' ? '확인가' : price.source === 'mixed' ? '일부 확인' : auctionStatusLabel(status);
   const klass = price.source === 'live' || price.source === 'mixed' ? 'live' : status;
   const date = price.collectedAt ? `<span class="price-meta">${escapeHtml(formatDate(price.collectedAt))}</span>` : '';
   return `<span class="price-value">${formatMeso(price.meso)}</span>${date}<span class="source-pill ${klass}">${label}</span>`;
@@ -584,9 +584,9 @@ function renderComponentQuote(price) {
   const label = price.source === 'manual'
     ? '수동입력'
     : price.source === 'live'
-      ? '수집값'
+      ? '확인가'
       : price.source === 'mixed'
-        ? '일부 수집'
+        ? '일부 확인'
         : auctionStatusLabel(status);
   return `<span class="component-quote"><strong>${formatMeso(price.meso)}</strong><em>${escapeHtml(label)}</em></span>`;
 }
