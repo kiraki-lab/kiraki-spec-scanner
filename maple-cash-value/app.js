@@ -80,6 +80,7 @@ const state = {
   search: '',
   categoryFilter: '',
   statusFilter: '',
+  packagesVisible: true,
   saleSearch: '',
   saleGroupFilter: '',
   saleTypeFilter: '',
@@ -411,6 +412,22 @@ function categoryFor(item) {
   return item.referenceOnly ? REFERENCE_CATEGORY : (item.category || '캐시 아이템');
 }
 
+function isPackageCategory(category) {
+  return String(category || '').startsWith('패키지');
+}
+
+function isPackageItem(item) {
+  return !item.referenceOnly && isPackageCategory(categoryFor(item));
+}
+
+function syncPackageToggle() {
+  const toggle = $('#package-filter-toggle');
+  const status = $('#package-filter-state');
+  if (!toggle || !status) return;
+  toggle.checked = state.packagesVisible;
+  status.textContent = state.packagesVisible ? 'ON' : 'OFF';
+}
+
 function auctionStatusLabel(status) {
   return AUCTION_STATUS_LABELS[status] || '미확인';
 }
@@ -550,6 +567,7 @@ function enrichItems() {
 function filteredRows(sourceRows = enrichItems()) {
   const q = normalizeKey(state.search);
   return sourceRows.filter(item => {
+    if (!state.packagesVisible && isPackageItem(item)) return false;
     if (item.referenceOnly) {
       if (state.categoryFilter !== REFERENCE_CATEGORY) return false;
     } else if (state.categoryFilter && categoryFor(item) !== state.categoryFilter) {
@@ -585,6 +603,7 @@ function render() {
   const saleRankOffset = rows.slice(0, pageStart).filter(item => !item.referenceOnly).length;
 
   syncCategoryOptions(allRows);
+  syncPackageToggle();
   syncPriceTargetOptions();
   syncAdminItemOptions();
 
@@ -698,9 +717,12 @@ function renderTable(rows, saleRankOffset = 0) {
     const rank = isReference
       ? '<span class="source-pill seed">참고</span>'
       : `<span class="rank">${rankNumber}</span>`;
+    const turnoverWarning = !isReference && isPackageItem(item)
+      ? '<span class="turnover-pill" title="패키지는 판매까지 시간이 걸릴 수 있습니다.">회전율 주의</span>'
+      : '';
     const itemMeta = isReference
       ? `<span class="item-meta">마일리지 전용 · 판매 불가 · ${REFERENCE_CATEGORY}</span>`
-      : `<span class="item-meta">${escapeHtml(item.category || '캐시 아이템')}</span>${renderMileageBadge(item.mileageType)}`;
+      : `<span class="item-meta">${escapeHtml(item.category || '캐시 아이템')}</span>${renderMileageBadge(item.mileageType)}${turnoverWarning}`;
     const cost = isReference
       ? `${nf.format(Number(item.mileagePrice || item.cashPrice || 0))} 마일리지`
       : `${nf.format(Number(item.cashPrice || 0))}원`;
@@ -710,6 +732,7 @@ function renderTable(rows, saleRankOffset = 0) {
       : `<span class="eff-value">${formatWon(item.listingEfficiency)}</span><span class="price-meta">1억당 현금</span>`;
     const rowClass = [
       isReference ? 'reference-row' : '',
+      isPackageItem(item) ? 'package-row' : '',
       rankNumber && rankNumber <= 3 ? `top-rank rank-${rankNumber}` : ''
     ].filter(Boolean).join(' ');
 
@@ -843,7 +866,9 @@ function syncSaleFilterOptions() {
 
 function syncCategoryOptions(rows) {
   const select = $('#category-filter');
-  const categories = [...new Set(rows.map(categoryFor))].sort((a, b) => a.localeCompare(b, 'ko-KR'));
+  const categories = [...new Set(rows.map(categoryFor))]
+    .filter(category => state.packagesVisible || !isPackageCategory(category))
+    .sort((a, b) => a.localeCompare(b, 'ko-KR'));
   const current = state.categoryFilter;
   select.innerHTML = '<option value="">전체 판매 항목</option>' + categories
     .map(category => {
@@ -1234,6 +1259,13 @@ on('#mode-password', 'keydown', event => {
 
 on('#search-input', 'input', event => {
   state.search = event.target.value;
+  state.page = 1;
+  render();
+});
+
+on('#package-filter-toggle', 'change', event => {
+  state.packagesVisible = event.target.checked;
+  if (!state.packagesVisible && isPackageCategory(state.categoryFilter)) state.categoryFilter = '';
   state.page = 1;
   render();
 });
