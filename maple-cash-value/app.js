@@ -24,6 +24,7 @@ const state = {
   search: '',
   hiddenCategories: new Set([REFERENCE_CATEGORY]),
   hiddenAuctionStatuses: new Set(),
+  packagesVisible: true,
   saleSearch: '',
   saleGroupFilter: '',
   saleTypeFilter: '',
@@ -318,6 +319,22 @@ function categoryFor(item) {
   return item.referenceOnly ? REFERENCE_CATEGORY : (item.category || '캐시 아이템');
 }
 
+function isPackageCategory(category) {
+  return String(category || '').startsWith('패키지');
+}
+
+function isPackageItem(item) {
+  return !item.referenceOnly && isPackageCategory(categoryFor(item));
+}
+
+function syncPackageToggle() {
+  const toggle = $('#package-filter-toggle');
+  const status = $('#package-filter-state');
+  if (!toggle || !status) return;
+  toggle.checked = state.packagesVisible;
+  status.textContent = state.packagesVisible ? 'ON' : 'OFF';
+}
+
 function auctionStatusLabel(status) {
   return AUCTION_STATUS_LABELS[status] || '미확인';
 }
@@ -444,6 +461,7 @@ function enrichItems() {
 function filteredRows(sourceRows = enrichItems()) {
   const q = normalizeKey(state.search);
   return sourceRows.filter(item => {
+    if (!state.packagesVisible && isPackageItem(item)) return false;
     if (state.hiddenCategories.has(categoryFor(item))) return false;
     if (!item.referenceOnly && state.hiddenAuctionStatuses.has(item.auctionStatus || 'unverified')) return false;
     if (!q) return true;
@@ -565,9 +583,12 @@ function renderTable(rows, saleRankOffset = 0) {
     const rank = isReference
       ? '<span class="source-pill seed">참고</span>'
       : `<span class="rank">${rankNumber}</span>`;
+    const turnoverWarning = !isReference && isPackageItem(item)
+      ? '<span class="turnover-pill" title="패키지는 판매까지 시간이 걸릴 수 있습니다.">회전율 주의</span>'
+      : '';
     const itemMeta = isReference
       ? `<span class="item-meta">마일리지 전용 · 판매 불가 · ${REFERENCE_CATEGORY}</span>`
-      : `<span class="item-meta">${escapeHtml(item.category || '캐시 아이템')}</span>${renderMileageBadge(item.mileageType)}`;
+      : `<span class="item-meta">${escapeHtml(item.category || '캐시 아이템')}</span>${renderMileageBadge(item.mileageType)}${turnoverWarning}`;
     const cost = isReference
       ? `${nf.format(Number(item.mileagePrice || item.cashPrice || 0))} 마일리지`
       : `${nf.format(Number(item.cashPrice || 0))}원`;
@@ -577,6 +598,7 @@ function renderTable(rows, saleRankOffset = 0) {
       : `<span class="eff-value">${formatWon(item.listingEfficiency)}</span><span class="price-meta">1억당 현금</span>`;
     const rowClass = [
       isReference ? 'reference-row' : '',
+      isPackageItem(item) ? 'package-row' : '',
       rankNumber && rankNumber <= 3 ? `top-rank rank-${rankNumber}` : ''
     ].filter(Boolean).join(' ');
 
@@ -709,13 +731,18 @@ function renderCategoryFilterChips(rows) {
     counts.set(category, (counts.get(category) || 0) + 1);
   }
   const categories = [...counts.keys()].sort((a, b) => a.localeCompare(b, 'ko-KR'));
-  $('#category-filter-list').innerHTML = categories.map(category => renderFilterChip({
-    group: 'category',
-    value: category,
-    label: category,
-    count: counts.get(category),
-    checked: !state.hiddenCategories.has(category)
-  })).join('');
+  syncPackageToggle();
+  $('#category-filter-list').innerHTML = categories.map(category => {
+    const packageCategory = isPackageCategory(category);
+    return renderFilterChip({
+      group: 'category',
+      value: category,
+      label: category,
+      count: counts.get(category),
+      checked: !state.hiddenCategories.has(category) && (!packageCategory || state.packagesVisible),
+      disabled: packageCategory && !state.packagesVisible
+    });
+  }).join('');
 }
 
 function renderStatusFilterChips(rows) {
@@ -734,10 +761,10 @@ function renderStatusFilterChips(rows) {
   })).join('');
 }
 
-function renderFilterChip({ group, value, label, count, checked }) {
+function renderFilterChip({ group, value, label, count, checked, disabled = false }) {
   return `
-    <label class="filter-chip ${checked ? 'active' : ''}">
-      <input type="checkbox" data-filter-group="${escapeAttribute(group)}" value="${escapeAttribute(value)}" ${checked ? 'checked' : ''}>
+    <label class="filter-chip ${checked ? 'active' : ''}${disabled ? ' disabled' : ''}">
+      <input type="checkbox" data-filter-group="${escapeAttribute(group)}" value="${escapeAttribute(value)}" ${checked ? 'checked' : ''} ${disabled ? 'disabled' : ''}>
       <span>${escapeHtml(label)}<em>${nf.format(count)}</em></span>
     </label>
   `;
@@ -768,6 +795,15 @@ $('#search-input').addEventListener('input', event => {
 });
 
 
+const packageFilterToggle = $('#package-filter-toggle');
+if (packageFilterToggle) {
+  packageFilterToggle.addEventListener('change', event => {
+    state.packagesVisible = event.target.checked;
+    state.page = 1;
+    render();
+  });
+}
+
 $('#category-filter-list').addEventListener('change', event => {
   const input = event.target.closest('input[data-filter-group="category"]');
   if (!input) return;
@@ -786,6 +822,7 @@ $('#status-filter-list').addEventListener('change', event => {
 
 $('#category-filter-reset').addEventListener('click', () => {
   state.hiddenCategories.clear();
+  state.packagesVisible = true;
   state.page = 1;
   render();
 });
