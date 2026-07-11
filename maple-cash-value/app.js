@@ -528,9 +528,10 @@ function renderTable(rows) {
   let saleRank = 0;
   tbody.innerHTML = rows.map(item => {
     const isReference = Boolean(item.referenceOnly);
+    const rankNumber = isReference ? null : ++saleRank;
     const rank = isReference
       ? '<span class="source-pill seed">참고</span>'
-      : `<span class="rank">${++saleRank}</span>`;
+      : `<span class="rank">${rankNumber}</span>`;
     const itemMeta = isReference
       ? `<span class="item-meta">마일리지 전용 · 판매 불가 · ${REFERENCE_CATEGORY}</span>`
       : `<span class="item-meta">${escapeHtml(item.category || '캐시 아이템')}</span>${renderMileageBadge(item.mileageType)}`;
@@ -541,18 +542,22 @@ function renderTable(rows) {
     const result = isReference
       ? `<span class="eff-value">${formatReferenceMeso(item.referenceMesoPerThousand)}</span><span class="price-meta">1,000 마일리지당 절약</span>`
       : `<span class="eff-value">${formatWon(item.listingEfficiency)}</span><span class="price-meta">1억당 현금</span>`;
+    const rowClass = [
+      isReference ? 'reference-row' : '',
+      rankNumber && rankNumber <= 3 ? `top-rank rank-${rankNumber}` : ''
+    ].filter(Boolean).join(' ');
 
     return `
-      <tr${isReference ? ' class="reference-row"' : ''}>
-        <td>${rank}</td>
-        <td>
+      <tr${rowClass ? ` class="${rowClass}"` : ''}>
+        <td data-label="순위">${rank}</td>
+        <td data-label="아이템">
           <span class="item-name">${escapeHtml(item.name)}</span>
           ${itemMeta}
           ${renderComponents(item)}
         </td>
-        <td>${cost}</td>
-        <td>${price}</td>
-        <td>${result}</td>
+        <td data-label="캐시/마일리지"><span class="cash-value">${cost}</span></td>
+        <td data-label="매물가/참고가">${price}</td>
+        <td data-label="판매 효율/절약">${result}</td>
       </tr>
     `;
   }).join('');
@@ -616,7 +621,7 @@ function renderComponents(item) {
         ${bonus.map(component => `
           <div class="component-row bonus">
             <span class="component-name">${escapeHtml(component.name)}</span>
-            <span class="component-quote"><strong>계산 제외</strong><em>BONUS</em></span>
+            <span class="component-quote"><strong>계산 제외</strong><em>추가 구성</em></span>
           </div>
         `).join('')}
       </div>
