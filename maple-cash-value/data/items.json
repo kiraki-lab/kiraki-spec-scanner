@@ -1,7 +1,7 @@
 {
   "version": 2,
   "world": "스카니아",
-  "updatedAt": "2026-07-11T19:08:42.609Z",
+  "updatedAt": "2026-07-11T19:16:02.040Z",
   "settings": {
     "baseMpRate": 6990,
     "discountRate": 6,
@@ -79,7 +79,14 @@
       "category": "랜덤",
       "cashPrice": 54000,
       "seedMesoPrice": 0,
-      "mileageType": "none"
+      "mileageType": "none",
+      "components": [
+        {
+          "name": "위습의 원더베리",
+          "quantity": 11,
+          "seedMesoPrice": 0
+        }
+      ]
     },
     {
       "id": 23,
