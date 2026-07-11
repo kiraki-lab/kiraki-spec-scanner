@@ -264,7 +264,11 @@ function componentList(raw) {
   if (!Array.isArray(raw)) return [];
   return raw
     .map(component => (typeof component === 'string' ? { name: component } : component))
-    .filter(component => component && component.name);
+    .filter(component => component && component.name)
+    .map(component => ({
+      ...component,
+      quantity: Math.max(1, Math.floor(Number(component.quantity) || 1))
+    }));
 }
 
 function bonusComponentsFor(item) {
@@ -393,7 +397,7 @@ function totalPriceFor(item, index) {
     return { component, price };
   });
   const componentPrices = components.map(entry => entry.price);
-  const meso = componentPrices.reduce((sum, price) => sum + price.meso, 0);
+  const meso = components.reduce((sum, { component, price }) => sum + price.meso * component.quantity, 0);
 
   return {
     meso,
@@ -651,6 +655,10 @@ function renderComponentQuote(price) {
   return `<span class="component-quote"><strong>${formatMeso(price.meso)}</strong><em>${escapeHtml(label)}</em></span>`;
 }
 
+function componentDisplayName(component) {
+  return component.quantity > 1 ? `${component.name} ×${nf.format(component.quantity)}` : component.name;
+}
+
 function renderComponents(item) {
   const tradable = componentList(item.components);
   const bonus = bonusComponentsFor(item);
@@ -659,9 +667,11 @@ function renderComponents(item) {
   const breakdown = new Map(
     (item.listingPrice?.components || []).map(entry => [normalizeKey(entry.component?.name), entry.price])
   );
+  const tradableCount = tradable.reduce((sum, component) => sum + component.quantity, 0);
+  const bonusCount = bonus.reduce((sum, component) => sum + component.quantity, 0);
   const label = bonus.length
-    ? `구성품 ${tradable.length + bonus.length}개 · 가격 반영 ${tradable.length} / 계산 제외 ${bonus.length}`
-    : `구성품별 가격 ${tradable.length}개`;
+    ? `구성품 ${tradableCount + bonusCount}개 · 가격 반영 ${tradableCount} / 계산 제외 ${bonusCount}`
+    : `구성품별 가격 ${tradableCount}개`;
 
   return `
     <details>
@@ -669,13 +679,13 @@ function renderComponents(item) {
       <div class="component-list">
         ${tradable.map(component => `
           <div class="component-row">
-            <span class="component-name">${escapeHtml(component.name)}</span>
+            <span class="component-name">${escapeHtml(componentDisplayName(component))}</span>
             ${renderComponentQuote(breakdown.get(normalizeKey(component.name)))}
           </div>
         `).join('')}
         ${bonus.map(component => `
           <div class="component-row bonus">
-            <span class="component-name">${escapeHtml(component.name)}</span>
+            <span class="component-name">${escapeHtml(componentDisplayName(component))}</span>
             <span class="component-quote"><strong>계산 제외</strong><em>추가 구성</em></span>
           </div>
         `).join('')}
