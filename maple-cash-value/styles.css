@@ -1598,3 +1598,278 @@ td details > summary {
     margin-left: 0;
   }
 }
+
+/* Compact filters, paging, and clearer mileage labels */
+body {
+  font-family: "Noto Sans KR", "Apple SD Gothic Neo", Pretendard, system-ui, sans-serif;
+  font-weight: 500;
+}
+
+h1,
+h2,
+h3,
+.eyebrow,
+.metric strong,
+.section-title,
+.compact-summary,
+.item-name,
+.rank,
+.count-pill,
+.cash-value,
+.price-value,
+.eff-value,
+.component-quote strong,
+button,
+#page-state {
+  font-family: "Jua", "Noto Sans KR", sans-serif;
+  font-weight: 400;
+}
+
+h1 {
+  font-size: 30px;
+}
+
+.topbar {
+  min-height: 60px;
+}
+
+.metric {
+  min-height: 56px;
+  padding-block: 8px;
+}
+
+.metric strong {
+  font-size: 18px;
+}
+
+.filter-panel-body {
+  grid-template-columns: minmax(0, 1.45fr) minmax(280px, .55fr);
+  gap: 12px;
+  padding: 9px 11px 10px;
+}
+
+.filter-group {
+  min-width: 0;
+}
+
+.filter-heading {
+  margin-bottom: 6px;
+}
+
+.filter-heading h2 {
+  font-family: "Jua", "Noto Sans KR", sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.filter-heading button {
+  min-height: 28px;
+  border-radius: 6px;
+  padding: 3px 8px;
+  font-size: 11px;
+}
+
+.filter-chip-list {
+  flex-wrap: nowrap;
+  gap: 6px;
+  overflow-x: auto;
+  padding: 1px 1px 5px;
+  scrollbar-color: #b4bfce transparent;
+  scrollbar-width: thin;
+}
+
+.filter-chip {
+  flex: 0 0 auto;
+}
+
+.filter-chip span {
+  min-height: 30px;
+  padding: 5px 9px;
+  font-family: "Jua", "Noto Sans KR", sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  white-space: nowrap;
+}
+
+.table-heading-actions {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.page-size-control {
+  display: block;
+}
+
+.page-size-control select {
+  width: 82px;
+  height: 32px;
+  border: 1px solid var(--line-strong);
+  border-radius: 6px;
+  background: #fff;
+  color: var(--ink);
+  padding: 0 7px;
+  font-family: "Jua", "Noto Sans KR", sans-serif;
+  font-size: 12px;
+  outline: none;
+}
+
+.page-size-control select:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(47, 97, 199, .16);
+}
+
+.table-wrap {
+  max-height: min(52vh, 540px);
+}
+
+.table-pagination {
+  display: grid;
+  grid-template-columns: 32px minmax(110px, auto) 32px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  border-top: 1px solid var(--line);
+  background: #fff;
+  padding: 6px 10px;
+}
+
+.page-button {
+  display: grid;
+  width: 32px;
+  height: 32px;
+  min-height: 32px;
+  place-items: center;
+  border: 1px solid var(--line-strong);
+  border-radius: 6px;
+  background: var(--surface-alt);
+  color: var(--blue);
+  padding: 0;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.page-button:hover:not(:disabled) {
+  border-color: var(--blue);
+  background: #edf3ff;
+}
+
+.page-button:disabled {
+  cursor: default;
+  opacity: .35;
+}
+
+#page-state {
+  color: var(--ink);
+  font-size: 13px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.mileage-pill {
+  min-height: 26px;
+  gap: 5px;
+  margin-top: 5px;
+  border-radius: 6px;
+  padding: 3px 7px;
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.mileage-pill::before {
+  border-radius: 4px;
+  color: #fff;
+  padding: 2px 4px;
+  font-family: "Jua", "Noto Sans KR", sans-serif;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 1;
+}
+
+.mileage-pill.full {
+  border-color: #b9caed;
+  background: #eef3ff;
+  color: #274f9f;
+}
+
+.mileage-pill.full::before {
+  background: var(--blue);
+  content: "100%";
+}
+
+.mileage-pill.partial {
+  border-color: #acd7c6;
+  background: #eaf7f2;
+  color: #096348;
+}
+
+.mileage-pill.partial::before {
+  background: var(--green);
+  content: "30%";
+}
+
+.mileage-pill.none {
+  border-color: #d8dde5;
+  background: #f2f4f7;
+  color: #657084;
+}
+
+.item-name {
+  font-size: 15px;
+}
+
+.cash-value,
+.price-value,
+.eff-value {
+  font-size: 15px;
+}
+
+main {
+  gap: 8px;
+}
+
+@media (max-width: 980px) {
+  .filter-panel-body {
+    grid-template-columns: 1fr;
+  }
+
+  .table-wrap {
+    max-height: 50vh;
+  }
+}
+
+@media (max-width: 760px) {
+  .table-wrap {
+    max-height: 52vh;
+  }
+
+  .table-heading-actions {
+    gap: 5px;
+  }
+
+  .page-size-control select {
+    width: 76px;
+  }
+
+  .mileage-pill {
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 520px) {
+  h1 {
+    font-size: 26px;
+  }
+
+  .table-pagination {
+    grid-template-columns: 32px minmax(90px, auto) 32px;
+  }
+
+  #page-state {
+    font-size: 12px;
+  }
+}
