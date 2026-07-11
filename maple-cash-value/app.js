@@ -28,6 +28,8 @@ const state = {
   saleGroupFilter: '',
   saleTypeFilter: '',
   saleReviewFilter: 'all',
+  page: 1,
+  pageSize: 15,
   settings: { ...DEFAULT_SETTINGS }
 };
 
@@ -465,6 +467,14 @@ function render() {
   const visibleSaleCount = flattenSaleSearchItems(visibleSaleCatalog).length;
   const totalSaleCount = flattenSaleSearchItems().length;
 
+  const pageSize = Number(state.pageSize);
+  const totalPages = pageSize > 0 ? Math.max(1, Math.ceil(rows.length / pageSize)) : 1;
+  state.page = Math.min(Math.max(1, Number(state.page) || 1), totalPages);
+  const pageStart = pageSize > 0 ? (state.page - 1) * pageSize : 0;
+  const pageEnd = pageSize > 0 ? Math.min(pageStart + pageSize, rows.length) : rows.length;
+  const pageRows = rows.slice(pageStart, pageEnd);
+  const saleRankOffset = rows.slice(0, pageStart).filter(item => !item.referenceOnly).length;
+
   $('#rank-mode-label').textContent = '매물 최저가';
   $('#row-count').textContent = referenceCount ? `${saleRows.length}개 + 참고 ${referenceCount}개` : `${saleRows.length}개`;
   $('#sale-item-count').textContent = visibleSaleCount === totalSaleCount ? `${totalSaleCount}개` : `${visibleSaleCount}/${totalSaleCount}개`;
@@ -473,7 +483,30 @@ function render() {
 
   renderNotices();
   renderSaleItems(visibleSaleCatalog);
-  renderTable(rows);
+  renderTable(pageRows, saleRankOffset);
+  renderPagination(rows.length, pageStart, pageEnd, totalPages);
+}
+
+function renderPagination(total, start, end, totalPages) {
+  const pageSize = $('#page-size');
+  const previous = $('#page-prev');
+  const next = $('#page-next');
+  const pageState = $('#page-state');
+  if (!pageSize || !previous || !next || !pageState) return;
+
+  pageSize.value = String(state.pageSize);
+  previous.disabled = state.page <= 1;
+  next.disabled = state.page >= totalPages;
+  pageState.textContent = total
+    ? `${state.page}/${totalPages} · ${start + 1}-${end} / ${total}`
+    : '0 / 0';
+}
+
+function updateTablePage(page) {
+  state.page = page;
+  render();
+  const table = $('.table-wrap');
+  if (table) table.scrollTop = 0;
 }
 
 function renderNotices() {
@@ -518,14 +551,14 @@ function renderSaleItems(catalog) {
   }).join('');
 }
 
-function renderTable(rows) {
+function renderTable(rows, saleRankOffset = 0) {
   const tbody = $('#item-rows');
   if (!rows.length) {
     tbody.innerHTML = $('#empty-template').innerHTML;
     return;
   }
 
-  let saleRank = 0;
+  let saleRank = saleRankOffset;
   tbody.innerHTML = rows.map(item => {
     const isReference = Boolean(item.referenceOnly);
     const rankNumber = isReference ? null : ++saleRank;
@@ -555,7 +588,7 @@ function renderTable(rows) {
           ${itemMeta}
           ${renderComponents(item)}
         </td>
-        <td data-label="캐시/마일리지"><span class="cash-value">${cost}</span></td>
+        <td data-label="구매 가격"><span class="cash-value">${cost}</span></td>
         <td data-label="매물가/참고가">${price}</td>
         <td data-label="판매 효율/절약">${result}</td>
       </tr>
@@ -630,15 +663,15 @@ function renderComponents(item) {
 }
 
 function renderMileageBadge(type) {
-  if (type === 'full') return '<span class="mileage-pill full">마일리지 100% 가능</span>';
-  if (type === 'partial') return '<span class="mileage-pill partial">마일리지 30% 가능</span>';
-  return '<span class="mileage-pill none">마일리지 사용 불가</span>';
+  if (type === 'full') return '<span class="mileage-pill full">마일리지로 전액 결제</span>';
+  if (type === 'partial') return '<span class="mileage-pill partial">마일리지로 30% 할인</span>';
+  return '<span class="mileage-pill none">마일리지 할인 불가</span>';
 }
 
 function mileageLabel(type) {
-  if (type === 'full') return '100%';
-  if (type === 'partial') return '30%';
-  return '불가';
+  if (type === 'full') return '마일리지 전액 결제';
+  if (type === 'partial') return '마일리지 30% 할인';
+  return '마일리지 할인 불가';
 }
 
 function setSyncState(kind, title, detail) {
@@ -730,6 +763,7 @@ function escapeAttribute(value) {
 
 $('#search-input').addEventListener('input', event => {
   state.search = event.target.value;
+  state.page = 1;
   render();
 });
 
@@ -738,6 +772,7 @@ $('#category-filter-list').addEventListener('change', event => {
   const input = event.target.closest('input[data-filter-group="category"]');
   if (!input) return;
   updateHiddenFilter(state.hiddenCategories, input.value, input.checked);
+  state.page = 1;
   render();
 });
 
@@ -745,16 +780,19 @@ $('#status-filter-list').addEventListener('change', event => {
   const input = event.target.closest('input[data-filter-group="status"]');
   if (!input) return;
   updateHiddenFilter(state.hiddenAuctionStatuses, input.value, input.checked);
+  state.page = 1;
   render();
 });
 
 $('#category-filter-reset').addEventListener('click', () => {
   state.hiddenCategories.clear();
+  state.page = 1;
   render();
 });
 
 $('#status-filter-reset').addEventListener('click', () => {
   state.hiddenAuctionStatuses.clear();
+  state.page = 1;
   render();
 });
 $('#sale-search-input').addEventListener('input', event => {
@@ -777,20 +815,35 @@ $('#sale-review-filter').addEventListener('change', event => {
   render();
 });
 
+const pageSizeControl = $('#page-size');
+if (pageSizeControl) {
+  pageSizeControl.addEventListener('change', event => {
+    state.pageSize = Number(event.target.value);
+    updateTablePage(1);
+  });
+}
+const previousPage = $('#page-prev');
+if (previousPage) previousPage.addEventListener('click', () => updateTablePage(state.page - 1));
+const nextPage = $('#page-next');
+if (nextPage) nextPage.addEventListener('click', () => updateTablePage(state.page + 1));
+
 $('#discount-rate').addEventListener('input', event => {
   state.settings.discountRate = Number(event.target.value || 0);
+  state.page = 1;
   persistSettings();
   render();
 });
 
 $('#ah-fee-rate').addEventListener('change', event => {
   state.settings.ahFeeRate = Number(event.target.value || 5);
+  state.page = 1;
   persistSettings();
   render();
 });
 
 $('#base-mp-rate').addEventListener('input', event => {
   state.settings.baseMpRate = Number(event.target.value || 0);
+  state.page = 1;
   persistSettings();
   render();
 });
