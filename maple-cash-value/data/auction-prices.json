@@ -1,7 +1,7 @@
 {
   "version": 2,
   "world": "스카니아",
-  "generatedAt": "2026-07-11T20:01:55.235+09:00",
+  "generatedAt": "2026-07-11T20:08:50.692+09:00",
   "source": "manual-maple-auction-two-account",
   "policy": {
     "searchTab": "구매",
@@ -1258,6 +1258,336 @@
       "searchAccount": 1,
       "searchIndex": 50,
       "collectedAt": "2026-07-11T20:01:55.235+09:00"
+    },
+    {
+      "itemName": "모험가 히어로 아머",
+      "query": "모험가 히어로 아머",
+      "listingLowestMeso": 85555555,
+      "listingLowestText": "8555만 5555",
+      "resultCount": 7,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 51,
+      "collectedAt": "2026-07-11T20:08:50.692+09:00"
+    },
+    {
+      "itemName": "모험가 히어로 소드",
+      "query": "모험가 히어로 소드",
+      "listingLowestMeso": 399999999,
+      "listingLowestText": "3억 9999만 9999",
+      "resultCount": 5,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 52,
+      "collectedAt": "2026-07-11T20:08:50.692+09:00"
+    },
+    {
+      "itemName": "모험가 팔라딘 아머",
+      "query": "모험가 팔라딘 아머",
+      "listingLowestMeso": 107777777,
+      "listingLowestText": "1억 777만 7777",
+      "resultCount": 9,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 53,
+      "collectedAt": "2026-07-11T20:08:50.692+09:00"
+    },
+    {
+      "itemName": "모험가 팔라딘 해머",
+      "query": "모험가 팔라딘 해머",
+      "listingLowestMeso": 355555555,
+      "listingLowestText": "3억 5555만 5555",
+      "resultCount": 10,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 54,
+      "collectedAt": "2026-07-11T20:08:50.692+09:00"
+    },
+    {
+      "itemName": "모험가 다크나이트 아머",
+      "query": "모험가 다크나이트 아머",
+      "listingLowestMeso": 181999999,
+      "listingLowestText": "1억 8199만 9999",
+      "resultCount": 9,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 55,
+      "collectedAt": "2026-07-11T20:08:50.692+09:00"
+    },
+    {
+      "itemName": "모험가 다크나이트 스피어",
+      "query": "모험가 다크나이트 스피어",
+      "listingLowestMeso": 299999999,
+      "listingLowestText": "2억 9999만 9999",
+      "resultCount": 4,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 56,
+      "collectedAt": "2026-07-11T20:08:50.692+09:00"
+    },
+    {
+      "itemName": "모험가 불독 로브(남)",
+      "query": "모험가 불독 로브 (남)",
+      "aliases": [
+        "모험가 불독 로브 (남)"
+      ],
+      "listingLowestMeso": 111111111,
+      "listingLowestText": "1억 1111만 1111",
+      "resultCount": 6,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 57,
+      "collectedAt": "2026-07-11T20:08:50.692+09:00"
+    },
+    {
+      "itemName": "모험가 불독 완드",
+      "query": "모험가 불독 완드",
+      "listingLowestMeso": 259999989,
+      "listingLowestText": "2억 5999만 9989",
+      "resultCount": 5,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 58,
+      "collectedAt": "2026-07-11T20:08:50.692+09:00"
+    },
+    {
+      "itemName": "모험가 불독 로브(여)",
+      "query": "모험가 불독 로브 (여)",
+      "aliases": [
+        "모험가 불독 로브 (여)"
+      ],
+      "listingLowestMeso": 189999999,
+      "listingLowestText": "1억 8999만 9999",
+      "resultCount": 9,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 59,
+      "collectedAt": "2026-07-11T20:08:50.692+09:00"
+    },
+    {
+      "itemName": "모험가 썬콜 로브(남)",
+      "query": "모험가 썬콜 로브 (남)",
+      "aliases": [
+        "모험가 썬콜 로브 (남)"
+      ],
+      "listingLowestMeso": 199999999,
+      "listingLowestText": "1억 9999만 9999",
+      "resultCount": 3,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 60,
+      "collectedAt": "2026-07-11T20:08:50.692+09:00"
+    },
+    {
+      "itemName": "모험가 썬콜 스태프",
+      "query": "모험가 썬콜 스태프",
+      "listingLowestMeso": 69999999,
+      "listingLowestText": "6999만 9999",
+      "resultCount": 6,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 61,
+      "collectedAt": "2026-07-11T20:08:50.692+09:00"
+    },
+    {
+      "itemName": "모험가 썬콜 로브(여)",
+      "query": "모험가 썬콜 로브 (여)",
+      "aliases": [
+        "모험가 썬콜 로브 (여)"
+      ],
+      "listingLowestMeso": 32000000,
+      "listingLowestText": "3200만",
+      "resultCount": 7,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 62,
+      "collectedAt": "2026-07-11T20:08:50.692+09:00"
+    },
+    {
+      "itemName": "모험가 비숍 로브(남)",
+      "query": "모험가 비숍 로브 (남)",
+      "aliases": [
+        "모험가 비숍 로브 (남)"
+      ],
+      "listingLowestMeso": 155555555,
+      "listingLowestText": "1억 5555만 5555",
+      "resultCount": 8,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 63,
+      "collectedAt": "2026-07-11T20:08:50.692+09:00"
+    },
+    {
+      "itemName": "모험가 비숍 완드",
+      "query": "모험가 비숍 완드",
+      "listingLowestMeso": 133333333,
+      "listingLowestText": "1억 3333만 3333",
+      "resultCount": 6,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 64,
+      "collectedAt": "2026-07-11T20:08:50.692+09:00"
+    },
+    {
+      "itemName": "모험가 비숍 로브(여)",
+      "query": "모험가 비숍 로브 (여)",
+      "aliases": [
+        "모험가 비숍 로브 (여)"
+      ],
+      "listingLowestMeso": 249999999,
+      "listingLowestText": "2억 4999만 9999",
+      "resultCount": 3,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 65,
+      "collectedAt": "2026-07-11T20:08:50.692+09:00"
+    },
+    {
+      "itemName": "모험가 보우마스터 슈트(남)",
+      "query": "모험가 보우마스터 슈트 (남)",
+      "aliases": [
+        "모험가 보우마스터 슈트 (남)"
+      ],
+      "listingLowestMeso": 66850000,
+      "listingLowestText": "6685만",
+      "resultCount": 8,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 66,
+      "collectedAt": "2026-07-11T20:08:50.692+09:00"
+    },
+    {
+      "itemName": "모험가 보우마스터 활",
+      "query": "모험가 보우마스터 활",
+      "listingLowestMeso": 455555555,
+      "listingLowestText": "4억 5555만 5555",
+      "resultCount": 4,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 67,
+      "collectedAt": "2026-07-11T20:08:50.692+09:00"
+    },
+    {
+      "itemName": "모험가 보우마스터 슈트(여)",
+      "query": "모험가 보우마스터 슈트 (여)",
+      "aliases": [
+        "모험가 보우마스터 슈트 (여)"
+      ],
+      "listingLowestMeso": 33333333,
+      "listingLowestText": "3333만 3333",
+      "resultCount": 3,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 68,
+      "collectedAt": "2026-07-11T20:08:50.692+09:00"
+    },
+    {
+      "itemName": "모험가 신궁 슈트(남)",
+      "query": "모험가 신궁 슈트 (남)",
+      "aliases": [
+        "모험가 신궁 슈트 (남)"
+      ],
+      "listingLowestMeso": 122222222,
+      "listingLowestText": "1억 2222만 2222",
+      "resultCount": 3,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 69,
+      "collectedAt": "2026-07-11T20:08:50.692+09:00"
+    },
+    {
+      "itemName": "모험가 신궁 석궁",
+      "query": "모험가 신궁 석궁",
+      "listingLowestMeso": 389799999,
+      "listingLowestText": "3억 8979만 9999",
+      "resultCount": 7,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 70,
+      "collectedAt": "2026-07-11T20:08:50.692+09:00"
+    },
+    {
+      "itemName": "모험가 신궁 슈트(여)",
+      "query": "모험가 신궁 슈트 (여)",
+      "aliases": [
+        "모험가 신궁 슈트 (여)"
+      ],
+      "listingLowestMeso": 239599999,
+      "listingLowestText": "2억 3959만 9999",
+      "resultCount": 6,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 71,
+      "collectedAt": "2026-07-11T20:08:50.692+09:00"
+    },
+    {
+      "itemName": "모험가 패스파인더 슈트",
+      "query": "모험가 패스파인더 슈트",
+      "listingLowestMeso": 255500000,
+      "listingLowestText": "2억 5550만",
+      "resultCount": 4,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 72,
+      "collectedAt": "2026-07-11T20:08:50.692+09:00"
+    },
+    {
+      "itemName": "모험가 패스파인더 활",
+      "query": "모험가 패스파인더 활",
+      "listingLowestMeso": 266600000,
+      "listingLowestText": "2억 6660만",
+      "resultCount": 5,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 73,
+      "collectedAt": "2026-07-11T20:08:50.692+09:00"
+    },
+    {
+      "itemName": "모험가 나이트로드 슈트",
+      "query": "모험가 나이트로드 슈트",
+      "listingLowestMeso": 88800000,
+      "listingLowestText": "8880만",
+      "resultCount": 4,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 74,
+      "collectedAt": "2026-07-11T20:08:50.692+09:00"
+    },
+    {
+      "itemName": "모험가 나이트로드 표창",
+      "query": "모험가 나이트로드 표창",
+      "listingLowestMeso": 466600000,
+      "listingLowestText": "4억 6660만",
+      "resultCount": 10,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 75,
+      "collectedAt": "2026-07-11T20:08:50.692+09:00"
     }
   ],
   "skipped": [
