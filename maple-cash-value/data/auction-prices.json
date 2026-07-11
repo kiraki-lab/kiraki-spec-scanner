@@ -1,14 +1,14 @@
 {
   "version": 2,
   "world": "스카니아",
-  "generatedAt": "2026-07-11T19:01:40.802+09:00",
-  "source": "maple-auction-web-purchase-tab+manual",
+  "generatedAt": "2026-07-11T19:56:41.794+09:00",
+  "source": "manual-maple-auction-two-account",
   "policy": {
     "searchTab": "구매",
     "priceBasis": "listingLowestMeso",
     "candidateCheckBeforeSearch": true,
     "officialSearchLimit": 100,
-    "notes": "2026-07-09 검색 제한 도달 전 확인분만 반영"
+    "notes": "Chrome exact-candidate searches; account ledger prevents duplicates; no-candidate entries are not submitted."
   },
   "prices": [
     {
@@ -589,6 +589,333 @@
       "status": "ok",
       "filter": "캐시",
       "collectedAt": "2026-07-09T23:45:00+09:00"
+    },
+    {
+      "itemName": "기사단장 오즈 스태프",
+      "query": "기사단장 오즈 스태프",
+      "listingLowestMeso": 162200000,
+      "listingLowestText": "1억 6220만",
+      "resultCount": 8,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 1,
+      "collectedAt": "2026-07-11T19:56:41.794+09:00"
+    },
+    {
+      "itemName": "기사단장 이리나 크라운",
+      "query": "기사단장 이리나 크라운",
+      "listingLowestMeso": 32950000,
+      "listingLowestText": "3295만",
+      "resultCount": 3,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 2,
+      "collectedAt": "2026-07-11T19:56:41.794+09:00"
+    },
+    {
+      "itemName": "기사단장 이리나 슈트(남)",
+      "query": "기사단장 이리나 슈트 (남)",
+      "aliases": [
+        "기사단장 이리나 슈트 (남)"
+      ],
+      "listingLowestMeso": 211111111,
+      "listingLowestText": "2억 1111만 1111",
+      "resultCount": 3,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 3,
+      "collectedAt": "2026-07-11T19:56:41.794+09:00"
+    },
+    {
+      "itemName": "기사단장 이리나 슈즈(남)",
+      "query": "기사단장 이리나 슈즈 (남)",
+      "aliases": [
+        "기사단장 이리나 슈즈 (남)"
+      ],
+      "listingLowestMeso": 78787878,
+      "listingLowestText": "7878만 7878",
+      "resultCount": 2,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 4,
+      "collectedAt": "2026-07-11T19:56:41.794+09:00"
+    },
+    {
+      "itemName": "기사단장 이리나 보우",
+      "query": "기사단장 이리나 보우",
+      "listingLowestMeso": 372800000,
+      "listingLowestText": "3억 7280만",
+      "resultCount": 8,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 5,
+      "collectedAt": "2026-07-11T19:56:41.794+09:00"
+    },
+    {
+      "itemName": "기사단장 이리나 슈트(여)",
+      "query": "기사단장 이리나 슈트 (여)",
+      "aliases": [
+        "기사단장 이리나 슈트 (여)"
+      ],
+      "listingLowestMeso": 313900000,
+      "listingLowestText": "3억 1390만",
+      "resultCount": 5,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 6,
+      "collectedAt": "2026-07-11T19:56:41.794+09:00"
+    },
+    {
+      "itemName": "기사단장 이리나 슈즈(여)",
+      "query": "기사단장 이리나 슈즈 (여)",
+      "aliases": [
+        "기사단장 이리나 슈즈 (여)"
+      ],
+      "listingLowestMeso": 15950000,
+      "listingLowestText": "1595만",
+      "resultCount": 3,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 7,
+      "collectedAt": "2026-07-11T19:56:41.794+09:00"
+    },
+    {
+      "itemName": "기사단장 이카르트 가면",
+      "query": "기사단장 이카르트 가면",
+      "listingLowestMeso": 427900000,
+      "listingLowestText": "4억 2790만",
+      "resultCount": 6,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 8,
+      "collectedAt": "2026-07-11T19:56:41.794+09:00"
+    },
+    {
+      "itemName": "기사단장 이카르트 슈트(남)",
+      "query": "기사단장 이카르트 슈트 (남)",
+      "aliases": [
+        "기사단장 이카르트 슈트 (남)"
+      ],
+      "listingLowestMeso": 199900000,
+      "listingLowestText": "1억 9990만",
+      "resultCount": 4,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 9,
+      "collectedAt": "2026-07-11T19:56:41.794+09:00"
+    },
+    {
+      "itemName": "기사단장 이카르트 표창",
+      "query": "기사단장 이카르트 표창",
+      "listingLowestMeso": 199999999,
+      "listingLowestText": "1억 9999만 9999",
+      "resultCount": 5,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 10,
+      "collectedAt": "2026-07-11T19:56:41.794+09:00"
+    },
+    {
+      "itemName": "기사단장 이카르트 부츠",
+      "query": "기사단장 이카르트 부츠",
+      "listingLowestMeso": 18000000,
+      "listingLowestText": "1800만",
+      "resultCount": 2,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 11,
+      "collectedAt": "2026-07-11T19:56:41.794+09:00"
+    },
+    {
+      "itemName": "기사단장 이카르트 슈트(여)",
+      "query": "기사단장 이카르트 슈트 (여)",
+      "aliases": [
+        "기사단장 이카르트 슈트 (여)"
+      ],
+      "listingLowestMeso": 187800000,
+      "listingLowestText": "1억 8780만",
+      "resultCount": 3,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 12,
+      "collectedAt": "2026-07-11T19:56:41.794+09:00"
+    },
+    {
+      "itemName": "기사단장 호크아이 햇",
+      "query": "기사단장 호크아이 햇",
+      "listingLowestMeso": 115000000,
+      "listingLowestText": "1억 1500만",
+      "resultCount": 5,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 13,
+      "collectedAt": "2026-07-11T19:56:41.794+09:00"
+    },
+    {
+      "itemName": "기사단장 호크아이 슈트(남)",
+      "query": "기사단장 호크아이 슈트 (남)",
+      "aliases": [
+        "기사단장 호크아이 슈트 (남)"
+      ],
+      "listingLowestMeso": 111111111,
+      "listingLowestText": "1억 1111만 1111",
+      "resultCount": 1,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 14,
+      "collectedAt": "2026-07-11T19:56:41.794+09:00"
+    },
+    {
+      "itemName": "기사단장 호크아이 너클",
+      "query": "기사단장 호크아이 너클",
+      "listingLowestMeso": 133333333,
+      "listingLowestText": "1억 3333만 3333",
+      "resultCount": 5,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 15,
+      "collectedAt": "2026-07-11T19:56:41.794+09:00"
+    },
+    {
+      "itemName": "기사단장 호크아이 부츠",
+      "query": "기사단장 호크아이 부츠",
+      "listingLowestMeso": 9999999,
+      "listingLowestText": "999만 9999",
+      "resultCount": 3,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 16,
+      "collectedAt": "2026-07-11T19:56:41.794+09:00"
+    },
+    {
+      "itemName": "기사단장 호크아이 슈트(여)",
+      "query": "기사단장 호크아이 슈트 (여)",
+      "aliases": [
+        "기사단장 호크아이 슈트 (여)"
+      ],
+      "listingLowestMeso": 399999999,
+      "listingLowestText": "3억 9999만 9999",
+      "resultCount": 1,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 17,
+      "collectedAt": "2026-07-11T19:56:41.794+09:00"
+    },
+    {
+      "itemName": "책사 나인하트 모노클",
+      "query": "책사 나인하트 모노클",
+      "listingLowestMeso": 39999999,
+      "listingLowestText": "3999만 9999",
+      "resultCount": 7,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 18,
+      "collectedAt": "2026-07-11T19:56:41.794+09:00"
+    },
+    {
+      "itemName": "책사 나인하트 로브",
+      "query": "책사 나인하트 로브",
+      "listingLowestMeso": 29999999,
+      "listingLowestText": "2999만 9999",
+      "resultCount": 4,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 19,
+      "collectedAt": "2026-07-11T19:56:41.794+09:00"
+    },
+    {
+      "itemName": "책사 나인하트 도서",
+      "query": "책사 나인하트 도서",
+      "listingLowestMeso": 666666666,
+      "listingLowestText": "6억 6666만 6666",
+      "resultCount": 9,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 20,
+      "collectedAt": "2026-07-11T19:56:41.794+09:00"
+    },
+    {
+      "itemName": "책사 나인하트 슈즈",
+      "query": "책사 나인하트 슈즈",
+      "listingLowestMeso": 3222222,
+      "listingLowestText": "322만 2222",
+      "resultCount": 4,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 21,
+      "collectedAt": "2026-07-11T19:56:41.794+09:00"
+    },
+    {
+      "itemName": "여제 시그너스 써클릿",
+      "query": "여제 시그너스 써클릿",
+      "listingLowestMeso": 40000000,
+      "listingLowestText": "4000만",
+      "resultCount": 1,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 22,
+      "collectedAt": "2026-07-11T19:56:41.794+09:00"
+    },
+    {
+      "itemName": "여제 시그너스 드레스(여)",
+      "query": "여제 시그너스 드레스 (여)",
+      "aliases": [
+        "여제 시그너스 드레스 (여)"
+      ],
+      "listingLowestMeso": 211111100,
+      "listingLowestText": "2억 1111만 1100",
+      "resultCount": 2,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 23,
+      "collectedAt": "2026-07-11T19:56:41.794+09:00"
+    },
+    {
+      "itemName": "신수의 부름",
+      "query": "신수의 부름",
+      "listingLowestMeso": 89000000,
+      "listingLowestText": "8900만",
+      "resultCount": 1,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 24,
+      "collectedAt": "2026-07-11T19:56:41.794+09:00"
+    },
+    {
+      "itemName": "여제 시그너스 슈즈",
+      "query": "여제 시그너스 슈즈",
+      "listingLowestMeso": 139999999,
+      "listingLowestText": "1억 3999만 9999",
+      "resultCount": 1,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 25,
+      "collectedAt": "2026-07-11T19:56:41.794+09:00"
     }
   ],
   "skipped": [
@@ -636,12 +963,6 @@
       "query": "기사단장 오즈 로브 (여)",
       "status": "no_listing",
       "reason": "후보 선택 후 필터 검색 결과 0건",
-      "filter": "캐시"
-    },
-    {
-      "itemName": "기사단장 오즈 스태프",
-      "status": "unverified",
-      "reason": "검색 제한 도달로 최종 가격 미확인",
       "filter": "캐시"
     }
   ]
