@@ -1,7 +1,7 @@
 {
   "version": 3,
   "world": "스카니아",
-  "updatedAt": "2026-07-11T18:50:17.685Z",
+  "updatedAt": "2026-07-11T19:08:42.609Z",
   "settings": {
     "baseMpRate": 6990,
     "discountRate": 6,
@@ -4535,6 +4535,566 @@
         },
         {
           "name": "오로라냥 빔",
+          "seedMesoPrice": 0
+        }
+      ]
+    },
+    {
+      "id": 663,
+      "name": "코어 젬젬이 펫 패키지",
+      "category": "패키지 · 금손 은손 펫",
+      "cashPrice": 9900,
+      "mileageType": "none",
+      "components": [
+        {
+          "name": "코어 젬젬이",
+          "seedMesoPrice": 0
+        },
+        {
+          "name": "거울 젬젬이",
+          "seedMesoPrice": 0
+        },
+        {
+          "name": "경험 젬젬이",
+          "seedMesoPrice": 0
+        }
+      ],
+      "bonusComponents": [
+        {
+          "name": "푸른 빛의 광휘",
+          "seedMesoPrice": 0
+        },
+        {
+          "name": "거울의 광휘",
+          "seedMesoPrice": 0
+        },
+        {
+          "name": "경험의 광휘",
+          "seedMesoPrice": 0
+        }
+      ]
+    },
+    {
+      "id": 664,
+      "name": "튀잉과 함께 요리해요 펫 패키지",
+      "category": "패키지 · 금손 은손 펫",
+      "cashPrice": 9900,
+      "mileageType": "none",
+      "components": [
+        {
+          "name": "버싸잉",
+          "seedMesoPrice": 0
+        },
+        {
+          "name": "노릇잉",
+          "seedMesoPrice": 0
+        },
+        {
+          "name": "탔다잉",
+          "seedMesoPrice": 0
+        }
+      ],
+      "bonusComponents": [
+        {
+          "name": "강철 집게",
+          "seedMesoPrice": 0
+        },
+        {
+          "name": "라이팬",
+          "seedMesoPrice": 0
+        },
+        {
+          "name": "소중한 올리브유",
+          "seedMesoPrice": 0
+        }
+      ]
+    },
+    {
+      "id": 665,
+      "name": "모험의 시작 펫 패키지",
+      "category": "패키지 · 금손 은손 펫",
+      "cashPrice": 9900,
+      "mileageType": "none",
+      "components": [
+        {
+          "name": "아루루",
+          "seedMesoPrice": 0
+        },
+        {
+          "name": "도도",
+          "seedMesoPrice": 0
+        },
+        {
+          "name": "바우",
+          "seedMesoPrice": 0
+        }
+      ],
+      "bonusComponents": [
+        {
+          "name": "모험가의 표창",
+          "seedMesoPrice": 0
+        },
+        {
+          "name": "모험가의 검",
+          "seedMesoPrice": 0
+        },
+        {
+          "name": "모험가의 활",
+          "seedMesoPrice": 0
+        }
+      ]
+    },
+    {
+      "id": 666,
+      "name": "오! 나의 쁘띠 여신님 펫 패키지",
+      "category": "패키지 · 금손 은손 펫",
+      "cashPrice": 9900,
+      "mileageType": "none",
+      "components": [
+        {
+          "name": "메이플 여신",
+          "seedMesoPrice": 0
+        },
+        {
+          "name": "레프 여신",
+          "seedMesoPrice": 0
+        },
+        {
+          "name": "아니마 여신",
+          "seedMesoPrice": 0
+        }
+      ],
+      "bonusComponents": [
+        {
+          "name": "메이플 여신의 따스한 휘광",
+          "seedMesoPrice": 0
+        },
+        {
+          "name": "레프 여신의 찬란한 휘광",
+          "seedMesoPrice": 0
+        },
+        {
+          "name": "아니마 여신의 화려한 휘광",
+          "seedMesoPrice": 0
+        }
+      ]
+    },
+    {
+      "id": 667,
+      "name": "도토리 수비대 펫 패키지",
+      "category": "패키지 · 금손 은손 펫",
+      "cashPrice": 9900,
+      "mileageType": "none",
+      "components": [
+        {
+          "name": "도롱",
+          "seedMesoPrice": 0
+        },
+        {
+          "name": "토리",
+          "seedMesoPrice": 0
+        },
+        {
+          "name": "리링",
+          "seedMesoPrice": 0
+        }
+      ],
+      "bonusComponents": [
+        {
+          "name": "도롱의 피크닉",
+          "seedMesoPrice": 0
+        },
+        {
+          "name": "토리의 요술 보따리",
+          "seedMesoPrice": 0
+        },
+        {
+          "name": "리링의 턱받이",
+          "seedMesoPrice": 0
+        }
+      ]
+    },
+    {
+      "id": 668,
+      "name": "플레임 데빌 펫 패키지",
+      "category": "패키지 · 금손 은손 펫",
+      "cashPrice": 9900,
+      "mileageType": "none",
+      "components": [
+        {
+          "name": "바알",
+          "seedMesoPrice": 0
+        },
+        {
+          "name": "루시",
+          "seedMesoPrice": 0
+        },
+        {
+          "name": "레비",
+          "seedMesoPrice": 0
+        }
+      ],
+      "bonusComponents": [
+        {
+          "name": "바알 플레임",
+          "seedMesoPrice": 0
+        },
+        {
+          "name": "루시 플레임",
+          "seedMesoPrice": 0
+        },
+        {
+          "name": "레비 플레임",
+          "seedMesoPrice": 0
+        }
+      ]
+    },
+    {
+      "id": 669,
+      "name": "딸초바니 펫 패키지",
+      "category": "패키지 · 금손 은손 펫",
+      "cashPrice": 9900,
+      "mileageType": "none",
+      "components": [
+        {
+          "name": "딸기",
+          "seedMesoPrice": 0
+        },
+        {
+          "name": "초코",
+          "seedMesoPrice": 0
+        },
+        {
+          "name": "날라",
+          "seedMesoPrice": 0
+        }
+      ],
+      "bonusComponents": [
+        {
+          "name": "딸기맛 아이스크림",
+          "seedMesoPrice": 0
+        },
+        {
+          "name": "초코맛 아이스크림",
+          "seedMesoPrice": 0
+        },
+        {
+          "name": "바닐라 아이스크림",
+          "seedMesoPrice": 0
+        }
+      ]
+    },
+    {
+      "id": 670,
+      "name": "으스스 유령 친구들 펫 패키지",
+      "category": "패키지 · 금손 은손 펫",
+      "cashPrice": 9900,
+      "mileageType": "none",
+      "components": [
+        {
+          "name": "으스스곰",
+          "seedMesoPrice": 0
+        },
+        {
+          "name": "으스스깜",
+          "seedMesoPrice": 0
+        },
+        {
+          "name": "으스스냥",
+          "seedMesoPrice": 0
+        }
+      ],
+      "bonusComponents": [
+        {
+          "name": "으스스한 물고기",
+          "seedMesoPrice": 0
+        },
+        {
+          "name": "으스스한 당근",
+          "seedMesoPrice": 0
+        },
+        {
+          "name": "으스스한 발자국",
+          "seedMesoPrice": 0
+        }
+      ]
+    },
+    {
+      "id": 671,
+      "name": "짹짹! 우편부 아기새 펫 패키지",
+      "category": "패키지 · 금손 은손 펫",
+      "cashPrice": 9900,
+      "mileageType": "none",
+      "components": [
+        {
+          "name": "누누",
+          "seedMesoPrice": 0
+        },
+        {
+          "name": "구구",
+          "seedMesoPrice": 0
+        },
+        {
+          "name": "비비",
+          "seedMesoPrice": 0
+        }
+      ],
+      "bonusComponents": [
+        {
+          "name": "빨간 가방",
+          "seedMesoPrice": 0
+        },
+        {
+          "name": "파란 가방",
+          "seedMesoPrice": 0
+        },
+        {
+          "name": "초록 가방",
+          "seedMesoPrice": 0
+        }
+      ]
+    },
+    {
+      "id": 672,
+      "name": "검은 마법사의 여름휴가 펫 패키지",
+      "category": "패키지 · 금손 은손 펫",
+      "cashPrice": 9900,
+      "mileageType": "none",
+      "components": [
+        {
+          "name": "밍고 검마",
+          "seedMesoPrice": 0
+        },
+        {
+          "name": "오리 검마",
+          "seedMesoPrice": 0
+        },
+        {
+          "name": "비치볼 검마",
+          "seedMesoPrice": 0
+        }
+      ],
+      "bonusComponents": [
+        {
+          "name": "밍고 검마의 방울",
+          "seedMesoPrice": 0
+        },
+        {
+          "name": "오리 검마의 방울",
+          "seedMesoPrice": 0
+        },
+        {
+          "name": "비치볼 검마의 방울",
+          "seedMesoPrice": 0
+        }
+      ]
+    },
+    {
+      "id": 673,
+      "name": "바다빵집 1호점 펫 패키지",
+      "category": "패키지 · 금손 은손 펫",
+      "cashPrice": 9900,
+      "mileageType": "none",
+      "components": [
+        {
+          "name": "팬케오리",
+          "seedMesoPrice": 0
+        },
+        {
+          "name": "다쿠아부기",
+          "seedMesoPrice": 0
+        },
+        {
+          "name": "마들고렌",
+          "seedMesoPrice": 0
+        }
+      ],
+      "bonusComponents": [
+        {
+          "name": "버터 한 조각",
+          "seedMesoPrice": 0
+        },
+        {
+          "name": "달달한 휘핑크림",
+          "seedMesoPrice": 0
+        },
+        {
+          "name": "화이트 초코 모자",
+          "seedMesoPrice": 0
+        }
+      ]
+    },
+    {
+      "id": 674,
+      "name": "쁘띠 토벤머리용사 펫 패키지",
+      "category": "패키지 · 금손 은손 펫",
+      "cashPrice": 9900,
+      "mileageType": "none",
+      "components": [
+        {
+          "name": "쁘띠토벤",
+          "seedMesoPrice": 0
+        },
+        {
+          "name": "아케인토벤",
+          "seedMesoPrice": 0
+        },
+        {
+          "name": "블링토잉",
+          "seedMesoPrice": 0
+        }
+      ],
+      "bonusComponents": [
+        {
+          "name": "쁘띠토벤의 초보자용 검",
+          "seedMesoPrice": 0
+        },
+        {
+          "name": "아케인토벤의 아케인 세이버",
+          "seedMesoPrice": 0
+        },
+        {
+          "name": "블링토잉의 안이뿌댕",
+          "seedMesoPrice": 0
+        }
+      ]
+    },
+    {
+      "id": 675,
+      "name": "철푸덕 아이스크림 펫 패키지",
+      "category": "패키지 · 금손 은손 펫",
+      "cashPrice": 9900,
+      "mileageType": "none",
+      "components": [
+        {
+          "name": "아이스핑크빈",
+          "seedMesoPrice": 0
+        },
+        {
+          "name": "아이스슬라임",
+          "seedMesoPrice": 0
+        },
+        {
+          "name": "아이스예티",
+          "seedMesoPrice": 0
+        }
+      ],
+      "bonusComponents": [
+        {
+          "name": "블랙빈 토핑",
+          "seedMesoPrice": 0
+        },
+        {
+          "name": "버블링 토핑",
+          "seedMesoPrice": 0
+        },
+        {
+          "name": "페페 토핑",
+          "seedMesoPrice": 0
+        }
+      ]
+    },
+    {
+      "id": 676,
+      "name": "티컵 페어리 펫 패키지",
+      "category": "패키지 · 금손 은손 펫",
+      "cashPrice": 9900,
+      "mileageType": "none",
+      "components": [
+        {
+          "name": "꼬미",
+          "seedMesoPrice": 0
+        },
+        {
+          "name": "토미",
+          "seedMesoPrice": 0
+        },
+        {
+          "name": "라미",
+          "seedMesoPrice": 0
+        }
+      ],
+      "bonusComponents": [
+        {
+          "name": "꼬미의 하트데코",
+          "seedMesoPrice": 0
+        },
+        {
+          "name": "토미의 하트데코",
+          "seedMesoPrice": 0
+        },
+        {
+          "name": "라미의 하트데코",
+          "seedMesoPrice": 0
+        }
+      ]
+    },
+    {
+      "id": 677,
+      "name": "여름맞이 칵테일 펫 패키지",
+      "category": "패키지 · 금손 은손 펫",
+      "cashPrice": 9900,
+      "mileageType": "none",
+      "components": [
+        {
+          "name": "소다",
+          "seedMesoPrice": 0
+        },
+        {
+          "name": "베리",
+          "seedMesoPrice": 0
+        },
+        {
+          "name": "민트",
+          "seedMesoPrice": 0
+        }
+      ],
+      "bonusComponents": [
+        {
+          "name": "레몬픽",
+          "seedMesoPrice": 0
+        },
+        {
+          "name": "딸기픽",
+          "seedMesoPrice": 0
+        },
+        {
+          "name": "민트잎픽",
+          "seedMesoPrice": 0
+        }
+      ]
+    },
+    {
+      "id": 678,
+      "name": "아틀란티스의 숨겨진 펫 패키지",
+      "category": "패키지 · 금손 은손 펫",
+      "cashPrice": 9900,
+      "mileageType": "none",
+      "components": [
+        {
+          "name": "네스",
+          "seedMesoPrice": 0
+        },
+        {
+          "name": "미미",
+          "seedMesoPrice": 0
+        },
+        {
+          "name": "비쥬",
+          "seedMesoPrice": 0
+        }
+      ],
+      "bonusComponents": [
+        {
+          "name": "네스의 물고기",
+          "seedMesoPrice": 0
+        },
+        {
+          "name": "미미의 해파리 친구",
+          "seedMesoPrice": 0
+        },
+        {
+          "name": "비쥬의 크리스탈",
           "seedMesoPrice": 0
         }
       ]
