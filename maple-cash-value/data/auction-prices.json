@@ -1,14 +1,14 @@
 {
   "version": 2,
   "world": "스카니아",
-  "generatedAt": "2026-07-11T20:08:50.692+09:00",
+  "generatedAt": "2026-07-11T20:17:00.926+09:00",
   "source": "manual-maple-auction-two-account",
   "policy": {
     "searchTab": "구매",
     "priceBasis": "listingLowestMeso",
     "candidateCheckBeforeSearch": true,
     "officialSearchLimit": 100,
-    "notes": "Chrome exact-candidate searches; account ledger prevents duplicates; no-candidate entries are not submitted."
+    "notes": "Account 1 completed 100 exact-candidate filter searches. Missing candidates were not submitted and require manual review."
   },
   "prices": [
     {
@@ -1588,6 +1588,336 @@
       "searchAccount": 1,
       "searchIndex": 75,
       "collectedAt": "2026-07-11T20:08:50.692+09:00"
+    },
+    {
+      "itemName": "모험가 듀얼블레이드 슈트",
+      "query": "모험가 듀얼블레이드 슈트",
+      "listingLowestMeso": 44444444,
+      "listingLowestText": "4444만 4444",
+      "resultCount": 3,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 76,
+      "collectedAt": "2026-07-11T20:17:00.926+09:00"
+    },
+    {
+      "itemName": "모험가 듀얼블레이드 단검",
+      "query": "모험가 듀얼블레이드 단검",
+      "listingLowestMeso": 488888800,
+      "listingLowestText": "4억 8888만 8800",
+      "resultCount": 4,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 77,
+      "collectedAt": "2026-07-11T20:17:00.926+09:00"
+    },
+    {
+      "itemName": "모험가 섀도어 슈트",
+      "query": "모험가 섀도어 슈트",
+      "listingLowestMeso": 69999999,
+      "listingLowestText": "6999만 9999",
+      "resultCount": 3,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 78,
+      "collectedAt": "2026-07-11T20:17:00.926+09:00"
+    },
+    {
+      "itemName": "모험가 섀도어 단검",
+      "query": "모험가 섀도어 단검",
+      "listingLowestMeso": 366666600,
+      "listingLowestText": "3억 6666만 6600",
+      "resultCount": 7,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 79,
+      "collectedAt": "2026-07-11T20:17:00.926+09:00"
+    },
+    {
+      "itemName": "모험가 바이퍼 갑옷(남)",
+      "query": "모험가 바이퍼 갑옷 (남)",
+      "aliases": [
+        "모험가 바이퍼 갑옷 (남)"
+      ],
+      "listingLowestMeso": 377700000,
+      "listingLowestText": "3억 7770만",
+      "resultCount": 6,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 80,
+      "collectedAt": "2026-07-11T20:17:00.926+09:00"
+    },
+    {
+      "itemName": "모험가 바이퍼 너클",
+      "query": "모험가 바이퍼 너클",
+      "listingLowestMeso": 299999999,
+      "listingLowestText": "2억 9999만 9999",
+      "resultCount": 5,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 81,
+      "collectedAt": "2026-07-11T20:17:00.926+09:00"
+    },
+    {
+      "itemName": "모험가 바이퍼 갑옷(여)",
+      "query": "모험가 바이퍼 갑옷 (여)",
+      "aliases": [
+        "모험가 바이퍼 갑옷 (여)"
+      ],
+      "listingLowestMeso": 319999999,
+      "listingLowestText": "3억 1999만 9999",
+      "resultCount": 2,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 82,
+      "collectedAt": "2026-07-11T20:17:00.926+09:00"
+    },
+    {
+      "itemName": "모험가 캡틴 갑옷(남)",
+      "query": "모험가 캡틴 갑옷 (남)",
+      "aliases": [
+        "모험가 캡틴 갑옷 (남)"
+      ],
+      "listingLowestMeso": 99999999,
+      "listingLowestText": "9999만 9999",
+      "resultCount": 6,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 83,
+      "collectedAt": "2026-07-11T20:17:00.926+09:00"
+    },
+    {
+      "itemName": "모험가 캡틴 건",
+      "query": "모험가 캡틴 건",
+      "listingLowestMeso": 335000000,
+      "listingLowestText": "3억 3500만",
+      "resultCount": 5,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 84,
+      "collectedAt": "2026-07-11T20:17:00.926+09:00"
+    },
+    {
+      "itemName": "모험가 캡틴 갑옷(여)",
+      "query": "모험가 캡틴 갑옷 (여)",
+      "aliases": [
+        "모험가 캡틴 갑옷 (여)"
+      ],
+      "listingLowestMeso": 50000000,
+      "listingLowestText": "5000만",
+      "resultCount": 6,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 85,
+      "collectedAt": "2026-07-11T20:17:00.926+09:00"
+    },
+    {
+      "itemName": "모험가 히어로 부츠",
+      "query": "모험가 히어로 부츠",
+      "listingLowestMeso": 74000000,
+      "listingLowestText": "7400만",
+      "resultCount": 2,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 86,
+      "collectedAt": "2026-07-11T20:17:00.926+09:00"
+    },
+    {
+      "itemName": "모험가 팔라딘 부츠",
+      "query": "모험가 팔라딘 부츠",
+      "listingLowestMeso": 90745000,
+      "listingLowestText": "9074만 5000",
+      "resultCount": 1,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 87,
+      "collectedAt": "2026-07-11T20:17:00.926+09:00"
+    },
+    {
+      "itemName": "모험가 다크나이트 부츠",
+      "query": "모험가 다크나이트 부츠",
+      "listingLowestMeso": 41111111,
+      "listingLowestText": "4111만 1111",
+      "resultCount": 6,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 88,
+      "collectedAt": "2026-07-11T20:17:00.926+09:00"
+    },
+    {
+      "itemName": "모험가 불독 부츠(남)",
+      "query": "모험가 불독 부츠 (남)",
+      "aliases": [
+        "모험가 불독 부츠 (남)"
+      ],
+      "listingLowestMeso": 36666666,
+      "listingLowestText": "3666만 6666",
+      "resultCount": 4,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 89,
+      "collectedAt": "2026-07-11T20:17:00.926+09:00"
+    },
+    {
+      "itemName": "모험가 불독 부츠(여)",
+      "query": "모험가 불독 부츠 (여)",
+      "aliases": [
+        "모험가 불독 부츠 (여)"
+      ],
+      "listingLowestMeso": 26999999,
+      "listingLowestText": "2699만 9999",
+      "resultCount": 1,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 90,
+      "collectedAt": "2026-07-11T20:17:00.926+09:00"
+    },
+    {
+      "itemName": "모험가 썬콜 부츠(남)",
+      "query": "모험가 썬콜 부츠 (남)",
+      "aliases": [
+        "모험가 썬콜 부츠 (남)"
+      ],
+      "listingLowestMeso": 39999999,
+      "listingLowestText": "3999만 9999",
+      "resultCount": 3,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 91,
+      "collectedAt": "2026-07-11T20:17:00.926+09:00"
+    },
+    {
+      "itemName": "모험가 썬콜 부츠(여)",
+      "query": "모험가 썬콜 부츠 (여)",
+      "aliases": [
+        "모험가 썬콜 부츠 (여)"
+      ],
+      "listingLowestMeso": 44000000,
+      "listingLowestText": "4400만",
+      "resultCount": 7,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 92,
+      "collectedAt": "2026-07-11T20:17:00.926+09:00"
+    },
+    {
+      "itemName": "모험가 비숍 부츠(남)",
+      "query": "모험가 비숍 부츠 (남)",
+      "aliases": [
+        "모험가 비숍 부츠 (남)"
+      ],
+      "listingLowestMeso": 26666666,
+      "listingLowestText": "2666만 6666",
+      "resultCount": 5,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 93,
+      "collectedAt": "2026-07-11T20:17:00.926+09:00"
+    },
+    {
+      "itemName": "모험가 비숍 부츠(여)",
+      "query": "모험가 비숍 부츠 (여)",
+      "aliases": [
+        "모험가 비숍 부츠 (여)"
+      ],
+      "listingLowestMeso": 28990000,
+      "listingLowestText": "2899만",
+      "resultCount": 2,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 94,
+      "collectedAt": "2026-07-11T20:17:00.926+09:00"
+    },
+    {
+      "itemName": "모험가 보우마스터 부츠",
+      "query": "모험가 보우마스터 부츠",
+      "listingLowestMeso": 15950000,
+      "listingLowestText": "1595만",
+      "resultCount": 3,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 95,
+      "collectedAt": "2026-07-11T20:17:00.926+09:00"
+    },
+    {
+      "itemName": "모험가 신궁 부츠",
+      "query": "모험가 신궁 부츠",
+      "listingLowestMeso": 27699999,
+      "listingLowestText": "2769만 9999",
+      "resultCount": 7,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 96,
+      "collectedAt": "2026-07-11T20:17:00.926+09:00"
+    },
+    {
+      "itemName": "모험가 패스파인더 부츠",
+      "query": "모험가 패스파인더 부츠",
+      "listingLowestMeso": 49950000,
+      "listingLowestText": "4995만",
+      "resultCount": 3,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 97,
+      "collectedAt": "2026-07-11T20:17:00.926+09:00"
+    },
+    {
+      "itemName": "모험가 나이트로드 부츠",
+      "query": "모험가 나이트로드 부츠",
+      "listingLowestMeso": 47700000,
+      "listingLowestText": "4770만",
+      "resultCount": 6,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 98,
+      "collectedAt": "2026-07-11T20:17:00.926+09:00"
+    },
+    {
+      "itemName": "모험가 듀얼블레이드 부츠",
+      "query": "모험가 듀얼블레이드 부츠",
+      "listingLowestMeso": 19999998,
+      "listingLowestText": "1999만 9998",
+      "resultCount": 5,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 99,
+      "collectedAt": "2026-07-11T20:17:00.926+09:00"
+    },
+    {
+      "itemName": "모험가 섀도어 부츠",
+      "query": "모험가 섀도어 부츠",
+      "listingLowestMeso": 165900000,
+      "listingLowestText": "1억 6590만",
+      "resultCount": 2,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 100,
+      "collectedAt": "2026-07-11T20:17:00.926+09:00"
     }
   ],
   "skipped": [
@@ -1636,6 +1966,36 @@
       "status": "no_listing",
       "reason": "후보 선택 후 필터 검색 결과 0건",
       "filter": "캐시"
+    },
+    {
+      "itemName": "모험가 캐논슈터 슈트(남)",
+      "query": "모험가 캐논슈터",
+      "candidate": "모험가 캐논슈터 슈트 (남)",
+      "status": "no_candidate",
+      "reason": "자동완성 정확 후보 없음; 필터 검색 미실행",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "collectedAt": "2026-07-11T20:17:00.926+09:00"
+    },
+    {
+      "itemName": "모험가 캐논슈터 캐논",
+      "query": "모험가 캐논슈터",
+      "candidate": "모험가 캐논슈터 캐논",
+      "status": "no_candidate",
+      "reason": "자동완성 정확 후보 없음; 필터 검색 미실행",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "collectedAt": "2026-07-11T20:17:00.926+09:00"
+    },
+    {
+      "itemName": "모험가 캐논슈터 슈트(여)",
+      "query": "모험가 캐논슈터",
+      "candidate": "모험가 캐논슈터 슈트 (여)",
+      "status": "no_candidate",
+      "reason": "자동완성 정확 후보 없음; 필터 검색 미실행",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "collectedAt": "2026-07-11T20:17:00.926+09:00"
     }
   ]
 }
