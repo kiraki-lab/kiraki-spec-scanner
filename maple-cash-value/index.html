@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Jua&amp;family=Noto+Sans+KR:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./styles.css?v=0.7.0">
+  <link rel="stylesheet" href="./styles.css?v=0.8.0">
 </head>
 <body>
   <div class="app-shell">
@@ -75,7 +75,15 @@
         <div class="filter-group">
           <div class="filter-heading">
             <h2>계산기 카테고리</h2>
-            <button id="category-filter-reset" type="button">전체 표시</button>
+            <div class="filter-heading-actions">
+              <label class="package-toggle">
+                <input id="package-filter-toggle" type="checkbox" checked>
+                <span class="toggle-track" aria-hidden="true"></span>
+                <strong>패키지 전체</strong>
+                <em id="package-filter-state">ON</em>
+              </label>
+              <button id="category-filter-reset" type="button">전체 표시</button>
+            </div>
           </div>
           <div id="category-filter-list" class="filter-chip-list"></div>
         </div>
@@ -185,6 +193,6 @@
     </tr>
   </template>
 
-  <script type="module" src="./app.js?v=0.7.0"></script>
+  <script type="module" src="./app.js?v=0.8.0"></script>
 </body>
 </html>
