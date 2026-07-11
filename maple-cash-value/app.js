@@ -8,6 +8,7 @@ const DATA_PATHS = {
 const SETTINGS_KEY = 'maple-cash-value-settings-v2';
 const LOCAL_DATA_KEY = 'maple-cash-value-local-data-v1';
 const FIXED_MILEAGE_MESO_RATE = 10000;
+const REFERENCE_CATEGORY = '마일리지 구매 참고';
 const DEFAULT_SETTINGS = {
   baseMpRate: 6990,
   discountRate: 6,
@@ -120,6 +121,14 @@ function formatMeso(value) {
   return `${eok >= 10 ? eok.toFixed(1) : eok.toFixed(2)}억`;
 }
 
+function formatReferenceMeso(value) {
+  const meso = Number(value || 0);
+  if (!meso) return '-';
+  if (meso >= 100000000) return formatMeso(meso);
+  if (meso >= 10000) return `${nf.format(Math.round(meso / 10000))}만`;
+  return nf.format(Math.round(meso));
+}
+
 function formatWon(value) {
   return Number.isFinite(value) ? `${won.format(value)}원` : '-';
 }
@@ -222,7 +231,11 @@ function normalizeItemList(items) {
     ...item,
     category: item.category || '캐시 아이템',
     cashPrice: toNumber(item.cashPrice, 0),
+    mileagePrice: toNumber(item.mileagePrice || item.cashPrice, 0),
     seedMesoPrice: toNumber(item.seedMesoPrice || item.defaultMesoPrice, 0),
+    referenceMesoValue: toNumber(item.referenceMesoValue, 0),
+    referenceOnly: Boolean(item.referenceOnly),
+    tradable: item.tradable !== false,
     mileageType: item.mileageType || 'none',
     aliases: Array.isArray(item.aliases) ? item.aliases.map(String).filter(Boolean) : [],
     components: componentList(item.components),
@@ -393,7 +406,7 @@ function buildPriceIndex() {
 }
 
 function categoryFor(item) {
-  return item.category || '캐시 아이템';
+  return item.referenceOnly ? REFERENCE_CATEGORY : (item.category || '캐시 아이템');
 }
 
 function auctionStatusLabel(status) {
@@ -503,6 +516,23 @@ function calculateEfficiency(item, mesoPrice) {
 function enrichItems() {
   const index = buildPriceIndex();
   return state.items.map(item => {
+    if (item.referenceOnly) {
+      const referenceMesoValue = Number(item.referenceMesoValue || 0);
+      const mileagePrice = Number(item.mileagePrice || item.cashPrice || 0);
+      return {
+        ...item,
+        listingPrice: {
+          meso: referenceMesoValue,
+          source: 'reference',
+          auctionStatus: 'reference',
+          collectedAt: item.referenceUpdatedAt || null
+        },
+        auctionStatus: 'reference',
+        listingEfficiency: Infinity,
+        referenceMesoPerThousand: mileagePrice > 0 ? referenceMesoValue / mileagePrice * 1000 : 0
+      };
+    }
+
     const listing = totalPriceFor(item, index);
     return {
       ...item,
@@ -516,18 +546,28 @@ function enrichItems() {
 function filteredRows(sourceRows = enrichItems()) {
   const q = normalizeKey(state.search);
   return sourceRows.filter(item => {
-    if (state.categoryFilter && categoryFor(item) !== state.categoryFilter) return false;
-    if (state.statusFilter && (item.auctionStatus || 'unverified') !== state.statusFilter) return false;
+    if (item.referenceOnly) {
+      if (state.categoryFilter !== REFERENCE_CATEGORY) return false;
+    } else if (state.categoryFilter && categoryFor(item) !== state.categoryFilter) {
+      return false;
+    }
+    if (!item.referenceOnly && state.statusFilter && (item.auctionStatus || 'unverified') !== state.statusFilter) return false;
     if (!q) return true;
     const componentText = Array.isArray(item.components) ? item.components.map(component => component.name).join(' ') : '';
     const bonusText = bonusComponentsFor(item).map(component => component.name).join(' ');
-    return normalizeKey([item.name, item.category, auctionStatusLabel(item.auctionStatus), componentText, bonusText, ...(item.aliases || [])].join(' ')).includes(q);
+    return normalizeKey([item.name, categoryFor(item), auctionStatusLabel(item.auctionStatus), componentText, bonusText, ...(item.aliases || [])].join(' ')).includes(q);
   });
 }
 
 function render() {
   const allRows = enrichItems();
-  const rows = filteredRows(allRows).sort((a, b) => a.listingEfficiency - b.listingEfficiency);
+  const rows = filteredRows(allRows).sort((a, b) => {
+    if (Boolean(a.referenceOnly) !== Boolean(b.referenceOnly)) return a.referenceOnly ? 1 : -1;
+    if (a.referenceOnly) return b.referenceMesoPerThousand - a.referenceMesoPerThousand;
+    return a.listingEfficiency - b.listingEfficiency;
+  });
+  const saleRows = rows.filter(item => !item.referenceOnly);
+  const referenceCount = rows.length - saleRows.length;
   const visibleSaleCatalog = filteredSaleCatalog();
   const visibleSaleCount = flattenSaleSearchItems(visibleSaleCatalog).length;
   const totalSaleCount = flattenSaleSearchItems().length;
@@ -537,10 +577,10 @@ function render() {
   syncAdminItemOptions();
 
   $('#rank-mode-label').textContent = '매물 최저가';
-  $('#row-count').textContent = `${rows.length}개`;
+  $('#row-count').textContent = referenceCount ? `${saleRows.length}개 + 참고 ${referenceCount}개` : `${saleRows.length}개`;
   $('#sale-item-count').textContent = visibleSaleCount === totalSaleCount ? `${totalSaleCount}개` : `${visibleSaleCount}/${totalSaleCount}개`;
   $('#auction-updated').textContent = formatDate(state.localAuctionRows.length ? state.localDataUpdatedAt : state.metadata.auctionUpdatedAt);
-  $('#best-efficiency').textContent = rows.length ? formatWon(rows[0].listingEfficiency) : '-';
+  $('#best-efficiency').textContent = saleRows.length ? formatWon(saleRows[0].listingEfficiency) : '-';
   $('#local-price-count').textContent = `${state.localAuctionRows.length}개`;
   $('#item-override-state').textContent = state.hasLocalItems ? '수정 데이터' : '기본 데이터';
 
@@ -615,19 +655,45 @@ function renderTable(rows) {
     tbody.innerHTML = $('#empty-template').innerHTML;
     return;
   }
-  tbody.innerHTML = rows.map((item, index) => `
-    <tr>
-      <td><span class="rank">${index + 1}</span></td>
-      <td>
-        <span class="item-name">${escapeHtml(item.name)}</span>
-        <span class="item-meta">마일리지 ${mileageLabel(item.mileageType)} · ${escapeHtml(item.category || '캐시 아이템')}</span>
-        ${renderComponents(item)}
-      </td>
-      <td>${nf.format(Number(item.cashPrice || 0))}원</td>
-      <td>${renderPrice(item.listingPrice)}</td>
-      <td><span class="eff-value">${formatWon(item.listingEfficiency)}</span><span class="price-meta">1억당 현금</span></td>
-    </tr>
-  `).join('');
+
+  let saleRank = 0;
+  tbody.innerHTML = rows.map(item => {
+    const isReference = Boolean(item.referenceOnly);
+    const rank = isReference
+      ? '<span class="source-pill seed">참고</span>'
+      : `<span class="rank">${++saleRank}</span>`;
+    const itemMeta = isReference
+      ? `마일리지 전용 · 판매 불가 · ${REFERENCE_CATEGORY}`
+      : `마일리지 ${mileageLabel(item.mileageType)} · ${escapeHtml(item.category || '캐시 아이템')}`;
+    const cost = isReference
+      ? `${nf.format(Number(item.mileagePrice || item.cashPrice || 0))} 마일리지`
+      : `${nf.format(Number(item.cashPrice || 0))}원`;
+    const price = isReference ? renderReferencePrice(item) : renderPrice(item.listingPrice);
+    const result = isReference
+      ? `<span class="eff-value">${formatReferenceMeso(item.referenceMesoPerThousand)}</span><span class="price-meta">1,000 마일리지당 절약</span>`
+      : `<span class="eff-value">${formatWon(item.listingEfficiency)}</span><span class="price-meta">1억당 현금</span>`;
+
+    return `
+      <tr${isReference ? ' class="reference-row"' : ''}>
+        <td>${rank}</td>
+        <td>
+          <span class="item-name">${escapeHtml(item.name)}</span>
+          <span class="item-meta">${itemMeta}</span>
+          ${renderComponents(item)}
+        </td>
+        <td>${cost}</td>
+        <td>${price}</td>
+        <td>${result}</td>
+      </tr>
+    `;
+  }).join('');
+}
+
+function renderReferencePrice(item) {
+  const date = item.referenceUpdatedAt
+    ? `<span class="price-meta">${escapeHtml(formatDate(item.referenceUpdatedAt))}</span>`
+    : '';
+  return `<span class="price-value">${formatMeso(item.referenceMesoValue)}</span>${date}<span class="source-pill seed">대체 구매가</span>`;
 }
 
 function renderPrice(price) {
@@ -702,8 +768,11 @@ function syncCategoryOptions(rows) {
   const select = $('#category-filter');
   const categories = [...new Set(rows.map(categoryFor))].sort((a, b) => a.localeCompare(b, 'ko-KR'));
   const current = state.categoryFilter;
-  select.innerHTML = '<option value="">전체</option>' + categories
-    .map(category => `<option value="${escapeAttribute(category)}">${escapeHtml(category)}</option>`)
+  select.innerHTML = '<option value="">전체 판매 항목</option>' + categories
+    .map(category => {
+      const label = category === REFERENCE_CATEGORY ? `${category} (선택 시 표시)` : category;
+      return `<option value="${escapeAttribute(category)}">${escapeHtml(label)}</option>`;
+    })
     .join('');
   select.value = categories.includes(current) ? current : '';
   if (select.value !== current) state.categoryFilter = '';
@@ -718,6 +787,7 @@ function allPriceTargets() {
     if (!targets.has(key)) targets.set(key, name);
   };
   state.items.forEach(item => {
+    if (item.referenceOnly) return;
     add(item);
     componentList(item.components).forEach(add);
   });
@@ -935,6 +1005,7 @@ function writeItemEditor(item) {
 function readItemEditor() {
   const selected = state.items.find(item => String(item.id) === String(state.adminItemId));
   return {
+    ...(selected || {}),
     id: selected?.id || nextItemId(),
     name: $('#admin-item-name').value.trim(),
     category: $('#admin-item-category').value.trim() || '캐시 아이템',
