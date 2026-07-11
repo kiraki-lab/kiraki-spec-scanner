@@ -6,7 +6,10 @@
   <meta name="color-scheme" content="light">
   <meta name="theme-color" content="#f3f5f8">
   <title>메이플 캐시 효율 계산기</title>
-  <link rel="stylesheet" href="./styles.css?v=0.6.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jua&amp;family=Noto+Sans+KR:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css?v=0.7.0">
 </head>
 <body>
   <div class="app-shell">
@@ -119,11 +122,11 @@
           <input id="manual-meso-price" type="number" min="0" step="10000" placeholder="80988444">
         </label>
         <label>
-          <span>마일리지</span>
+          <span>마일리지 혜택</span>
           <select id="manual-mileage-type">
-            <option value="none">사용 불가</option>
-            <option value="partial">30%</option>
-            <option value="full">100%</option>
+            <option value="none">할인 불가</option>
+            <option value="partial">30% 할인</option>
+            <option value="full">전액 결제</option>
           </select>
         </label>
         <article class="result-card" id="manual-result">
@@ -213,11 +216,11 @@
               <input id="admin-item-seed" type="number" min="0" step="10000">
             </label>
             <label>
-              <span>마일리지</span>
+              <span>마일리지 혜택</span>
               <select id="admin-item-mileage">
-                <option value="none">사용 불가</option>
-                <option value="partial">30%</option>
-                <option value="full">100%</option>
+                <option value="none">할인 불가</option>
+                <option value="partial">30% 할인</option>
+                <option value="full">전액 결제</option>
               </select>
             </label>
             <label class="wide-field">
@@ -259,7 +262,16 @@
       <section class="table-panel" aria-label="효율 목록">
         <div class="section-title">
           <h2>효율 목록</h2>
-          <span id="row-count" class="count-pill">0개</span>
+          <div class="table-heading-actions">
+            <label class="page-size-control">
+              <select id="page-size" aria-label="페이지당 표시 개수">
+                <option value="15">15개씩</option>
+                <option value="30">30개씩</option>
+                <option value="0">전체</option>
+              </select>
+            </label>
+            <span id="row-count" class="count-pill">0개</span>
+          </div>
         </div>
         <div class="table-wrap">
           <table>
@@ -267,7 +279,7 @@
               <tr>
                 <th scope="col">순위</th>
                 <th scope="col">아이템</th>
-                <th scope="col">캐시/마일리지</th>
+                <th scope="col">구매 가격</th>
                 <th scope="col">매물가/참고가</th>
                 <th scope="col">판매 효율/절약</th>
               </tr>
@@ -275,6 +287,11 @@
             <tbody id="item-rows"></tbody>
           </table>
         </div>
+        <nav class="table-pagination" aria-label="효율 목록 페이지">
+          <button id="page-prev" class="page-button" type="button" aria-label="이전 페이지" title="이전 페이지">‹</button>
+          <span id="page-state" aria-live="polite">0 / 0</span>
+          <button id="page-next" class="page-button" type="button" aria-label="다음 페이지" title="다음 페이지">›</button>
+        </nav>
       </section>
 
       <details class="market-info">
@@ -337,6 +354,6 @@
     </tr>
   </template>
 
-  <script type="module" src="./app.js?v=0.6.0"></script>
+  <script type="module" src="./app.js?v=0.7.0"></script>
 </body>
 </html>
