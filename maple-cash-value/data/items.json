@@ -1,7 +1,7 @@
 {
-  "version": 2,
+  "version": 3,
   "world": "스카니아",
-  "updatedAt": "2026-07-08T00:00:00+09:00",
+  "updatedAt": "2026-07-11T00:00:00+09:00",
   "settings": {
     "baseMpRate": 6990,
     "discountRate": 6,
@@ -88,6 +88,14 @@
       "cashPrice": 3900,
       "seedMesoPrice": 0,
       "mileageType": "none"
+    },
+    {
+      "id": 24,
+      "name": "붕어빵 뿌리기 11개",
+      "category": "마일리지",
+      "cashPrice": 3300,
+      "seedMesoPrice": 82000000,
+      "mileageType": "full"
     },
     {
       "id": 101,
