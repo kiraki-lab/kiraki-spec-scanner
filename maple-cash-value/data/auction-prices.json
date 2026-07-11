@@ -1,7 +1,7 @@
 {
   "version": 2,
   "world": "스카니아",
-  "generatedAt": "2026-07-09T23:45:00+09:00",
+  "generatedAt": "2026-07-11T18:41:48.971+09:00",
   "source": "maple-auction-web-purchase-tab+manual",
   "policy": {
     "searchTab": "구매",
@@ -69,7 +69,9 @@
     {
       "itemName": "프리미엄 헤어쿠폰",
       "query": "프리미엄 헤어 쿠폰",
-      "aliases": ["프리미엄 헤어 쿠폰"],
+      "aliases": [
+        "프리미엄 헤어 쿠폰"
+      ],
       "listingLowestMeso": 193330000,
       "listingLowestText": "1억 9333만",
       "status": "manual",
@@ -80,7 +82,9 @@
     {
       "itemName": "프리미엄 성형쿠폰",
       "query": "프리미엄 성형 쿠폰",
-      "aliases": ["프리미엄 성형 쿠폰"],
+      "aliases": [
+        "프리미엄 성형 쿠폰"
+      ],
       "listingLowestMeso": 130000000,
       "listingLowestText": "1억 3000만",
       "status": "manual",
@@ -91,7 +95,9 @@
     {
       "itemName": "잠재능력 전승스크롤",
       "query": "잠재능력 전승 스크롤",
-      "aliases": ["잠재능력 전승 스크롤"],
+      "aliases": [
+        "잠재능력 전승 스크롤"
+      ],
       "listingLowestMeso": 3788888888,
       "listingLowestText": "37억 8888만 8888",
       "status": "ok",
@@ -164,7 +170,9 @@
     {
       "itemName": "데몬 슬레이어 머리띠(여)",
       "query": "데몬 슬레이어 머리띠 (여)",
-      "aliases": ["데몬 슬레이어 머리띠 (여)"],
+      "aliases": [
+        "데몬 슬레이어 머리띠 (여)"
+      ],
       "listingLowestMeso": 542800000,
       "listingLowestText": "5억 4280만",
       "status": "ok",
@@ -183,7 +191,9 @@
     {
       "itemName": "데몬 슬레이어 슈트(여)",
       "query": "데몬 슬레이어 슈트 (여)",
-      "aliases": ["데몬 슬레이어 슈트 (여)"],
+      "aliases": [
+        "데몬 슬레이어 슈트 (여)"
+      ],
       "listingLowestMeso": 24000000,
       "listingLowestText": "2400만",
       "status": "ok",
@@ -211,7 +221,9 @@
     {
       "itemName": "데몬 어벤져 머리띠(여)",
       "query": "데몬 어벤져 머리띠 (여)",
-      "aliases": ["데몬 어벤져 머리띠 (여)"],
+      "aliases": [
+        "데몬 어벤져 머리띠 (여)"
+      ],
       "listingLowestMeso": 565900000,
       "listingLowestText": "5억 6590만",
       "status": "ok",
@@ -221,7 +233,9 @@
     {
       "itemName": "데몬 어벤져 슈트(남)",
       "query": "데몬 어벤져 슈트 (남)",
-      "aliases": ["데몬 어벤져 슈트 (남)"],
+      "aliases": [
+        "데몬 어벤져 슈트 (남)"
+      ],
       "listingLowestMeso": 799999999,
       "listingLowestText": "7억 9999만 9999",
       "status": "ok",
@@ -231,7 +245,9 @@
     {
       "itemName": "데몬 어벤져 슈트(여)",
       "query": "데몬 어벤져 슈트 (여)",
-      "aliases": ["데몬 어벤져 슈트 (여)"],
+      "aliases": [
+        "데몬 어벤져 슈트 (여)"
+      ],
       "listingLowestMeso": 47000000,
       "listingLowestText": "4700만",
       "status": "ok",
@@ -268,7 +284,9 @@
     {
       "itemName": "레지스탕스 블래스터 헤어핀(여)",
       "query": "레지스탕스 블래스터 헤어핀 (여)",
-      "aliases": ["레지스탕스 블래스터 헤어핀 (여)"],
+      "aliases": [
+        "레지스탕스 블래스터 헤어핀 (여)"
+      ],
       "listingLowestMeso": 375700000,
       "listingLowestText": "3억 7570만",
       "status": "ok",
@@ -278,7 +296,9 @@
     {
       "itemName": "레지스탕스 블래스터 슈트(남)",
       "query": "레지스탕스 블래스터 슈트 (남)",
-      "aliases": ["레지스탕스 블래스터 슈트 (남)"],
+      "aliases": [
+        "레지스탕스 블래스터 슈트 (남)"
+      ],
       "listingLowestMeso": 133333332,
       "listingLowestText": "1억 3333만 3332",
       "status": "ok",
@@ -288,7 +308,9 @@
     {
       "itemName": "레지스탕스 블래스터 슈트(여)",
       "query": "레지스탕스 블래스터 슈트 (여)",
-      "aliases": ["레지스탕스 블래스터 슈트 (여)"],
+      "aliases": [
+        "레지스탕스 블래스터 슈트 (여)"
+      ],
       "listingLowestMeso": 139888888,
       "listingLowestText": "1억 3988만 8888",
       "status": "ok",
@@ -298,7 +320,9 @@
     {
       "itemName": "레지스탕스 블래스터 슈즈(남)",
       "query": "레지스탕스 블래스터 슈즈 (남)",
-      "aliases": ["레지스탕스 블래스터 슈즈 (남)"],
+      "aliases": [
+        "레지스탕스 블래스터 슈즈 (남)"
+      ],
       "listingLowestMeso": 59999999,
       "listingLowestText": "5999만 9999",
       "status": "ok",
@@ -308,7 +332,9 @@
     {
       "itemName": "레지스탕스 블래스터 슈즈(여)",
       "query": "레지스탕스 블래스터 슈즈 (여)",
-      "aliases": ["레지스탕스 블래스터 슈즈 (여)"],
+      "aliases": [
+        "레지스탕스 블래스터 슈즈 (여)"
+      ],
       "listingLowestMeso": 49388888,
       "listingLowestText": "4938만 8888",
       "status": "ok",
@@ -327,7 +353,9 @@
     {
       "itemName": "레지스탕스 배틀메이지 슈트(남)",
       "query": "레지스탕스 배틀메이지 슈트 (남)",
-      "aliases": ["레지스탕스 배틀메이지 슈트 (남)"],
+      "aliases": [
+        "레지스탕스 배틀메이지 슈트 (남)"
+      ],
       "listingLowestMeso": 111111111,
       "listingLowestText": "1억 1111만 1111",
       "status": "ok",
@@ -337,7 +365,9 @@
     {
       "itemName": "레지스탕스 배틀메이지 슈트(여)",
       "query": "레지스탕스 배틀메이지 슈트 (여)",
-      "aliases": ["레지스탕스 배틀메이지 슈트 (여)"],
+      "aliases": [
+        "레지스탕스 배틀메이지 슈트 (여)"
+      ],
       "listingLowestMeso": 98800000,
       "listingLowestText": "9880만",
       "status": "ok",
@@ -374,7 +404,9 @@
     {
       "itemName": "레지스탕스 와일드헌터 슈트(남)",
       "query": "레지스탕스 와일드헌터 슈트 (남)",
-      "aliases": ["레지스탕스 와일드헌터 슈트 (남)"],
+      "aliases": [
+        "레지스탕스 와일드헌터 슈트 (남)"
+      ],
       "listingLowestMeso": 198888888,
       "listingLowestText": "1억 9888만 8888",
       "status": "ok",
@@ -411,7 +443,9 @@
     {
       "itemName": "레지스탕스 제논 슈트(남)",
       "query": "레지스탕스 제논 슈트 (남)",
-      "aliases": ["레지스탕스 제논 슈트 (남)"],
+      "aliases": [
+        "레지스탕스 제논 슈트 (남)"
+      ],
       "listingLowestMeso": 98888888,
       "listingLowestText": "9888만 8888",
       "status": "ok",
@@ -421,7 +455,9 @@
     {
       "itemName": "레지스탕스 제논 슈트(여)",
       "query": "레지스탕스 제논 슈트 (여)",
-      "aliases": ["레지스탕스 제논 슈트 (여)"],
+      "aliases": [
+        "레지스탕스 제논 슈트 (여)"
+      ],
       "listingLowestMeso": 99999999,
       "listingLowestText": "9999만 9999",
       "status": "ok",
@@ -458,7 +494,9 @@
     {
       "itemName": "레지스탕스 메카닉 슈트(남)",
       "query": "레지스탕스 메카닉 슈트 (남)",
-      "aliases": ["레지스탕스 메카닉 슈트 (남)"],
+      "aliases": [
+        "레지스탕스 메카닉 슈트 (남)"
+      ],
       "listingLowestMeso": 99950000,
       "listingLowestText": "9995만",
       "status": "ok",
@@ -468,7 +506,9 @@
     {
       "itemName": "레지스탕스 메카닉 슈트(여)",
       "query": "레지스탕스 메카닉 슈트 (여)",
-      "aliases": ["레지스탕스 메카닉 슈트 (여)"],
+      "aliases": [
+        "레지스탕스 메카닉 슈트 (여)"
+      ],
       "listingLowestMeso": 49999999,
       "listingLowestText": "4999만 9999",
       "status": "ok",
@@ -532,7 +572,9 @@
     {
       "itemName": "기사단장 오즈 로브(남)",
       "query": "기사단장 오즈 로브 (남)",
-      "aliases": ["기사단장 오즈 로브 (남)"],
+      "aliases": [
+        "기사단장 오즈 로브 (남)"
+      ],
       "listingLowestMeso": 555400000,
       "listingLowestText": "5억 5540만",
       "status": "ok",
@@ -547,6 +589,64 @@
       "status": "ok",
       "filter": "캐시",
       "collectedAt": "2026-07-09T23:45:00+09:00"
+    },
+    {
+      "itemId": 24,
+      "itemName": "붕어빵 뿌리기 11개",
+      "query": "붕어빵 뿌리기 11개",
+      "aliases": [
+        "붕어빵",
+        "붕어빵 11개",
+        "붕어빵 뿌리기"
+      ],
+      "listingLowestMeso": 82000000,
+      "listingLowestText": "8200만",
+      "status": "manual",
+      "source": "manual",
+      "filter": "수동",
+      "collectedAt": "2026-07-11T18:41:48.971+09:00"
+    },
+    {
+      "itemId": 25,
+      "itemName": "달콤한 붕어빵 11개",
+      "query": "달콤한 붕어빵 11개",
+      "aliases": [
+        "달콤한 붕어빵"
+      ],
+      "listingLowestMeso": 159000000,
+      "listingLowestText": "1억 5900만",
+      "status": "manual",
+      "source": "manual",
+      "filter": "수동",
+      "collectedAt": "2026-07-11T18:41:48.971+09:00"
+    },
+    {
+      "itemId": 26,
+      "itemName": "슈퍼파워버프",
+      "query": "슈퍼파워버프",
+      "aliases": [
+        "슈퍼파워 버프"
+      ],
+      "listingLowestMeso": 132000000,
+      "listingLowestText": "1억 3200만",
+      "status": "manual",
+      "source": "manual",
+      "filter": "수동",
+      "collectedAt": "2026-07-11T18:41:48.971+09:00"
+    },
+    {
+      "itemId": 27,
+      "itemName": "마슈르의 선물기상효과",
+      "query": "마슈르의 선물기상효과",
+      "aliases": [
+        "마슈르의 선물 기상효과"
+      ],
+      "listingLowestMeso": 135000000,
+      "listingLowestText": "1억 3500만",
+      "status": "manual",
+      "source": "manual",
+      "filter": "수동",
+      "collectedAt": "2026-07-11T18:41:48.971+09:00"
     }
   ],
   "skipped": [
