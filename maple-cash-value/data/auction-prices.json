@@ -1,14 +1,14 @@
 {
   "version": 2,
   "world": "스카니아",
-  "generatedAt": "2026-07-11T20:17:00.926+09:00",
+  "generatedAt": "2026-07-11T21:42:41.901+09:00",
   "source": "manual-maple-auction-two-account",
   "policy": {
     "searchTab": "구매",
     "priceBasis": "listingLowestMeso",
     "candidateCheckBeforeSearch": true,
     "officialSearchLimit": 100,
-    "notes": "Account 1 completed 100 exact-candidate filter searches. Missing candidates were not submitted and require manual review."
+    "notes": "Account 2 completed remaining new items and rechecked prior no-listing candidates."
   },
   "prices": [
     {
@@ -1918,6 +1918,75 @@
       "searchAccount": 1,
       "searchIndex": 100,
       "collectedAt": "2026-07-11T20:17:00.926+09:00"
+    },
+    {
+      "itemName": "모험가 캐논슈터 부츠",
+      "query": "모험가 캐논슈터 부츠",
+      "listingLowestMeso": 29999999,
+      "listingLowestText": "2999만 9999",
+      "resultCount": 3,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 1,
+      "collectedAt": "2026-07-11T21:42:41.901+09:00"
+    },
+    {
+      "itemName": "모험가 바이퍼 부츠",
+      "query": "모험가 바이퍼 부츠",
+      "listingLowestMeso": 37444444,
+      "listingLowestText": "3744만 4444",
+      "resultCount": 3,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 2,
+      "collectedAt": "2026-07-11T21:42:41.901+09:00"
+    },
+    {
+      "itemName": "모험가 캡틴 부츠(남)",
+      "query": "모험가 캡틴 부츠 (남)",
+      "aliases": [
+        "모험가 캡틴 부츠 (남)"
+      ],
+      "listingLowestMeso": 7777777,
+      "listingLowestText": "777만 7777",
+      "resultCount": 2,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 3,
+      "collectedAt": "2026-07-11T21:42:41.901+09:00"
+    },
+    {
+      "itemName": "모험가 캡틴 부츠(여)",
+      "query": "모험가 캡틴 부츠 (여)",
+      "aliases": [
+        "모험가 캡틴 부츠 (여)"
+      ],
+      "listingLowestMeso": 38888888,
+      "listingLowestText": "3888만 8888",
+      "resultCount": 3,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 4,
+      "collectedAt": "2026-07-11T21:42:41.901+09:00"
+    },
+    {
+      "itemName": "기사단장 오즈 로브(여)",
+      "query": "기사단장 오즈 로브 (여)",
+      "aliases": [
+        "기사단장 오즈 로브 (여)"
+      ],
+      "listingLowestMeso": 409888887,
+      "listingLowestText": "4억 988만 8887",
+      "resultCount": 2,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 8,
+      "collectedAt": "2026-07-11T21:42:41.901+09:00"
     }
   ],
   "skipped": [
@@ -1928,43 +1997,15 @@
       "filter": "캐시"
     },
     {
-      "itemName": "데몬 슬레이어 슈트(남)",
-      "query": "데몬 슬레이어 슈트 (남)",
-      "status": "no_listing",
-      "reason": "후보 선택 후 필터 검색 결과 0건",
-      "filter": "캐시"
-    },
-    {
-      "itemName": "레지스탕스 블래스터 헤어밴드(남)",
-      "query": "레지스탕스 블래스터 헤어밴드 (남)",
-      "status": "no_listing",
-      "reason": "후보 선택 후 필터 검색 결과 0건",
-      "filter": "캐시"
-    },
-    {
       "itemName": "레지스탕스 배틀메이지 모자",
       "status": "no_candidate",
       "reason": "경매장 후보에는 레지스탕스 배틀메이지 고글만 노출됨",
       "filter": "캐시"
     },
     {
-      "itemName": "레지스탕스 와일드헌터 슈트(여)",
-      "query": "레지스탕스 와일드헌터 슈트 (여)",
-      "status": "no_listing",
-      "reason": "후보 선택 후 필터 검색 결과 0건",
-      "filter": "캐시"
-    },
-    {
       "itemName": "레지스탕스 메카닉 무기",
       "status": "no_candidate",
       "reason": "경매장 후보에는 레지스탕스 메카닉 건만 노출됨",
-      "filter": "캐시"
-    },
-    {
-      "itemName": "기사단장 오즈 로브(여)",
-      "query": "기사단장 오즈 로브 (여)",
-      "status": "no_listing",
-      "reason": "후보 선택 후 필터 검색 결과 0건",
       "filter": "캐시"
     },
     {
@@ -1996,6 +2037,48 @@
       "filter": "캐시",
       "searchAccount": 1,
       "collectedAt": "2026-07-11T20:17:00.926+09:00"
+    },
+    {
+      "itemName": "데몬 슬레이어 슈트(남)",
+      "query": "데몬 슬레이어 슈트 (남)",
+      "aliases": [
+        "데몬 슬레이어 슈트 (남)"
+      ],
+      "status": "no_listing",
+      "reason": "정확 후보 선택 후 필터 검색 결과 0건",
+      "resultCount": 0,
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 5,
+      "collectedAt": "2026-07-11T21:42:41.901+09:00"
+    },
+    {
+      "itemName": "레지스탕스 블래스터 헤어밴드(남)",
+      "query": "레지스탕스 블래스터 헤어밴드 (남)",
+      "aliases": [
+        "레지스탕스 블래스터 헤어밴드 (남)"
+      ],
+      "status": "no_listing",
+      "reason": "정확 후보 선택 후 필터 검색 결과 0건",
+      "resultCount": 0,
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 6,
+      "collectedAt": "2026-07-11T21:42:41.901+09:00"
+    },
+    {
+      "itemName": "레지스탕스 와일드헌터 슈트(여)",
+      "query": "레지스탕스 와일드헌터 슈트 (여)",
+      "aliases": [
+        "레지스탕스 와일드헌터 슈트 (여)"
+      ],
+      "status": "no_listing",
+      "reason": "정확 후보 선택 후 필터 검색 결과 0건",
+      "resultCount": 0,
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 7,
+      "collectedAt": "2026-07-11T21:42:41.901+09:00"
     }
   ]
 }
