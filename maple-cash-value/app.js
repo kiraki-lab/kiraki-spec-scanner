@@ -471,13 +471,14 @@ function totalPriceFor(item, index) {
   let liveCount = 0;
   let manualCount = 0;
   let latest = null;
-  const componentPrices = item.components.map(component => {
+  const components = item.components.map(component => {
     const price = priceFor(component, index);
     if (price.source === 'live') liveCount += 1;
     if (price.source === 'manual') manualCount += 1;
     if (price.collectedAt && (!latest || new Date(price.collectedAt) > new Date(latest))) latest = price.collectedAt;
-    return price;
+    return { component, price };
   });
+  const componentPrices = components.map(entry => entry.price);
   const meso = componentPrices.reduce((sum, price) => sum + price.meso, 0);
   const filledCount = liveCount + manualCount;
 
@@ -485,7 +486,8 @@ function totalPriceFor(item, index) {
     meso,
     source: filledCount === item.components.length ? (manualCount ? 'manual' : 'live') : filledCount > 0 ? 'mixed' : 'seed',
     auctionStatus: summarizeAuctionStatus(componentPrices),
-    collectedAt: latest
+    collectedAt: latest,
+    components
   };
 }
 
@@ -663,8 +665,8 @@ function renderTable(rows) {
       ? '<span class="source-pill seed">참고</span>'
       : `<span class="rank">${++saleRank}</span>`;
     const itemMeta = isReference
-      ? `마일리지 전용 · 판매 불가 · ${REFERENCE_CATEGORY}`
-      : `마일리지 ${mileageLabel(item.mileageType)} · ${escapeHtml(item.category || '캐시 아이템')}`;
+      ? `<span class="item-meta">마일리지 전용 · 판매 불가 · ${REFERENCE_CATEGORY}</span>`
+      : `<span class="item-meta">${escapeHtml(item.category || '캐시 아이템')}</span>${renderMileageBadge(item.mileageType)}`;
     const cost = isReference
       ? `${nf.format(Number(item.mileagePrice || item.cashPrice || 0))} 마일리지`
       : `${nf.format(Number(item.cashPrice || 0))}원`;
@@ -678,7 +680,7 @@ function renderTable(rows) {
         <td>${rank}</td>
         <td>
           <span class="item-name">${escapeHtml(item.name)}</span>
-          <span class="item-meta">${itemMeta}</span>
+          ${itemMeta}
           ${renderComponents(item)}
         </td>
         <td>${cost}</td>
@@ -710,21 +712,52 @@ function renderPrice(price) {
   return `<span class="price-value">${formatMeso(price.meso)}</span>${date}<span class="source-pill ${klass}">${label}</span>`;
 }
 
+function renderComponentQuote(price) {
+  if (!price) {
+    return '<span class="component-quote"><strong>미확인</strong><em>가격 없음</em></span>';
+  }
+  const status = price.auctionStatus || 'unverified';
+  if (Number(price.meso || 0) <= 0) {
+    return `<span class="component-quote"><strong>${escapeHtml(auctionStatusLabel(status))}</strong><em>가격 없음</em></span>`;
+  }
+  const label = price.source === 'manual'
+    ? '수동입력'
+    : price.source === 'live'
+      ? '수집값'
+      : price.source === 'mixed'
+        ? '일부 수집'
+        : auctionStatusLabel(status);
+  return `<span class="component-quote"><strong>${formatMeso(price.meso)}</strong><em>${escapeHtml(label)}</em></span>`;
+}
+
 function renderComponents(item) {
   const tradable = componentList(item.components);
   const bonus = bonusComponentsFor(item);
   if (!tradable.length && !bonus.length) return '';
 
+  const breakdown = new Map(
+    (item.listingPrice?.components || []).map(entry => [normalizeKey(entry.component?.name), entry.price])
+  );
   const label = bonus.length
-    ? `구성품 ${tradable.length + bonus.length}개 · 경매 후보 ${tradable.length} / BONUS ${bonus.length}`
-    : `구성품 ${tradable.length}개`;
+    ? `구성품 ${tradable.length + bonus.length}개 · 가격 반영 ${tradable.length} / 계산 제외 ${bonus.length}`
+    : `구성품별 가격 ${tradable.length}개`;
 
   return `
     <details>
       <summary>${escapeHtml(label)}</summary>
       <div class="component-list">
-        ${tradable.map(component => `<span>${escapeHtml(component.name)}</span>`).join('')}
-        ${bonus.map(component => `<span class="bonus">${escapeHtml(component.name)}<em>BONUS</em></span>`).join('')}
+        ${tradable.map(component => `
+          <div class="component-row">
+            <span class="component-name">${escapeHtml(component.name)}</span>
+            ${renderComponentQuote(breakdown.get(normalizeKey(component.name)))}
+          </div>
+        `).join('')}
+        ${bonus.map(component => `
+          <div class="component-row bonus">
+            <span class="component-name">${escapeHtml(component.name)}</span>
+            <span class="component-quote"><strong>계산 제외</strong><em>BONUS</em></span>
+          </div>
+        `).join('')}
       </div>
     </details>
   `;
@@ -742,6 +775,12 @@ function renderManualResult() {
   $('#manual-efficiency').textContent = formatWon(efficiency);
   const netMeso = item.seedMesoPrice * (1 - Number(state.settings.ahFeeRate || 0) / 100);
   detail.textContent = `${formatMeso(item.seedMesoPrice)} · 수수료 후 ${formatMeso(netMeso)}`;
+}
+
+function renderMileageBadge(type) {
+  if (type === 'full') return '<span class="mileage-pill full">마일리지 100% 가능</span>';
+  if (type === 'partial') return '<span class="mileage-pill partial">마일리지 30% 가능</span>';
+  return '<span class="mileage-pill none">마일리지 사용 불가</span>';
 }
 
 function mileageLabel(type) {
