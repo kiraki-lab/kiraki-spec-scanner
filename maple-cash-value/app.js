@@ -7,6 +7,7 @@ const DATA_PATHS = {
 
 const STORAGE_KEY = 'maple-cash-value-settings-v1';
 const FIXED_MILEAGE_MESO_RATE = 10000;
+const REFERENCE_CATEGORY = '마일리지 구매 참고';
 const DEFAULT_SETTINGS = {
   baseMpRate: 6990,
   discountRate: 6,
@@ -21,7 +22,7 @@ const state = {
   saleCatalog: [],
   metadata: {},
   search: '',
-  hiddenCategories: new Set(),
+  hiddenCategories: new Set([REFERENCE_CATEGORY]),
   hiddenAuctionStatuses: new Set(),
   saleSearch: '',
   saleGroupFilter: '',
@@ -106,6 +107,14 @@ function formatMeso(value) {
   if (!meso) return '-';
   const eok = meso / 100000000;
   return `${eok >= 10 ? eok.toFixed(1) : eok.toFixed(2)}억`;
+}
+
+function formatReferenceMeso(value) {
+  const meso = Number(value || 0);
+  if (!meso) return '-';
+  if (meso >= 100000000) return formatMeso(meso);
+  if (meso >= 10000) return `${nf.format(Math.round(meso / 10000))}만`;
+  return nf.format(Math.round(meso));
 }
 
 function formatWon(value) {
@@ -304,7 +313,7 @@ function buildPriceIndex() {
 }
 
 function categoryFor(item) {
-  return item.category || '캐시 아이템';
+  return item.referenceOnly ? REFERENCE_CATEGORY : (item.category || '캐시 아이템');
 }
 
 function auctionStatusLabel(status) {
@@ -401,6 +410,23 @@ function calculateEfficiency(item, mesoPrice) {
 function enrichItems() {
   const index = buildPriceIndex();
   return state.items.map(item => {
+    if (item.referenceOnly) {
+      const referenceMesoValue = Number(item.referenceMesoValue || 0);
+      const mileagePrice = Number(item.mileagePrice || item.cashPrice || 0);
+      return {
+        ...item,
+        listingPrice: {
+          meso: referenceMesoValue,
+          source: 'reference',
+          auctionStatus: 'reference',
+          collectedAt: item.referenceUpdatedAt || null
+        },
+        auctionStatus: 'reference',
+        listingEfficiency: Infinity,
+        referenceMesoPerThousand: mileagePrice > 0 ? referenceMesoValue / mileagePrice * 1000 : 0
+      };
+    }
+
     const listing = totalPriceFor(item, index);
     return {
       ...item,
@@ -415,27 +441,33 @@ function filteredRows(sourceRows = enrichItems()) {
   const q = normalizeKey(state.search);
   return sourceRows.filter(item => {
     if (state.hiddenCategories.has(categoryFor(item))) return false;
-    if (state.hiddenAuctionStatuses.has(item.auctionStatus || 'unverified')) return false;
+    if (!item.referenceOnly && state.hiddenAuctionStatuses.has(item.auctionStatus || 'unverified')) return false;
     if (!q) return true;
     const componentText = Array.isArray(item.components) ? item.components.map(component => component.name).join(' ') : '';
     const bonusText = bonusComponentsFor(item).map(component => component.name).join(' ');
-    return normalizeKey([item.name, item.category, auctionStatusLabel(item.auctionStatus), componentText, bonusText, ...(item.aliases || [])].join(' ')).includes(q);
+    return normalizeKey([item.name, categoryFor(item), auctionStatusLabel(item.auctionStatus), componentText, bonusText, ...(item.aliases || [])].join(' ')).includes(q);
   });
 }
 
 function render() {
   const allRows = enrichItems();
   renderFilterChips(allRows);
-  const rows = filteredRows(allRows).sort((a, b) => a.listingEfficiency - b.listingEfficiency);
+  const rows = filteredRows(allRows).sort((a, b) => {
+    if (Boolean(a.referenceOnly) !== Boolean(b.referenceOnly)) return a.referenceOnly ? 1 : -1;
+    if (a.referenceOnly) return b.referenceMesoPerThousand - a.referenceMesoPerThousand;
+    return a.listingEfficiency - b.listingEfficiency;
+  });
+  const saleRows = rows.filter(item => !item.referenceOnly);
+  const referenceCount = rows.length - saleRows.length;
   const visibleSaleCatalog = filteredSaleCatalog();
   const visibleSaleCount = flattenSaleSearchItems(visibleSaleCatalog).length;
   const totalSaleCount = flattenSaleSearchItems().length;
 
   $('#rank-mode-label').textContent = '매물 최저가';
-  $('#row-count').textContent = `${rows.length}개`;
+  $('#row-count').textContent = referenceCount ? `${saleRows.length}개 + 참고 ${referenceCount}개` : `${saleRows.length}개`;
   $('#sale-item-count').textContent = visibleSaleCount === totalSaleCount ? `${totalSaleCount}개` : `${visibleSaleCount}/${totalSaleCount}개`;
   $('#auction-updated').textContent = formatDate(state.metadata.auctionUpdatedAt);
-  $('#best-efficiency').textContent = rows.length ? formatWon(rows[0].listingEfficiency) : '-';
+  $('#best-efficiency').textContent = saleRows.length ? formatWon(saleRows[0].listingEfficiency) : '-';
 
   renderNotices();
   renderSaleItems(visibleSaleCatalog);
@@ -490,19 +522,45 @@ function renderTable(rows) {
     tbody.innerHTML = $('#empty-template').innerHTML;
     return;
   }
-  tbody.innerHTML = rows.map((item, index) => `
-    <tr>
-      <td><span class="rank">${index + 1}</span></td>
-      <td>
-        <span class="item-name">${escapeHtml(item.name)}</span>
-        <span class="item-meta">마일리지 ${mileageLabel(item.mileageType)} · ${escapeHtml(item.category || '캐시 아이템')}</span>
-        ${renderComponents(item)}
-      </td>
-      <td>${nf.format(Number(item.cashPrice || 0))}원</td>
-      <td>${renderPrice(item.listingPrice)}</td>
-      <td><span class="eff-value">${formatWon(item.listingEfficiency)}</span><span class="price-meta">1억당 현금</span></td>
-    </tr>
-  `).join('');
+
+  let saleRank = 0;
+  tbody.innerHTML = rows.map(item => {
+    const isReference = Boolean(item.referenceOnly);
+    const rank = isReference
+      ? '<span class="source-pill seed">참고</span>'
+      : `<span class="rank">${++saleRank}</span>`;
+    const itemMeta = isReference
+      ? `마일리지 전용 · 판매 불가 · ${REFERENCE_CATEGORY}`
+      : `마일리지 ${mileageLabel(item.mileageType)} · ${escapeHtml(item.category || '캐시 아이템')}`;
+    const cost = isReference
+      ? `${nf.format(Number(item.mileagePrice || item.cashPrice || 0))} 마일리지`
+      : `${nf.format(Number(item.cashPrice || 0))}원`;
+    const price = isReference ? renderReferencePrice(item) : renderPrice(item.listingPrice);
+    const result = isReference
+      ? `<span class="eff-value">${formatReferenceMeso(item.referenceMesoPerThousand)}</span><span class="price-meta">1,000 마일리지당 절약</span>`
+      : `<span class="eff-value">${formatWon(item.listingEfficiency)}</span><span class="price-meta">1억당 현금</span>`;
+
+    return `
+      <tr${isReference ? ' class="reference-row"' : ''}>
+        <td>${rank}</td>
+        <td>
+          <span class="item-name">${escapeHtml(item.name)}</span>
+          <span class="item-meta">${itemMeta}</span>
+          ${renderComponents(item)}
+        </td>
+        <td>${cost}</td>
+        <td>${price}</td>
+        <td>${result}</td>
+      </tr>
+    `;
+  }).join('');
+}
+
+function renderReferencePrice(item) {
+  const date = item.referenceUpdatedAt
+    ? `<span class="price-meta">${escapeHtml(formatDate(item.referenceUpdatedAt))}</span>`
+    : '';
+  return `<span class="price-value">${formatMeso(item.referenceMesoValue)}</span>${date}<span class="source-pill seed">대체 구매가</span>`;
 }
 
 function renderPrice(price) {
@@ -586,6 +644,7 @@ function renderCategoryFilterChips(rows) {
 function renderStatusFilterChips(rows) {
   const counts = new Map(AUCTION_STATUS_OPTIONS.map(([status]) => [status, 0]));
   for (const item of rows) {
+    if (item.referenceOnly) continue;
     const status = item.auctionStatus || 'unverified';
     counts.set(status, (counts.get(status) || 0) + 1);
   }
