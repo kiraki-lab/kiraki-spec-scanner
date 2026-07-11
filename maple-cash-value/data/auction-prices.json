@@ -1,7 +1,7 @@
 {
   "version": 2,
   "world": "스카니아",
-  "generatedAt": "2026-07-11T21:42:41.901+09:00",
+  "generatedAt": "2026-07-11T21:44:18.020+09:00",
   "source": "manual-maple-auction-two-account",
   "policy": {
     "searchTab": "구매",
@@ -48,15 +48,6 @@
       "collectedAt": "2026-07-09T22:35:00+09:00"
     },
     {
-      "itemName": "블레어 살롱 헤어 쿠폰",
-      "query": "블레어 살롱 헤어 쿠폰",
-      "listingLowestMeso": 1220000000,
-      "listingLowestText": "12억 2000만",
-      "status": "ok",
-      "filter": "캐시",
-      "collectedAt": "2026-07-09T22:35:00+09:00"
-    },
-    {
       "itemName": "위습의 원더베리",
       "query": "위습의 원더베리",
       "listingLowestMeso": 200000000,
@@ -89,18 +80,6 @@
       "listingLowestText": "1억 3000만",
       "status": "manual",
       "source": "manual",
-      "filter": "캐시",
-      "collectedAt": "2026-07-09T22:35:00+09:00"
-    },
-    {
-      "itemName": "잠재능력 전승스크롤",
-      "query": "잠재능력 전승 스크롤",
-      "aliases": [
-        "잠재능력 전승 스크롤"
-      ],
-      "listingLowestMeso": 3788888888,
-      "listingLowestText": "37억 8888만 8888",
-      "status": "ok",
       "filter": "캐시",
       "collectedAt": "2026-07-09T22:35:00+09:00"
     },
@@ -226,18 +205,6 @@
       ],
       "listingLowestMeso": 565900000,
       "listingLowestText": "5억 6590만",
-      "status": "ok",
-      "filter": "캐시",
-      "collectedAt": "2026-07-09T23:10:00+09:00"
-    },
-    {
-      "itemName": "데몬 어벤져 슈트(남)",
-      "query": "데몬 어벤져 슈트 (남)",
-      "aliases": [
-        "데몬 어벤져 슈트 (남)"
-      ],
-      "listingLowestMeso": 799999999,
-      "listingLowestText": "7억 9999만 9999",
       "status": "ok",
       "filter": "캐시",
       "collectedAt": "2026-07-09T23:10:00+09:00"
@@ -529,15 +496,6 @@
       "query": "기사단장 미하일 투구",
       "listingLowestMeso": 121111111,
       "listingLowestText": "1억 2111만 1111",
-      "status": "ok",
-      "filter": "캐시",
-      "collectedAt": "2026-07-09T23:43:00+09:00"
-    },
-    {
-      "itemName": "기사단장 미하일 아머",
-      "query": "기사단장 미하일 아머",
-      "listingLowestMeso": 697777777,
-      "listingLowestText": "6억 9777만 7777",
       "status": "ok",
       "filter": "캐시",
       "collectedAt": "2026-07-09T23:43:00+09:00"
@@ -1987,6 +1945,60 @@
       "searchAccount": 2,
       "searchIndex": 8,
       "collectedAt": "2026-07-11T21:42:41.901+09:00"
+    },
+    {
+      "itemName": "잠재능력 전승스크롤",
+      "query": "잠재능력 전승 스크롤",
+      "aliases": [
+        "잠재능력 전승 스크롤"
+      ],
+      "listingLowestMeso": 4180000000,
+      "listingLowestText": "41억 8000만",
+      "resultCount": 33,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 9,
+      "collectedAt": "2026-07-11T21:44:18.020+09:00"
+    },
+    {
+      "itemName": "블레어 살롱 헤어 쿠폰",
+      "query": "블레어 살롱 헤어 쿠폰",
+      "listingLowestMeso": 1273333333,
+      "listingLowestText": "12억 7333만 3333",
+      "resultCount": 49,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 10,
+      "collectedAt": "2026-07-11T21:44:18.020+09:00"
+    },
+    {
+      "itemName": "데몬 어벤져 슈트(남)",
+      "query": "데몬 어벤져 슈트 (남)",
+      "aliases": [
+        "데몬 어벤져 슈트 (남)"
+      ],
+      "listingLowestMeso": 599999999,
+      "listingLowestText": "5억 9999만 9999",
+      "resultCount": 1,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 11,
+      "collectedAt": "2026-07-11T21:44:18.020+09:00"
+    },
+    {
+      "itemName": "기사단장 미하일 아머",
+      "query": "기사단장 미하일 아머",
+      "listingLowestMeso": 400000000,
+      "listingLowestText": "4억",
+      "resultCount": 4,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 12,
+      "collectedAt": "2026-07-11T21:44:18.020+09:00"
     }
   ],
   "skipped": [
