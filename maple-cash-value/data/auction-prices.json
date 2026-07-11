@@ -1,7 +1,7 @@
 {
   "version": 2,
   "world": "스카니아",
-  "generatedAt": "2026-07-11T19:56:41.794+09:00",
+  "generatedAt": "2026-07-11T20:01:55.235+09:00",
   "source": "manual-maple-auction-two-account",
   "policy": {
     "searchTab": "구매",
@@ -916,6 +916,348 @@
       "searchAccount": 1,
       "searchIndex": 25,
       "collectedAt": "2026-07-11T19:56:41.794+09:00"
+    },
+    {
+      "itemName": "영웅 아란 아머(남)",
+      "query": "영웅 아란 아머 (남)",
+      "aliases": [
+        "영웅 아란 아머 (남)"
+      ],
+      "listingLowestMeso": 46500000,
+      "listingLowestText": "4650만",
+      "resultCount": 5,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 26,
+      "collectedAt": "2026-07-11T20:01:55.235+09:00"
+    },
+    {
+      "itemName": "영웅 아란 폴암",
+      "query": "영웅 아란 폴암",
+      "listingLowestMeso": 448999999,
+      "listingLowestText": "4억 4899만 9999",
+      "resultCount": 10,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 27,
+      "collectedAt": "2026-07-11T20:01:55.235+09:00"
+    },
+    {
+      "itemName": "영웅 아란 아머(여)",
+      "query": "영웅 아란 아머 (여)",
+      "aliases": [
+        "영웅 아란 아머 (여)"
+      ],
+      "listingLowestMeso": 68900000,
+      "listingLowestText": "6890만",
+      "resultCount": 8,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 28,
+      "collectedAt": "2026-07-11T20:01:55.235+09:00"
+    },
+    {
+      "itemName": "영웅 아란 부츠",
+      "query": "영웅 아란 부츠",
+      "listingLowestMeso": 17950000,
+      "listingLowestText": "1795만",
+      "resultCount": 10,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 29,
+      "collectedAt": "2026-07-11T20:01:55.235+09:00"
+    },
+    {
+      "itemName": "영웅 은월 슈트(남)",
+      "query": "영웅 은월 슈트 (남)",
+      "aliases": [
+        "영웅 은월 슈트 (남)"
+      ],
+      "listingLowestMeso": 387500000,
+      "listingLowestText": "3억 8750만",
+      "resultCount": 7,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 30,
+      "collectedAt": "2026-07-11T20:01:55.235+09:00"
+    },
+    {
+      "itemName": "영웅 은월 너클",
+      "query": "영웅 은월 너클",
+      "listingLowestMeso": 355000000,
+      "listingLowestText": "3억 5500만",
+      "resultCount": 7,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 31,
+      "collectedAt": "2026-07-11T20:01:55.235+09:00"
+    },
+    {
+      "itemName": "영웅 은월 슈트(여)",
+      "query": "영웅 은월 슈트 (여)",
+      "aliases": [
+        "영웅 은월 슈트 (여)"
+      ],
+      "listingLowestMeso": 246555555,
+      "listingLowestText": "2억 4655만 5555",
+      "resultCount": 3,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 32,
+      "collectedAt": "2026-07-11T20:01:55.235+09:00"
+    },
+    {
+      "itemName": "영웅 은월 부츠",
+      "query": "영웅 은월 부츠",
+      "listingLowestMeso": 49050000,
+      "listingLowestText": "4905만",
+      "resultCount": 4,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 33,
+      "collectedAt": "2026-07-11T20:01:55.235+09:00"
+    },
+    {
+      "itemName": "영웅 루미너스 로브(남)",
+      "query": "영웅 루미너스 로브 (남)",
+      "aliases": [
+        "영웅 루미너스 로브 (남)"
+      ],
+      "listingLowestMeso": 287250000,
+      "listingLowestText": "2억 8725만",
+      "resultCount": 4,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 34,
+      "collectedAt": "2026-07-11T20:01:55.235+09:00"
+    },
+    {
+      "itemName": "영웅 루미너스 샤이닝로드",
+      "query": "영웅 루미너스 샤이닝로드",
+      "listingLowestMeso": 377744444,
+      "listingLowestText": "3억 7774만 4444",
+      "resultCount": 6,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 35,
+      "collectedAt": "2026-07-11T20:01:55.235+09:00"
+    },
+    {
+      "itemName": "영웅 루미너스 로브(여)",
+      "query": "영웅 루미너스 로브 (여)",
+      "aliases": [
+        "영웅 루미너스 로브 (여)"
+      ],
+      "listingLowestMeso": 142500000,
+      "listingLowestText": "1억 4250만",
+      "resultCount": 2,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 36,
+      "collectedAt": "2026-07-11T20:01:55.235+09:00"
+    },
+    {
+      "itemName": "영웅 루미너스 부츠",
+      "query": "영웅 루미너스 부츠",
+      "listingLowestMeso": 33300000,
+      "listingLowestText": "3330만",
+      "resultCount": 3,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 37,
+      "collectedAt": "2026-07-11T20:01:55.235+09:00"
+    },
+    {
+      "itemName": "영웅 에반 로브(남)",
+      "query": "영웅 에반 로브 (남)",
+      "aliases": [
+        "영웅 에반 로브 (남)"
+      ],
+      "listingLowestMeso": 89000000,
+      "listingLowestText": "8900만",
+      "resultCount": 3,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 38,
+      "collectedAt": "2026-07-11T20:01:55.235+09:00"
+    },
+    {
+      "itemName": "영웅 에반 스태프",
+      "query": "영웅 에반 스태프",
+      "listingLowestMeso": 345000000,
+      "listingLowestText": "3억 4500만",
+      "resultCount": 4,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 39,
+      "collectedAt": "2026-07-11T20:01:55.235+09:00"
+    },
+    {
+      "itemName": "영웅 에반 로브(여)",
+      "query": "영웅 에반 로브 (여)",
+      "aliases": [
+        "영웅 에반 로브 (여)"
+      ],
+      "listingLowestMeso": 80000000,
+      "listingLowestText": "8000만",
+      "resultCount": 6,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 40,
+      "collectedAt": "2026-07-11T20:01:55.235+09:00"
+    },
+    {
+      "itemName": "영웅 에반 부츠",
+      "query": "영웅 에반 부츠",
+      "listingLowestMeso": 19999999,
+      "listingLowestText": "1999만 9999",
+      "resultCount": 4,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 41,
+      "collectedAt": "2026-07-11T20:01:55.235+09:00"
+    },
+    {
+      "itemName": "영웅 메르세데스 슈트(남)",
+      "query": "영웅 메르세데스 슈트 (남)",
+      "aliases": [
+        "영웅 메르세데스 슈트 (남)"
+      ],
+      "listingLowestMeso": 499000000,
+      "listingLowestText": "4억 9900만",
+      "resultCount": 3,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 42,
+      "collectedAt": "2026-07-11T20:01:55.235+09:00"
+    },
+    {
+      "itemName": "영웅 메르세데스 듀얼보우건",
+      "query": "영웅 메르세데스 듀얼보우건",
+      "listingLowestMeso": 199999988,
+      "listingLowestText": "1억 9999만 9988",
+      "resultCount": 2,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 43,
+      "collectedAt": "2026-07-11T20:01:55.235+09:00"
+    },
+    {
+      "itemName": "영웅 메르세데스 슈즈(남)",
+      "query": "영웅 메르세데스 슈즈 (남)",
+      "aliases": [
+        "영웅 메르세데스 슈즈 (남)"
+      ],
+      "listingLowestMeso": 64000000,
+      "listingLowestText": "6400만",
+      "resultCount": 1,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 44,
+      "collectedAt": "2026-07-11T20:01:55.235+09:00"
+    },
+    {
+      "itemName": "영웅 메르세데스 슈트(여)",
+      "query": "영웅 메르세데스 슈트 (여)",
+      "aliases": [
+        "영웅 메르세데스 슈트 (여)"
+      ],
+      "listingLowestMeso": 239999000,
+      "listingLowestText": "2억 3999만 9000",
+      "resultCount": 5,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 45,
+      "collectedAt": "2026-07-11T20:01:55.235+09:00"
+    },
+    {
+      "itemName": "영웅 메르세데스 슈즈(여)",
+      "query": "영웅 메르세데스 슈즈 (여)",
+      "aliases": [
+        "영웅 메르세데스 슈즈 (여)"
+      ],
+      "listingLowestMeso": 55555555,
+      "listingLowestText": "5555만 5555",
+      "resultCount": 1,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 46,
+      "collectedAt": "2026-07-11T20:01:55.235+09:00"
+    },
+    {
+      "itemName": "영웅 팬텀 슈트(남)",
+      "query": "영웅 팬텀 슈트 (남)",
+      "aliases": [
+        "영웅 팬텀 슈트 (남)"
+      ],
+      "listingLowestMeso": 148888888,
+      "listingLowestText": "1억 4888만 8888",
+      "resultCount": 3,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 47,
+      "collectedAt": "2026-07-11T20:01:55.235+09:00"
+    },
+    {
+      "itemName": "영웅 팬텀 케인",
+      "query": "영웅 팬텀 케인",
+      "listingLowestMeso": 477777777,
+      "listingLowestText": "4억 7777만 7777",
+      "resultCount": 6,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 48,
+      "collectedAt": "2026-07-11T20:01:55.235+09:00"
+    },
+    {
+      "itemName": "영웅 팬텀 슈트(여)",
+      "query": "영웅 팬텀 슈트 (여)",
+      "aliases": [
+        "영웅 팬텀 슈트 (여)"
+      ],
+      "listingLowestMeso": 79999999,
+      "listingLowestText": "7999만 9999",
+      "resultCount": 3,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 49,
+      "collectedAt": "2026-07-11T20:01:55.235+09:00"
+    },
+    {
+      "itemName": "영웅 팬텀 부츠",
+      "query": "영웅 팬텀 부츠",
+      "listingLowestMeso": 11111111,
+      "listingLowestText": "1111만 1111",
+      "resultCount": 4,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 50,
+      "collectedAt": "2026-07-11T20:01:55.235+09:00"
     }
   ],
   "skipped": [
