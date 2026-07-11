@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Jua&amp;family=Noto+Sans+KR:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./styles.css?v=0.7.0">
+  <link rel="stylesheet" href="./styles.css?v=0.8.0">
 </head>
 <body>
   <div class="app-shell">
@@ -63,12 +63,20 @@
         <input id="search-input" type="search" placeholder="아이템명 · 구성품 검색" autocomplete="off">
       </label>
 
-      <label>
-        <span>표 분류</span>
+      <div class="control-field">
+        <div class="control-label-row">
+          <label for="category-filter">표 분류</label>
+          <label class="package-toggle">
+                <input id="package-filter-toggle" type="checkbox" checked>
+                <span class="toggle-track" aria-hidden="true"></span>
+                <strong>패키지 전체</strong>
+                <em id="package-filter-state">ON</em>
+              </label>
+        </div>
         <select id="category-filter">
           <option value="">전체</option>
         </select>
-      </label>
+      </div>
 
       <label>
         <span>가격 상태</span>
@@ -354,6 +362,6 @@
     </tr>
   </template>
 
-  <script type="module" src="./app.js?v=0.7.0"></script>
+  <script type="module" src="./app.js?v=0.8.0"></script>
 </body>
 </html>
