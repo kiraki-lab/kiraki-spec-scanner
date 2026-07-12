@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Jua&amp;family=Noto+Sans+KR:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./styles.css?v=0.9.0">
+  <link rel="stylesheet" href="./styles.css?v=0.9.2">
 </head>
 <body>
   <div class="app-shell">
@@ -26,7 +26,7 @@
             <button id="unlock-mode" type="button">열기</button>
             <button id="lock-mode" type="button" hidden>잠금</button>
           </div>
-          <small id="mode-detail">수동 계산 가능 · 저장 잠김</small>
+          <small id="mode-detail">수동 계산 · 내 브라우저 가격 수정</small>
         </div>
         <div class="sync-card" aria-live="polite">
           <span class="sync-dot"></span>
@@ -127,7 +127,7 @@
     <details class="manual-panel compact-panel" aria-label="수동 계산">
       <summary class="section-title compact-summary">
         <h2>수동 계산</h2>
-        <span id="manual-save-state" class="count-pill">저장 잠김</span>
+        <span id="manual-save-state" class="count-pill">내 가격 저장</span>
       </summary>
       <div class="manual-grid">
         <label>
@@ -162,9 +162,50 @@
       </div>
       <div class="action-row">
         <button id="calculate-manual" type="button">계산</button>
-        <button id="save-manual-price" class="member-only" type="button" hidden>가격 저장</button>
+        <button id="save-manual-price" type="button">내 가격으로 적용</button>
         <button id="save-manual-item" class="admin-only" type="button" hidden>항목 저장</button>
         <button id="clear-manual" type="button" class="ghost-button">초기화</button>
+      </div>
+    </details>
+
+    <details id="local-price-panel" class="manual-panel compact-panel local-price-panel" aria-label="내 브라우저 가격">
+      <summary class="section-title compact-summary">
+        <h2>내 가격 수정</h2>
+        <span id="local-price-count" class="count-pill">0개</span>
+      </summary>
+      <div class="local-price-editor">
+        <div class="editor-grid">
+          <label class="wide-field">
+            <span>대상</span>
+            <select id="price-target-select">
+              <option value="">직접 입력</option>
+            </select>
+          </label>
+          <label>
+            <span>품목명</span>
+            <input id="price-item-name" type="text" autocomplete="off">
+          </label>
+          <label>
+            <span>가격</span>
+            <input id="price-meso" type="number" min="0" step="10000">
+          </label>
+          <label>
+            <span>상태</span>
+            <select id="price-status">
+              <option value="live">가격 있음</option>
+              <option value="seed">기본값</option>
+              <option value="no_listing">매물 없음</option>
+              <option value="no_candidate">후보 없음</option>
+              <option value="unverified">미확인</option>
+            </select>
+          </label>
+        </div>
+        <div class="action-row compact">
+          <button id="save-price-row" type="button">브라우저에 적용</button>
+          <button id="clear-price-row" type="button" class="ghost-button">이 가격 삭제</button>
+          <button id="reset-local-prices" type="button" class="ghost-button">전체 초기화</button>
+          <button id="export-prices" type="button" class="ghost-button">가격 내보내기</button>
+        </div>
       </div>
     </details>
 
@@ -174,44 +215,6 @@
         <span id="management-mode" class="count-pill">공개 모드</span>
       </div>
       <div class="manager-grid">
-        <article class="manager-block member-only" hidden>
-          <div class="block-title">
-            <h3>가격 연동</h3>
-            <span id="local-price-count">0개</span>
-          </div>
-          <div class="editor-grid">
-            <label class="wide-field">
-              <span>대상</span>
-              <select id="price-target-select">
-                <option value="">직접 입력</option>
-              </select>
-            </label>
-            <label>
-              <span>품목명</span>
-              <input id="price-item-name" type="text" autocomplete="off">
-            </label>
-            <label>
-              <span>가격</span>
-              <input id="price-meso" type="number" min="0" step="10000">
-            </label>
-            <label>
-              <span>상태</span>
-              <select id="price-status">
-                <option value="live">가격 있음</option>
-                <option value="seed">기본값</option>
-                <option value="no_listing">매물 없음</option>
-                <option value="no_candidate">후보 없음</option>
-                <option value="unverified">미확인</option>
-              </select>
-            </label>
-          </div>
-          <div class="action-row compact">
-            <button id="save-price-row" type="button">가격 저장</button>
-            <button id="clear-price-row" type="button" class="ghost-button">가격 해제</button>
-            <button id="export-prices" type="button" class="ghost-button">가격 내보내기</button>
-          </div>
-        </article>
-
         <article class="manager-block admin-only" hidden>
           <div class="block-title">
             <h3>항목 수정</h3>
@@ -379,6 +382,6 @@
     </tr>
   </template>
 
-  <script type="module" src="./app.js?v=0.9.1"></script>
+  <script type="module" src="./app.js?v=0.9.2"></script>
 </body>
 </html>
