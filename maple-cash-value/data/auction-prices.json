@@ -1,7 +1,7 @@
 {
   "version": 2,
   "world": "스카니아",
-  "generatedAt": "2026-07-12T15:35:24.908Z",
+  "generatedAt": "2026-07-12T15:39:34.926Z",
   "source": "manual-maple-auction-two-account",
   "policy": {
     "searchTab": "구매",
@@ -5003,6 +5003,286 @@
       "searchAccount": 1,
       "searchIndex": 60,
       "collectedAt": "2026-07-12T15:34:50.500Z"
+    },
+    {
+      "itemName": "노바 카인 제복",
+      "query": "노바 카인 제복",
+      "aliases": [],
+      "listingLowestMeso": 238999999,
+      "listingLowestText": "2억 3899만 9999",
+      "resultCount": 7,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 61,
+      "collectedAt": "2026-07-12T15:36:46.274Z"
+    },
+    {
+      "itemName": "누누",
+      "query": "누누",
+      "aliases": [],
+      "listingLowestMeso": 222222222,
+      "listingLowestText": "2억 2222만 2222",
+      "resultCount": 1,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 62,
+      "collectedAt": "2026-07-12T15:36:52.459Z"
+    },
+    {
+      "itemName": "다쿠아부기",
+      "query": "다쿠아부기",
+      "aliases": [],
+      "listingLowestMeso": 222222222,
+      "listingLowestText": "2억 2222만 2222",
+      "resultCount": 1,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 63,
+      "collectedAt": "2026-07-12T15:36:58.640Z"
+    },
+    {
+      "itemName": "단죄의 의지(남)",
+      "query": "단죄의 의지 (남)",
+      "aliases": [
+        "단죄의 의지 (남)"
+      ],
+      "listingLowestMeso": 11111111,
+      "listingLowestText": "1111만 1111",
+      "resultCount": 4,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 64,
+      "collectedAt": "2026-07-12T15:37:04.830Z"
+    },
+    {
+      "itemName": "달나라 멜빵 반바지(남)",
+      "query": "달나라 멜빵 반바지 (남)",
+      "aliases": [
+        "달나라 멜빵 반바지 (남)"
+      ],
+      "listingLowestMeso": 141111000,
+      "listingLowestText": "1억 4111만 1000",
+      "resultCount": 14,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 65,
+      "collectedAt": "2026-07-12T15:37:17.398Z"
+    },
+    {
+      "itemName": "달나라 멜빵 원피스(여)",
+      "query": "달나라 멜빵 원피스 (여)",
+      "aliases": [
+        "달나라 멜빵 원피스 (여)"
+      ],
+      "listingLowestMeso": 177722222,
+      "listingLowestText": "1억 7772만 2222",
+      "resultCount": 12,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 66,
+      "collectedAt": "2026-07-12T15:37:23.587Z"
+    },
+    {
+      "itemName": "달무리(남)",
+      "query": "달무리 (남)",
+      "aliases": [
+        "달무리 (남)"
+      ],
+      "listingLowestMeso": 7777777,
+      "listingLowestText": "777만 7777",
+      "resultCount": 6,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 67,
+      "collectedAt": "2026-07-12T15:37:29.762Z"
+    },
+    {
+      "itemName": "달빛 느와르 자켓(남)",
+      "query": "달빛 느와르 자켓 (남)",
+      "aliases": [
+        "달빛 느와르 자켓 (남)"
+      ],
+      "listingLowestMeso": 269999999,
+      "listingLowestText": "2억 6999만 9999",
+      "resultCount": 6,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 68,
+      "collectedAt": "2026-07-12T15:37:37.793Z"
+    },
+    {
+      "itemName": "달빛 루즈 자켓(여)",
+      "query": "달빛 루즈 자켓 (여)",
+      "aliases": [
+        "달빛 루즈 자켓 (여)"
+      ],
+      "listingLowestMeso": 264000000,
+      "listingLowestText": "2억 6400만",
+      "resultCount": 9,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 69,
+      "collectedAt": "2026-07-12T15:37:46.702Z"
+    },
+    {
+      "itemName": "달빛 풍류(남)",
+      "query": "달빛 풍류 (남)",
+      "aliases": [
+        "달빛 풍류 (남)"
+      ],
+      "listingLowestMeso": 40000000,
+      "listingLowestText": "4000만",
+      "resultCount": 14,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 70,
+      "collectedAt": "2026-07-12T15:37:52.870Z"
+    },
+    {
+      "itemName": "달의 고지(여)",
+      "query": "달의 고지 (여)",
+      "aliases": [
+        "달의 고지 (여)"
+      ],
+      "listingLowestMeso": 97777777,
+      "listingLowestText": "9777만 7777",
+      "resultCount": 13,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 71,
+      "collectedAt": "2026-07-12T15:37:59.069Z"
+    },
+    {
+      "itemName": "달의 바다(남)",
+      "query": "달의 바다 (남)",
+      "aliases": [
+        "달의 바다 (남)"
+      ],
+      "listingLowestMeso": 28888888,
+      "listingLowestText": "2888만 8888",
+      "resultCount": 15,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 72,
+      "collectedAt": "2026-07-12T15:38:05.246Z"
+    },
+    {
+      "itemName": "당당한 걸음(남)",
+      "query": "당당한 걸음 (남)",
+      "aliases": [
+        "당당한 걸음 (남)"
+      ],
+      "listingLowestMeso": 8888888,
+      "listingLowestText": "888만 8888",
+      "resultCount": 5,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 73,
+      "collectedAt": "2026-07-12T15:38:17.254Z"
+    },
+    {
+      "itemName": "덜바랜 빛",
+      "query": "덜바랜 빛",
+      "aliases": [],
+      "listingLowestMeso": 22200000,
+      "listingLowestText": "2220만",
+      "resultCount": 10,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 74,
+      "collectedAt": "2026-07-12T15:38:23.450Z"
+    },
+    {
+      "itemName": "도도",
+      "query": "도도",
+      "aliases": [],
+      "listingLowestMeso": 100000000,
+      "listingLowestText": "1억",
+      "resultCount": 8,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 75,
+      "collectedAt": "2026-07-12T15:38:29.663Z"
+    },
+    {
+      "itemName": "도롱",
+      "query": "도롱",
+      "aliases": [],
+      "listingLowestMeso": 88888888,
+      "listingLowestText": "8888만 8888",
+      "resultCount": 3,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 76,
+      "collectedAt": "2026-07-12T15:38:35.837Z"
+    },
+    {
+      "itemName": "돌의 정령 베레모",
+      "query": "돌의 정령 베레모",
+      "aliases": [],
+      "listingLowestMeso": 60000000,
+      "listingLowestText": "6000만",
+      "resultCount": 9,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 77,
+      "collectedAt": "2026-07-12T15:38:44.653Z"
+    },
+    {
+      "itemName": "돌의 정령 우비",
+      "query": "돌의 정령 우비",
+      "aliases": [],
+      "listingLowestMeso": 200000000,
+      "listingLowestText": "2억",
+      "resultCount": 4,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 78,
+      "collectedAt": "2026-07-12T15:38:50.847Z"
+    },
+    {
+      "itemName": "돌의 정령 응원봉",
+      "query": "돌의 정령 응원봉",
+      "aliases": [],
+      "listingLowestMeso": 63000000,
+      "listingLowestText": "6300만",
+      "resultCount": 4,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 79,
+      "collectedAt": "2026-07-12T15:38:57.050Z"
+    },
+    {
+      "itemName": "돌의 정령 장화",
+      "query": "돌의 정령 장화",
+      "aliases": [],
+      "listingLowestMeso": 36666666,
+      "listingLowestText": "3666만 6666",
+      "resultCount": 16,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 80,
+      "collectedAt": "2026-07-12T15:39:03.350Z"
     }
   ],
   "skipped": [
@@ -5214,25 +5494,25 @@
       "collectedAt": "2026-07-12T15:34:05.970Z"
     }
   ],
-  "updatedAt": "2026-07-12T15:35:24.908Z",
+  "updatedAt": "2026-07-12T15:39:34.926Z",
   "lastSearchRun": {
     "date": "2026-07-13",
     "searchAccount": 1,
     "accountCharacter": "스카니아 / 헤성",
     "searchLimit": 100,
-    "usedSearches": 60,
-    "listingSearches": 59,
+    "usedSearches": 80,
+    "listingSearches": 79,
     "marketSearches": 1,
-    "validPrices": 58,
+    "validPrices": 78,
     "noListingSearches": 1,
     "noCandidateChecks": 2,
     "duplicateSearches": 0,
     "priorityQueueComplete": false,
     "queueMode": "unsearched_first_then_unverified",
-    "queueCursor": 60,
-    "queueRemaining": 179,
-    "nextItem": "노바 카인 제복",
-    "checkpointAt": "2026-07-12T15:35:24.908Z",
+    "queueCursor": 80,
+    "queueRemaining": 159,
+    "nextItem": "돌의 정령의 반짝임",
+    "checkpointAt": "2026-07-12T15:39:34.926Z",
     "manualNoCandidate": [
       "노바 엔젤릭버스터 윙",
       "날라"
