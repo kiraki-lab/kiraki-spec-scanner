@@ -7,8 +7,6 @@ const DATA_PATHS = {
 
 const SETTINGS_KEY = 'maple-cash-value-settings-v2';
 const LOCAL_DATA_KEY = 'maple-cash-value-local-data-v1';
-const THEME_KEY = 'kirakiTheme';
-const THEME_USER_KEY = 'kirakiThemeUserSet';
 const FIXED_MILEAGE_MESO_RATE = 10000;
 const MESO_INPUT_UNIT = 100000000;
 const MESO_PRECISION = 1000000;
@@ -31,7 +29,7 @@ const MODE_LABELS = Object.freeze({
 });
 
 const MODE_DETAILS = Object.freeze({
-  public: '수동 계산 · 내 브라우저 가격 수정',
+  public: '내 브라우저 가격 수정',
   member: '내 가격 저장 · 데이터 연동',
   admin: '항목 수정 · 내 가격 저장 · 데이터 연동'
 });
@@ -189,26 +187,6 @@ function mesoToInputUnit(value) {
 
 function mesoFromInputUnit(value) {
   return roundMeso(toNumber(value, 0) * MESO_INPUT_UNIT);
-}
-
-function applyTheme(theme, persist = true) {
-  const isPink = theme === 'pink';
-  document.documentElement.dataset.theme = isPink ? 'pink' : 'clean';
-  if (persist) {
-    localStorage.setItem(THEME_KEY, isPink ? 'kiraki' : 'clean');
-    localStorage.setItem(THEME_USER_KEY, '1');
-  }
-
-  const toggle = $('#theme-toggle');
-  const stateLabel = $('#theme-toggle-state');
-  if (toggle) {
-    toggle.checked = isPink;
-    toggle.setAttribute('aria-label', isPink ? '핑크 모드 끄기' : '핑크 모드 켜기');
-  }
-  if (stateLabel) stateLabel.textContent = isPink ? 'ON' : 'OFF';
-
-  const themeColor = document.querySelector('meta[name="theme-color"]');
-  if (themeColor) themeColor.content = isPink ? '#fff0f5' : '#f3f5f8';
 }
 
 function canEditPrices() {
@@ -756,7 +734,6 @@ function render() {
   $('#item-override-state').textContent = state.hasLocalItems ? '수정 데이터' : '기본 데이터';
 
   renderMode();
-  renderManualResult();
   renderNotices();
   renderSaleItems(visibleSaleCatalog);
   renderTable(pageRows, rankByKey, rankChanges);
@@ -768,7 +745,6 @@ function renderMode() {
   $('#mode-label').textContent = MODE_LABELS[state.mode];
   $('#mode-detail').textContent = MODE_DETAILS[state.mode];
   $('#management-mode').textContent = MODE_LABELS[state.mode];
-  $('#manual-save-state').textContent = canEditItems() ? '항목·가격 저장' : '내 가격 저장';
   $('#management-panel').hidden = state.mode === 'public';
   $('#lock-mode').hidden = state.mode === 'public';
   document.querySelectorAll('.member-only').forEach(element => {
@@ -1056,20 +1032,6 @@ function renderComponentDetailRow(item, key) {
   `;
 }
 
-function renderManualResult() {
-  const item = readManualDraft();
-  const detail = $('#manual-detail');
-  if (!item.name && !item.cashPrice && !item.seedMesoPrice) {
-    $('#manual-efficiency').textContent = '-';
-    detail.textContent = '값을 입력하면 바로 계산됩니다.';
-    return;
-  }
-  const efficiency = calculateEfficiency(item, item.seedMesoPrice);
-  $('#manual-efficiency').textContent = formatWon(efficiency);
-  const netMeso = item.seedMesoPrice * (1 - Number(state.settings.ahFeeRate || 0) / 100);
-  detail.textContent = `${formatMeso(item.seedMesoPrice)} · 수수료 후 ${formatMeso(netMeso)}`;
-}
-
 function renderMileageBadge(type) {
   if (type === 'full') return '<span class="mileage-pill full" title="마일리지로 전액 결제">마일리지 100%</span>';
   if (type === 'partial') return '<span class="mileage-pill partial" title="마일리지로 30% 할인">마일리지 30%</span>';
@@ -1208,59 +1170,6 @@ function unlockMode() {
 function lockMode() {
   state.mode = 'public';
   setSyncState('ready', '공개 모드', MODE_DETAILS.public);
-  render();
-}
-
-function readManualDraft() {
-  return {
-    id: 'manual',
-    name: $('#manual-name').value.trim(),
-    category: $('#manual-category').value.trim() || '수동 계산',
-    cashPrice: toNumber($('#manual-cash-price').value, 0),
-    seedMesoPrice: mesoFromInputUnit($('#manual-meso-price').value),
-    mileageType: $('#manual-mileage-type').value || 'none'
-  };
-}
-
-function clearManualDraft() {
-  ['#manual-name', '#manual-category', '#manual-cash-price', '#manual-meso-price'].forEach(selector => {
-    $(selector).value = '';
-  });
-  $('#manual-mileage-type').value = 'none';
-  renderManualResult();
-}
-
-function saveManualPrice() {
-  if (!canEditPrices()) return;
-  const item = readManualDraft();
-  if (!item.name || item.seedMesoPrice <= 0) {
-    setSyncState('error', '가격 저장 실패', '아이템명과 경매장 가격을 입력해 주세요.');
-    return;
-  }
-  const existing = state.items.find(row => normalizeKey(row.name) === normalizeKey(item.name));
-  if (existing && componentList(existing.components).length) {
-    setSyncState('error', '구성품 가격을 수정해 주세요', '패키지 가격은 구성품 합계로 계산됩니다.');
-    return;
-  }
-  state.pendingPreviousRanks = new Map(state.currentRanks);
-  upsertLocalPrice(item.name, item.seedMesoPrice, 'live');
-  setSyncState('ready', '내 가격 적용', `${item.name} 가격을 이 브라우저 계산에 반영했습니다.`);
-  render();
-}
-
-function saveManualItem() {
-  if (!canEditItems()) return;
-  const item = readManualDraft();
-  if (!item.name || item.cashPrice <= 0) {
-    setSyncState('error', '항목 저장 실패', '아이템명과 캐시 가격을 입력해 주세요.');
-    return;
-  }
-  const key = normalizeKey(item.name);
-  const existing = state.items.find(row => normalizeKey(row.name) === key);
-  const next = { ...item, id: existing?.id || nextItemId() };
-  upsertItem(next);
-  if (item.seedMesoPrice > 0) upsertLocalPrice(item.name, item.seedMesoPrice, 'live');
-  setSyncState('ready', '항목 저장 완료', `${item.name} 항목을 저장했습니다.`);
   render();
 }
 
@@ -1562,10 +1471,6 @@ function on(selector, eventName, handler) {
   if (element) element.addEventListener(eventName, handler);
 }
 
-on('#theme-toggle', 'change', event => {
-  applyTheme(event.target.checked ? 'pink' : 'clean');
-});
-
 on('#unlock-mode', 'click', unlockMode);
 on('#lock-mode', 'click', lockMode);
 on('#mode-password', 'keydown', event => {
@@ -1682,11 +1587,6 @@ on('#base-mp-rate', 'input', event => {
   render();
 });
 
-['#manual-name', '#manual-category', '#manual-cash-price', '#manual-meso-price', '#manual-mileage-type'].forEach(selector => {
-  on(selector, 'input', renderManualResult);
-  on(selector, 'change', renderManualResult);
-});
-
 on('#item-rows', 'click', event => {
   const toggle = event.target.closest('button[data-component-toggle]');
   if (toggle) {
@@ -1715,11 +1615,6 @@ on('#item-rows', 'keydown', event => {
   saveInlinePrice(event.target.dataset.inlinePriceName, event.target.value);
 });
 
-on('#calculate-manual', 'click', renderManualResult);
-on('#save-manual-price', 'click', saveManualPrice);
-on('#save-manual-item', 'click', saveManualItem);
-on('#clear-manual', 'click', clearManualDraft);
-
 on('#price-target-select', 'change', event => {
   state.priceTargetName = event.target.value;
   writePriceEditor(state.priceTargetName);
@@ -1747,5 +1642,4 @@ on('#clear-import', 'click', () => {
   setImportState('대기');
 });
 
-applyTheme(document.documentElement.dataset.theme === 'pink' ? 'pink' : 'clean', false);
 loadData();
