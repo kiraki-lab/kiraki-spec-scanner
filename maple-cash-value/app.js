@@ -7,8 +7,11 @@ const DATA_PATHS = {
 
 const SETTINGS_KEY = 'maple-cash-value-settings-v2';
 const LOCAL_DATA_KEY = 'maple-cash-value-local-data-v1';
+const THEME_KEY = 'kirakiTheme';
+const THEME_USER_KEY = 'kirakiThemeUserSet';
 const FIXED_MILEAGE_MESO_RATE = 10000;
-const MESO_INPUT_UNIT = 1000000;
+const MESO_INPUT_UNIT = 100000000;
+const MESO_PRECISION = 1000000;
 const REFERENCE_CATEGORY = '마일리지 구매 참고';
 const DEFAULT_SETTINGS = {
   baseMpRate: 6990,
@@ -158,16 +161,11 @@ function formatDate(value) {
 function formatMeso(value) {
   const meso = Number(value || 0);
   if (!meso) return '-';
-  const eok = meso / 100000000;
-  return `${eok >= 10 ? eok.toFixed(1) : eok.toFixed(2)}억`;
+  return `${(meso / MESO_INPUT_UNIT).toFixed(2)}억`;
 }
 
 function formatReferenceMeso(value) {
-  const meso = Number(value || 0);
-  if (!meso) return '-';
-  if (meso >= 100000000) return formatMeso(meso);
-  if (meso >= 10000) return `${nf.format(Math.round(meso / 10000))}만`;
-  return nf.format(Math.round(meso));
+  return formatMeso(value);
 }
 
 function formatWon(value) {
@@ -181,15 +179,36 @@ function toNumber(value, fallback = 0) {
 
 function roundMeso(value) {
   const meso = Math.max(0, toNumber(value, 0));
-  return Math.round(meso / MESO_INPUT_UNIT) * MESO_INPUT_UNIT;
+  return Math.round(meso / MESO_PRECISION) * MESO_PRECISION;
 }
 
 function mesoToInputUnit(value) {
-  return roundMeso(value) / MESO_INPUT_UNIT;
+  const meso = roundMeso(value);
+  return meso > 0 ? (meso / MESO_INPUT_UNIT).toFixed(2) : 0;
 }
 
 function mesoFromInputUnit(value) {
   return roundMeso(toNumber(value, 0) * MESO_INPUT_UNIT);
+}
+
+function applyTheme(theme, persist = true) {
+  const isPink = theme === 'pink';
+  document.documentElement.dataset.theme = isPink ? 'pink' : 'clean';
+  if (persist) {
+    localStorage.setItem(THEME_KEY, isPink ? 'kiraki' : 'clean');
+    localStorage.setItem(THEME_USER_KEY, '1');
+  }
+
+  const toggle = $('#theme-toggle');
+  const stateLabel = $('#theme-toggle-state');
+  if (toggle) {
+    toggle.checked = isPink;
+    toggle.setAttribute('aria-label', isPink ? '핑크 모드 끄기' : '핑크 모드 켜기');
+  }
+  if (stateLabel) stateLabel.textContent = isPink ? 'ON' : 'OFF';
+
+  const themeColor = document.querySelector('meta[name="theme-color"]');
+  if (themeColor) themeColor.content = isPink ? '#fff0f5' : '#f3f5f8';
 }
 
 function canEditPrices() {
@@ -940,10 +959,10 @@ function renderInlinePriceEditor(name, price, compact = false) {
   return `
     <span class="inline-price-editor${compact ? ' compact' : ''}">
       <span class="inline-price-row">
-        <input class="inline-price-input" type="number" min="0" step="1" inputmode="numeric"
+        <input class="inline-price-input" type="number" min="0" step="0.01" inputmode="decimal"
           value="${inputMeso || ''}" data-inline-price-name="${escapeAttribute(name)}"
-          aria-label="${escapeAttribute(name)} 가격 (백만 메소)">
-        <span class="inline-price-unit">백만</span>
+          aria-label="${escapeAttribute(name)} 가격 (억 메소)">
+        <span class="inline-price-unit">억</span>
         <button class="inline-price-save" type="button"
           data-inline-price-save="${escapeAttribute(name)}"
           aria-label="${escapeAttribute(name)} 가격 적용" title="가격 적용">&#10003;</button>
@@ -1350,7 +1369,7 @@ function savePriceEditor() {
   if (!canEditPrices()) return;
   const name = $('#price-item-name').value.trim() || state.priceTargetName;
   const status = $('#price-status').value || 'live';
-  const meso = toNumber($('#price-meso').value, 0);
+  const meso = mesoFromInputUnit($('#price-meso').value);
   if (!name) {
     setSyncState('error', '가격 저장 실패', '품목명을 입력해 주세요.');
     return;
@@ -1543,6 +1562,10 @@ function on(selector, eventName, handler) {
   if (element) element.addEventListener(eventName, handler);
 }
 
+on('#theme-toggle', 'change', event => {
+  applyTheme(event.target.checked ? 'pink' : 'clean');
+});
+
 on('#unlock-mode', 'click', unlockMode);
 on('#lock-mode', 'click', lockMode);
 on('#mode-password', 'keydown', event => {
@@ -1724,4 +1747,5 @@ on('#clear-import', 'click', () => {
   setImportState('대기');
 });
 
+applyTheme(document.documentElement.dataset.theme === 'pink' ? 'pink' : 'clean', false);
 loadData();
