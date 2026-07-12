@@ -1,7 +1,7 @@
 {
-  "version": 2,
+  "version": 3,
   "world": "스카니아",
-  "updatedAt": "2026-07-11T19:16:02.040Z",
+  "updatedAt": "2026-07-11T19:16:02.041Z",
   "settings": {
     "baseMpRate": 6990,
     "discountRate": 6,
@@ -113,7 +113,7 @@
       "tradable": false,
       "purchaseMode": "mileage_only",
       "referenceMesoValue": 82000000,
-      "referenceUpdatedAt": "2026-07-11T18:59:27.598+09:00"
+      "referenceUpdatedAt": "2026-07-11T19:01:23.424+09:00"
     },
     {
       "id": 25,
@@ -130,7 +130,7 @@
       "tradable": false,
       "purchaseMode": "mileage_only",
       "referenceMesoValue": 159000000,
-      "referenceUpdatedAt": "2026-07-11T18:59:27.598+09:00"
+      "referenceUpdatedAt": "2026-07-11T19:01:23.424+09:00"
     },
     {
       "id": 26,
@@ -147,7 +147,7 @@
       "tradable": false,
       "purchaseMode": "mileage_only",
       "referenceMesoValue": 132000000,
-      "referenceUpdatedAt": "2026-07-11T18:59:27.598+09:00"
+      "referenceUpdatedAt": "2026-07-11T19:01:23.424+09:00"
     },
     {
       "id": 27,
@@ -164,7 +164,7 @@
       "tradable": false,
       "purchaseMode": "mileage_only",
       "referenceMesoValue": 135000000,
-      "referenceUpdatedAt": "2026-07-11T18:59:27.598+09:00"
+      "referenceUpdatedAt": "2026-07-11T19:01:23.424+09:00"
     },
     {
       "id": 28,
