@@ -1,8 +1,8 @@
 @font-face {
-  font-family: "Cafe24Mone";
-  src: local("Cafe24 Mone"),
-       local("Cafe24Mone"),
-       url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.1/Cafe24Mone.woff") format("woff");
+  font-family: "Cafe24Anemone";
+  src: local("Cafe24 아네모네"),
+       local("Cafe24 Ohsquare"),
+       url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/Cafe24Ohsquare.woff") format("woff");
   font-style: normal;
   font-weight: 400;
   font-display: swap;
@@ -40,7 +40,7 @@ body {
     linear-gradient(180deg, rgba(232, 93, 130, .08), transparent 260px),
     var(--bg);
   color: var(--ink);
-  font-family: "Cafe24Mone", "Apple SD Gothic Neo", Pretendard, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: "Cafe24Anemone", "Apple SD Gothic Neo", Pretendard, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   line-height: 1.45;
 }
 
@@ -103,7 +103,7 @@ a {
   border-radius: 7px;
   background: #fff;
   color: var(--rose-dark);
-  font-family: "Jua", "Cafe24Mone", sans-serif;
+  font-family: "Jua", "Cafe24Anemone", sans-serif;
   font-size: 13px;
   text-decoration: none;
 }
@@ -1637,7 +1637,7 @@ td details > summary {
 
 /* Compact filters, paging, and clearer mileage labels */
 body {
-  font-family: "Cafe24Mone", "Apple SD Gothic Neo", Pretendard, system-ui, sans-serif;
+  font-family: "Cafe24Anemone", "Apple SD Gothic Neo", Pretendard, system-ui, sans-serif;
   font-weight: 500;
 }
 
@@ -1657,7 +1657,7 @@ h3,
 .component-quote strong,
 button,
 #page-state {
-  font-family: "Jua", "Cafe24Mone", sans-serif;
+  font-family: "Jua", "Cafe24Anemone", sans-serif;
   font-weight: 400;
 }
 
@@ -1693,7 +1693,7 @@ h1 {
 }
 
 .filter-heading h2 {
-  font-family: "Jua", "Cafe24Mone", sans-serif;
+  font-family: "Jua", "Cafe24Anemone", sans-serif;
   font-size: 13px;
   font-weight: 400;
 }
@@ -1721,7 +1721,7 @@ h1 {
 .filter-chip span {
   min-height: 30px;
   padding: 5px 9px;
-  font-family: "Jua", "Cafe24Mone", sans-serif;
+  font-family: "Jua", "Cafe24Anemone", sans-serif;
   font-size: 11px;
   font-weight: 400;
   white-space: nowrap;
@@ -1745,7 +1745,7 @@ h1 {
   background: #fff;
   color: var(--ink);
   padding: 0 7px;
-  font-family: "Jua", "Cafe24Mone", sans-serif;
+  font-family: "Jua", "Cafe24Anemone", sans-serif;
   font-size: 12px;
   outline: none;
 }
@@ -1810,7 +1810,7 @@ h1 {
   margin-top: 5px;
   border-radius: 6px;
   padding: 3px 7px;
-  font-family: "Cafe24Mone", sans-serif;
+  font-family: "Cafe24Anemone", sans-serif;
   font-size: 10px;
   font-weight: 700;
   line-height: 1.2;
@@ -1820,7 +1820,7 @@ h1 {
   border-radius: 4px;
   color: #fff;
   padding: 2px 4px;
-  font-family: "Jua", "Cafe24Mone", sans-serif;
+  font-family: "Jua", "Cafe24Anemone", sans-serif;
   font-size: 10px;
   font-weight: 400;
   line-height: 1;
@@ -1978,7 +1978,7 @@ main {
 
 .package-toggle strong {
   overflow: hidden;
-  font-family: "Jua", "Cafe24Mone", sans-serif;
+  font-family: "Jua", "Cafe24Anemone", sans-serif;
   font-size: 12px;
   font-weight: 400;
   text-overflow: ellipsis;
@@ -1988,7 +1988,7 @@ main {
 .package-toggle em {
   min-width: 24px;
   color: var(--blue);
-  font-family: "Jua", "Cafe24Mone", sans-serif;
+  font-family: "Jua", "Cafe24Anemone", sans-serif;
   font-size: 11px;
   font-style: normal;
   text-align: center;
@@ -2010,7 +2010,7 @@ main {
   background: #fff7df;
   color: #765000;
   padding: 3px 7px;
-  font-family: "Jua", "Cafe24Mone", sans-serif;
+  font-family: "Jua", "Cafe24Anemone", sans-serif;
   font-size: 11px;
   font-weight: 400;
   line-height: 1.2;
@@ -2026,7 +2026,7 @@ main {
   background: #b07a00;
   color: #fff;
   content: "!";
-  font-family: "Cafe24Mone", sans-serif;
+  font-family: "Cafe24Anemone", sans-serif;
   font-size: 10px;
   font-weight: 900;
   line-height: 1;
@@ -2132,7 +2132,7 @@ body {
   border-radius: 6px;
   background: #fff;
   color: var(--muted);
-  font-family: "Jua", "Cafe24Mone", sans-serif;
+  font-family: "Jua", "Cafe24Anemone", sans-serif;
   font-weight: 400;
   letter-spacing: 0;
   cursor: pointer;
@@ -2157,7 +2157,7 @@ body {
   margin-left: 7px;
   padding-left: 7px;
   border-left: 1px solid currentColor;
-  font-family: "Cafe24Mone", sans-serif;
+  font-family: "Cafe24Anemone", sans-serif;
   font-size: 9px;
   font-style: normal;
   font-weight: 800;
@@ -2202,7 +2202,7 @@ body {
 
 .job-group-label {
   color: #68758a;
-  font-family: "Jua", "Cafe24Mone", sans-serif;
+  font-family: "Jua", "Cafe24Anemone", sans-serif;
   font-size: 12px;
   text-align: center;
 }
@@ -2473,7 +2473,7 @@ body {
   background: #fff;
   color: var(--rose-dark);
   padding: 2px 8px;
-  font-family: "Cafe24Mone", sans-serif;
+  font-family: "Cafe24Anemone", sans-serif;
   font-size: 10px;
   font-weight: 800;
 }
@@ -2531,7 +2531,7 @@ td {
 .efficiency-heading small {
   margin-top: 2px;
   color: #7c8798;
-  font-family: "Cafe24Mone", sans-serif;
+  font-family: "Cafe24Anemone", sans-serif;
   font-size: 9px;
   font-weight: 700;
 }
@@ -2544,7 +2544,7 @@ td {
 .inline-price-meta,
 .price-date,
 #page-state {
-  font-family: "Cafe24Mone", sans-serif !important;
+  font-family: "Cafe24Anemone", sans-serif !important;
   font-variant-numeric: tabular-nums;
   font-weight: 800;
 }
@@ -2662,7 +2662,7 @@ td {
   background: #fff;
   color: #748095;
   padding: 0;
-  font-family: "Cafe24Mone", sans-serif;
+  font-family: "Cafe24Anemone", sans-serif;
   font-size: 15px;
   font-weight: 900;
 }
@@ -2689,7 +2689,7 @@ td {
   background: transparent;
   color: var(--blue);
   padding: 0;
-  font-family: "Cafe24Mone", sans-serif;
+  font-family: "Cafe24Anemone", sans-serif;
   font-size: 11px;
   font-weight: 800;
   text-align: left;
@@ -2731,7 +2731,7 @@ td {
 
 .component-detail-header strong {
   color: var(--ink);
-  font-family: "Jua", "Cafe24Mone", sans-serif;
+  font-family: "Jua", "Cafe24Anemone", sans-serif;
   font-size: 14px;
   font-weight: 400;
 }
@@ -3030,7 +3030,7 @@ td {
 }
 
 .theme-switch strong {
-  font-family: "Jua", "Cafe24Mone", sans-serif;
+  font-family: "Jua", "Cafe24Anemone", sans-serif;
   font-size: 12px;
   font-weight: 400;
   white-space: nowrap;
@@ -3039,7 +3039,7 @@ td {
 .theme-switch em {
   min-width: 20px;
   color: var(--muted);
-  font-family: "Cafe24Mone", sans-serif;
+  font-family: "Cafe24Anemone", sans-serif;
   font-size: 9px;
   font-style: normal;
   font-weight: 800;
@@ -3636,7 +3636,7 @@ html[data-theme="pink"] body {
 .controls-heading h2 {
   margin: 0;
   color: var(--rose);
-  font-family: "Jua", "Cafe24Mone", sans-serif;
+  font-family: "Jua", "Cafe24Anemone", sans-serif;
   font-size: 15px;
   font-weight: 400;
 }
