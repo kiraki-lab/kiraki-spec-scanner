@@ -8,6 +8,7 @@ const DATA_PATHS = {
 const SETTINGS_KEY = 'maple-cash-value-settings-v2';
 const LOCAL_DATA_KEY = 'maple-cash-value-local-data-v1';
 const FIXED_MILEAGE_MESO_RATE = 10000;
+const MESO_INPUT_UNIT = 1000000;
 const REFERENCE_CATEGORY = '마일리지 구매 참고';
 const DEFAULT_SETTINGS = {
   baseMpRate: 6990,
@@ -169,6 +170,11 @@ function formatWon(value) {
 function toNumber(value, fallback = 0) {
   const number = Number(value);
   return Number.isFinite(number) ? number : fallback;
+}
+
+function roundMeso(value) {
+  const meso = Math.max(0, toNumber(value, 0));
+  return Math.round(meso / MESO_INPUT_UNIT) * MESO_INPUT_UNIT;
 }
 
 function canEditPrices() {
@@ -496,7 +502,7 @@ function priceFor(target, index) {
   const names = [target.name, ...(target.aliases || [])].filter(Boolean);
   const rowByName = names.map(name => index.byName.get(normalizeKey(name))).find(Boolean);
   const row = rowById || rowByName;
-  const liveValue = Number(row?.listingLowestMeso || 0);
+  const liveValue = roundMeso(row?.listingLowestMeso);
 
   if (liveValue > 0) {
     return {
@@ -519,7 +525,7 @@ function priceFor(target, index) {
   const skippedById = id ? index.skippedById.get(id) : null;
   const skippedByName = names.map(name => index.skippedByName.get(normalizeKey(name))).find(Boolean);
   const skipped = skippedById || skippedByName;
-  const seedMeso = Number(target.seedMesoPrice || target.defaultMesoPrice || 0);
+  const seedMeso = roundMeso(target.seedMesoPrice || target.defaultMesoPrice);
   const auctionStatus = skipped?.status || (seedMeso > 0 ? 'seed' : 'unverified');
 
   return {
@@ -884,7 +890,7 @@ function renderPrice(price) {
 }
 
 function renderInlinePriceEditor(name, price, compact = false) {
-  const meso = Math.max(0, Math.round(Number(price?.meso || 0)));
+  const meso = roundMeso(price?.meso);
   const status = price?.auctionStatus || 'unverified';
   const label = price?.source === 'manual'
     ? '수동입력'
@@ -896,7 +902,7 @@ function renderInlinePriceEditor(name, price, compact = false) {
   return `
     <span class="inline-price-editor${compact ? ' compact' : ''}">
       <span class="inline-price-row">
-        <input class="inline-price-input" type="number" min="0" step="10000"
+        <input class="inline-price-input" type="number" min="0" step="${MESO_INPUT_UNIT}"
           value="${meso || ''}" data-inline-price-name="${escapeAttribute(name)}"
           aria-label="${escapeAttribute(name)} 가격">
         <button class="inline-price-save" type="button"
@@ -1125,7 +1131,7 @@ function readManualDraft() {
     name: $('#manual-name').value.trim(),
     category: $('#manual-category').value.trim() || '수동 계산',
     cashPrice: toNumber($('#manual-cash-price').value, 0),
-    seedMesoPrice: toNumber($('#manual-meso-price').value, 0),
+    seedMesoPrice: roundMeso($('#manual-meso-price').value),
     mileageType: $('#manual-mileage-type').value || 'none'
   };
 }
@@ -1213,11 +1219,12 @@ function upsertLocalPrice(name, meso, status = 'live') {
   const cleanName = String(name || '').trim();
   if (!cleanName) return;
   const key = normalizeKey(cleanName);
+  const roundedMeso = roundMeso(meso);
   const row = {
     itemName: cleanName,
     query: cleanName,
-    listingLowestMeso: status === 'live' || status === 'seed' ? toNumber(meso, 0) : 0,
-    listingLowestText: status === 'live' || status === 'seed' ? formatMeso(meso) : '',
+    listingLowestMeso: status === 'live' || status === 'seed' ? roundedMeso : 0,
+    listingLowestText: status === 'live' || status === 'seed' ? formatMeso(roundedMeso) : '',
     status,
     source: 'manual',
     filter: '수동',
@@ -1232,7 +1239,7 @@ function upsertLocalPrice(name, meso, status = 'live') {
 function saveInlinePrice(name, rawValue) {
   const cleanName = String(name || '').trim();
   if (!cleanName) return;
-  const meso = toNumber(rawValue, 0);
+  const meso = roundMeso(rawValue);
   state.pendingPreviousRanks = new Map(state.currentRanks);
   if (meso > 0) {
     upsertLocalPrice(cleanName, meso, 'live');
@@ -1301,7 +1308,7 @@ function findPriceRow(name) {
 function writePriceEditor(name) {
   const row = findPriceRow(name);
   $('#price-item-name').value = name || '';
-  $('#price-meso').value = row?.listingLowestMeso || '';
+  $('#price-meso').value = roundMeso(row?.listingLowestMeso) || '';
   $('#price-status').value = row?.listingLowestMeso > 0 ? 'live' : row?.status || 'live';
 }
 
@@ -1309,7 +1316,7 @@ function writeItemEditor(item) {
   $('#admin-item-name').value = item?.name || '';
   $('#admin-item-category').value = item?.category || '';
   $('#admin-item-cash').value = item?.cashPrice || '';
-  $('#admin-item-seed').value = item?.seedMesoPrice || '';
+  $('#admin-item-seed').value = roundMeso(item?.seedMesoPrice) || '';
   $('#admin-item-mileage').value = item?.mileageType || 'none';
   $('#admin-item-aliases').value = Array.isArray(item?.aliases) ? item.aliases.join('\n') : '';
   $('#admin-item-components').value = componentList(item?.components).map(component => {
@@ -1328,7 +1335,7 @@ function readItemEditor() {
     name: $('#admin-item-name').value.trim(),
     category: $('#admin-item-category').value.trim() || '캐시 아이템',
     cashPrice: toNumber($('#admin-item-cash').value, 0),
-    seedMesoPrice: toNumber($('#admin-item-seed').value, 0),
+    seedMesoPrice: roundMeso($('#admin-item-seed').value),
     mileageType: $('#admin-item-mileage').value || 'none',
     aliases: parseAliasText($('#admin-item-aliases').value),
     components: parseComponentsText($('#admin-item-components').value)
@@ -1343,7 +1350,7 @@ function parseComponentsText(text) {
   return String(text || '').split(/\n+/).map(line => line.trim()).filter(Boolean).map(line => {
     const [name, price, rawQuantity] = line.split('|').map(value => value.trim());
     const component = { name };
-    const seedMesoPrice = toNumber(price, 0);
+    const seedMesoPrice = roundMeso(price);
     const quantity = Math.max(1, Math.floor(toNumber(rawQuantity, 1)));
     if (seedMesoPrice > 0) component.seedMesoPrice = seedMesoPrice;
     if (quantity > 1) component.quantity = quantity;
