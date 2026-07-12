@@ -3939,3 +3939,45 @@ html[data-theme="pink"] .channel-link:hover {
     grid-column: span 1;
   }
 }
+
+/* Market-history verification states */
+.source-pill.pending,
+.market-warning-pill {
+  border: 1px solid #e6bd68;
+  background: #fff8e5;
+  color: #825700;
+}
+
+.market-warning-pill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 21px;
+  margin: 4px 0 0 7px;
+  border-radius: 999px;
+  padding: 2px 7px;
+  font-size: 9px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.inline-market-toggle.has-warning {
+  border-color: #dfb256;
+  background: #fff8e5;
+  color: #825700;
+}
+
+.market-reference-meta.warning {
+  color: #765d28;
+}
+
+.market-reference-meta.warning strong {
+  color: #825700;
+}
+
+.price-note.warning {
+  color: #825700;
+}
+
+.market-pending-row .eff-value {
+  color: #8a6b2d;
+}
