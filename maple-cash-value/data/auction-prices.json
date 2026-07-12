@@ -3592,7 +3592,11 @@
       "listingLowestMeso": 599900000,
       "listingLowestText": "5억 9990만",
       "resultCount": 2,
-      "status": "ok"
+      "status": "ok",
+      "marketHistoryMaxMeso": 400000000,
+      "marketHistoryMaxText": "4억",
+      "marketHistoryBasis": "시세 탭 체결 상단",
+      "marketHistoryCollectedAt": "2026-07-12T14:43:58.209Z"
     },
     {
       "itemName": "프렌즈 월드 키네시스 신발",
@@ -4336,5 +4340,6 @@
     ],
     "queueMode": "package_completion_by_known_value",
     "safetyRulesDocument": "maple-cash-value/docs/daily-auction-search-routine.md"
-  }
+  },
+  "marketHistoryUpdatedAt": "2026-07-12T14:43:58.209Z"
 }
