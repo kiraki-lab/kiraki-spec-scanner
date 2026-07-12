@@ -177,6 +177,14 @@ function roundMeso(value) {
   return Math.round(meso / MESO_INPUT_UNIT) * MESO_INPUT_UNIT;
 }
 
+function mesoToInputUnit(value) {
+  return roundMeso(value) / MESO_INPUT_UNIT;
+}
+
+function mesoFromInputUnit(value) {
+  return roundMeso(toNumber(value, 0) * MESO_INPUT_UNIT);
+}
+
 function canEditPrices() {
   return true;
 }
@@ -891,6 +899,7 @@ function renderPrice(price) {
 
 function renderInlinePriceEditor(name, price, compact = false) {
   const meso = roundMeso(price?.meso);
+  const inputMeso = mesoToInputUnit(meso);
   const status = price?.auctionStatus || 'unverified';
   const label = price?.source === 'manual'
     ? '수동입력'
@@ -902,9 +911,10 @@ function renderInlinePriceEditor(name, price, compact = false) {
   return `
     <span class="inline-price-editor${compact ? ' compact' : ''}">
       <span class="inline-price-row">
-        <input class="inline-price-input" type="number" min="0" step="${MESO_INPUT_UNIT}"
-          value="${meso || ''}" data-inline-price-name="${escapeAttribute(name)}"
-          aria-label="${escapeAttribute(name)} 가격">
+        <input class="inline-price-input" type="number" min="0" step="1" inputmode="numeric"
+          value="${inputMeso || ''}" data-inline-price-name="${escapeAttribute(name)}"
+          aria-label="${escapeAttribute(name)} 가격 (백만 메소)">
+        <span class="inline-price-unit">백만</span>
         <button class="inline-price-save" type="button"
           data-inline-price-save="${escapeAttribute(name)}">적용</button>
       </span>
@@ -1131,7 +1141,7 @@ function readManualDraft() {
     name: $('#manual-name').value.trim(),
     category: $('#manual-category').value.trim() || '수동 계산',
     cashPrice: toNumber($('#manual-cash-price').value, 0),
-    seedMesoPrice: roundMeso($('#manual-meso-price').value),
+    seedMesoPrice: mesoFromInputUnit($('#manual-meso-price').value),
     mileageType: $('#manual-mileage-type').value || 'none'
   };
 }
@@ -1239,7 +1249,7 @@ function upsertLocalPrice(name, meso, status = 'live') {
 function saveInlinePrice(name, rawValue) {
   const cleanName = String(name || '').trim();
   if (!cleanName) return;
-  const meso = roundMeso(rawValue);
+  const meso = mesoFromInputUnit(rawValue);
   state.pendingPreviousRanks = new Map(state.currentRanks);
   if (meso > 0) {
     upsertLocalPrice(cleanName, meso, 'live');
@@ -1308,7 +1318,7 @@ function findPriceRow(name) {
 function writePriceEditor(name) {
   const row = findPriceRow(name);
   $('#price-item-name').value = name || '';
-  $('#price-meso').value = roundMeso(row?.listingLowestMeso) || '';
+  $('#price-meso').value = mesoToInputUnit(row?.listingLowestMeso) || '';
   $('#price-status').value = row?.listingLowestMeso > 0 ? 'live' : row?.status || 'live';
 }
 
@@ -1316,12 +1326,12 @@ function writeItemEditor(item) {
   $('#admin-item-name').value = item?.name || '';
   $('#admin-item-category').value = item?.category || '';
   $('#admin-item-cash').value = item?.cashPrice || '';
-  $('#admin-item-seed').value = roundMeso(item?.seedMesoPrice) || '';
+  $('#admin-item-seed').value = mesoToInputUnit(item?.seedMesoPrice) || '';
   $('#admin-item-mileage').value = item?.mileageType || 'none';
   $('#admin-item-aliases').value = Array.isArray(item?.aliases) ? item.aliases.join('\n') : '';
   $('#admin-item-components').value = componentList(item?.components).map(component => {
     const fields = [component.name];
-    if (component.seedMesoPrice || component.quantity > 1) fields.push(component.seedMesoPrice || 0);
+    if (component.seedMesoPrice || component.quantity > 1) fields.push(mesoToInputUnit(component.seedMesoPrice) || 0);
     if (component.quantity > 1) fields.push(component.quantity);
     return fields.join(' | ');
   }).join('\n');
@@ -1335,7 +1345,7 @@ function readItemEditor() {
     name: $('#admin-item-name').value.trim(),
     category: $('#admin-item-category').value.trim() || '캐시 아이템',
     cashPrice: toNumber($('#admin-item-cash').value, 0),
-    seedMesoPrice: roundMeso($('#admin-item-seed').value),
+    seedMesoPrice: mesoFromInputUnit($('#admin-item-seed').value),
     mileageType: $('#admin-item-mileage').value || 'none',
     aliases: parseAliasText($('#admin-item-aliases').value),
     components: parseComponentsText($('#admin-item-components').value)
@@ -1350,7 +1360,7 @@ function parseComponentsText(text) {
   return String(text || '').split(/\n+/).map(line => line.trim()).filter(Boolean).map(line => {
     const [name, price, rawQuantity] = line.split('|').map(value => value.trim());
     const component = { name };
-    const seedMesoPrice = roundMeso(price);
+    const seedMesoPrice = mesoFromInputUnit(price);
     const quantity = Math.max(1, Math.floor(toNumber(rawQuantity, 1)));
     if (seedMesoPrice > 0) component.seedMesoPrice = seedMesoPrice;
     if (quantity > 1) component.quantity = quantity;
