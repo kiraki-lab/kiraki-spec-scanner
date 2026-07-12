@@ -1,7 +1,7 @@
 {
   "version": 2,
   "world": "스카니아",
-  "generatedAt": "2026-07-12T15:39:34.926Z",
+  "generatedAt": "2026-07-12T15:42:56.742Z",
   "source": "manual-maple-auction-two-account",
   "policy": {
     "searchTab": "구매",
@@ -5283,6 +5283,280 @@
       "searchAccount": 1,
       "searchIndex": 80,
       "collectedAt": "2026-07-12T15:39:03.350Z"
+    },
+    {
+      "itemName": "돌의 정령의 반짝임",
+      "query": "돌의 정령의 반짝임",
+      "aliases": [],
+      "listingLowestMeso": 52222222,
+      "listingLowestText": "5222만 2222",
+      "resultCount": 10,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 81,
+      "collectedAt": "2026-07-12T15:40:13.696Z"
+    },
+    {
+      "itemName": "딸기",
+      "query": "딸기",
+      "aliases": [],
+      "listingLowestMeso": 333333333,
+      "listingLowestText": "3억 3333만 3333",
+      "resultCount": 2,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 82,
+      "collectedAt": "2026-07-12T15:40:19.878Z"
+    },
+    {
+      "itemName": "라미",
+      "query": "라미",
+      "aliases": [],
+      "listingLowestMeso": 222222222,
+      "listingLowestText": "2억 2222만 2222",
+      "resultCount": 2,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 83,
+      "collectedAt": "2026-07-12T15:40:26.081Z"
+    },
+    {
+      "itemName": "레비",
+      "query": "레비",
+      "aliases": [],
+      "listingLowestMeso": 99999999,
+      "listingLowestText": "9999만 9999",
+      "resultCount": 4,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 84,
+      "collectedAt": "2026-07-12T15:40:32.300Z"
+    },
+    {
+      "itemName": "레트로 마법소녀 원피스(여)",
+      "query": "레트로 마법소녀 원피스 (여)",
+      "aliases": [
+        "레트로 마법소녀 원피스 (여)"
+      ],
+      "listingLowestMeso": 42000000,
+      "listingLowestText": "4200만",
+      "resultCount": 12,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 85,
+      "collectedAt": "2026-07-12T15:40:41.169Z"
+    },
+    {
+      "itemName": "레프 아델 부츠",
+      "query": "레프 아델 부츠",
+      "aliases": [],
+      "listingLowestMeso": 111111110,
+      "listingLowestText": "1억 1111만 1110",
+      "resultCount": 3,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 86,
+      "collectedAt": "2026-07-12T15:40:47.385Z"
+    },
+    {
+      "itemName": "레프 아델 제복",
+      "query": "레프 아델 제복",
+      "aliases": [],
+      "listingLowestMeso": 254999999,
+      "listingLowestText": "2억 5499만 9999",
+      "resultCount": 7,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 87,
+      "collectedAt": "2026-07-12T15:40:53.586Z"
+    },
+    {
+      "itemName": "레프 아델 튜너",
+      "query": "레프 아델 튜너",
+      "aliases": [],
+      "listingLowestMeso": 322199999,
+      "listingLowestText": "3억 2219만 9999",
+      "resultCount": 10,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 88,
+      "collectedAt": "2026-07-12T15:40:59.767Z"
+    },
+    {
+      "itemName": "레프 아크 제복(남)",
+      "query": "레프 아크 제복 (남)",
+      "aliases": [
+        "레프 아크 제복 (남)"
+      ],
+      "listingLowestMeso": 148888888,
+      "listingLowestText": "1억 4888만 8888",
+      "resultCount": 5,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 89,
+      "collectedAt": "2026-07-12T15:41:09.027Z"
+    },
+    {
+      "itemName": "레프 아크 제복(여)",
+      "query": "레프 아크 제복 (여)",
+      "aliases": [
+        "레프 아크 제복 (여)"
+      ],
+      "listingLowestMeso": 162555555,
+      "listingLowestText": "1억 6255만 5555",
+      "resultCount": 6,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 90,
+      "collectedAt": "2026-07-12T15:41:15.229Z"
+    },
+    {
+      "itemName": "레프 여신",
+      "query": "레프 여신",
+      "aliases": [],
+      "listingLowestMeso": 99999999,
+      "listingLowestText": "9999만 9999",
+      "resultCount": 4,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 91,
+      "collectedAt": "2026-07-12T15:41:21.420Z"
+    },
+    {
+      "itemName": "레프 일리움 슈즈",
+      "query": "레프 일리움 슈즈",
+      "aliases": [],
+      "listingLowestMeso": 20000000,
+      "listingLowestText": "2000만",
+      "resultCount": 4,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 92,
+      "collectedAt": "2026-07-12T15:41:27.602Z"
+    },
+    {
+      "itemName": "레프 칼리 보닛",
+      "query": "레프 칼리 보닛",
+      "aliases": [],
+      "listingLowestMeso": 394900000,
+      "listingLowestText": "3억 9490만",
+      "resultCount": 2,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 93,
+      "collectedAt": "2026-07-12T15:41:36.505Z"
+    },
+    {
+      "itemName": "레프 칼리 신발",
+      "query": "레프 칼리 신발",
+      "aliases": [],
+      "listingLowestMeso": 94950000,
+      "listingLowestText": "9495만",
+      "resultCount": 3,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 94,
+      "collectedAt": "2026-07-12T15:41:42.706Z"
+    },
+    {
+      "itemName": "레프 칼리 제복",
+      "query": "레프 칼리 제복",
+      "aliases": [],
+      "listingLowestMeso": 55500000,
+      "listingLowestText": "5550만",
+      "resultCount": 3,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 95,
+      "collectedAt": "2026-07-12T15:41:48.883Z"
+    },
+    {
+      "itemName": "레프 칼리 차크람",
+      "query": "레프 칼리 차크람",
+      "aliases": [],
+      "listingLowestMeso": 499999999,
+      "listingLowestText": "4억 9999만 9999",
+      "resultCount": 3,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 96,
+      "collectedAt": "2026-07-12T15:41:55.059Z"
+    },
+    {
+      "itemName": "로즈 위들리(남)",
+      "query": "로즈 위들리 (남)",
+      "aliases": [
+        "로즈 위들리 (남)"
+      ],
+      "listingLowestMeso": 117999999,
+      "listingLowestText": "1억 1799만 9999",
+      "resultCount": 14,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 97,
+      "collectedAt": "2026-07-12T15:42:08.631Z"
+    },
+    {
+      "itemName": "로즈 위즐리(여)",
+      "query": "로즈 위즐리 (여)",
+      "aliases": [
+        "로즈 위즐리 (여)"
+      ],
+      "listingLowestMeso": 210000000,
+      "listingLowestText": "2억 1000만",
+      "resultCount": 17,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 98,
+      "collectedAt": "2026-07-12T15:42:14.844Z"
+    },
+    {
+      "itemName": "로판 남주(남)",
+      "query": "로판 남주 (남)",
+      "aliases": [
+        "로판 남주 (남)"
+      ],
+      "listingLowestMeso": 82555555,
+      "listingLowestText": "8255만 5555",
+      "resultCount": 8,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 99,
+      "collectedAt": "2026-07-12T15:42:21.030Z"
+    },
+    {
+      "itemName": "로판 여주(여)",
+      "query": "로판 여주 (여)",
+      "aliases": [
+        "로판 여주 (여)"
+      ],
+      "listingLowestMeso": 385444444,
+      "listingLowestText": "3억 8544만 4444",
+      "resultCount": 5,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 100,
+      "collectedAt": "2026-07-12T15:42:27.214Z"
     }
   ],
   "skipped": [
@@ -5494,25 +5768,26 @@
       "collectedAt": "2026-07-12T15:34:05.970Z"
     }
   ],
-  "updatedAt": "2026-07-12T15:39:34.926Z",
+  "updatedAt": "2026-07-12T15:42:56.742Z",
   "lastSearchRun": {
     "date": "2026-07-13",
     "searchAccount": 1,
     "accountCharacter": "스카니아 / 헤성",
     "searchLimit": 100,
-    "usedSearches": 80,
-    "listingSearches": 79,
+    "usedSearches": 100,
+    "listingSearches": 99,
     "marketSearches": 1,
-    "validPrices": 78,
+    "validPrices": 98,
     "noListingSearches": 1,
     "noCandidateChecks": 2,
     "duplicateSearches": 0,
+    "accountComplete": true,
     "priorityQueueComplete": false,
     "queueMode": "unsearched_first_then_unverified",
-    "queueCursor": 80,
-    "queueRemaining": 159,
-    "nextItem": "돌의 정령의 반짝임",
-    "checkpointAt": "2026-07-12T15:39:34.926Z",
+    "queueCursor": 100,
+    "queueRemaining": 139,
+    "nextItem": "루시",
+    "completedAt": "2026-07-12T15:42:56.742Z",
     "manualNoCandidate": [
       "노바 엔젤릭버스터 윙",
       "날라"
