@@ -2224,51 +2224,98 @@ body {
   }
 }
 
-/* Browser-local price editing */
-.local-price-editor {
-  padding: 12px;
-}
-
-.price-cell,
-.component-price-actions {
+/* Inline browser-local price editing */
+.price-cell {
   display: flex;
-  align-items: flex-start;
   justify-content: flex-end;
   min-width: 0;
-  gap: 8px;
 }
 
-.price-content {
+.inline-price-editor {
+  display: grid;
+  justify-items: end;
   min-width: 0;
+  gap: 3px;
 }
 
-.price-edit-button {
-  flex: 0 0 auto;
-  min-height: 30px;
-  border-color: var(--line-strong);
+.inline-price-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 5px;
+}
+
+.inline-price-input {
+  width: 142px;
+  height: 32px;
+  border: 1px solid var(--line-strong);
+  border-radius: 6px;
   background: #fff;
-  color: var(--blue);
+  color: var(--ink);
+  padding: 0 8px;
+  text-align: right;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.inline-price-input:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 2px rgba(53, 102, 214, .13);
+  outline: 0;
+}
+
+.inline-price-save {
+  min-height: 32px;
   padding: 0 9px;
   font-size: 11px;
 }
 
-.component-price-actions {
-  align-items: center;
-  gap: 7px;
+.inline-price-meta {
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 750;
+  line-height: 1.25;
 }
 
-.component-price-actions .price-edit-button {
-  min-height: 28px;
+.component-row .inline-price-editor {
+  flex: 0 0 auto;
+}
+
+.inline-price-editor.compact .inline-price-input {
+  width: 112px;
+}
+
+.inline-price-editor.compact .inline-price-save {
   padding-inline: 7px;
 }
 
+.rank-cell {
+  display: grid;
+  justify-items: center;
+  gap: 2px;
+}
+
+.rank-change {
+  font-size: 9px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.rank-change.up {
+  color: var(--green);
+}
+
+.rank-change.down {
+  color: var(--amber);
+}
+
 @media (max-width: 680px) {
-  .local-price-editor {
-    padding: 10px;
+  .inline-price-input {
+    width: min(132px, 36vw);
   }
 
-  .price-cell {
-    align-items: center;
+  .inline-price-editor.compact .inline-price-input {
+    width: min(106px, 29vw);
   }
 }
 
