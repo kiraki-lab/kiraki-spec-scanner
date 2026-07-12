@@ -3749,3 +3749,11 @@ html[data-theme="pink"] .controls > .control-field {
     padding: 7px 8px 8px;
   }
 }
+
+.topbar {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.topbar-actions {
+  justify-self: stretch;
+}
