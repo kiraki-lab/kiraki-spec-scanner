@@ -1,7 +1,7 @@
 {
   "version": 2,
   "world": "스카니아",
-  "generatedAt": "2026-07-12T15:31:58.711Z",
+  "generatedAt": "2026-07-12T15:35:24.908Z",
   "source": "manual-maple-auction-two-account",
   "policy": {
     "searchTab": "구매",
@@ -4740,6 +4740,269 @@
       "searchAccount": 1,
       "searchIndex": 40,
       "collectedAt": "2026-07-12T15:31:35.664Z"
+    },
+    {
+      "itemName": "구구",
+      "query": "구구",
+      "aliases": [],
+      "listingLowestMeso": 199999999,
+      "listingLowestText": "1억 9999만 9999",
+      "resultCount": 2,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 41,
+      "collectedAt": "2026-07-12T15:32:31.125Z"
+    },
+    {
+      "itemName": "그리운 발걸음(남)",
+      "query": "그리운 발걸음 (남)",
+      "aliases": [
+        "그리운 발걸음 (남)"
+      ],
+      "listingLowestMeso": 22222222,
+      "listingLowestText": "2222만 2222",
+      "resultCount": 5,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 42,
+      "collectedAt": "2026-07-12T15:32:37.315Z"
+    },
+    {
+      "itemName": "까만 달토끼",
+      "query": "까만 달토끼",
+      "aliases": [],
+      "listingLowestMeso": 66666600,
+      "listingLowestText": "6666만 6600",
+      "resultCount": 16,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 43,
+      "collectedAt": "2026-07-12T15:32:43.497Z"
+    },
+    {
+      "itemName": "꼬마 정비공(여)",
+      "query": "꼬마 정비공 (여)",
+      "aliases": [
+        "꼬마 정비공 (여)"
+      ],
+      "listingLowestMeso": 353699999,
+      "listingLowestText": "3억 5369만 9999",
+      "resultCount": 8,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 44,
+      "collectedAt": "2026-07-12T15:32:49.676Z"
+    },
+    {
+      "itemName": "꼬마 정비사(남)",
+      "query": "꼬마 정비사 (남)",
+      "aliases": [
+        "꼬마 정비사 (남)"
+      ],
+      "listingLowestMeso": 278887777,
+      "listingLowestText": "2억 7888만 7777",
+      "resultCount": 16,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 45,
+      "collectedAt": "2026-07-12T15:32:58.943Z"
+    },
+    {
+      "itemName": "꼬미",
+      "query": "꼬미",
+      "aliases": [],
+      "listingLowestMeso": 155555555,
+      "listingLowestText": "1억 5555만 5555",
+      "resultCount": 3,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 46,
+      "collectedAt": "2026-07-12T15:33:05.120Z"
+    },
+    {
+      "itemName": "네스",
+      "query": "네스",
+      "aliases": [],
+      "listingLowestMeso": 222222222,
+      "listingLowestText": "2억 2222만 2222",
+      "resultCount": 1,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 47,
+      "collectedAt": "2026-07-12T15:33:15.005Z"
+    },
+    {
+      "itemName": "노릇잉",
+      "query": "노릇잉",
+      "aliases": [],
+      "listingLowestMeso": 76666665,
+      "listingLowestText": "7666만 6665",
+      "resultCount": 5,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 48,
+      "collectedAt": "2026-07-12T15:33:25.289Z"
+    },
+    {
+      "itemName": "노마드 고스트(남)",
+      "query": "노마드 고스트 (남)",
+      "aliases": [
+        "노마드 고스트 (남)"
+      ],
+      "listingLowestMeso": 159000000,
+      "listingLowestText": "1억 5900만",
+      "resultCount": 11,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 49,
+      "collectedAt": "2026-07-12T15:33:31.473Z"
+    },
+    {
+      "itemName": "노마드 댄서(여)",
+      "query": "노마드 댄서 (여)",
+      "aliases": [
+        "노마드 댄서 (여)"
+      ],
+      "listingLowestMeso": 21111110,
+      "listingLowestText": "2111만 1110",
+      "resultCount": 16,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 50,
+      "collectedAt": "2026-07-12T15:33:37.673Z"
+    },
+    {
+      "itemName": "노마드 러너(남)",
+      "query": "노마드 러너 (남)",
+      "aliases": [
+        "노마드 러너 (남)"
+      ],
+      "listingLowestMeso": 24000000,
+      "listingLowestText": "2400만",
+      "resultCount": 8,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 51,
+      "collectedAt": "2026-07-12T15:33:43.840Z"
+    },
+    {
+      "itemName": "노마드 위치(여)",
+      "query": "노마드 위치 (여)",
+      "aliases": [
+        "노마드 위치 (여)"
+      ],
+      "listingLowestMeso": 273333333,
+      "listingLowestText": "2억 7333만 3333",
+      "resultCount": 19,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 52,
+      "collectedAt": "2026-07-12T15:33:53.595Z"
+    },
+    {
+      "itemName": "노바 엔젤릭버스터 부츠(여)",
+      "query": "노바 엔젤릭버스터 부츠 (여)",
+      "aliases": [
+        "노바 엔젤릭버스터 부츠 (여)"
+      ],
+      "listingLowestMeso": 60000000,
+      "listingLowestText": "6000만",
+      "resultCount": 3,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 53,
+      "collectedAt": "2026-07-12T15:33:59.791Z"
+    },
+    {
+      "itemName": "노바 카데나 슈즈",
+      "query": "노바 카데나 슈즈",
+      "aliases": [],
+      "listingLowestMeso": 42222222,
+      "listingLowestText": "4222만 2222",
+      "resultCount": 2,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 55,
+      "collectedAt": "2026-07-12T15:34:12.169Z"
+    },
+    {
+      "itemName": "노바 카데나 체인",
+      "query": "노바 카데나 체인",
+      "aliases": [],
+      "listingLowestMeso": 462999999,
+      "listingLowestText": "4억 6299만 9999",
+      "resultCount": 5,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 56,
+      "collectedAt": "2026-07-12T15:34:22.549Z"
+    },
+    {
+      "itemName": "노바 카이저 갑화",
+      "query": "노바 카이저 갑화",
+      "aliases": [],
+      "listingLowestMeso": 73549999,
+      "listingLowestText": "7354만 9999",
+      "resultCount": 12,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 57,
+      "collectedAt": "2026-07-12T15:34:28.754Z"
+    },
+    {
+      "itemName": "노바 카이저 카이세리움",
+      "query": "노바 카이저 카이세리움",
+      "aliases": [],
+      "listingLowestMeso": 835555555,
+      "listingLowestText": "8억 3555만 5555",
+      "resultCount": 9,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 58,
+      "collectedAt": "2026-07-12T15:34:34.951Z"
+    },
+    {
+      "itemName": "노바 카인 군화",
+      "query": "노바 카인 군화",
+      "aliases": [],
+      "listingLowestMeso": 115000000,
+      "listingLowestText": "1억 1500만",
+      "resultCount": 5,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 59,
+      "collectedAt": "2026-07-12T15:34:41.129Z"
+    },
+    {
+      "itemName": "노바 카인 브레스 슈터",
+      "query": "노바 카인 브레스 슈터",
+      "aliases": [],
+      "listingLowestMeso": 89999999,
+      "listingLowestText": "8999만 9999",
+      "resultCount": 7,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 60,
+      "collectedAt": "2026-07-12T15:34:50.500Z"
     }
   ],
   "skipped": [
@@ -4929,29 +5192,50 @@
       "filter": "캐시",
       "searchAccount": 1,
       "collectedAt": "2026-07-12T15:27:23.231Z"
+    },
+    {
+      "itemName": "날라",
+      "query": "날라",
+      "status": "no_candidate",
+      "reason": "5초 대기 후 자동완성 정확 후보 없음",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "collectedAt": "2026-07-12T15:33:11.818Z"
+    },
+    {
+      "itemName": "노바 엔젤릭버스터 소울 슈터",
+      "query": "노바 엔젤릭버스터 소울 슈터",
+      "status": "no_listing",
+      "reason": "정확 후보 선택 후 필터 검색 결과 0건",
+      "resultCount": 0,
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 54,
+      "collectedAt": "2026-07-12T15:34:05.970Z"
     }
   ],
-  "updatedAt": "2026-07-12T15:31:58.711Z",
+  "updatedAt": "2026-07-12T15:35:24.908Z",
   "lastSearchRun": {
     "date": "2026-07-13",
     "searchAccount": 1,
     "accountCharacter": "스카니아 / 헤성",
     "searchLimit": 100,
-    "usedSearches": 40,
-    "listingSearches": 39,
+    "usedSearches": 60,
+    "listingSearches": 59,
     "marketSearches": 1,
-    "validPrices": 39,
-    "noListingSearches": 0,
-    "noCandidateChecks": 1,
+    "validPrices": 58,
+    "noListingSearches": 1,
+    "noCandidateChecks": 2,
     "duplicateSearches": 0,
     "priorityQueueComplete": false,
     "queueMode": "unsearched_first_then_unverified",
-    "queueCursor": 39,
-    "queueRemaining": 200,
-    "nextItem": "구구",
-    "checkpointAt": "2026-07-12T15:31:58.711Z",
+    "queueCursor": 60,
+    "queueRemaining": 179,
+    "nextItem": "노바 카인 제복",
+    "checkpointAt": "2026-07-12T15:35:24.908Z",
     "manualNoCandidate": [
-      "노바 엔젤릭버스터 윙"
+      "노바 엔젤릭버스터 윙",
+      "날라"
     ],
     "safetyRulesDocument": "maple-cash-value/docs/daily-auction-search-routine.md"
   },
