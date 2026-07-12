@@ -116,6 +116,9 @@ const state = {
   pageSize: 15,
   adminItemId: '',
   priceTargetName: '',
+  stableRowOrder: [],
+  currentRanks: new Map(),
+  pendingPreviousRanks: null,
   settings: { ...DEFAULT_SETTINGS }
 };
 
@@ -527,31 +530,10 @@ function priceFor(target, index) {
   };
 }
 
-function localPriceRowFor(target) {
-  const id = target.id != null ? String(target.id) : null;
-  const names = new Set([target.name, ...(target.aliases || [])].filter(Boolean).map(normalizeKey));
-  return state.localAuctionRows.find(row => {
-    if (id && row.itemId != null && String(row.itemId) === id) return true;
-    return names.has(normalizeKey(row.itemName || row.name || row.query));
-  }) || null;
-}
-
 function totalPriceFor(item, index) {
   const tradableComponents = componentList(item.components);
-  const directPrice = priceFor(item, index);
   if (!tradableComponents.length) {
-    return directPrice;
-  }
-
-  if (localPriceRowFor(item)) {
-    return {
-      ...directPrice,
-      components: tradableComponents.map(component => ({
-        component,
-        price: priceFor(component, index)
-      })),
-      directOverride: true
-    };
+    return priceFor(item, index);
   }
 
   let liveCount = 0;
@@ -649,14 +631,63 @@ function filteredRows(sourceRows = enrichItems()) {
   });
 }
 
+function rowIdentity(item) {
+  return item.id != null ? `id:${item.id}` : `name:${normalizeKey(item.name)}`;
+}
+
+function compareRankRows(a, b) {
+  if (Boolean(a.referenceOnly) !== Boolean(b.referenceOnly)) return a.referenceOnly ? 1 : -1;
+  if (a.referenceOnly) return b.referenceMesoPerThousand - a.referenceMesoPerThousand;
+  return a.listingEfficiency - b.listingEfficiency;
+}
+
+function createRankMap(rows) {
+  const ranks = new Map();
+  let rank = 0;
+  rows.forEach(item => {
+    if (!item.referenceOnly) ranks.set(rowIdentity(item), ++rank);
+  });
+  return ranks;
+}
+
+function syncStableRowOrder(rows) {
+  const known = new Set(state.stableRowOrder);
+  rows.forEach(item => {
+    const key = rowIdentity(item);
+    if (!known.has(key)) {
+      state.stableRowOrder.push(key);
+      known.add(key);
+    }
+  });
+}
+
+function stableDisplayRows(rows) {
+  const order = new Map(state.stableRowOrder.map((key, index) => [key, index]));
+  return [...rows].sort((a, b) => (order.get(rowIdentity(a)) ?? Number.MAX_SAFE_INTEGER) - (order.get(rowIdentity(b)) ?? Number.MAX_SAFE_INTEGER));
+}
+
 function render() {
   const allRows = enrichItems();
   renderMajorFilterControls(allRows);
-  const rows = filteredRows(allRows).sort((a, b) => {
-    if (Boolean(a.referenceOnly) !== Boolean(b.referenceOnly)) return a.referenceOnly ? 1 : -1;
-    if (a.referenceOnly) return b.referenceMesoPerThousand - a.referenceMesoPerThousand;
-    return a.listingEfficiency - b.listingEfficiency;
-  });
+
+  const globalSaleRows = allRows.filter(item => !item.referenceOnly).sort(compareRankRows);
+  const referenceRows = allRows.filter(item => item.referenceOnly).sort(compareRankRows);
+  syncStableRowOrder([...globalSaleRows, ...referenceRows]);
+
+  const rankByKey = createRankMap(globalSaleRows);
+  const rankChanges = new Map();
+  if (state.pendingPreviousRanks) {
+    rankByKey.forEach((rank, key) => {
+      const previous = state.pendingPreviousRanks.get(key);
+      if (previous != null && previous !== rank) rankChanges.set(key, previous - rank);
+    });
+  }
+  state.currentRanks = rankByKey;
+  state.pendingPreviousRanks = null;
+
+  const filtered = filteredRows(allRows);
+  const rows = stableDisplayRows(filtered);
+  const rankedVisibleSales = filtered.filter(item => !item.referenceOnly).sort(compareRankRows);
   const saleRows = rows.filter(item => !item.referenceOnly);
   const referenceCount = rows.length - saleRows.length;
   const visibleSaleCatalog = filteredSaleCatalog();
@@ -669,7 +700,6 @@ function render() {
   const pageStart = pageSize > 0 ? (state.page - 1) * pageSize : 0;
   const pageEnd = pageSize > 0 ? Math.min(pageStart + pageSize, rows.length) : rows.length;
   const pageRows = rows.slice(pageStart, pageEnd);
-  const saleRankOffset = rows.slice(0, pageStart).filter(item => !item.referenceOnly).length;
 
   syncCategoryOptions(allRows);
   syncPackageToggle();
@@ -680,15 +710,16 @@ function render() {
   $('#row-count').textContent = referenceCount ? `${saleRows.length}개 + 참고 ${referenceCount}개` : `${saleRows.length}개`;
   $('#sale-item-count').textContent = visibleSaleCount === totalSaleCount ? `${totalSaleCount}개` : `${visibleSaleCount}/${totalSaleCount}개`;
   $('#auction-updated').textContent = formatDate(state.localAuctionRows.length ? state.localDataUpdatedAt : state.metadata.auctionUpdatedAt);
-  $('#best-efficiency').textContent = saleRows.length ? formatWon(saleRows[0].listingEfficiency) : '-';
-  $('#local-price-count').textContent = `${state.localAuctionRows.length}개`;
+  $('#best-efficiency').textContent = rankedVisibleSales.length ? formatWon(rankedVisibleSales[0].listingEfficiency) : '-';
+  const localPriceCount = $('#local-price-count');
+  if (localPriceCount) localPriceCount.textContent = `${state.localAuctionRows.length}개`;
   $('#item-override-state').textContent = state.hasLocalItems ? '수정 데이터' : '기본 데이터';
 
   renderMode();
   renderManualResult();
   renderNotices();
   renderSaleItems(visibleSaleCatalog);
-  renderTable(pageRows, saleRankOffset);
+  renderTable(pageRows, rankByKey, rankChanges);
   renderPagination(rows.length, pageStart, pageEnd, totalPages);
 }
 
@@ -772,20 +803,26 @@ function renderSaleItems(catalog) {
   }).join('');
 }
 
-function renderTable(rows, saleRankOffset = 0) {
+function renderTable(rows, rankByKey = new Map(), rankChanges = new Map()) {
   const tbody = $('#item-rows');
   if (!rows.length) {
     tbody.innerHTML = $('#empty-template').innerHTML;
     return;
   }
 
-  let saleRank = saleRankOffset;
   tbody.innerHTML = rows.map(item => {
     const isReference = Boolean(item.referenceOnly);
-    const rankNumber = isReference ? null : ++saleRank;
+    const key = rowIdentity(item);
+    const rankNumber = isReference ? null : rankByKey.get(key);
+    const rankDelta = rankChanges.get(key) || 0;
+    const rankChange = rankDelta > 0
+      ? `<small class="rank-change up">↑${rankDelta}</small>`
+      : rankDelta < 0
+        ? `<small class="rank-change down">↓${Math.abs(rankDelta)}</small>`
+        : '';
     const rank = isReference
       ? '<span class="source-pill seed">참고</span>'
-      : `<span class="rank">${rankNumber}</span>`;
+      : `<span class="rank-cell"><span class="rank">${rankNumber}</span>${rankChange}</span>`;
     const turnoverWarning = !isReference && isPackageItem(item)
       ? '<span class="turnover-pill" title="패키지는 판매까지 시간이 걸릴 수 있습니다.">회전율 주의</span>'
       : '';
@@ -795,10 +832,11 @@ function renderTable(rows, saleRankOffset = 0) {
     const cost = isReference
       ? `${nf.format(Number(item.mileagePrice || item.cashPrice || 0))} 마일리지`
       : `${nf.format(Number(item.cashPrice || 0))}원`;
-    const price = isReference ? renderReferencePrice(item) : renderPrice(item.listingPrice);
-    const priceEditButton = !isReference
-      ? `<button class="price-edit-button" type="button" data-price-edit="${escapeAttribute(item.name)}" aria-label="${escapeAttribute(item.name)} 가격 수정">수정</button>`
-      : '';
+    const price = isReference
+      ? renderReferencePrice(item)
+      : isPackageItem(item)
+        ? renderPrice(item.listingPrice)
+        : renderInlinePriceEditor(item.name, item.listingPrice);
     const result = isReference
       ? `<span class="eff-value">${formatReferenceMeso(item.referenceMesoPerThousand)}</span><span class="price-meta">1,000 마일리지당 절약</span>`
       : `<span class="eff-value">${formatWon(item.listingEfficiency)}</span><span class="price-meta">1억당 현금</span>`;
@@ -817,7 +855,7 @@ function renderTable(rows, saleRankOffset = 0) {
           ${renderComponents(item)}
         </td>
         <td data-label="구매 가격"><span class="cash-value">${cost}</span></td>
-        <td data-label="매물가/참고가"><div class="price-cell"><span class="price-content">${price}</span>${priceEditButton}</div></td>
+        <td data-label="매물가/참고가"><div class="price-cell">${price}</div></td>
         <td data-label="판매 효율/절약">${result}</td>
       </tr>
     `;
@@ -843,6 +881,30 @@ function renderPrice(price) {
   const klass = ['live', 'manual', 'mixed'].includes(price.source) ? price.source : status;
   const date = price.collectedAt ? `<span class="price-meta">${escapeHtml(formatDate(price.collectedAt))}</span>` : '';
   return `<span class="price-value">${formatMeso(price.meso)}</span>${date}<span class="source-pill ${klass}">${label}</span>`;
+}
+
+function renderInlinePriceEditor(name, price, compact = false) {
+  const meso = Math.max(0, Math.round(Number(price?.meso || 0)));
+  const status = price?.auctionStatus || 'unverified';
+  const label = price?.source === 'manual'
+    ? '수동입력'
+    : price?.source === 'live'
+      ? '확인가'
+      : auctionStatusLabel(status);
+  const meta = meso > 0 ? `${formatMeso(meso)} · ${label}` : label;
+  const date = price?.collectedAt && !compact ? ` · ${formatDate(price.collectedAt)}` : '';
+  return `
+    <span class="inline-price-editor${compact ? ' compact' : ''}">
+      <span class="inline-price-row">
+        <input class="inline-price-input" type="number" min="0" step="10000"
+          value="${meso || ''}" data-inline-price-name="${escapeAttribute(name)}"
+          aria-label="${escapeAttribute(name)} 가격">
+        <button class="inline-price-save" type="button"
+          data-inline-price-save="${escapeAttribute(name)}">적용</button>
+      </span>
+      <small class="inline-price-meta">${escapeHtml(meta + date)}</small>
+    </span>
+  `;
 }
 
 function renderComponentQuote(price) {
@@ -888,10 +950,7 @@ function renderComponents(item) {
         ${tradable.map(component => `
           <div class="component-row">
             <span class="component-name">${escapeHtml(componentDisplayName(component))}</span>
-            <div class="component-price-actions">
-              ${renderComponentQuote(breakdown.get(normalizeKey(component.name)))}
-              <button class="price-edit-button" type="button" data-price-edit="${escapeAttribute(component.name)}" aria-label="${escapeAttribute(component.name)} 가격 수정">수정</button>
-            </div>
+            ${renderInlinePriceEditor(component.name, breakdown.get(normalizeKey(component.name)), true)}
           </div>
         `).join('')}
         ${bonus.map(component => `
@@ -1086,6 +1145,12 @@ function saveManualPrice() {
     setSyncState('error', '가격 저장 실패', '아이템명과 경매장 가격을 입력해 주세요.');
     return;
   }
+  const existing = state.items.find(row => normalizeKey(row.name) === normalizeKey(item.name));
+  if (existing && componentList(existing.components).length) {
+    setSyncState('error', '구성품 가격을 수정해 주세요', '패키지 가격은 구성품 합계로 계산됩니다.');
+    return;
+  }
+  state.pendingPreviousRanks = new Map(state.currentRanks);
   upsertLocalPrice(item.name, item.seedMesoPrice, 'live');
   setSyncState('ready', '내 가격 적용', `${item.name} 가격을 이 브라우저 계산에 반영했습니다.`);
   render();
@@ -1164,6 +1229,23 @@ function upsertLocalPrice(name, meso, status = 'live') {
   persistLocalData();
 }
 
+function saveInlinePrice(name, rawValue) {
+  const cleanName = String(name || '').trim();
+  if (!cleanName) return;
+  const meso = toNumber(rawValue, 0);
+  state.pendingPreviousRanks = new Map(state.currentRanks);
+  if (meso > 0) {
+    upsertLocalPrice(cleanName, meso, 'live');
+    setSyncState('ready', '가격 적용', `${cleanName} 가격을 이 브라우저 계산에 반영했습니다.`);
+  } else {
+    const key = normalizeKey(cleanName);
+    state.localAuctionRows = state.localAuctionRows.filter(row => normalizeKey(row.itemName || row.name || row.query) !== key);
+    persistLocalData();
+    setSyncState('ready', '기본 가격 복원', `${cleanName}의 로컬 가격을 해제했습니다.`);
+  }
+  render();
+}
+
 function clearLocalPrice() {
   if (!canEditPrices()) return;
   const name = $('#price-item-name').value.trim() || state.priceTargetName;
@@ -1221,18 +1303,6 @@ function writePriceEditor(name) {
   $('#price-item-name').value = name || '';
   $('#price-meso').value = row?.listingLowestMeso || '';
   $('#price-status').value = row?.listingLowestMeso > 0 ? 'live' : row?.status || 'live';
-}
-
-function openPriceEditor(name) {
-  state.priceTargetName = name;
-  const select = $('#price-target-select');
-  if (select) select.value = name;
-  writePriceEditor(name);
-  const panel = $('#local-price-panel');
-  if (panel) {
-    panel.open = true;
-    panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
 }
 
 function writeItemEditor(item) {
@@ -1519,9 +1589,17 @@ on('#base-mp-rate', 'input', event => {
 });
 
 on('#item-rows', 'click', event => {
-  const button = event.target.closest('button[data-price-edit]');
+  const button = event.target.closest('button[data-inline-price-save]');
   if (!button) return;
-  openPriceEditor(button.dataset.priceEdit);
+  const editor = button.closest('.inline-price-editor');
+  const input = editor?.querySelector('.inline-price-input');
+  saveInlinePrice(button.dataset.inlinePriceSave, input?.value);
+});
+
+on('#item-rows', 'keydown', event => {
+  if (event.key !== 'Enter' || !event.target.matches('.inline-price-input')) return;
+  event.preventDefault();
+  saveInlinePrice(event.target.dataset.inlinePriceName, event.target.value);
 });
 
 on('#calculate-manual', 'click', renderManualResult);
