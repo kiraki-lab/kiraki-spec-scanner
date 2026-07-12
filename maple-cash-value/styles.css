@@ -3924,3 +3924,18 @@ html[data-theme="pink"] .channel-link:hover {
     justify-content: flex-start;
   }
 }
+
+.component-row:has(.inline-price-editor.has-market) {
+  grid-column: span 2;
+}
+
+.component-row:has(.inline-price-editor.has-market) .component-name {
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+@media (max-width: 680px) {
+  .component-row:has(.inline-price-editor.has-market) {
+    grid-column: span 1;
+  }
+}
