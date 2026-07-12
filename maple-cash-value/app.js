@@ -428,13 +428,14 @@ function priceFor(target, index) {
 }
 
 function totalPriceFor(item, index) {
-  if (!Array.isArray(item.components) || !item.components.length) {
+  const tradableComponents = componentList(item.components);
+  if (!tradableComponents.length) {
     return priceFor(item, index);
   }
 
   let liveCount = 0;
   let latest = null;
-  const components = item.components.map(component => {
+  const components = tradableComponents.map(component => {
     const price = priceFor(component, index);
     if (price.source === 'live') liveCount += 1;
     if (price.collectedAt && (!latest || new Date(price.collectedAt) > new Date(latest))) latest = price.collectedAt;
@@ -445,7 +446,7 @@ function totalPriceFor(item, index) {
 
   return {
     meso,
-    source: liveCount === item.components.length ? 'live' : liveCount > 0 ? 'mixed' : 'seed',
+    source: liveCount === tradableComponents.length ? 'live' : liveCount > 0 ? 'mixed' : 'seed',
     auctionStatus: summarizeAuctionStatus(componentPrices),
     collectedAt: latest,
     components
