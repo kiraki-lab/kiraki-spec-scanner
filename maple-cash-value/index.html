@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Jua&amp;family=Noto+Sans+KR:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./styles.css?v=0.9.2">
+  <link rel="stylesheet" href="./styles.css?v=0.9.3">
 </head>
 <body>
   <div class="app-shell">
@@ -168,47 +168,6 @@
       </div>
     </details>
 
-    <details id="local-price-panel" class="manual-panel compact-panel local-price-panel" aria-label="내 브라우저 가격">
-      <summary class="section-title compact-summary">
-        <h2>내 가격 수정</h2>
-        <span id="local-price-count" class="count-pill">0개</span>
-      </summary>
-      <div class="local-price-editor">
-        <div class="editor-grid">
-          <label class="wide-field">
-            <span>대상</span>
-            <select id="price-target-select">
-              <option value="">직접 입력</option>
-            </select>
-          </label>
-          <label>
-            <span>품목명</span>
-            <input id="price-item-name" type="text" autocomplete="off">
-          </label>
-          <label>
-            <span>가격</span>
-            <input id="price-meso" type="number" min="0" step="10000">
-          </label>
-          <label>
-            <span>상태</span>
-            <select id="price-status">
-              <option value="live">가격 있음</option>
-              <option value="seed">기본값</option>
-              <option value="no_listing">매물 없음</option>
-              <option value="no_candidate">후보 없음</option>
-              <option value="unverified">미확인</option>
-            </select>
-          </label>
-        </div>
-        <div class="action-row compact">
-          <button id="save-price-row" type="button">브라우저에 적용</button>
-          <button id="clear-price-row" type="button" class="ghost-button">이 가격 삭제</button>
-          <button id="reset-local-prices" type="button" class="ghost-button">전체 초기화</button>
-          <button id="export-prices" type="button" class="ghost-button">가격 내보내기</button>
-        </div>
-      </div>
-    </details>
-
     <section id="management-panel" class="management-panel" aria-label="데이터 관리" hidden>
       <div class="plain-title">
         <h2>데이터 관리</h2>
@@ -279,6 +238,7 @@
           </label>
           <div class="action-row compact">
             <button id="import-prices" type="button">가격 가져오기</button>
+            <button id="export-prices" type="button" class="ghost-button">가격 내보내기</button>
             <button id="import-items" class="admin-only" type="button" hidden>항목 가져오기</button>
             <button id="clear-import" type="button" class="ghost-button">비우기</button>
           </div>
@@ -382,6 +342,6 @@
     </tr>
   </template>
 
-  <script type="module" src="./app.js?v=0.9.3"></script>
+  <script type="module" src="./app.js?v=0.9.4"></script>
 </body>
 </html>
