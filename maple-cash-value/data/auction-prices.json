@@ -2945,6 +2945,51 @@
       "searchAccount": 1,
       "searchIndex": 100,
       "collectedAt": "2026-07-12T11:14:27.481+09:00"
+    },
+    {
+      "itemName": "라스트 서바이버(남)",
+      "query": "라스트 서바이버 (남)",
+      "aliases": [
+        "라스트 서바이버 (남)"
+      ],
+      "listingLowestMeso": 39999999,
+      "listingLowestText": "3999만 9999",
+      "resultCount": 6,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 1,
+      "collectedAt": "2026-07-12T14:19:36.293+09:00"
+    },
+    {
+      "itemName": "캠퍼스 소녀(여)",
+      "query": "캠퍼스 소녀 (여)",
+      "aliases": [
+        "캠퍼스 소녀 (여)"
+      ],
+      "listingLowestMeso": 144444444,
+      "listingLowestText": "1억 4444만 4444",
+      "resultCount": 24,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 2,
+      "collectedAt": "2026-07-12T14:22:29.062+09:00"
+    },
+    {
+      "itemName": "곰곰 멜빵(남)",
+      "query": "곰곰 멜빵 (남)",
+      "aliases": [
+        "곰곰 멜빵 (남)"
+      ],
+      "listingLowestMeso": 209999988,
+      "listingLowestText": "2억 999만 9988",
+      "resultCount": 8,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 4,
+      "collectedAt": "2026-07-12T14:22:55.341+09:00"
     }
   ],
   "skipped": [
@@ -3046,22 +3091,46 @@
       "filter": "캐시",
       "searchAccount": 1,
       "collectedAt": "2026-07-12T11:11:02.132+09:00"
+    },
+    {
+      "itemName": "캠퍼스 소년(남)",
+      "query": "캠퍼스 소년 (남)",
+      "aliases": [
+        "캠퍼스 소년 (남)"
+      ],
+      "status": "no_listing",
+      "reason": "정확 후보 선택 후 필터 검색 결과 0건",
+      "resultCount": 0,
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 3,
+      "collectedAt": "2026-07-12T14:22:40.154+09:00"
+    },
+    {
+      "itemName": "라스트 서바이버(여)",
+      "query": "라스트 서바이버(여)",
+      "status": "no_candidate",
+      "reason": "5초 대기 후에도 자동완성 정확 후보 없음; 필터 검색 미실행",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "collectedAt": "2026-07-12T14:21:51.907+09:00"
     }
   ],
-  "updatedAt": "2026-07-12T11:14:47.914+09:00",
+  "updatedAt": "2026-07-12T14:41:45,795+09:00",
   "lastSearchRun": {
-    "searchAccount": 1,
-    "usedSearches": 100,
-    "validPrices": 86,
-    "duplicateSearches": 12,
-    "nextItem": "춤추는 꽃잎",
-    "completedAt": "2026-07-12T11:14:47.914+09:00",
-    "priceFormatRechecks": 2,
+    "searchAccount": 2,
+    "searchLimit": 100,
+    "usedSearches": 4,
+    "validPrices": 3,
+    "noListingSearches": 1,
+    "noCandidateChecks": 1,
+    "duplicateSearches": 0,
+    "nextItem": "곰곰 원피스(여)",
+    "updatedAt": "2026-07-12T14:41:45,795+09:00",
     "manualNoCandidate": [
-      "파도를 이끄는 구조 신호"
+      "라스트 서바이버(여)"
     ],
-    "remainingGoldSilverApparel": 143,
-    "queueMode": "sequential_resume",
+    "queueMode": "priority_package_completion",
     "safetyRulesDocument": "maple-cash-value/docs/daily-auction-search-routine.md"
   }
 }
