@@ -3905,6 +3905,216 @@
       "listingLowestText": "1억 5555만 5555",
       "resultCount": 6,
       "status": "ok"
+    },
+    {
+      "itemName": "발드릭스 할버드",
+      "query": "발드릭스 할버드",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 81,
+      "collectedAt": "2026-07-12T15:08:54.172+09:00",
+      "listingLowestMeso": 300000000,
+      "listingLowestText": "3억",
+      "resultCount": 8,
+      "status": "ok"
+    },
+    {
+      "itemName": "빅풋 갑주",
+      "query": "빅풋 갑주",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 82,
+      "collectedAt": "2026-07-12T15:09:05.313+09:00",
+      "listingLowestMeso": 13999994,
+      "listingLowestText": "1399만 9994",
+      "resultCount": 11,
+      "status": "ok"
+    },
+    {
+      "itemName": "빅풋 슈즈",
+      "query": "빅풋 슈즈",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 83,
+      "collectedAt": "2026-07-12T15:09:49.487+09:00",
+      "listingLowestMeso": 9999999,
+      "listingLowestText": "999만 9999",
+      "resultCount": 6,
+      "status": "ok"
+    },
+    {
+      "itemName": "빅풋 슈트",
+      "query": "빅풋 슈트",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 84,
+      "collectedAt": "2026-07-12T15:10:01.788+09:00",
+      "listingLowestMeso": 100000000,
+      "listingLowestText": "1억",
+      "resultCount": 9,
+      "status": "ok"
+    },
+    {
+      "itemName": "빅풋 탈",
+      "query": "빅풋 탈",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 85,
+      "collectedAt": "2026-07-12T15:10:19.676+09:00",
+      "listingLowestMeso": 55000000,
+      "listingLowestText": "5500만",
+      "resultCount": 11,
+      "status": "ok"
+    },
+    {
+      "itemName": "빅풋 플레임",
+      "query": "빅풋 플레임",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 86,
+      "collectedAt": "2026-07-12T15:10:35.110+09:00",
+      "listingLowestMeso": 355555555,
+      "listingLowestText": "3억 5555만 5555",
+      "resultCount": 13,
+      "status": "ok"
+    },
+    {
+      "itemName": "세렌 갑옷",
+      "query": "세렌 갑옷",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 87,
+      "collectedAt": "2026-07-12T15:10:50.992+09:00",
+      "listingLowestMeso": 14500000,
+      "listingLowestText": "1450만",
+      "resultCount": 13,
+      "status": "ok"
+    },
+    {
+      "itemName": "세렌 슈즈",
+      "query": "세렌 슈즈",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 88,
+      "collectedAt": "2026-07-12T15:11:06.454+09:00",
+      "listingLowestMeso": 6800000,
+      "listingLowestText": "680만",
+      "resultCount": 8,
+      "status": "ok"
+    },
+    {
+      "itemName": "세렌 헤일로",
+      "query": "세렌 헤일로",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 89,
+      "collectedAt": "2026-07-12T15:11:24.412+09:00",
+      "listingLowestMeso": 170000000,
+      "listingLowestText": "1억 7000만",
+      "resultCount": 4,
+      "status": "ok"
+    },
+    {
+      "itemName": "세렌의 날개",
+      "query": "세렌의 날개",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 90,
+      "collectedAt": "2026-07-12T15:11:39.812+09:00",
+      "listingLowestMeso": 587777777,
+      "listingLowestText": "5억 8777만 7777",
+      "resultCount": 8,
+      "status": "ok"
+    },
+    {
+      "itemName": "신성검 아소르",
+      "query": "신성검 아소르",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 91,
+      "collectedAt": "2026-07-12T15:11:57.693+09:00",
+      "listingLowestMeso": 84444444,
+      "listingLowestText": "8444만 4444",
+      "resultCount": 11,
+      "status": "ok"
+    },
+    {
+      "itemName": "아카이럼 슈즈",
+      "query": "아카이럼 슈즈",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 93,
+      "collectedAt": "2026-07-12T15:12:32.064+09:00",
+      "listingLowestMeso": 38666666,
+      "listingLowestText": "3866만 6666",
+      "resultCount": 3,
+      "status": "ok"
+    },
+    {
+      "itemName": "아카이럼 스네이크",
+      "query": "아카이럼 스네이크",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 94,
+      "collectedAt": "2026-07-12T15:12:47.458+09:00",
+      "listingLowestMeso": 77777775,
+      "listingLowestText": "7777만 7775",
+      "resultCount": 4,
+      "status": "ok"
+    },
+    {
+      "itemName": "아카이럼 완드",
+      "query": "아카이럼 완드",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 95,
+      "collectedAt": "2026-07-12T15:13:04.373+09:00",
+      "listingLowestMeso": 455555500,
+      "listingLowestText": "4억 5555만 5500",
+      "resultCount": 1,
+      "status": "ok"
+    },
+    {
+      "itemName": "오염된 근원",
+      "query": "오염된 근원",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 97,
+      "collectedAt": "2026-07-12T15:13:38.722+09:00",
+      "listingLowestMeso": 445990000,
+      "listingLowestText": "4억 4599만",
+      "resultCount": 6,
+      "status": "ok"
+    },
+    {
+      "itemName": "아니마 호영 도사복(남)",
+      "query": "아니마 호영 도사복 (남)",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 98,
+      "collectedAt": "2026-07-12T15:15:43.475+09:00",
+      "aliases": [
+        "아니마 호영 도사복 (남)"
+      ],
+      "listingLowestMeso": 160000000,
+      "listingLowestText": "1억 6000만",
+      "resultCount": 1,
+      "status": "ok"
+    },
+    {
+      "itemName": "아니마 호영 도사복(여)",
+      "query": "아니마 호영 도사복 (여)",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 99,
+      "collectedAt": "2026-07-12T15:15:58.970+09:00",
+      "aliases": [
+        "아니마 호영 도사복 (여)"
+      ],
+      "listingLowestMeso": 115000000,
+      "listingLowestText": "1억 1500만",
+      "resultCount": 7,
+      "status": "ok"
     }
   ],
   "skipped": [
@@ -4058,25 +4268,73 @@
       "filter": "캐시",
       "searchAccount": 2,
       "collectedAt": "2026-07-12T15:05:32.878+09:00"
+    },
+    {
+      "itemName": "아카이럼 로브",
+      "query": "아카이럼 로브",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 92,
+      "collectedAt": "2026-07-12T15:12:13.113+09:00",
+      "status": "no_listing",
+      "reason": "정확 후보 선택 후 필터 검색 결과 0건",
+      "resultCount": 0
+    },
+    {
+      "itemName": "아카이럼의 문양",
+      "query": "아카이럼의 문양",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 96,
+      "collectedAt": "2026-07-12T15:13:19.782+09:00",
+      "status": "no_listing",
+      "reason": "정확 후보 선택 후 필터 검색 결과 0건",
+      "resultCount": 0
+    },
+    {
+      "itemName": "매그너스 장갑",
+      "query": "매그너스 장갑",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 100,
+      "collectedAt": "2026-07-12T15:16:18.966+09:00",
+      "status": "no_listing",
+      "reason": "정확 후보 선택 후 필터 검색 결과 0건",
+      "resultCount": 0
     }
   ],
-  "updatedAt": "2026-07-12T15:08:01.412+09:00",
+  "updatedAt": "2026-07-12T15:17:02.920+09:00",
   "lastSearchRun": {
     "searchAccount": 2,
     "searchLimit": 100,
-    "usedSearches": 80,
-    "validPrices": 78,
-    "noListingSearches": 2,
+    "usedSearches": 100,
+    "validPrices": 95,
+    "noListingSearches": 5,
     "noCandidateChecks": 3,
     "duplicateSearches": 0,
-    "nextItem": "발드릭스 할버드",
-    "updatedAt": "2026-07-12T15:08:01.412+09:00",
+    "priorityQueueComplete": true,
+    "nextItem": "천족의 날개귀",
+    "completedAt": "2026-07-12T15:17:02.920+09:00",
     "manualNoCandidate": [
       "라스트 서바이버(여)",
       "로즈 원드",
       "림보 날"
     ],
-    "queueMode": "priority_package_completion_then_shared_components_then_high_value",
+    "remainingExtraPriority": [
+      "천족의 날개귀",
+      "찬란한 흉성 슈트(남)",
+      "찬란한 흉성 슈트(여)",
+      "발드릭스 장갑",
+      "듄켈 장갑",
+      "파워풀 빅풋",
+      "곰도리 귀 머리띠",
+      "곰도리 귀",
+      "카링 비단옷(남)",
+      "카링 비단 치마(여)",
+      "심연의 그림자(남)",
+      "심연의 거울(여)"
+    ],
+    "queueMode": "package_completion_by_known_value",
     "safetyRulesDocument": "maple-cash-value/docs/daily-auction-search-routine.md"
   }
 }
