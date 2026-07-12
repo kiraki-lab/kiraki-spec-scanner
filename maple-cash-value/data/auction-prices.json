@@ -2990,6 +2990,204 @@
       "searchAccount": 2,
       "searchIndex": 4,
       "collectedAt": "2026-07-12T14:22:55.341+09:00"
+    },
+    {
+      "itemName": "곰곰 원피스(여)",
+      "query": "곰곰 원피스 (여)",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 5,
+      "collectedAt": "2026-07-12T14:44:09.836+09:00",
+      "listingLowestMeso": 277777777,
+      "listingLowestText": "2억 7777만 7777",
+      "resultCount": 15,
+      "status": "ok"
+    },
+    {
+      "itemName": "해결사의 흑의(남)",
+      "query": "해결사의 흑의 (남)",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 6,
+      "collectedAt": "2026-07-12T14:44:32.906+09:00",
+      "listingLowestMeso": 199000000,
+      "listingLowestText": "1억 9900만",
+      "resultCount": 3,
+      "status": "ok"
+    },
+    {
+      "itemName": "행복한 생일(여)",
+      "query": "행복한 생일 (여)",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 7,
+      "collectedAt": "2026-07-12T14:44:53.965+09:00",
+      "listingLowestMeso": 42210000,
+      "listingLowestText": "4221만",
+      "resultCount": 10,
+      "status": "ok"
+    },
+    {
+      "itemName": "스타 페인터(남)",
+      "query": "스타 페인터 (남)",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 8,
+      "collectedAt": "2026-07-12T14:45:14.381+09:00",
+      "listingLowestMeso": 187888888,
+      "listingLowestText": "1억 8788만 8888",
+      "resultCount": 1,
+      "status": "ok"
+    },
+    {
+      "itemName": "다크 시그너스 써클릿",
+      "query": "다크 시그너스 써클릿",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 9,
+      "collectedAt": "2026-07-12T14:45:34.384+09:00",
+      "listingLowestMeso": 9111111,
+      "listingLowestText": "911만 1111",
+      "resultCount": 9,
+      "status": "ok"
+    },
+    {
+      "itemName": "다크 시그너스의 신수",
+      "query": "다크 시그너스의 신수",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 10,
+      "collectedAt": "2026-07-12T14:45:53.792+09:00",
+      "listingLowestMeso": 33333332,
+      "listingLowestText": "3333만 3332",
+      "resultCount": 9,
+      "status": "ok"
+    },
+    {
+      "itemName": "유피테르 슈즈",
+      "query": "유피테르 슈즈",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 11,
+      "collectedAt": "2026-07-12T14:46:14.466+09:00",
+      "listingLowestMeso": 3333333,
+      "listingLowestText": "333만 3333",
+      "resultCount": 7,
+      "status": "ok"
+    },
+    {
+      "itemName": "진 힐라 가발",
+      "query": "진 힐라 가발",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 12,
+      "collectedAt": "2026-07-12T14:46:35.020+09:00",
+      "listingLowestMeso": 124998989,
+      "listingLowestText": "1억 2499만 8989",
+      "resultCount": 6,
+      "status": "ok"
+    },
+    {
+      "itemName": "찬란한 흉성 슈즈",
+      "query": "찬란한 흉성 슈즈",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 13,
+      "collectedAt": "2026-07-12T14:46:55.808+09:00",
+      "listingLowestMeso": 22222222,
+      "listingLowestText": "2222만 2222",
+      "resultCount": 16,
+      "status": "ok"
+    },
+    {
+      "itemName": "사냥꾼의 흑의(여)",
+      "query": "사냥꾼의 흑의 (여)",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 14,
+      "collectedAt": "2026-07-12T14:48:12.026+09:00",
+      "aliases": [
+        "사냥꾼의 흑의 (여)"
+      ],
+      "listingLowestMeso": 199999999,
+      "listingLowestText": "1억 9999만 9999",
+      "resultCount": 3,
+      "status": "ok"
+    },
+    {
+      "itemName": "슈팅 페인터(여)",
+      "query": "슈팅 페인터 (여)",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 15,
+      "collectedAt": "2026-07-12T14:48:32.677+09:00",
+      "aliases": [
+        "슈팅 페인터 (여)"
+      ],
+      "listingLowestMeso": 243000000,
+      "listingLowestText": "2억 4300만",
+      "resultCount": 8,
+      "status": "ok"
+    },
+    {
+      "itemName": "다크 시그너스 엠블럼",
+      "query": "다크 시그너스 엠블럼",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 16,
+      "collectedAt": "2026-07-12T14:48:55.702+09:00",
+      "listingLowestMeso": 7000000,
+      "listingLowestText": "700만",
+      "resultCount": 7,
+      "status": "ok"
+    },
+    {
+      "itemName": "죽음의 손아귀",
+      "query": "죽음의 손아귀",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 17,
+      "collectedAt": "2026-07-12T14:49:18.579+09:00",
+      "listingLowestMeso": 44444444,
+      "listingLowestText": "4444만 4444",
+      "resultCount": 7,
+      "status": "ok"
+    },
+    {
+      "itemName": "찬란한 흉성 케이프",
+      "query": "찬란한 흉성 케이프",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 18,
+      "collectedAt": "2026-07-12T14:49:38.122+09:00",
+      "listingLowestMeso": 259999999,
+      "listingLowestText": "2억 5999만 9999",
+      "resultCount": 10,
+      "status": "ok"
+    },
+    {
+      "itemName": "찬란한 흉성의 힘",
+      "query": "찬란한 흉성의 힘",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 19,
+      "collectedAt": "2026-07-12T14:49:53.517+09:00",
+      "listingLowestMeso": 188888888,
+      "listingLowestText": "1억 8888만 8888",
+      "resultCount": 12,
+      "status": "ok"
+    },
+    {
+      "itemName": "최초의 대적자 슈즈",
+      "query": "최초의 대적자 슈즈",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 20,
+      "collectedAt": "2026-07-12T14:50:13.037+09:00",
+      "listingLowestMeso": 41500000,
+      "listingLowestText": "4150만",
+      "resultCount": 5,
+      "status": "ok"
     }
   ],
   "skipped": [
@@ -3114,23 +3312,83 @@
       "filter": "캐시",
       "searchAccount": 2,
       "collectedAt": "2026-07-12T14:21:51.907+09:00"
+    },
+    {
+      "itemName": "신나는 생일(남)",
+      "query": "신나는 생일(남)",
+      "status": "no_candidate",
+      "reason": "검색 완료 후 5초 간격 적용 및 추가 5초 대기 후에도 자동완성 정확 후보 없음; 필터 검색 미실행",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "collectedAt": "2026-07-12T14:48:21.446+09:00"
+    },
+    {
+      "itemName": "고통의 속박",
+      "query": "고통의 속박",
+      "status": "no_candidate",
+      "reason": "검색 완료 후 5초 간격 적용 및 추가 5초 대기 후에도 자동완성 정확 후보 없음; 필터 검색 미실행",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "collectedAt": "2026-07-12T14:48:42.098+09:00"
+    },
+    {
+      "itemName": "유피테르 기계 팔",
+      "query": "유피테르 기계 팔",
+      "status": "no_candidate",
+      "reason": "검색 완료 후 5초 간격 적용 및 추가 5초 대기 후에도 자동완성 정확 후보 없음; 필터 검색 미실행",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "collectedAt": "2026-07-12T14:49:08.850+09:00"
+    },
+    {
+      "itemName": "진 힐라의 낫",
+      "query": "진 힐라의 낫",
+      "status": "no_candidate",
+      "reason": "검색 완료 후 5초 간격 적용 및 추가 5초 대기 후에도 자동완성 정확 후보 없음; 필터 검색 미실행",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "collectedAt": "2026-07-12T14:49:28.006+09:00"
+    },
+    {
+      "itemName": "찬란한 흉성 헤일로",
+      "query": "찬란한 흉성 헤일로",
+      "status": "no_candidate",
+      "reason": "검색 완료 후 5초 간격 적용 및 추가 5초 대기 후에도 자동완성 정확 후보 없음; 필터 검색 미실행",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "collectedAt": "2026-07-12T14:49:49.355+09:00"
+    },
+    {
+      "itemName": "최초의 대적자 망토",
+      "query": "최초의 대적자 망토",
+      "status": "no_candidate",
+      "reason": "검색 완료 후 5초 간격 적용 및 추가 5초 대기 후에도 자동완성 정확 후보 없음; 필터 검색 미실행",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "collectedAt": "2026-07-12T14:50:08.897+09:00"
     }
   ],
-  "updatedAt": "2026-07-12T14:41:37,299+09:00",
+  "updatedAt": "2026-07-12T14:50:39.244+09:00",
   "lastSearchRun": {
     "searchAccount": 2,
     "searchLimit": 100,
-    "usedSearches": 4,
-    "validPrices": 3,
+    "usedSearches": 20,
+    "validPrices": 19,
     "noListingSearches": 1,
-    "noCandidateChecks": 1,
+    "noCandidateChecks": 7,
     "duplicateSearches": 0,
-    "nextItem": "곰곰 원피스(여)",
-    "updatedAt": "2026-07-12T14:41:37,299+09:00",
+    "nextItem": "최초의 대적자 후드",
+    "updatedAt": "2026-07-12T14:50:39.244+09:00",
     "manualNoCandidate": [
-      "라스트 서바이버(여)"
+      "라스트 서바이버(여)",
+      "신나는 생일(남)",
+      "고통의 속박",
+      "유피테르 기계 팔",
+      "진 힐라의 낫",
+      "찬란한 흉성 헤일로",
+      "최초의 대적자 망토"
     ],
-    "queueMode": "priority_package_completion",
+    "queueMode": "priority_package_completion_then_shared_components",
     "safetyRulesDocument": "maple-cash-value/docs/daily-auction-search-routine.md"
   }
 }
