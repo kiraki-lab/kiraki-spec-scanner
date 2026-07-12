@@ -480,6 +480,16 @@ function auctionStatusLabel(status) {
   return AUCTION_STATUS_LABELS[status] || '미확인';
 }
 
+function isMarketHistoryPending(status) {
+  return status === 'no_sales' || status === 'listing_unconfirmed';
+}
+
+function marketHistoryStatusLabel(status) {
+  if (status === 'no_sales') return '시세 탭 체결 없음';
+  if (status === 'listing_unconfirmed') return '현재가 체결 확인 안 됨';
+  return '';
+}
+
 function summarizeAuctionStatus(prices) {
   const statuses = prices.map(price => price.auctionStatus).filter(Boolean);
   if (!statuses.length) return 'unverified';
@@ -498,25 +508,34 @@ function priceFor(target, index) {
   const row = rowById || rowByName;
   const listingMeso = roundMeso(row?.listingLowestMeso);
   const marketHistoryMeso = roundMeso(row?.marketHistoryMaxMeso || row?.marketHistoryMeso);
-  const meso = listingMeso > 0 && marketHistoryMeso > 0
+  const marketHistoryStatus = row?.marketHistoryStatus || '';
+  const pendingMarketHistory = isMarketHistoryPending(marketHistoryStatus) && marketHistoryMeso <= 0;
+  const candidateMeso = listingMeso > 0 && marketHistoryMeso > 0
     ? Math.min(listingMeso, marketHistoryMeso)
     : listingMeso || marketHistoryMeso;
+  const meso = pendingMarketHistory ? 0 : candidateMeso;
   const usesMarketHistory = marketHistoryMeso > 0 && (!listingMeso || marketHistoryMeso < listingMeso);
   const marketGapRate = listingMeso > 0 && marketHistoryMeso > 0 && marketHistoryMeso < listingMeso
     ? (listingMeso - marketHistoryMeso) / listingMeso * 100
     : 0;
 
-  if (meso > 0) {
+  if (candidateMeso > 0 || pendingMarketHistory) {
     return {
       meso,
       listingMeso,
       marketHistoryMeso,
+      marketHistoryStatus,
+      marketHistoryNote: row?.marketHistoryNote || marketHistoryStatusLabel(marketHistoryStatus),
       marketHistoryBasis: row?.marketHistoryBasis || '시세 탭 체결 상단',
       marketHistoryCollectedAt: row?.marketHistoryCollectedAt || row?.marketHistoryUpdatedAt || null,
       marketGapRate,
       usesMarketHistory,
-      source: usesMarketHistory ? 'history' : row?.source === 'manual' ? 'manual' : 'live',
-      auctionStatus: 'live',
+      source: pendingMarketHistory
+        ? 'pending'
+        : usesMarketHistory
+          ? 'history'
+          : row?.source === 'manual' ? 'manual' : 'live',
+      auctionStatus: listingMeso > 0 ? 'live' : 'unverified',
       collectedAt: row?.collectedAt || row?.updatedAt || state.localDataUpdatedAt || state.metadata.auctionUpdatedAt
     };
   }
@@ -557,12 +576,14 @@ function totalPriceFor(item, index) {
   let liveCount = 0;
   let manualCount = 0;
   let historyCount = 0;
+  let pendingCount = 0;
   let latest = null;
   const components = tradableComponents.map(component => {
     const price = priceFor(component, index);
     if (price.source === 'live') liveCount += 1;
     if (price.source === 'manual') manualCount += 1;
     if (price.source === 'history') historyCount += 1;
+    if (price.source === 'pending') pendingCount += 1;
     [price.collectedAt, price.marketHistoryCollectedAt].filter(Boolean).forEach(value => {
       if (!latest || new Date(value) > new Date(latest)) latest = value;
     });
@@ -571,9 +592,11 @@ function totalPriceFor(item, index) {
   const componentPrices = components.map(entry => entry.price);
   const meso = components.reduce((sum, { component, price }) => sum + price.meso * component.quantity, 0);
   const filledCount = liveCount + manualCount + historyCount;
-  const source = filledCount === tradableComponents.length
-    ? historyCount > 0 ? 'history' : manualCount > 0 ? 'manual' : 'live'
-    : filledCount > 0 ? 'mixed' : 'seed';
+  const source = pendingCount > 0
+    ? 'pending'
+    : filledCount === tradableComponents.length
+      ? historyCount > 0 ? 'history' : manualCount > 0 ? 'manual' : 'live'
+      : filledCount > 0 ? 'mixed' : 'seed';
 
   return {
     meso,
@@ -581,6 +604,7 @@ function totalPriceFor(item, index) {
     auctionStatus: summarizeAuctionStatus(componentPrices),
     collectedAt: latest,
     marketHistoryApplied: historyCount > 0,
+    pendingMarketCount: pendingCount,
     components
   };
 }
@@ -827,10 +851,13 @@ function renderTable(rows, rankByKey = new Map(), rankChanges = new Map()) {
     const turnoverWarning = !isReference && isPackageItem(item)
       ? '<span class="turnover-pill" title="패키지는 판매까지 시간이 걸릴 수 있습니다." aria-label="회전율 주의">회전율 주의</span>'
       : '';
+    const marketWarning = !isReference && Number(item.listingPrice?.pendingMarketCount || 0) > 0
+      ? `<span class="market-warning-pill" title="시세 탭 검증 전 구성품은 보수 합산에서 제외됩니다.">시세 검증 ${item.listingPrice.pendingMarketCount}개</span>`
+      : '';
     const itemMeta = isReference
       ? `<span class="item-meta">마일리지 전용 · 판매 불가 · ${REFERENCE_CATEGORY}</span>`
       : `<span class="item-meta">${escapeHtml(item.category || '캐시 아이템')}</span>
-         <span class="item-badges">${renderMileageBadge(item.mileageType)}${turnoverWarning}</span>`;
+         <span class="item-badges">${renderMileageBadge(item.mileageType)}${turnoverWarning}${marketWarning}</span>`;
     const cost = isReference
       ? `${nf.format(Number(item.mileagePrice || item.cashPrice || 0))} 마일리지`
       : `${nf.format(Number(item.cashPrice || 0))}원`;
@@ -841,10 +868,11 @@ function renderTable(rows, rankByKey = new Map(), rankChanges = new Map()) {
         : renderInlinePriceEditor(item.name, item.listingPrice);
     const result = isReference
       ? `<span class="eff-value">${formatReferenceMeso(item.referenceMesoPerThousand)}</span><span class="price-meta">1,000 마일리지당 절약</span>`
-      : `<span class="eff-value">${formatWon(item.listingEfficiency)}</span><span class="price-meta">1억당 현금</span>`;
+      : `<span class="eff-value">${formatWon(item.listingEfficiency)}</span><span class="price-meta">${item.listingPrice?.source === 'pending' ? '검증 합산 기준' : '1억당 현금'}</span>`;
     const rowClass = [
       isReference ? 'reference-row' : '',
       isPackageItem(item) ? 'package-row' : '',
+      item.listingPrice?.source === 'pending' ? 'market-pending-row' : '',
       rankNumber && rankNumber <= 3 ? `top-rank rank-${rankNumber}` : ''
     ].filter(Boolean).join(' ');
 
@@ -886,14 +914,19 @@ function renderPrice(price) {
     ? '수동입력'
     : price.source === 'history'
       ? '시세 반영'
-      : price.source === 'live'
-        ? '확인가'
-        : price.source === 'mixed'
-          ? '일부 확인'
-          : auctionStatusLabel(status);
-  const klass = ['live', 'manual', 'history', 'mixed'].includes(price.source) ? price.source : status;
+      : price.source === 'pending'
+        ? '검증 필요'
+        : price.source === 'live'
+          ? '확인가'
+          : price.source === 'mixed'
+            ? '일부 확인'
+            : auctionStatusLabel(status);
+  const klass = ['live', 'manual', 'history', 'pending', 'mixed'].includes(price.source) ? price.source : status;
   const date = price.collectedAt
     ? `<time class="price-date">${escapeHtml(formatDate(price.collectedAt))}</time>`
+    : '';
+  const note = price.source === 'pending'
+    ? `<span class="price-note warning">체결 미확인 ${nf.format(price.pendingMarketCount || 0)}개 제외</span>`
     : '';
   return `
     <span class="price-display">
@@ -901,6 +934,7 @@ function renderPrice(price) {
         <span class="price-value">${formatMeso(price.meso)}</span>
         <span class="source-pill ${klass}">${escapeHtml(label)}</span>
       </span>
+      ${note}
       ${date}
     </span>
   `;
@@ -910,12 +944,14 @@ function renderInlinePriceEditor(name, price, compact = false) {
   const appliedMeso = roundMeso(price?.meso);
   const listingMeso = roundMeso(price?.listingMeso || (price?.marketHistoryMeso ? 0 : price?.meso));
   const marketHistoryMeso = roundMeso(price?.marketHistoryMeso);
+  const marketHistoryStatus = price?.marketHistoryStatus || '';
+  const pendingMarketHistory = price?.source === 'pending';
   const inputMeso = mesoToInputUnit(listingMeso);
   const marketInputMeso = mesoToInputUnit(marketHistoryMeso);
   const status = price?.auctionStatus || 'unverified';
   const label = price?.source === 'manual'
     ? '수동입력'
-    : price?.source === 'history'
+    : price?.source === 'history' || pendingMarketHistory
       ? '현재 매물'
       : price?.source === 'live'
         ? '확인가'
@@ -930,14 +966,20 @@ function renderInlinePriceEditor(name, price, compact = false) {
   const marketDate = price?.marketHistoryCollectedAt
     ? `<time>${escapeHtml(formatDate(price.marketHistoryCollectedAt))}</time>`
     : '';
-  const marketMeta = marketHistoryMeso > 0
-    ? `<small class="market-reference-meta">
-        <strong>시세 탭 ${formatMeso(marketHistoryMeso)}</strong>
-        <span>계산 ${formatMeso(appliedMeso)}</span>
-        ${gap > 0 ? `<span class="market-gap">괴리 ${Math.round(gap)}%</span>` : ''}
+  const marketMeta = pendingMarketHistory
+    ? `<small class="market-reference-meta warning">
+        <strong>${escapeHtml(price?.marketHistoryNote || marketHistoryStatusLabel(marketHistoryStatus))}</strong>
+        <span>보수 계산 제외</span>
         ${marketDate}
       </small>`
-    : '';
+    : marketHistoryMeso > 0
+      ? `<small class="market-reference-meta">
+          <strong>시세 탭 ${formatMeso(marketHistoryMeso)}</strong>
+          <span>계산 ${formatMeso(appliedMeso)}</span>
+          ${gap > 0 ? `<span class="market-gap">괴리 ${Math.round(gap)}%</span>` : ''}
+          ${marketDate}
+        </small>`
+      : '';
   const marketEditor = marketExpanded
     ? `<span class="inline-market-row">
         <span class="inline-market-label">시세</span>
@@ -951,13 +993,13 @@ function renderInlinePriceEditor(name, price, compact = false) {
       </span>`
     : '';
   return `
-    <span class="inline-price-editor${compact ? ' compact' : ''}${marketHistoryMeso > 0 ? ' has-market' : ''}">
+    <span class="inline-price-editor${compact ? ' compact' : ''}${marketHistoryMeso > 0 || pendingMarketHistory ? ' has-market' : ''}">
       <span class="inline-price-row">
         <input class="inline-price-input" type="number" min="0" step="0.01" inputmode="decimal"
           value="${inputMeso || ''}" data-inline-price-name="${escapeAttribute(name)}"
           aria-label="${escapeAttribute(name)} 현재 매물가 (억 메소)">
         <span class="inline-price-unit">억</span>
-        <button class="inline-market-toggle${marketHistoryMeso > 0 ? ' has-value' : ''}" type="button"
+        <button class="inline-market-toggle${marketHistoryMeso > 0 ? ' has-value' : ''}${pendingMarketHistory ? ' has-warning' : ''}" type="button"
           data-inline-market-toggle="${escapeAttribute(name)}" aria-expanded="${marketExpanded}"
           aria-label="${escapeAttribute(name)} 시세 참고가 입력" title="시세 탭 참고가 입력">시세</button>
         <button class="inline-price-save" type="button"
@@ -974,6 +1016,9 @@ function renderInlinePriceEditor(name, price, compact = false) {
 function renderComponentQuote(price) {
   if (!price) {
     return '<span class="component-quote"><strong>미확인</strong><em>가격 없음</em></span>';
+  }
+  if (price.source === 'pending') {
+    return '<span class="component-quote"><strong>검증 필요</strong><em>보수 계산 제외</em></span>';
   }
   const status = price.auctionStatus || 'unverified';
   if (Number(price.meso || 0) <= 0) {
@@ -1244,17 +1289,24 @@ function upsertLocalMarketPrice(name, meso) {
   const key = normalizeKey(cleanName);
   const roundedMeso = roundMeso(meso);
   const existing = findPriceRow(cleanName) || {};
+  const base = state.auctionRows.find(price => normalizeKey(price.itemName || price.name || price.query) === key) || {};
   const listingMeso = roundMeso(existing.listingLowestMeso);
+  const baseMarketMeso = roundMeso(base.marketHistoryMaxMeso || base.marketHistoryMeso);
+  const marketHistoryMeso = roundedMeso > 0 ? roundedMeso : baseMarketMeso;
   const row = {
     ...existing,
     itemName: cleanName,
     query: cleanName,
     listingLowestMeso: listingMeso,
     listingLowestText: listingMeso > 0 ? formatMeso(listingMeso) : '',
-    marketHistoryMaxMeso: roundedMeso,
-    marketHistoryMaxText: roundedMeso > 0 ? formatMeso(roundedMeso) : '',
-    marketHistoryBasis: existing.marketHistoryBasis || '시세 탭 체결 상단',
-    marketHistoryCollectedAt: nowIso(),
+    marketHistoryMaxMeso: marketHistoryMeso,
+    marketHistoryMaxText: marketHistoryMeso > 0 ? formatMeso(marketHistoryMeso) : '',
+    marketHistoryBasis: roundedMeso > 0
+      ? existing.marketHistoryBasis || '시세 탭 체결 상단'
+      : base.marketHistoryBasis,
+    marketHistoryCollectedAt: roundedMeso > 0 ? nowIso() : base.marketHistoryCollectedAt,
+    marketHistoryStatus: roundedMeso > 0 ? 'verified' : base.marketHistoryStatus,
+    marketHistoryNote: roundedMeso > 0 ? '' : base.marketHistoryNote,
     status: listingMeso > 0 ? existing.status || 'ok' : 'manual',
     source: 'manual',
     filter: '수동'
