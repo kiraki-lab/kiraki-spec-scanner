@@ -895,16 +895,12 @@ function renderPrice(price) {
   const date = price.collectedAt
     ? `<time class="price-date">${escapeHtml(formatDate(price.collectedAt))}</time>`
     : '';
-  const note = price.source === 'history'
-    ? '<span class="price-note">시세 탭 참고가로 보수 계산</span>'
-    : '';
   return `
     <span class="price-display">
       <span class="price-line">
         <span class="price-value">${formatMeso(price.meso)}</span>
         <span class="source-pill ${klass}">${escapeHtml(label)}</span>
       </span>
-      ${note}
       ${date}
     </span>
   `;
