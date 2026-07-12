@@ -2940,3 +2940,8 @@ td {
     font-size: 11px;
   }
 }
+
+.package-toggle input {
+  width: 1px;
+  height: 1px;
+}
