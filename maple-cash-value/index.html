@@ -1,38 +1,25 @@
 <!doctype html>
-<html lang="ko">
+<html lang="ko" data-theme="pink">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light">
-  <meta name="theme-color" content="#f3f5f8">
-  <script>
-    try {
-      document.documentElement.dataset.theme = localStorage.getItem('kirakiTheme') === 'kiraki' ? 'pink' : 'clean';
-    } catch (_) {
-      document.documentElement.dataset.theme = 'clean';
-    }
-  </script>
+  <meta name="theme-color" content="#fff0f5">
   <link rel="icon" href="./favicon.svg?v=20260712" type="image/svg+xml">
-  <title>메이플 캐시 효율 계산기</title>
+  <title>키라키 캐시 효율 계산기</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Jua&amp;family=Noto+Sans+KR:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./styles.css?v=0.11.4">
+  <link href="https://fonts.googleapis.com/css2?family=Jua&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css?v=0.12.0">
 </head>
 <body>
   <div class="app-shell">
     <header class="topbar">
       <div class="brand-block">
         <p class="eyebrow">스카니아 · 월드 통합 경매장</p>
-        <h1>메이플 캐시 효율 계산기</h1>
+        <h1>키라키 캐시 효율 계산기</h1>
         <div class="brand-actions">
-          <a class="channel-link" href="https://youtube.com/channel/UCTa93vcBRawFA1YLyDOAkdw?si=RAosYvNcb20jcBWu" target="_blank" rel="noopener noreferrer">키라키 채널</a>
-          <label class="theme-switch">
-            <input id="theme-toggle" type="checkbox" role="switch" aria-label="핑크 모드 켜기">
-            <span class="theme-switch-track" aria-hidden="true"></span>
-            <strong>핑크 모드</strong>
-            <em id="theme-toggle-state">OFF</em>
-          </label>
+          <a class="channel-link" href="https://youtube.com/channel/UCTa93vcBRawFA1YLyDOAkdw?si=RAosYvNcb20jcBWu" target="_blank" rel="noopener noreferrer">키라키 채널 방문</a>
         </div>
       </div>
       <div class="topbar-actions">
@@ -43,7 +30,7 @@
             <button id="unlock-mode" type="button">열기</button>
             <button id="lock-mode" type="button" hidden>잠금</button>
           </div>
-          <small id="mode-detail">수동 계산 · 내 브라우저 가격 수정</small>
+          <small id="mode-detail">내 브라우저 가격 수정</small>
         </div>
         <div class="sync-card" aria-live="polite">
           <span class="sync-dot"></span>
@@ -140,50 +127,6 @@
             <div id="job-group-filter-list" class="job-group-list" role="group" aria-label="직업군"></div>
           </div>
         </div>
-      </div>
-    </details>
-
-    <details class="manual-panel compact-panel" aria-label="수동 계산">
-      <summary class="section-title compact-summary">
-        <h2>수동 계산</h2>
-        <span id="manual-save-state" class="count-pill">내 가격 저장</span>
-      </summary>
-      <div class="manual-grid">
-        <label>
-          <span>아이템명</span>
-          <input id="manual-name" type="text" placeholder="예: 메이플 로얄 스타일" autocomplete="off">
-        </label>
-        <label>
-          <span>분류</span>
-          <input id="manual-category" type="text" placeholder="기본 · 랜덤 · 패키지" autocomplete="off">
-        </label>
-        <label>
-          <span>캐시 가격</span>
-          <input id="manual-cash-price" type="number" min="0" step="100" placeholder="2200">
-        </label>
-        <label>
-          <span>경매장 가격 (억 메소)</span>
-          <input id="manual-meso-price" type="number" min="0" step="0.01" inputmode="decimal" placeholder="0.81">
-        </label>
-        <label>
-          <span>마일리지 혜택</span>
-          <select id="manual-mileage-type">
-            <option value="none">할인 불가</option>
-            <option value="partial">30% 할인</option>
-            <option value="full">전액 결제</option>
-          </select>
-        </label>
-        <article class="result-card" id="manual-result">
-          <span>계산 결과</span>
-          <strong id="manual-efficiency">-</strong>
-          <small id="manual-detail">값을 입력하면 바로 계산됩니다.</small>
-        </article>
-      </div>
-      <div class="action-row">
-        <button id="calculate-manual" type="button">계산</button>
-        <button id="save-manual-price" type="button">내 가격으로 적용</button>
-        <button id="save-manual-item" class="admin-only" type="button" hidden>항목 저장</button>
-        <button id="clear-manual" type="button" class="ghost-button">초기화</button>
       </div>
     </details>
 
@@ -361,6 +304,6 @@
     </tr>
   </template>
 
-  <script type="module" src="./app.js?v=0.11.0"></script>
+  <script type="module" src="./app.js?v=0.12.0"></script>
 </body>
 </html>
