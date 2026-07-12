@@ -114,12 +114,13 @@ const state = {
   saleTypeFilter: '',
   saleReviewFilter: 'all',
   page: 1,
-  pageSize: 15,
+  pageSize: 10,
   adminItemId: '',
   priceTargetName: '',
   stableRowOrder: [],
   currentRanks: new Map(),
   pendingPreviousRanks: null,
+  expandedComponentKeys: new Set(),
   settings: { ...DEFAULT_SETTINGS }
 };
 
@@ -139,13 +140,19 @@ function formatDate(value) {
   if (!value) return '-';
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) return String(value);
-  return new Intl.DateTimeFormat('ko-KR', {
-    timeZone: 'Asia/Seoul',
-    month: '2-digit',
-    day: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit'
-  }).format(date);
+  const parts = Object.fromEntries(
+    new Intl.DateTimeFormat('ko-KR', {
+      timeZone: 'Asia/Seoul',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      hourCycle: 'h23'
+    }).formatToParts(date)
+      .filter(part => part.type !== 'literal')
+      .map(part => [part.type, part.value])
+  );
+  return `${parts.month}.${parts.day} ${parts.hour}:${parts.minute}`;
 }
 
 function formatMeso(value) {
@@ -722,7 +729,7 @@ function render() {
 
   $('#rank-mode-label').textContent = '매물 최저가';
   $('#row-count').textContent = referenceCount ? `${saleRows.length}개 + 참고 ${referenceCount}개` : `${saleRows.length}개`;
-  $('#sale-item-count').textContent = visibleSaleCount === totalSaleCount ? `${totalSaleCount}개` : `${visibleSaleCount}/${totalSaleCount}개`;
+  $('#sale-item-count').textContent = `${rows.length}개`;
   $('#auction-updated').textContent = formatDate(state.localAuctionRows.length ? state.localDataUpdatedAt : state.metadata.auctionUpdatedAt);
   $('#best-efficiency').textContent = rankedVisibleSales.length ? formatWon(rankedVisibleSales[0].listingEfficiency) : '-';
   const localPriceCount = $('#local-price-count');
@@ -838,11 +845,12 @@ function renderTable(rows, rankByKey = new Map(), rankChanges = new Map()) {
       ? '<span class="source-pill seed">참고</span>'
       : `<span class="rank-cell"><span class="rank">${rankNumber}</span>${rankChange}</span>`;
     const turnoverWarning = !isReference && isPackageItem(item)
-      ? '<span class="turnover-pill" title="패키지는 판매까지 시간이 걸릴 수 있습니다.">회전율 주의</span>'
+      ? '<span class="turnover-pill" title="패키지는 판매까지 시간이 걸릴 수 있습니다." aria-label="회전율 주의">회전율 주의</span>'
       : '';
     const itemMeta = isReference
       ? `<span class="item-meta">마일리지 전용 · 판매 불가 · ${REFERENCE_CATEGORY}</span>`
-      : `<span class="item-meta">${escapeHtml(item.category || '캐시 아이템')}</span>${renderMileageBadge(item.mileageType)}${turnoverWarning}`;
+      : `<span class="item-meta">${escapeHtml(item.category || '캐시 아이템')}</span>
+         <span class="item-badges">${renderMileageBadge(item.mileageType)}${turnoverWarning}</span>`;
     const cost = isReference
       ? `${nf.format(Number(item.mileagePrice || item.cashPrice || 0))} 마일리지`
       : `${nf.format(Number(item.cashPrice || 0))}원`;
@@ -860,27 +868,36 @@ function renderTable(rows, rankByKey = new Map(), rankChanges = new Map()) {
       rankNumber && rankNumber <= 3 ? `top-rank rank-${rankNumber}` : ''
     ].filter(Boolean).join(' ');
 
-    return `
+    const itemRow = `
       <tr${rowClass ? ` class="${rowClass}"` : ''}>
         <td data-label="순위">${rank}</td>
         <td data-label="아이템">
           <span class="item-name">${escapeHtml(item.name)}</span>
-          ${itemMeta}
-          ${renderComponents(item)}
+          <span class="item-meta-row">${itemMeta}</span>
+          ${renderComponentToggle(item, key)}
         </td>
         <td data-label="구매 가격"><span class="cash-value">${cost}</span></td>
         <td data-label="매물가/참고가"><div class="price-cell">${price}</div></td>
         <td data-label="판매 효율/절약">${result}</td>
       </tr>
     `;
+    return itemRow + renderComponentDetailRow(item, key);
   }).join('');
 }
 
 function renderReferencePrice(item) {
   const date = item.referenceUpdatedAt
-    ? `<span class="price-meta">${escapeHtml(formatDate(item.referenceUpdatedAt))}</span>`
+    ? `<time class="price-date">${escapeHtml(formatDate(item.referenceUpdatedAt))}</time>`
     : '';
-  return `<span class="price-value">${formatMeso(item.referenceMesoValue)}</span>${date}<span class="source-pill seed">대체 구매가</span>`;
+  return `
+    <span class="price-display">
+      <span class="price-line">
+        <span class="price-value">${formatMeso(item.referenceMesoValue)}</span>
+        <span class="source-pill seed">대체 구매가</span>
+      </span>
+      ${date}
+    </span>
+  `;
 }
 
 function renderPrice(price) {
@@ -893,8 +910,18 @@ function renderPrice(price) {
         ? '일부 확인'
         : auctionStatusLabel(status);
   const klass = ['live', 'manual', 'mixed'].includes(price.source) ? price.source : status;
-  const date = price.collectedAt ? `<span class="price-meta">${escapeHtml(formatDate(price.collectedAt))}</span>` : '';
-  return `<span class="price-value">${formatMeso(price.meso)}</span>${date}<span class="source-pill ${klass}">${label}</span>`;
+  const date = price.collectedAt
+    ? `<time class="price-date">${escapeHtml(formatDate(price.collectedAt))}</time>`
+    : '';
+  return `
+    <span class="price-display">
+      <span class="price-line">
+        <span class="price-value">${formatMeso(price.meso)}</span>
+        <span class="source-pill ${klass}">${escapeHtml(label)}</span>
+      </span>
+      ${date}
+    </span>
+  `;
 }
 
 function renderInlinePriceEditor(name, price, compact = false) {
@@ -907,7 +934,9 @@ function renderInlinePriceEditor(name, price, compact = false) {
       ? '확인가'
       : auctionStatusLabel(status);
   const meta = meso > 0 ? `${formatMeso(meso)} · ${label}` : label;
-  const date = price?.collectedAt && !compact ? ` · ${formatDate(price.collectedAt)}` : '';
+  const date = price?.collectedAt && !compact
+    ? `<time class="inline-price-date">${escapeHtml(formatDate(price.collectedAt))}</time>`
+    : '';
   return `
     <span class="inline-price-editor${compact ? ' compact' : ''}">
       <span class="inline-price-row">
@@ -916,9 +945,10 @@ function renderInlinePriceEditor(name, price, compact = false) {
           aria-label="${escapeAttribute(name)} 가격 (백만 메소)">
         <span class="inline-price-unit">백만</span>
         <button class="inline-price-save" type="button"
-          data-inline-price-save="${escapeAttribute(name)}">적용</button>
+          data-inline-price-save="${escapeAttribute(name)}"
+          aria-label="${escapeAttribute(name)} 가격 적용" title="가격 적용">&#10003;</button>
       </span>
-      <small class="inline-price-meta">${escapeHtml(meta + date)}</small>
+      <small class="inline-price-meta"><span>${escapeHtml(meta)}</span>${date}</small>
     </span>
   `;
 }
@@ -945,38 +975,65 @@ function componentDisplayName(component) {
   return component.quantity > 1 ? `${component.name} ×${nf.format(component.quantity)}` : component.name;
 }
 
-function renderComponents(item) {
+function componentBreakdown(item) {
   const tradable = componentList(item.components);
   const bonus = bonusComponentsFor(item);
-  if (!tradable.length && !bonus.length) return '';
+  if (!tradable.length && !bonus.length) return null;
 
-  const breakdown = new Map(
+  const prices = new Map(
     (item.listingPrice?.components || []).map(entry => [normalizeKey(entry.component?.name), entry.price])
   );
   const tradableCount = tradable.reduce((sum, component) => sum + component.quantity, 0);
   const bonusCount = bonus.reduce((sum, component) => sum + component.quantity, 0);
   const label = bonus.length
-    ? `구성품 ${tradableCount + bonusCount}개 · 가격 반영 ${tradableCount} / 계산 제외 ${bonusCount}`
-    : `구성품별 가격 ${tradableCount}개`;
+    ? `전체 ${tradableCount + bonusCount}개 · 합산 ${tradableCount}개 · 제외 ${bonusCount}개`
+    : `구성품 ${tradableCount}개`;
+
+  return { tradable, bonus, prices, label };
+}
+
+function renderComponentToggle(item, key) {
+  const breakdown = componentBreakdown(item);
+  if (!breakdown) return '';
+  const expanded = state.expandedComponentKeys.has(key);
+  return `
+    <button class="component-toggle" type="button"
+      data-component-toggle="${escapeAttribute(key)}" aria-expanded="${expanded}">
+      <span aria-hidden="true">${expanded ? '▾' : '▸'}</span>
+      <span>${escapeHtml(breakdown.label)}</span>
+    </button>
+  `;
+}
+
+function renderComponentDetailRow(item, key) {
+  const breakdown = componentBreakdown(item);
+  if (!breakdown || !state.expandedComponentKeys.has(key)) return '';
 
   return `
-    <details>
-      <summary>${escapeHtml(label)}</summary>
-      <div class="component-list">
-        ${tradable.map(component => `
-          <div class="component-row">
-            <span class="component-name">${escapeHtml(componentDisplayName(component))}</span>
-            ${renderInlinePriceEditor(component.name, breakdown.get(normalizeKey(component.name)), true)}
+    <tr class="component-detail-row">
+      <td colspan="5">
+        <div class="component-detail-shell">
+          <div class="component-detail-header">
+            <strong>${escapeHtml(item.name)} 구성품</strong>
+            <span>${escapeHtml(breakdown.label)}</span>
           </div>
-        `).join('')}
-        ${bonus.map(component => `
-          <div class="component-row bonus">
-            <span class="component-name">${escapeHtml(componentDisplayName(component))}</span>
-            <span class="component-quote"><strong>계산 제외</strong><em>추가 구성</em></span>
+          <div class="component-list">
+            ${breakdown.tradable.map(component => `
+              <div class="component-row">
+                <span class="component-name">${escapeHtml(componentDisplayName(component))}</span>
+                ${renderInlinePriceEditor(component.name, breakdown.prices.get(normalizeKey(component.name)), true)}
+              </div>
+            `).join('')}
+            ${breakdown.bonus.map(component => `
+              <div class="component-row bonus">
+                <span class="component-name">${escapeHtml(componentDisplayName(component))}</span>
+                <span class="component-quote"><strong>계산 제외</strong><em>추가 구성</em></span>
+              </div>
+            `).join('')}
           </div>
-        `).join('')}
-      </div>
-    </details>
+        </div>
+      </td>
+    </tr>
   `;
 }
 
@@ -995,9 +1052,9 @@ function renderManualResult() {
 }
 
 function renderMileageBadge(type) {
-  if (type === 'full') return '<span class="mileage-pill full">마일리지로 전액 결제</span>';
-  if (type === 'partial') return '<span class="mileage-pill partial">마일리지로 30% 할인</span>';
-  return '<span class="mileage-pill none">마일리지 할인 불가</span>';
+  if (type === 'full') return '<span class="mileage-pill full" title="마일리지로 전액 결제">마일리지 100%</span>';
+  if (type === 'partial') return '<span class="mileage-pill partial" title="마일리지로 30% 할인">마일리지 30%</span>';
+  return '<span class="mileage-pill none" title="마일리지 할인 불가">마일리지 불가</span>';
 }
 
 function mileageLabel(type) {
@@ -1061,7 +1118,7 @@ function syncCategoryOptions(rows) {
     .filter(category => state.packagesVisible || !isPackageCategory(category))
     .sort((a, b) => a.localeCompare(b, 'ko-KR'));
   const current = state.categoryFilter;
-  select.innerHTML = '<option value="">전체 판매 항목</option>' + categories
+  select.innerHTML = '<option value="">전체 세부 분류</option>' + categories
     .map(category => {
       const label = category === REFERENCE_CATEGORY ? `${category} (선택 시 표시)` : category;
       return `<option value="${escapeAttribute(category)}">${escapeHtml(label)}</option>`;
@@ -1520,7 +1577,9 @@ on('#job-group-filter-list', 'click', event => {
   render();
 });
 
-on('#major-filter-reset', 'click', () => {
+on('#major-filter-reset', 'click', event => {
+  event.preventDefault();
+  event.stopPropagation();
   state.majorFilter = 'all';
   state.jobGroupFilter = 'all';
   state.categoryFilter = '';
@@ -1606,11 +1665,25 @@ on('#base-mp-rate', 'input', event => {
 });
 
 on('#item-rows', 'click', event => {
+  const toggle = event.target.closest('button[data-component-toggle]');
+  if (toggle) {
+    const key = toggle.dataset.componentToggle;
+    if (state.expandedComponentKeys.has(key)) state.expandedComponentKeys.delete(key);
+    else state.expandedComponentKeys.add(key);
+    render();
+    return;
+  }
+
   const button = event.target.closest('button[data-inline-price-save]');
   if (!button) return;
   const editor = button.closest('.inline-price-editor');
   const input = editor?.querySelector('.inline-price-input');
   saveInlinePrice(button.dataset.inlinePriceSave, input?.value);
+});
+
+on('#item-rows', 'input', event => {
+  if (!event.target.matches('.inline-price-input')) return;
+  event.target.closest('.inline-price-editor')?.classList.add('is-dirty');
 });
 
 on('#item-rows', 'keydown', event => {
