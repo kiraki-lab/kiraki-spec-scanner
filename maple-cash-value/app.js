@@ -22,6 +22,8 @@ const state = {
   saleCatalog: [],
   metadata: {},
   search: '',
+  majorFilter: 'all',
+  jobGroupFilter: 'all',
   hiddenCategories: new Set([REFERENCE_CATEGORY]),
   hiddenAuctionStatuses: new Set(),
   packagesVisible: true,
@@ -84,6 +86,31 @@ const AUCTION_STATUS_OPTIONS = Object.freeze([
 ]);
 
 const AUCTION_STATUS_LABELS = Object.freeze(Object.fromEntries(AUCTION_STATUS_OPTIONS));
+const JOB_GROUP_OPTIONS = Object.freeze([
+  ['all', '전체 직업군', null],
+  ['adventurer', '모험가', '패키지 · 모험가'],
+  ['cygnus', '시그너스', '패키지 · 시그너스'],
+  ['hero', '영웅', '패키지 · 영웅'],
+  ['resistance', '레지스탕스', '패키지 · 레지스탕스'],
+  ['demon', '데몬', '패키지 · 데몬'],
+  ['nova', '노바', '패키지 · 노바'],
+  ['lef', '레프', '패키지 · 레프'],
+  ['anima', '아니마', '패키지 · 아니마'],
+  ['transcendent', '초월자', '패키지 · 초월자'],
+  ['friends', '프렌즈 월드', '패키지 · 프렌즈 월드']
+]);
+
+const JOB_PACKAGE_CATEGORIES = Object.freeze(JOB_GROUP_OPTIONS.map(([, , category]) => category).filter(Boolean));
+const MAJOR_FILTER_OPTIONS = Object.freeze([
+  ['all', '전체', null],
+  ['job', '직업 코디', JOB_PACKAGE_CATEGORIES],
+  ['boss', '보스 코디', ['패키지 · 보스']],
+  ['gold', '금손·은손', ['패키지 · 금손 은손', '패키지 · 금손 은손 펫']],
+  ['coupon', '쿠폰', ['쿠폰']],
+  ['basic', '기본·확률형', ['기본', '랜덤']],
+  ['mileage', '마일리지 참고', [REFERENCE_CATEGORY]]
+]);
+
 const $ = selector => document.querySelector(selector);
 const nf = new Intl.NumberFormat('ko-KR');
 const won = new Intl.NumberFormat('ko-KR', { maximumFractionDigits: 0 });
@@ -323,6 +350,23 @@ function categoryFor(item) {
   return item.referenceOnly ? REFERENCE_CATEGORY : (item.category || '캐시 아이템');
 }
 
+function categoriesForMajor(value = state.majorFilter) {
+  return MAJOR_FILTER_OPTIONS.find(([filter]) => filter === value)?.[2] || null;
+}
+
+function categoryMatchesMajor(category, value = state.majorFilter) {
+  const categories = categoriesForMajor(value);
+  return !categories || categories.includes(category);
+}
+
+function matchesMajorFilter(item) {
+  const category = categoryFor(item);
+  if (!categoryMatchesMajor(category)) return false;
+  if (state.majorFilter !== 'job' || state.jobGroupFilter === 'all') return true;
+  const selectedCategory = JOB_GROUP_OPTIONS.find(([group]) => group === state.jobGroupFilter)?.[2];
+  return !selectedCategory || category === selectedCategory;
+}
+
 function isPackageCategory(category) {
   return String(category || '').startsWith('패키지');
 }
@@ -465,6 +509,7 @@ function enrichItems() {
 function filteredRows(sourceRows = enrichItems()) {
   const q = normalizeKey(state.search);
   return sourceRows.filter(item => {
+    if (!matchesMajorFilter(item)) return false;
     if (!state.packagesVisible && isPackageItem(item)) return false;
     if (state.hiddenCategories.has(categoryFor(item))) return false;
     if (!item.referenceOnly && state.hiddenAuctionStatuses.has(item.auctionStatus || 'unverified')) return false;
@@ -730,8 +775,43 @@ function syncSaleFilterOptions() {
 }
 
 function renderFilterChips(rows) {
+  renderMajorFilterControls(rows);
   renderCategoryFilterChips(rows);
   renderStatusFilterChips(rows);
+}
+
+function renderPresetButton({ kind, value, label, count, active }) {
+  const dataAttribute = kind === 'major' ? 'data-major-filter' : 'data-job-group-filter';
+  const className = kind === 'major' ? 'major-filter-button' : 'job-group-button';
+  return `<button type="button" class="${className} ${active ? 'active' : ''}" ${dataAttribute}="${escapeAttribute(value)}" aria-pressed="${active}">
+    <span>${escapeHtml(label)}</span><em>${nf.format(count)}</em>
+  </button>`;
+}
+
+function renderMajorFilterControls(rows) {
+  const majorList = $('#major-filter-list');
+  const jobWrap = $('#job-group-filter-wrap');
+  const jobList = $('#job-group-filter-list');
+  if (!majorList || !jobWrap || !jobList) return;
+
+  majorList.innerHTML = MAJOR_FILTER_OPTIONS.map(([value, label]) => renderPresetButton({
+    kind: 'major',
+    value,
+    label,
+    count: rows.filter(item => categoryMatchesMajor(categoryFor(item), value)).length,
+    active: state.majorFilter === value
+  })).join('');
+
+  jobWrap.hidden = state.majorFilter !== 'job';
+  jobList.innerHTML = jobWrap.hidden ? '' : JOB_GROUP_OPTIONS.map(([value, label, category]) => renderPresetButton({
+    kind: 'job',
+    value,
+    label,
+    count: category
+      ? rows.filter(item => categoryFor(item) === category).length
+      : rows.filter(item => categoryMatchesMajor(categoryFor(item), 'job')).length,
+    active: state.jobGroupFilter === value
+  })).join('');
 }
 
 function renderCategoryFilterChips(rows) {
@@ -740,7 +820,9 @@ function renderCategoryFilterChips(rows) {
     const category = categoryFor(item);
     counts.set(category, (counts.get(category) || 0) + 1);
   }
-  const categories = [...counts.keys()].sort((a, b) => a.localeCompare(b, 'ko-KR'));
+  const categories = [...counts.keys()]
+    .filter(category => categoryMatchesMajor(category))
+    .sort((a, b) => a.localeCompare(b, 'ko-KR'));
   syncPackageToggle();
   $('#category-filter-list').innerHTML = categories.map(category => {
     const packageCategory = isPackageCategory(category);
@@ -804,6 +886,45 @@ $('#search-input').addEventListener('input', event => {
   render();
 });
 
+const majorFilterList = $('#major-filter-list');
+if (majorFilterList) {
+  majorFilterList.addEventListener('click', event => {
+    const button = event.target.closest('button[data-major-filter]');
+    if (!button) return;
+    state.majorFilter = button.dataset.majorFilter;
+    state.jobGroupFilter = 'all';
+    state.hiddenCategories.clear();
+    state.packagesVisible = true;
+    state.page = 1;
+    render();
+  });
+}
+
+const jobGroupFilterList = $('#job-group-filter-list');
+if (jobGroupFilterList) {
+  jobGroupFilterList.addEventListener('click', event => {
+    const button = event.target.closest('button[data-job-group-filter]');
+    if (!button) return;
+    state.majorFilter = 'job';
+    state.jobGroupFilter = button.dataset.jobGroupFilter;
+    state.hiddenCategories.clear();
+    state.packagesVisible = true;
+    state.page = 1;
+    render();
+  });
+}
+
+const majorFilterReset = $('#major-filter-reset');
+if (majorFilterReset) {
+  majorFilterReset.addEventListener('click', () => {
+    state.majorFilter = 'all';
+    state.jobGroupFilter = 'all';
+    state.hiddenCategories.clear();
+    state.packagesVisible = true;
+    state.page = 1;
+    render();
+  });
+}
 
 const packageFilterToggle = $('#package-filter-toggle');
 if (packageFilterToggle) {
