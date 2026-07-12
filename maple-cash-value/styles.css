@@ -2223,3 +2223,52 @@ body {
     text-align: left;
   }
 }
+
+/* Browser-local price editing */
+.local-price-editor {
+  padding: 12px;
+}
+
+.price-cell,
+.component-price-actions {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  min-width: 0;
+  gap: 8px;
+}
+
+.price-content {
+  min-width: 0;
+}
+
+.price-edit-button {
+  flex: 0 0 auto;
+  min-height: 30px;
+  border-color: var(--line-strong);
+  background: #fff;
+  color: var(--blue);
+  padding: 0 9px;
+  font-size: 11px;
+}
+
+.component-price-actions {
+  align-items: center;
+  gap: 7px;
+}
+
+.component-price-actions .price-edit-button {
+  min-height: 28px;
+  padding-inline: 7px;
+}
+
+@media (max-width: 680px) {
+  .local-price-editor {
+    padding: 10px;
+  }
+
+  .price-cell {
+    align-items: center;
+  }
+}
+
