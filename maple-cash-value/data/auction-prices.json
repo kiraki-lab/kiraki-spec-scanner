@@ -3055,6 +3055,13 @@
     "validPrices": 86,
     "duplicateSearches": 12,
     "nextItem": "춤추는 꽃잎",
-    "completedAt": "2026-07-12T11:14:47.914+09:00"
+    "completedAt": "2026-07-12T11:14:47.914+09:00",
+    "priceFormatRechecks": 2,
+    "manualNoCandidate": [
+      "파도를 이끄는 구조 신호"
+    ],
+    "remainingGoldSilverApparel": 143,
+    "queueMode": "sequential_resume",
+    "safetyRulesDocument": "maple-cash-value/docs/daily-auction-search-routine.md"
   }
 }
