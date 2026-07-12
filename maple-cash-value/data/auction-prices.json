@@ -3188,6 +3188,249 @@
       "listingLowestText": "4150만",
       "resultCount": 5,
       "status": "ok"
+    },
+    {
+      "itemName": "카링 비단 모자",
+      "query": "카링 비단 모자",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 21,
+      "collectedAt": "2026-07-12T14:52:08.431+09:00",
+      "listingLowestMeso": 16666666,
+      "listingLowestText": "1666만 6666",
+      "resultCount": 10,
+      "status": "ok"
+    },
+    {
+      "itemName": "카링의 악기",
+      "query": "카링의 악기",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 22,
+      "collectedAt": "2026-07-12T14:52:22.550+09:00",
+      "listingLowestMeso": 288850000,
+      "listingLowestText": "2억 8885만",
+      "resultCount": 9,
+      "status": "ok"
+    },
+    {
+      "itemName": "레프 아크 스펙터 핸드",
+      "query": "레프 아크 스펙터 핸드",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 23,
+      "collectedAt": "2026-07-12T14:52:38.278+09:00",
+      "listingLowestMeso": 366666666,
+      "listingLowestText": "3억 6666만 6666",
+      "resultCount": 2,
+      "status": "ok"
+    },
+    {
+      "itemName": "아니마 라라 지팡이",
+      "query": "아니마 라라 지팡이",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 24,
+      "collectedAt": "2026-07-12T14:52:56.826+09:00",
+      "listingLowestMeso": 279099999,
+      "listingLowestText": "2억 7909만 9999",
+      "resultCount": 5,
+      "status": "ok"
+    },
+    {
+      "itemName": "아니마 호영 귀",
+      "query": "아니마 호영 귀",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 25,
+      "collectedAt": "2026-07-12T14:53:13.403+09:00",
+      "listingLowestMeso": 50000000,
+      "listingLowestText": "5000만",
+      "resultCount": 9,
+      "status": "ok"
+    },
+    {
+      "itemName": "아니마 호영 신발",
+      "query": "아니마 호영 신발",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 26,
+      "collectedAt": "2026-07-12T14:53:30.043+09:00",
+      "listingLowestMeso": 26000000,
+      "listingLowestText": "2600만",
+      "resultCount": 2,
+      "status": "ok"
+    },
+    {
+      "itemName": "초월자 제로 슈즈",
+      "query": "초월자 제로 슈즈",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 27,
+      "collectedAt": "2026-07-12T14:53:46.345+09:00",
+      "listingLowestMeso": 5000000,
+      "listingLowestText": "500만",
+      "resultCount": 9,
+      "status": "ok"
+    },
+    {
+      "itemName": "프렌즈 월드 키네시스 ESP 리미터",
+      "query": "프렌즈 월드 키네시스 ESP 리미터",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 28,
+      "collectedAt": "2026-07-12T14:54:00.265+09:00",
+      "listingLowestMeso": 30000000,
+      "listingLowestText": "3000만",
+      "resultCount": 5,
+      "status": "ok"
+    },
+    {
+      "itemName": "곰나잇 인사",
+      "query": "곰나잇 인사",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 29,
+      "collectedAt": "2026-07-12T14:54:26.427+09:00",
+      "listingLowestMeso": 22000000,
+      "listingLowestText": "2200만",
+      "resultCount": 15,
+      "status": "ok"
+    },
+    {
+      "itemName": "곰도리 귀 양말",
+      "query": "곰도리 귀 양말",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 30,
+      "collectedAt": "2026-07-12T14:54:47.007+09:00",
+      "listingLowestMeso": 20000000,
+      "listingLowestText": "2000만",
+      "resultCount": 19,
+      "status": "ok"
+    },
+    {
+      "itemName": "데빌 헌터",
+      "query": "데빌 헌터",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 31,
+      "collectedAt": "2026-07-12T14:55:02.618+09:00",
+      "listingLowestMeso": 211111111,
+      "listingLowestText": "2억 1111만 1111",
+      "resultCount": 16,
+      "status": "ok"
+    },
+    {
+      "itemName": "붉은 장미 다발",
+      "query": "붉은 장미 다발",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 32,
+      "collectedAt": "2026-07-12T14:55:17.316+09:00",
+      "listingLowestMeso": 22000000,
+      "listingLowestText": "2200만",
+      "resultCount": 16,
+      "status": "ok"
+    },
+    {
+      "itemName": "블러드 문 이클립스",
+      "query": "블러드 문 이클립스",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 33,
+      "collectedAt": "2026-07-12T14:55:32.057+09:00",
+      "listingLowestMeso": 30999999,
+      "listingLowestText": "3099만 9999",
+      "resultCount": 17,
+      "status": "ok"
+    },
+    {
+      "itemName": "춤추는 꽃잎",
+      "query": "춤추는 꽃잎",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 34,
+      "collectedAt": "2026-07-12T14:55:47.606+09:00",
+      "listingLowestMeso": 41990000,
+      "listingLowestText": "4199만",
+      "resultCount": 18,
+      "status": "ok"
+    },
+    {
+      "itemName": "검은 마법사 로브",
+      "query": "검은 마법사 로브",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 35,
+      "collectedAt": "2026-07-12T14:56:02.471+09:00",
+      "listingLowestMeso": 443333333,
+      "listingLowestText": "4억 4333만 3333",
+      "resultCount": 8,
+      "status": "ok"
+    },
+    {
+      "itemName": "다크 시그너스 드레스(여)",
+      "query": "다크 시그너스 드레스 (여)",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 36,
+      "collectedAt": "2026-07-12T14:56:17.037+09:00",
+      "aliases": [
+        "다크 시그너스 드레스 (여)"
+      ],
+      "listingLowestMeso": 748888888,
+      "listingLowestText": "7억 4888만 8888",
+      "resultCount": 1,
+      "status": "ok"
+    },
+    {
+      "itemName": "다크 시그너스 슈즈",
+      "query": "다크 시그너스 슈즈",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 37,
+      "collectedAt": "2026-07-12T14:56:31.270+09:00",
+      "listingLowestMeso": 195000000,
+      "listingLowestText": "1억 9500만",
+      "resultCount": 2,
+      "status": "ok"
+    },
+    {
+      "itemName": "데미안 슈즈",
+      "query": "데미안 슈즈",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 38,
+      "collectedAt": "2026-07-12T14:56:45.980+09:00",
+      "listingLowestMeso": 27220000,
+      "listingLowestText": "2722만",
+      "resultCount": 8,
+      "status": "ok"
+    },
+    {
+      "itemName": "데미안의 낙인",
+      "query": "데미안의 낙인",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 39,
+      "collectedAt": "2026-07-12T14:57:03.160+09:00",
+      "listingLowestMeso": 39988888,
+      "listingLowestText": "3998만 8888",
+      "resultCount": 6,
+      "status": "ok"
+    },
+    {
+      "itemName": "듄켈 갑옷",
+      "query": "듄켈 갑옷",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 40,
+      "collectedAt": "2026-07-12T14:57:31.615+09:00",
+      "listingLowestMeso": 59944443,
+      "listingLowestText": "5994만 4443",
+      "resultCount": 12,
+      "status": "ok"
     }
   ],
   "skipped": [
@@ -3366,19 +3609,199 @@
       "filter": "캐시",
       "searchAccount": 2,
       "collectedAt": "2026-07-12T14:50:08.897+09:00"
+    },
+    {
+      "itemName": "최초의 대적자 후드",
+      "query": "최초의 대적자 후드",
+      "status": "no_candidate",
+      "reason": "검색 완료 후 5초 간격 적용 및 추가 5초 대기 후에도 자동완성 정확 후보 없음; 필터 검색 미실행",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "collectedAt": "2026-07-12T14:52:04.323+09:00"
+    },
+    {
+      "itemName": "카링 비단신",
+      "query": "카링 비단신",
+      "status": "no_candidate",
+      "reason": "검색 완료 후 5초 간격 적용 및 추가 5초 대기 후에도 자동완성 정확 후보 없음; 필터 검색 미실행",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "collectedAt": "2026-07-12T14:52:18.428+09:00"
+    },
+    {
+      "itemName": "레프 아크 군화",
+      "query": "레프 아크 군화",
+      "status": "no_candidate",
+      "reason": "검색 완료 후 5초 간격 적용 및 추가 5초 대기 후에도 자동완성 정확 후보 없음; 필터 검색 미실행",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "collectedAt": "2026-07-12T14:52:34.142+09:00"
+    },
+    {
+      "itemName": "아니마 라라 뿔",
+      "query": "아니마 라라 뿔",
+      "status": "no_candidate",
+      "reason": "검색 완료 후 5초 간격 적용 및 추가 5초 대기 후에도 자동완성 정확 후보 없음; 필터 검색 미실행",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "collectedAt": "2026-07-12T14:52:52.658+09:00"
+    },
+    {
+      "itemName": "아니마 렌 장검",
+      "query": "아니마 렌 장검",
+      "status": "no_candidate",
+      "reason": "검색 완료 후 5초 간격 적용 및 추가 5초 대기 후에도 자동완성 정확 후보 없음; 필터 검색 미실행",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "collectedAt": "2026-07-12T14:53:09.246+09:00"
+    },
+    {
+      "itemName": "아니마 호영 망토",
+      "query": "아니마 호영 망토",
+      "status": "no_candidate",
+      "reason": "검색 완료 후 5초 간격 적용 및 추가 5초 대기 후에도 자동완성 정확 후보 없음; 필터 검색 미실행",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "collectedAt": "2026-07-12T14:53:25.874+09:00"
+    },
+    {
+      "itemName": "아니마 호영 흑운선",
+      "query": "아니마 호영 흑운선",
+      "status": "no_candidate",
+      "reason": "검색 완료 후 5초 간격 적용 및 추가 5초 대기 후에도 자동완성 정확 후보 없음; 필터 검색 미실행",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "collectedAt": "2026-07-12T14:53:42.201+09:00"
+    },
+    {
+      "itemName": "프렌즈 월드 키네시스 신발",
+      "query": "프렌즈 월드 키네시스 신발",
+      "status": "no_candidate",
+      "reason": "검색 완료 후 5초 간격 적용 및 추가 5초 대기 후에도 자동완성 정확 후보 없음; 필터 검색 미실행",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "collectedAt": "2026-07-12T14:53:56.104+09:00"
+    },
+    {
+      "itemName": "곰나잇 곰인형",
+      "query": "곰나잇 곰인형",
+      "status": "no_candidate",
+      "reason": "검색 완료 후 5초 간격 적용 및 추가 5초 대기 후에도 자동완성 정확 후보 없음; 필터 검색 미실행",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "collectedAt": "2026-07-12T14:54:22.247+09:00"
+    },
+    {
+      "itemName": "곰나잇 잠옷",
+      "query": "곰나잇 잠옷",
+      "status": "no_candidate",
+      "reason": "검색 완료 후 5초 간격 적용 및 추가 5초 대기 후에도 자동완성 정확 후보 없음; 필터 검색 미실행",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "collectedAt": "2026-07-12T14:54:42.816+09:00"
+    },
+    {
+      "itemName": "끝없는 탐구",
+      "query": "끝없는 탐구",
+      "status": "no_candidate",
+      "reason": "검색 완료 후 5초 간격 적용 및 추가 5초 대기 후에도 자동완성 정확 후보 없음; 필터 검색 미실행",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "collectedAt": "2026-07-12T14:54:58.449+09:00"
+    },
+    {
+      "itemName": "로즈 원드",
+      "query": "로즈 원드",
+      "status": "no_candidate",
+      "reason": "검색 완료 후 5초 간격 적용 및 추가 5초 대기 후에도 자동완성 정확 후보 없음; 필터 검색 미실행",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "collectedAt": "2026-07-12T14:55:13.154+09:00"
+    },
+    {
+      "itemName": "블랙 위즈덤",
+      "query": "블랙 위즈덤",
+      "status": "no_candidate",
+      "reason": "검색 완료 후 5초 간격 적용 및 추가 5초 대기 후에도 자동완성 정확 후보 없음; 필터 검색 미실행",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "collectedAt": "2026-07-12T14:55:27.888+09:00"
+    },
+    {
+      "itemName": "저지먼트",
+      "query": "저지먼트",
+      "status": "no_candidate",
+      "reason": "검색 완료 후 5초 간격 적용 및 추가 5초 대기 후에도 자동완성 정확 후보 없음; 필터 검색 미실행",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "collectedAt": "2026-07-12T14:55:43.428+09:00"
+    },
+    {
+      "itemName": "헌터 워커",
+      "query": "헌터 워커",
+      "status": "no_candidate",
+      "reason": "검색 완료 후 5초 간격 적용 및 추가 5초 대기 후에도 자동완성 정확 후보 없음; 필터 검색 미실행",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "collectedAt": "2026-07-12T14:55:58.213+09:00"
+    },
+    {
+      "itemName": "검은 마법사 후드",
+      "query": "검은 마법사 후드",
+      "status": "no_candidate",
+      "reason": "검색 완료 후 5초 간격 적용 및 추가 5초 대기 후에도 자동완성 정확 후보 없음; 필터 검색 미실행",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "collectedAt": "2026-07-12T14:56:12.837+09:00"
+    },
+    {
+      "itemName": "다크 시그너스 링",
+      "query": "다크 시그너스 링",
+      "status": "no_candidate",
+      "reason": "검색 완료 후 5초 간격 적용 및 추가 5초 대기 후에도 자동완성 정확 후보 없음; 필터 검색 미실행",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "collectedAt": "2026-07-12T14:56:27.132+09:00"
+    },
+    {
+      "itemName": "다크 시그너스 슈트(남)",
+      "query": "다크 시그너스 슈트(남)",
+      "status": "no_candidate",
+      "reason": "검색 완료 후 5초 간격 적용 및 추가 5초 대기 후에도 자동완성 정확 후보 없음; 필터 검색 미실행",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "collectedAt": "2026-07-12T14:56:41.849+09:00"
+    },
+    {
+      "itemName": "데미안 슈트",
+      "query": "데미안 슈트",
+      "status": "no_candidate",
+      "reason": "검색 완료 후 5초 간격 적용 및 추가 5초 대기 후에도 자동완성 정확 후보 없음; 필터 검색 미실행",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "collectedAt": "2026-07-12T14:56:59.014+09:00"
+    },
+    {
+      "itemName": "도달한 진리",
+      "query": "도달한 진리",
+      "status": "no_candidate",
+      "reason": "검색 완료 후 5초 간격 적용 및 추가 5초 대기 후에도 자동완성 정확 후보 없음; 필터 검색 미실행",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "collectedAt": "2026-07-12T14:57:27.453+09:00"
     }
   ],
-  "updatedAt": "2026-07-12T14:50:39.244+09:00",
+  "updatedAt": "2026-07-12T14:57:48.712+09:00",
   "lastSearchRun": {
     "searchAccount": 2,
     "searchLimit": 100,
-    "usedSearches": 20,
-    "validPrices": 19,
+    "usedSearches": 40,
+    "validPrices": 39,
     "noListingSearches": 1,
-    "noCandidateChecks": 7,
+    "noCandidateChecks": 27,
     "duplicateSearches": 0,
-    "nextItem": "최초의 대적자 후드",
-    "updatedAt": "2026-07-12T14:50:39.244+09:00",
+    "nextItem": "듄켈 망토",
+    "updatedAt": "2026-07-12T14:57:48.712+09:00",
     "manualNoCandidate": [
       "라스트 서바이버(여)",
       "신나는 생일(남)",
@@ -3386,9 +3809,29 @@
       "유피테르 기계 팔",
       "진 힐라의 낫",
       "찬란한 흉성 헤일로",
-      "최초의 대적자 망토"
+      "최초의 대적자 망토",
+      "최초의 대적자 후드",
+      "카링 비단신",
+      "레프 아크 군화",
+      "아니마 라라 뿔",
+      "아니마 렌 장검",
+      "아니마 호영 망토",
+      "아니마 호영 흑운선",
+      "프렌즈 월드 키네시스 신발",
+      "곰나잇 곰인형",
+      "곰나잇 잠옷",
+      "끝없는 탐구",
+      "로즈 원드",
+      "블랙 위즈덤",
+      "저지먼트",
+      "헌터 워커",
+      "검은 마법사 후드",
+      "다크 시그너스 링",
+      "다크 시그너스 슈트(남)",
+      "데미안 슈트",
+      "도달한 진리"
     ],
-    "queueMode": "priority_package_completion_then_shared_components",
+    "queueMode": "priority_package_completion_then_shared_components_then_high_value",
     "safetyRulesDocument": "maple-cash-value/docs/daily-auction-search-routine.md"
   }
 }
