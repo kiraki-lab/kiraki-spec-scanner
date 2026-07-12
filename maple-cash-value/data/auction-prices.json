@@ -1129,7 +1129,11 @@
       "filter": "캐시",
       "searchAccount": 1,
       "searchIndex": 42,
-      "collectedAt": "2026-07-11T20:01:55.235+09:00"
+      "collectedAt": "2026-07-11T20:01:55.235+09:00",
+      "marketHistoryStatus": "no_sales",
+      "marketHistoryNote": "시세 탭 체결 기록 없음",
+      "marketHistoryBasis": "시세 탭",
+      "marketHistoryCollectedAt": "2026-07-12T15:02:19.494Z"
     },
     {
       "itemName": "영웅 메르세데스 듀얼보우건",
@@ -1141,7 +1145,11 @@
       "filter": "캐시",
       "searchAccount": 1,
       "searchIndex": 43,
-      "collectedAt": "2026-07-11T20:01:55.235+09:00"
+      "collectedAt": "2026-07-11T20:01:55.235+09:00",
+      "marketHistoryStatus": "listing_unconfirmed",
+      "marketHistoryNote": "현재 매물가 수준의 체결 기록 없음",
+      "marketHistoryBasis": "시세 탭",
+      "marketHistoryCollectedAt": "2026-07-12T15:02:19.494Z"
     },
     {
       "itemName": "영웅 메르세데스 슈즈(남)",
@@ -2011,7 +2019,11 @@
       "filter": "캐시",
       "searchAccount": 2,
       "searchIndex": 11,
-      "collectedAt": "2026-07-11T21:44:18.020+09:00"
+      "collectedAt": "2026-07-11T21:44:18.020+09:00",
+      "marketHistoryStatus": "no_sales",
+      "marketHistoryNote": "시세 탭 체결 기록 없음",
+      "marketHistoryBasis": "시세 탭",
+      "marketHistoryCollectedAt": "2026-07-12T15:02:19.494Z"
     },
     {
       "itemName": "기사단장 미하일 아머",
@@ -4371,7 +4383,7 @@
       "resultCount": 0
     }
   ],
-  "updatedAt": "2026-07-12T14:54:53.491Z",
+  "updatedAt": "2026-07-12T15:02:19.494Z",
   "lastSearchRun": {
     "searchAccount": 2,
     "searchLimit": 100,
@@ -4405,6 +4417,6 @@
     "queueMode": "package_completion_by_known_value",
     "safetyRulesDocument": "maple-cash-value/docs/daily-auction-search-routine.md"
   },
-  "marketHistoryUpdatedAt": "2026-07-12T14:43:58.209Z",
+  "marketHistoryUpdatedAt": "2026-07-12T15:02:19.494Z",
   "manualUpdatedAt": "2026-07-12T14:54:53.491Z"
 }
