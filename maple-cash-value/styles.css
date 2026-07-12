@@ -2068,3 +2068,158 @@ body {
   max-width: 100%;
   overflow-x: hidden;
 }
+
+
+/* Major and job-group presets */
+.major-filter-group {
+  grid-column: 1 / -1;
+  min-width: 0;
+  padding-bottom: 9px;
+  border-bottom: 1px solid var(--line);
+}
+
+.major-filter-list {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 6px;
+  min-width: 0;
+  padding-bottom: 2px;
+}
+
+.major-filter-button,
+.job-group-button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 0;
+  border: 1px solid var(--line-strong);
+  border-radius: 6px;
+  background: #fff;
+  color: var(--muted);
+  font-family: "Jua", "Noto Sans KR", sans-serif;
+  font-weight: 400;
+  letter-spacing: 0;
+  cursor: pointer;
+}
+
+.major-filter-button {
+  height: 40px;
+  padding: 0 10px;
+  font-size: 12px;
+}
+
+.major-filter-button span,
+.job-group-button span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.major-filter-button em,
+.job-group-button em {
+  flex: 0 0 auto;
+  margin-left: 7px;
+  padding-left: 7px;
+  border-left: 1px solid currentColor;
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 9px;
+  font-style: normal;
+  font-weight: 800;
+  opacity: .68;
+}
+
+.major-filter-button.active {
+  border-color: #87a5df;
+  background: #edf3ff;
+  color: #244f9d;
+}
+
+.major-filter-button[data-major-filter="boss"].active {
+  border-color: #e7aebf;
+  background: #fff0f4;
+  color: var(--rose-dark);
+}
+
+.major-filter-button[data-major-filter="gold"].active {
+  border-color: #e1c475;
+  background: #fff8e4;
+  color: #765000;
+}
+
+.major-filter-button[data-major-filter="coupon"].active {
+  border-color: #9acdb9;
+  background: #ecf8f3;
+  color: #096348;
+}
+
+.job-group-filter {
+  display: grid;
+  grid-template-columns: 54px minmax(0, 1fr);
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.job-group-filter[hidden] {
+  display: none;
+}
+
+.job-group-label {
+  color: #68758a;
+  font-family: "Jua", "Noto Sans KR", sans-serif;
+  font-size: 12px;
+  text-align: center;
+}
+
+.job-group-list {
+  display: flex;
+  gap: 5px;
+  min-width: 0;
+  overflow-x: auto;
+  padding: 1px 1px 4px;
+  scrollbar-color: #b4bfce transparent;
+  scrollbar-width: thin;
+}
+
+.job-group-button {
+  flex: 0 0 auto;
+  height: 32px;
+  padding: 0 9px;
+  font-size: 11px;
+}
+
+.job-group-button.active {
+  border-color: #e7aebf;
+  background: #fff0f4;
+  color: var(--rose-dark);
+}
+
+@media (max-width: 1100px) {
+  .major-filter-list {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(112px, 1fr);
+    overflow-x: auto;
+    scrollbar-color: #b4bfce transparent;
+    scrollbar-width: thin;
+  }
+}
+
+@media (max-width: 620px) {
+  .major-filter-group {
+    padding-bottom: 8px;
+  }
+
+  .major-filter-button {
+    height: 38px;
+  }
+
+  .job-group-filter {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+
+  .job-group-label {
+    text-align: left;
+  }
+}
