@@ -3757,3 +3757,30 @@ html[data-theme="pink"] .controls > .control-field {
 .topbar-actions {
   justify-self: stretch;
 }
+
+@media (max-width: 680px) {
+  .sync-card {
+    min-height: 36px;
+    padding-block: 6px;
+  }
+
+  .controls {
+    gap: 6px;
+    padding: 8px;
+  }
+
+  .controls > label,
+  .controls > .control-field {
+    padding: 5px 7px 6px;
+  }
+
+  .controls > label > span,
+  .controls .control-label-row {
+    margin-bottom: 3px;
+  }
+
+  .controls input,
+  .controls select {
+    height: 32px;
+  }
+}
