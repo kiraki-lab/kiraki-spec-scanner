@@ -527,10 +527,31 @@ function priceFor(target, index) {
   };
 }
 
+function localPriceRowFor(target) {
+  const id = target.id != null ? String(target.id) : null;
+  const names = new Set([target.name, ...(target.aliases || [])].filter(Boolean).map(normalizeKey));
+  return state.localAuctionRows.find(row => {
+    if (id && row.itemId != null && String(row.itemId) === id) return true;
+    return names.has(normalizeKey(row.itemName || row.name || row.query));
+  }) || null;
+}
+
 function totalPriceFor(item, index) {
   const tradableComponents = componentList(item.components);
+  const directPrice = priceFor(item, index);
   if (!tradableComponents.length) {
-    return priceFor(item, index);
+    return directPrice;
+  }
+
+  if (localPriceRowFor(item)) {
+    return {
+      ...directPrice,
+      components: tradableComponents.map(component => ({
+        component,
+        price: priceFor(component, index)
+      })),
+      directOverride: true
+    };
   }
 
   let liveCount = 0;
@@ -775,7 +796,7 @@ function renderTable(rows, saleRankOffset = 0) {
       ? `${nf.format(Number(item.mileagePrice || item.cashPrice || 0))} 마일리지`
       : `${nf.format(Number(item.cashPrice || 0))}원`;
     const price = isReference ? renderReferencePrice(item) : renderPrice(item.listingPrice);
-    const priceEditButton = !isReference && !isPackageItem(item)
+    const priceEditButton = !isReference
       ? `<button class="price-edit-button" type="button" data-price-edit="${escapeAttribute(item.name)}" aria-label="${escapeAttribute(item.name)} 가격 수정">수정</button>`
       : '';
     const result = isReference
