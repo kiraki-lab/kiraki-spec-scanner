@@ -27,9 +27,9 @@ const MODE_LABELS = Object.freeze({
 });
 
 const MODE_DETAILS = Object.freeze({
-  public: '수동 계산 가능 · 저장 잠김',
-  member: '가격 저장 · 데이터 연동',
-  admin: '항목 수정 · 가격 저장 · 데이터 연동'
+  public: '수동 계산 · 내 브라우저 가격 수정',
+  member: '내 가격 저장 · 데이터 연동',
+  admin: '항목 수정 · 내 가격 저장 · 데이터 연동'
 });
 
 const AUCTION_STATUS_OPTIONS = Object.freeze([
@@ -169,7 +169,7 @@ function toNumber(value, fallback = 0) {
 }
 
 function canEditPrices() {
-  return state.mode === 'member' || state.mode === 'admin';
+  return true;
 }
 
 function canEditItems() {
@@ -676,7 +676,7 @@ function renderMode() {
   $('#mode-label').textContent = MODE_LABELS[state.mode];
   $('#mode-detail').textContent = MODE_DETAILS[state.mode];
   $('#management-mode').textContent = MODE_LABELS[state.mode];
-  $('#manual-save-state').textContent = canEditItems() ? '항목 저장 가능' : canEditPrices() ? '가격 저장 가능' : '저장 잠김';
+  $('#manual-save-state').textContent = canEditItems() ? '항목·가격 저장' : '내 가격 저장';
   $('#management-panel').hidden = state.mode === 'public';
   $('#lock-mode').hidden = state.mode === 'public';
   document.querySelectorAll('.member-only').forEach(element => {
@@ -775,6 +775,9 @@ function renderTable(rows, saleRankOffset = 0) {
       ? `${nf.format(Number(item.mileagePrice || item.cashPrice || 0))} 마일리지`
       : `${nf.format(Number(item.cashPrice || 0))}원`;
     const price = isReference ? renderReferencePrice(item) : renderPrice(item.listingPrice);
+    const priceEditButton = !isReference && !isPackageItem(item)
+      ? `<button class="price-edit-button" type="button" data-price-edit="${escapeAttribute(item.name)}" aria-label="${escapeAttribute(item.name)} 가격 수정">수정</button>`
+      : '';
     const result = isReference
       ? `<span class="eff-value">${formatReferenceMeso(item.referenceMesoPerThousand)}</span><span class="price-meta">1,000 마일리지당 절약</span>`
       : `<span class="eff-value">${formatWon(item.listingEfficiency)}</span><span class="price-meta">1억당 현금</span>`;
@@ -793,7 +796,7 @@ function renderTable(rows, saleRankOffset = 0) {
           ${renderComponents(item)}
         </td>
         <td data-label="구매 가격"><span class="cash-value">${cost}</span></td>
-        <td data-label="매물가/참고가">${price}</td>
+        <td data-label="매물가/참고가"><div class="price-cell"><span class="price-content">${price}</span>${priceEditButton}</div></td>
         <td data-label="판매 효율/절약">${result}</td>
       </tr>
     `;
@@ -864,7 +867,10 @@ function renderComponents(item) {
         ${tradable.map(component => `
           <div class="component-row">
             <span class="component-name">${escapeHtml(componentDisplayName(component))}</span>
-            ${renderComponentQuote(breakdown.get(normalizeKey(component.name)))}
+            <div class="component-price-actions">
+              ${renderComponentQuote(breakdown.get(normalizeKey(component.name)))}
+              <button class="price-edit-button" type="button" data-price-edit="${escapeAttribute(component.name)}" aria-label="${escapeAttribute(component.name)} 가격 수정">수정</button>
+            </div>
           </div>
         `).join('')}
         ${bonus.map(component => `
@@ -1060,7 +1066,7 @@ function saveManualPrice() {
     return;
   }
   upsertLocalPrice(item.name, item.seedMesoPrice, 'live');
-  setSyncState('ready', '가격 저장 완료', `${item.name} 가격을 수동 데이터에 반영했습니다.`);
+  setSyncState('ready', '내 가격 적용', `${item.name} 가격을 이 브라우저 계산에 반영했습니다.`);
   render();
 }
 
@@ -1145,7 +1151,21 @@ function clearLocalPrice() {
   state.localAuctionRows = state.localAuctionRows.filter(row => normalizeKey(row.itemName || row.name || row.query) !== key);
   persistLocalData();
   writePriceEditor(name);
-  setSyncState('ready', '가격 해제 완료', `${name} 수동 가격을 해제했습니다.`);
+  setSyncState('ready', '내 가격 삭제', `${name}의 브라우저 가격을 삭제했습니다.`);
+  render();
+}
+
+function clearAllLocalPrices() {
+  if (!state.localAuctionRows.length) {
+    setSyncState('ready', '내 가격 없음', '삭제할 브라우저 가격이 없습니다.');
+    return;
+  }
+  if (!confirm('이 브라우저에 저장한 가격을 모두 삭제할까요?')) return;
+  state.localAuctionRows = [];
+  state.priceTargetName = '';
+  persistLocalData();
+  writePriceEditor('');
+  setSyncState('ready', '전체 초기화 완료', '브라우저 가격을 모두 기본값으로 되돌렸습니다.');
   render();
 }
 
@@ -1163,7 +1183,7 @@ function savePriceEditor() {
     return;
   }
   upsertLocalPrice(name, meso, status);
-  setSyncState('ready', '가격 저장 완료', `${name} 가격을 저장했습니다.`);
+  setSyncState('ready', '내 가격 적용', `${name} 가격을 이 브라우저 계산에 반영했습니다.`);
   render();
 }
 
@@ -1171,6 +1191,7 @@ function findPriceRow(name) {
   const key = normalizeKey(name);
   return state.localAuctionRows.find(row => normalizeKey(row.itemName || row.name || row.query) === key)
     || state.auctionRows.find(row => normalizeKey(row.itemName || row.name || row.query) === key)
+    || state.auctionSkips.find(row => normalizeKey(row.itemName || row.name || row.query) === key)
     || null;
 }
 
@@ -1179,6 +1200,18 @@ function writePriceEditor(name) {
   $('#price-item-name').value = name || '';
   $('#price-meso').value = row?.listingLowestMeso || '';
   $('#price-status').value = row?.listingLowestMeso > 0 ? 'live' : row?.status || 'live';
+}
+
+function openPriceEditor(name) {
+  state.priceTargetName = name;
+  const select = $('#price-target-select');
+  if (select) select.value = name;
+  writePriceEditor(name);
+  const panel = $('#local-price-panel');
+  if (panel) {
+    panel.open = true;
+    panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
 }
 
 function writeItemEditor(item) {
@@ -1464,6 +1497,12 @@ on('#base-mp-rate', 'input', event => {
   on(selector, 'change', renderManualResult);
 });
 
+on('#item-rows', 'click', event => {
+  const button = event.target.closest('button[data-price-edit]');
+  if (!button) return;
+  openPriceEditor(button.dataset.priceEdit);
+});
+
 on('#calculate-manual', 'click', renderManualResult);
 on('#save-manual-price', 'click', saveManualPrice);
 on('#save-manual-item', 'click', saveManualItem);
@@ -1476,6 +1515,7 @@ on('#price-target-select', 'change', event => {
 
 on('#save-price-row', 'click', savePriceEditor);
 on('#clear-price-row', 'click', clearLocalPrice);
+on('#reset-local-prices', 'click', clearAllLocalPrices);
 on('#export-prices', 'click', exportPrices);
 
 on('#admin-item-select', 'change', event => {
