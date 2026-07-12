@@ -81,6 +81,32 @@ a {
   gap: 10px;
 }
 
+.channel-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: max-content;
+  min-height: 32px;
+  margin-top: 8px;
+  padding: 0 12px;
+  border: 1px solid var(--rose);
+  border-radius: 7px;
+  background: #fff;
+  color: var(--rose-dark);
+  font-family: "Jua", "Noto Sans KR", sans-serif;
+  font-size: 13px;
+  text-decoration: none;
+}
+
+.channel-link:hover {
+  background: var(--panel-soft);
+}
+
+.channel-link:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+}
+
 .eyebrow {
   margin: 0 0 4px;
   color: var(--rose-dark);
@@ -2246,7 +2272,7 @@ body {
 }
 
 .inline-price-input {
-  width: 142px;
+  width: 92px;
   height: 32px;
   border: 1px solid var(--line-strong);
   border-radius: 6px;
@@ -2256,6 +2282,14 @@ body {
   text-align: right;
   font-size: 12px;
   font-variant-numeric: tabular-nums;
+}
+
+.inline-price-unit {
+  min-width: 24px;
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 800;
+  white-space: nowrap;
 }
 
 .inline-price-input:focus {
@@ -2282,7 +2316,7 @@ body {
 }
 
 .inline-price-editor.compact .inline-price-input {
-  width: 112px;
+  width: 72px;
 }
 
 .inline-price-editor.compact .inline-price-save {
@@ -2311,11 +2345,11 @@ body {
 
 @media (max-width: 680px) {
   .inline-price-input {
-    width: min(132px, 36vw);
+    width: min(88px, 26vw);
   }
 
   .inline-price-editor.compact .inline-price-input {
-    width: min(106px, 29vw);
+    width: min(70px, 20vw);
   }
 }
 
