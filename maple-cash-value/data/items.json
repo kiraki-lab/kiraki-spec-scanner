@@ -1,7 +1,7 @@
 {
   "version": 3,
   "world": "스카니아",
-  "updatedAt": "2026-07-11T19:16:02.041Z",
+  "updatedAt": "2026-07-12T14:53:04.332Z",
   "settings": {
     "baseMpRate": 6990,
     "discountRate": 6,
@@ -15,7 +15,7 @@
       "category": "기본",
       "cashPrice": 5900,
       "seedMesoPrice": 240000000,
-      "mileageType": "full"
+      "mileageType": "partial"
     },
     {
       "id": 7,
