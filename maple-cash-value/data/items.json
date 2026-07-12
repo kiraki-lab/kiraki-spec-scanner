@@ -1,7 +1,7 @@
 {
   "version": 3,
   "world": "스카니아",
-  "updatedAt": "2026-07-12T14:53:04.332Z",
+  "updatedAt": "2026-07-12T14:54:53.491Z",
   "settings": {
     "baseMpRate": 6990,
     "discountRate": 6,
@@ -5105,6 +5105,64 @@
           "seedMesoPrice": 0
         }
       ]
+    },
+    {
+      "id": 679,
+      "name": "성별 변경 쿠폰",
+      "category": "쿠폰",
+      "cashPrice": 15000,
+      "seedMesoPrice": 690000000,
+      "aliases": [],
+      "mileageType": "none"
+    },
+    {
+      "id": 680,
+      "name": "추가옵션 전승 스크롤",
+      "category": "기본",
+      "cashPrice": 49000,
+      "seedMesoPrice": 2242000000,
+      "aliases": [
+        "추가옵션 전승스크롤"
+      ],
+      "mileageType": "none"
+    },
+    {
+      "id": 681,
+      "name": "커스텀 믹스염색 쿠폰",
+      "category": "쿠폰",
+      "cashPrice": 48000,
+      "seedMesoPrice": 1440000000,
+      "aliases": [
+        "커스텀 믹스 염색 쿠폰"
+      ],
+      "mileageType": "none"
+    },
+    {
+      "id": 682,
+      "name": "커스텀 믹스 컬러렌즈 쿠폰",
+      "category": "쿠폰",
+      "cashPrice": 24000,
+      "seedMesoPrice": 1000000000,
+      "aliases": [],
+      "mileageType": "none"
+    },
+    {
+      "id": 683,
+      "name": "컬러링 프리즘",
+      "category": "기본",
+      "cashPrice": 5900,
+      "seedMesoPrice": 230000000,
+      "aliases": [],
+      "mileageType": "none"
+    },
+    {
+      "id": 684,
+      "name": "마네킹",
+      "category": "기본",
+      "cashPrice": 18900,
+      "seedMesoPrice": 860000000,
+      "aliases": [],
+      "mileageType": "none"
     }
   ]
 }
