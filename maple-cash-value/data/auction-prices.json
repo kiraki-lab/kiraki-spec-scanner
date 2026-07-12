@@ -4119,15 +4119,79 @@
       "listingLowestText": "1억 1500만",
       "resultCount": 7,
       "status": "ok"
+    },
+    {
+      "itemName": "성별 변경 쿠폰",
+      "query": "성별 변경 쿠폰",
+      "aliases": [],
+      "listingLowestMeso": 690000000,
+      "listingLowestText": "6억 9000만",
+      "status": "ok",
+      "source": "manual",
+      "filter": "캐시",
+      "collectedAt": "2026-07-12T14:54:53.491Z"
+    },
+    {
+      "itemName": "추가옵션 전승 스크롤",
+      "query": "추가옵션 전승 스크롤",
+      "aliases": [
+        "추가옵션 전승스크롤"
+      ],
+      "listingLowestMeso": 2242000000,
+      "listingLowestText": "22억 4200만",
+      "status": "ok",
+      "source": "manual",
+      "filter": "캐시",
+      "collectedAt": "2026-07-12T14:54:53.491Z"
+    },
+    {
+      "itemName": "커스텀 믹스염색 쿠폰",
+      "query": "커스텀 믹스염색 쿠폰",
+      "aliases": [
+        "커스텀 믹스 염색 쿠폰"
+      ],
+      "listingLowestMeso": 1440000000,
+      "listingLowestText": "14억 4000만",
+      "status": "ok",
+      "source": "manual",
+      "filter": "캐시",
+      "collectedAt": "2026-07-12T14:54:53.491Z"
+    },
+    {
+      "itemName": "커스텀 믹스 컬러렌즈 쿠폰",
+      "query": "커스텀 믹스 컬러렌즈 쿠폰",
+      "aliases": [],
+      "listingLowestMeso": 1000000000,
+      "listingLowestText": "10억",
+      "status": "ok",
+      "source": "manual",
+      "filter": "캐시",
+      "collectedAt": "2026-07-12T14:54:53.491Z"
+    },
+    {
+      "itemName": "컬러링 프리즘",
+      "query": "컬러링 프리즘",
+      "aliases": [],
+      "listingLowestMeso": 230000000,
+      "listingLowestText": "2억 3000만",
+      "status": "ok",
+      "source": "manual",
+      "filter": "캐시",
+      "collectedAt": "2026-07-12T14:54:53.491Z"
+    },
+    {
+      "itemName": "마네킹",
+      "query": "마네킹",
+      "aliases": [],
+      "listingLowestMeso": 860000000,
+      "listingLowestText": "8억 6000만",
+      "status": "ok",
+      "source": "manual",
+      "filter": "캐시",
+      "collectedAt": "2026-07-12T14:54:53.491Z"
     }
   ],
   "skipped": [
-    {
-      "itemName": "추가옵션 전승 스크롤",
-      "status": "unverified",
-      "reason": "경매가 미확인",
-      "filter": "캐시"
-    },
     {
       "itemName": "레지스탕스 배틀메이지 모자",
       "status": "no_candidate",
@@ -4307,7 +4371,7 @@
       "resultCount": 0
     }
   ],
-  "updatedAt": "2026-07-12T15:16:53.726+09:00",
+  "updatedAt": "2026-07-12T14:54:53.491Z",
   "lastSearchRun": {
     "searchAccount": 2,
     "searchLimit": 100,
@@ -4341,5 +4405,6 @@
     "queueMode": "package_completion_by_known_value",
     "safetyRulesDocument": "maple-cash-value/docs/daily-auction-search-routine.md"
   },
-  "marketHistoryUpdatedAt": "2026-07-12T14:43:58.209Z"
+  "marketHistoryUpdatedAt": "2026-07-12T14:43:58.209Z",
+  "manualUpdatedAt": "2026-07-12T14:54:53.491Z"
 }
