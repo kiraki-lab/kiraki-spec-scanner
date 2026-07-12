@@ -63,12 +63,14 @@
       "aliases": [
         "프리미엄 헤어 쿠폰"
       ],
-      "listingLowestMeso": 193330000,
-      "listingLowestText": "1억 9333만",
-      "status": "manual",
-      "source": "manual",
+      "listingLowestMeso": 185000000,
+      "listingLowestText": "1억 8500만",
+      "resultCount": 26,
+      "status": "ok",
       "filter": "캐시",
-      "collectedAt": "2026-07-09T22:35:00+09:00"
+      "searchAccount": 1,
+      "searchIndex": 21,
+      "collectedAt": "2026-07-12T11:01:16.533+09:00"
     },
     {
       "itemName": "프리미엄 성형쿠폰",
@@ -76,75 +78,98 @@
       "aliases": [
         "프리미엄 성형 쿠폰"
       ],
-      "listingLowestMeso": 130000000,
-      "listingLowestText": "1억 3000만",
-      "status": "manual",
-      "source": "manual",
+      "listingLowestMeso": 129989998,
+      "listingLowestText": "1억 2998만 9998",
+      "resultCount": 29,
+      "status": "ok",
       "filter": "캐시",
-      "collectedAt": "2026-07-09T22:35:00+09:00"
+      "searchAccount": 1,
+      "searchIndex": 22,
+      "collectedAt": "2026-07-12T11:01:22.630+09:00"
     },
     {
       "itemName": "금손 은손 헤어 쿠폰",
       "query": "금손 은손 헤어 쿠폰",
-      "listingLowestMeso": 242222222,
-      "listingLowestText": "2억 4222만 2222",
+      "listingLowestMeso": 247800000,
+      "listingLowestText": "2억 4780만",
+      "resultCount": 108,
       "status": "ok",
       "filter": "캐시",
-      "collectedAt": "2026-07-09T22:35:00+09:00"
+      "searchAccount": 1,
+      "searchIndex": 1,
+      "collectedAt": "2026-07-12T11:00:30.034+09:00"
     },
     {
       "itemName": "금손 은손 성형외과 쿠폰",
       "query": "금손 은손 성형외과 쿠폰",
-      "listingLowestMeso": 169999998,
-      "listingLowestText": "1억 6999만 9998",
+      "listingLowestMeso": 161992000,
+      "listingLowestText": "1억 6199만 2000",
+      "resultCount": 70,
       "status": "ok",
       "filter": "캐시",
-      "collectedAt": "2026-07-09T22:35:00+09:00"
+      "searchAccount": 1,
+      "searchIndex": 2,
+      "collectedAt": "2026-07-12T11:00:30.034+09:00"
     },
     {
       "itemName": "보스 헤어 쿠폰",
       "query": "보스 헤어 쿠폰",
-      "listingLowestMeso": 244333333,
-      "listingLowestText": "2억 4433만 3333",
+      "listingLowestMeso": 222222221,
+      "listingLowestText": "2억 2222만 2221",
+      "resultCount": 35,
       "status": "ok",
       "filter": "캐시",
-      "collectedAt": "2026-07-09T22:35:00+09:00"
+      "searchAccount": 1,
+      "searchIndex": 6,
+      "collectedAt": "2026-07-12T11:00:30.034+09:00"
     },
     {
       "itemName": "보스 성형 쿠폰",
       "query": "보스 성형 쿠폰",
-      "listingLowestMeso": 175488877,
-      "listingLowestText": "1억 7548만 8877",
+      "listingLowestMeso": 168977777,
+      "listingLowestText": "1억 6897만 7777",
+      "resultCount": 27,
       "status": "ok",
       "filter": "캐시",
-      "collectedAt": "2026-07-09T22:35:00+09:00"
+      "searchAccount": 1,
+      "searchIndex": 7,
+      "collectedAt": "2026-07-12T11:00:30.034+09:00"
     },
     {
       "itemName": "전 직업 헤어 쿠폰",
       "query": "전 직업 헤어 쿠폰",
-      "listingLowestMeso": 182777777,
-      "listingLowestText": "1억 8277만 7777",
+      "listingLowestMeso": 181700000,
+      "listingLowestText": "1억 8170만",
+      "resultCount": 13,
       "status": "ok",
       "filter": "캐시",
-      "collectedAt": "2026-07-09T22:35:00+09:00"
+      "searchAccount": 1,
+      "searchIndex": 12,
+      "collectedAt": "2026-07-12T11:00:30.034+09:00"
     },
     {
       "itemName": "전 직업 성형 쿠폰",
       "query": "전 직업 성형 쿠폰",
-      "listingLowestMeso": 128500000,
-      "listingLowestText": "1억 2850만",
+      "listingLowestMeso": 115999999,
+      "listingLowestText": "1억 1599만 9999",
+      "resultCount": 36,
       "status": "ok",
       "filter": "캐시",
-      "collectedAt": "2026-07-09T22:35:00+09:00"
+      "searchAccount": 1,
+      "searchIndex": 18,
+      "collectedAt": "2026-07-12T11:00:38.969+09:00"
     },
     {
       "itemName": "전 직업 일러스트 컬렉션 헤어 쿠폰",
       "query": "전 직업 일러스트 컬렉션 헤어 쿠폰",
-      "listingLowestMeso": 254000000,
-      "listingLowestText": "2억 5400만",
+      "listingLowestMeso": 245900000,
+      "listingLowestText": "2억 4590만",
+      "resultCount": 72,
       "status": "ok",
       "filter": "캐시",
-      "collectedAt": "2026-07-09T22:35:00+09:00"
+      "searchAccount": 1,
+      "searchIndex": 19,
+      "collectedAt": "2026-07-12T11:01:04.352+09:00"
     },
     {
       "itemName": "데몬 슬레이어 머리띠(여)",
@@ -1964,14 +1989,14 @@
     {
       "itemName": "블레어 살롱 헤어 쿠폰",
       "query": "블레어 살롱 헤어 쿠폰",
-      "listingLowestMeso": 1273333333,
-      "listingLowestText": "12억 7333만 3333",
+      "listingLowestMeso": 1271111110,
+      "listingLowestText": "12억 7111만 1110",
       "resultCount": 49,
       "status": "ok",
       "filter": "캐시",
-      "searchAccount": 2,
-      "searchIndex": 10,
-      "collectedAt": "2026-07-11T21:44:18.020+09:00"
+      "searchAccount": 1,
+      "searchIndex": 20,
+      "collectedAt": "2026-07-12T11:01:10.446+09:00"
     },
     {
       "itemName": "데몬 어벤져 슈트(남)",
@@ -1999,6 +2024,18 @@
       "searchAccount": 2,
       "searchIndex": 12,
       "collectedAt": "2026-07-11T21:44:18.020+09:00"
+    },
+    {
+      "itemName": "배틀 라이플",
+      "query": "배틀 라이플",
+      "listingLowestMeso": 285555555,
+      "listingLowestText": "2억 8555만 5555",
+      "resultCount": 7,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 25,
+      "collectedAt": "2026-07-12T11:02:40.708+09:00"
     }
   ],
   "skipped": [
@@ -2092,5 +2129,6 @@
       "searchIndex": 7,
       "collectedAt": "2026-07-11T21:42:41.901+09:00"
     }
-  ]
+  ],
+  "updatedAt": "2026-07-12T11:03:06.399+09:00"
 }
