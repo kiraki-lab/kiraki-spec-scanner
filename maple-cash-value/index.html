@@ -5,12 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light">
   <meta name="theme-color" content="#f3f5f8">
+  <script>
+    try {
+      document.documentElement.dataset.theme = localStorage.getItem('kirakiTheme') === 'kiraki' ? 'pink' : 'clean';
+    } catch (_) {
+      document.documentElement.dataset.theme = 'clean';
+    }
+  </script>
   <link rel="icon" href="./favicon.svg?v=20260712" type="image/svg+xml">
   <title>메이플 캐시 효율 계산기</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Jua&amp;family=Noto+Sans+KR:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./styles.css?v=0.10.1">
+  <link rel="stylesheet" href="./styles.css?v=0.11.0">
 </head>
 <body>
   <div class="app-shell">
@@ -18,7 +25,15 @@
       <div class="brand-block">
         <p class="eyebrow">스카니아 · 월드 통합 경매장</p>
         <h1>메이플 캐시 효율 계산기</h1>
-        <a class="channel-link" href="https://youtube.com/channel/UCTa93vcBRawFA1YLyDOAkdw?si=RAosYvNcb20jcBWu" target="_blank" rel="noopener noreferrer">키라키 채널</a>
+        <div class="brand-actions">
+          <a class="channel-link" href="https://youtube.com/channel/UCTa93vcBRawFA1YLyDOAkdw?si=RAosYvNcb20jcBWu" target="_blank" rel="noopener noreferrer">키라키 채널</a>
+          <label class="theme-switch">
+            <input id="theme-toggle" type="checkbox" role="switch" aria-label="핑크 모드 켜기">
+            <span class="theme-switch-track" aria-hidden="true"></span>
+            <strong>핑크 모드</strong>
+            <em id="theme-toggle-state">OFF</em>
+          </label>
+        </div>
       </div>
       <div class="topbar-actions">
         <div class="mode-card" aria-live="polite">
@@ -144,8 +159,8 @@
           <input id="manual-cash-price" type="number" min="0" step="100" placeholder="2200">
         </label>
         <label>
-          <span>경매장 가격 (백만 메소)</span>
-          <input id="manual-meso-price" type="number" min="0" step="1" inputmode="numeric" placeholder="81">
+          <span>경매장 가격 (억 메소)</span>
+          <input id="manual-meso-price" type="number" min="0" step="0.01" inputmode="decimal" placeholder="0.81">
         </label>
         <label>
           <span>마일리지 혜택</span>
@@ -200,8 +215,8 @@
               <input id="admin-item-cash" type="number" min="0" step="100">
             </label>
             <label>
-              <span>기본 가격 (백만 메소)</span>
-              <input id="admin-item-seed" type="number" min="0" step="1" inputmode="numeric">
+              <span>기본 가격 (억 메소)</span>
+              <input id="admin-item-seed" type="number" min="0" step="0.01" inputmode="decimal">
             </label>
             <label>
               <span>마일리지 혜택</span>
@@ -217,7 +232,7 @@
             </label>
             <label class="wide-field">
               <span>구성품</span>
-              <textarea id="admin-item-components" rows="5" placeholder="구성품명 | 기본가격(백만 메소)"></textarea>
+              <textarea id="admin-item-components" rows="5" placeholder="구성품명 | 기본가격(억 메소)"></textarea>
             </label>
           </div>
           <div class="action-row compact">
@@ -343,6 +358,6 @@
     </tr>
   </template>
 
-  <script type="module" src="./app.js?v=0.10.0"></script>
+  <script type="module" src="./app.js?v=0.11.0"></script>
 </body>
 </html>
