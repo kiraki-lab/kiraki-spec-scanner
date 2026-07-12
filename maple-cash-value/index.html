@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Jua&amp;display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./styles.css?v=0.12.1">
+  <link rel="stylesheet" href="./styles.css?v=0.13.0">
 </head>
 <body>
   <div class="app-shell">
@@ -23,15 +23,6 @@
         </div>
       </div>
       <div class="topbar-actions">
-        <div class="mode-card" aria-live="polite">
-          <span class="mode-label" id="mode-label">공개 모드</span>
-          <div class="mode-form">
-            <input id="mode-password" type="password" inputmode="numeric" placeholder="비밀번호" autocomplete="off" aria-label="모드 비밀번호">
-            <button id="unlock-mode" type="button">열기</button>
-            <button id="lock-mode" type="button" hidden>잠금</button>
-          </div>
-          <small id="mode-detail">내 브라우저 가격 수정</small>
-        </div>
         <div class="sync-card" aria-live="polite">
           <span class="sync-dot"></span>
           <div>
@@ -130,83 +121,6 @@
       </div>
     </details>
 
-    <section id="management-panel" class="management-panel" aria-label="데이터 관리" hidden>
-      <div class="plain-title">
-        <h2>데이터 관리</h2>
-        <span id="management-mode" class="count-pill">공개 모드</span>
-      </div>
-      <div class="manager-grid">
-        <article class="manager-block admin-only" hidden>
-          <div class="block-title">
-            <h3>항목 수정</h3>
-            <span id="item-override-state">기본 데이터</span>
-          </div>
-          <div class="editor-grid">
-            <label class="wide-field">
-              <span>항목</span>
-              <select id="admin-item-select">
-                <option value="">새 항목</option>
-              </select>
-            </label>
-            <label>
-              <span>아이템명</span>
-              <input id="admin-item-name" type="text" autocomplete="off">
-            </label>
-            <label>
-              <span>분류</span>
-              <input id="admin-item-category" type="text" autocomplete="off">
-            </label>
-            <label>
-              <span>캐시 가격</span>
-              <input id="admin-item-cash" type="number" min="0" step="100">
-            </label>
-            <label>
-              <span>기본 가격 (억 메소)</span>
-              <input id="admin-item-seed" type="number" min="0" step="0.01" inputmode="decimal">
-            </label>
-            <label>
-              <span>마일리지 혜택</span>
-              <select id="admin-item-mileage">
-                <option value="none">할인 불가</option>
-                <option value="partial">30% 할인</option>
-                <option value="full">전액 결제</option>
-              </select>
-            </label>
-            <label class="wide-field">
-              <span>검색 별칭</span>
-              <textarea id="admin-item-aliases" rows="3" placeholder="줄바꿈 또는 쉼표로 구분"></textarea>
-            </label>
-            <label class="wide-field">
-              <span>구성품</span>
-              <textarea id="admin-item-components" rows="5" placeholder="구성품명 | 기본가격(억 메소)"></textarea>
-            </label>
-          </div>
-          <div class="action-row compact">
-            <button id="save-admin-item" type="button">항목 저장</button>
-            <button id="delete-admin-item" type="button" class="danger-button">삭제</button>
-            <button id="reset-admin-items" type="button" class="ghost-button">기본값</button>
-            <button id="export-items" type="button" class="ghost-button">항목 내보내기</button>
-          </div>
-        </article>
-
-        <article class="manager-block member-only" hidden>
-          <div class="block-title">
-            <h3>데이터 가져오기</h3>
-            <span id="import-state">대기</span>
-          </div>
-          <label class="wide-field import-field">
-            <span>데이터</span>
-            <textarea id="data-import" rows="9" placeholder="내보낸 가격 또는 항목 데이터를 붙여넣기"></textarea>
-          </label>
-          <div class="action-row compact">
-            <button id="import-prices" type="button">가격 가져오기</button>
-            <button id="export-prices" type="button" class="ghost-button">가격 내보내기</button>
-            <button id="import-items" class="admin-only" type="button" hidden>항목 가져오기</button>
-            <button id="clear-import" type="button" class="ghost-button">비우기</button>
-          </div>
-        </article>
-      </div>
-    </section>
 
     <main>
       <section class="table-panel" aria-label="효율 목록">
@@ -304,6 +218,6 @@
     </tr>
   </template>
 
-  <script type="module" src="./app.js?v=0.12.0"></script>
+  <script type="module" src="./app.js?v=0.13.0"></script>
 </body>
 </html>
