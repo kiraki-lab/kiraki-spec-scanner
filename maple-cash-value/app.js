@@ -17,23 +17,6 @@ const DEFAULT_SETTINGS = {
   ahFeeRate: 5
 };
 
-const MODE_PASSWORDS = Object.freeze({
-  '0322': 'admin',
-  '0722': 'member'
-});
-
-const MODE_LABELS = Object.freeze({
-  public: '공개 모드',
-  member: '멤버십 모드',
-  admin: '관리자 모드'
-});
-
-const MODE_DETAILS = Object.freeze({
-  public: '내 브라우저 가격 수정',
-  member: '내 가격 저장 · 데이터 연동',
-  admin: '항목 수정 · 내 가격 저장 · 데이터 연동'
-});
-
 const AUCTION_STATUS_OPTIONS = Object.freeze([
   ['live', '가격 있음'],
   ['seed', '기본값'],
@@ -93,7 +76,6 @@ const BONUS_COMPONENTS_BY_PACKAGE = Object.freeze({
 });
 
 const state = {
-  mode: 'public',
   baseItems: [],
   items: [],
   hasLocalItems: false,
@@ -122,6 +104,7 @@ const state = {
   currentRanks: new Map(),
   pendingPreviousRanks: null,
   expandedComponentKeys: new Set(),
+  expandedMarketKeys: new Set(),
   settings: { ...DEFAULT_SETTINGS }
 };
 
@@ -194,7 +177,7 @@ function canEditPrices() {
 }
 
 function canEditItems() {
-  return state.mode === 'admin';
+  return false;
 }
 
 function loadStoredSettings() {
@@ -247,7 +230,6 @@ async function loadJson(path, fallback) {
 async function loadData() {
   loadStoredSettings();
   syncInputs();
-  renderMode();
   try {
     const [itemsDoc, auctionDoc, noticeDoc, saleDoc] = await Promise.all([
       loadJson(DATA_PATHS.items, { items: [], settings: DEFAULT_SETTINGS }),
@@ -514,20 +496,36 @@ function priceFor(target, index) {
   const names = [target.name, ...(target.aliases || [])].filter(Boolean);
   const rowByName = names.map(name => index.byName.get(normalizeKey(name))).find(Boolean);
   const row = rowById || rowByName;
-  const liveValue = roundMeso(row?.listingLowestMeso);
+  const listingMeso = roundMeso(row?.listingLowestMeso);
+  const marketHistoryMeso = roundMeso(row?.marketHistoryMaxMeso || row?.marketHistoryMeso);
+  const meso = listingMeso > 0 && marketHistoryMeso > 0
+    ? Math.min(listingMeso, marketHistoryMeso)
+    : listingMeso || marketHistoryMeso;
+  const usesMarketHistory = marketHistoryMeso > 0 && (!listingMeso || marketHistoryMeso < listingMeso);
+  const marketGapRate = listingMeso > 0 && marketHistoryMeso > 0 && marketHistoryMeso < listingMeso
+    ? (listingMeso - marketHistoryMeso) / listingMeso * 100
+    : 0;
 
-  if (liveValue > 0) {
+  if (meso > 0) {
     return {
-      meso: liveValue,
-      source: row.source === 'manual' ? 'manual' : 'live',
+      meso,
+      listingMeso,
+      marketHistoryMeso,
+      marketHistoryBasis: row?.marketHistoryBasis || '시세 탭 체결 상단',
+      marketHistoryCollectedAt: row?.marketHistoryCollectedAt || row?.marketHistoryUpdatedAt || null,
+      marketGapRate,
+      usesMarketHistory,
+      source: usesMarketHistory ? 'history' : row?.source === 'manual' ? 'manual' : 'live',
       auctionStatus: 'live',
-      collectedAt: row.collectedAt || row.updatedAt || state.localDataUpdatedAt || state.metadata.auctionUpdatedAt
+      collectedAt: row?.collectedAt || row?.updatedAt || state.localDataUpdatedAt || state.metadata.auctionUpdatedAt
     };
   }
 
   if (row?.status && row.status !== 'ok' && row.status !== 'manual') {
     return {
       meso: 0,
+      listingMeso: 0,
+      marketHistoryMeso: 0,
       source: row.status,
       auctionStatus: row.status,
       collectedAt: row.collectedAt || null
@@ -542,6 +540,8 @@ function priceFor(target, index) {
 
   return {
     meso: seedMeso,
+    listingMeso: seedMeso,
+    marketHistoryMeso: 0,
     source: seedMeso > 0 ? 'seed' : auctionStatus,
     auctionStatus,
     collectedAt: null
@@ -556,23 +556,31 @@ function totalPriceFor(item, index) {
 
   let liveCount = 0;
   let manualCount = 0;
+  let historyCount = 0;
   let latest = null;
   const components = tradableComponents.map(component => {
     const price = priceFor(component, index);
     if (price.source === 'live') liveCount += 1;
     if (price.source === 'manual') manualCount += 1;
-    if (price.collectedAt && (!latest || new Date(price.collectedAt) > new Date(latest))) latest = price.collectedAt;
+    if (price.source === 'history') historyCount += 1;
+    [price.collectedAt, price.marketHistoryCollectedAt].filter(Boolean).forEach(value => {
+      if (!latest || new Date(value) > new Date(latest)) latest = value;
+    });
     return { component, price };
   });
   const componentPrices = components.map(entry => entry.price);
   const meso = components.reduce((sum, { component, price }) => sum + price.meso * component.quantity, 0);
-  const filledCount = liveCount + manualCount;
+  const filledCount = liveCount + manualCount + historyCount;
+  const source = filledCount === tradableComponents.length
+    ? historyCount > 0 ? 'history' : manualCount > 0 ? 'manual' : 'live'
+    : filledCount > 0 ? 'mixed' : 'seed';
 
   return {
     meso,
-    source: filledCount === tradableComponents.length ? (manualCount ? 'manual' : 'live') : filledCount > 0 ? 'mixed' : 'seed',
+    source,
     auctionStatus: summarizeAuctionStatus(componentPrices),
     collectedAt: latest,
+    marketHistoryApplied: historyCount > 0,
     components
   };
 }
@@ -721,38 +729,15 @@ function render() {
 
   syncCategoryOptions(allRows);
   syncPackageToggle();
-  syncPriceTargetOptions();
-  syncAdminItemOptions();
-
-  $('#rank-mode-label').textContent = '매물 최저가';
+  $('#rank-mode-label').textContent = '보수적 적용가';
   $('#row-count').textContent = referenceCount ? `${saleRows.length}개 + 참고 ${referenceCount}개` : `${saleRows.length}개`;
   $('#sale-item-count').textContent = `${rows.length}개`;
   $('#auction-updated').textContent = formatDate(state.localAuctionRows.length ? state.localDataUpdatedAt : state.metadata.auctionUpdatedAt);
   $('#best-efficiency').textContent = rankedVisibleSales.length ? formatWon(rankedVisibleSales[0].listingEfficiency) : '-';
-  const localPriceCount = $('#local-price-count');
-  if (localPriceCount) localPriceCount.textContent = `${state.localAuctionRows.length}개`;
-  $('#item-override-state').textContent = state.hasLocalItems ? '수정 데이터' : '기본 데이터';
-
-  renderMode();
   renderNotices();
   renderSaleItems(visibleSaleCatalog);
   renderTable(pageRows, rankByKey, rankChanges);
   renderPagination(rows.length, pageStart, pageEnd, totalPages);
-}
-
-function renderMode() {
-  document.body.dataset.mode = state.mode;
-  $('#mode-label').textContent = MODE_LABELS[state.mode];
-  $('#mode-detail').textContent = MODE_DETAILS[state.mode];
-  $('#management-mode').textContent = MODE_LABELS[state.mode];
-  $('#management-panel').hidden = state.mode === 'public';
-  $('#lock-mode').hidden = state.mode === 'public';
-  document.querySelectorAll('.member-only').forEach(element => {
-    element.hidden = !canEditPrices();
-  });
-  document.querySelectorAll('.admin-only').forEach(element => {
-    element.hidden = !canEditItems();
-  });
 }
 
 function renderPagination(total, start, end, totalPages) {
@@ -899,14 +884,19 @@ function renderPrice(price) {
   const status = price.auctionStatus || 'unverified';
   const label = price.source === 'manual'
     ? '수동입력'
-    : price.source === 'live'
-      ? '확인가'
-      : price.source === 'mixed'
-        ? '일부 확인'
-        : auctionStatusLabel(status);
-  const klass = ['live', 'manual', 'mixed'].includes(price.source) ? price.source : status;
+    : price.source === 'history'
+      ? '시세 반영'
+      : price.source === 'live'
+        ? '확인가'
+        : price.source === 'mixed'
+          ? '일부 확인'
+          : auctionStatusLabel(status);
+  const klass = ['live', 'manual', 'history', 'mixed'].includes(price.source) ? price.source : status;
   const date = price.collectedAt
     ? `<time class="price-date">${escapeHtml(formatDate(price.collectedAt))}</time>`
+    : '';
+  const note = price.source === 'history'
+    ? '<span class="price-note">시세 탭 참고가로 보수 계산</span>'
     : '';
   return `
     <span class="price-display">
@@ -914,36 +904,73 @@ function renderPrice(price) {
         <span class="price-value">${formatMeso(price.meso)}</span>
         <span class="source-pill ${klass}">${escapeHtml(label)}</span>
       </span>
+      ${note}
       ${date}
     </span>
   `;
 }
 
 function renderInlinePriceEditor(name, price, compact = false) {
-  const meso = roundMeso(price?.meso);
-  const inputMeso = mesoToInputUnit(meso);
+  const appliedMeso = roundMeso(price?.meso);
+  const listingMeso = roundMeso(price?.listingMeso || (price?.marketHistoryMeso ? 0 : price?.meso));
+  const marketHistoryMeso = roundMeso(price?.marketHistoryMeso);
+  const inputMeso = mesoToInputUnit(listingMeso);
+  const marketInputMeso = mesoToInputUnit(marketHistoryMeso);
   const status = price?.auctionStatus || 'unverified';
   const label = price?.source === 'manual'
     ? '수동입력'
-    : price?.source === 'live'
-      ? '확인가'
-      : auctionStatusLabel(status);
-  const meta = meso > 0 ? `${formatMeso(meso)} · ${label}` : label;
+    : price?.source === 'history'
+      ? '현재 매물'
+      : price?.source === 'live'
+        ? '확인가'
+        : auctionStatusLabel(status);
+  const meta = listingMeso > 0 ? `${formatMeso(listingMeso)} · ${label}` : label;
   const date = price?.collectedAt && !compact
     ? `<time class="inline-price-date">${escapeHtml(formatDate(price.collectedAt))}</time>`
     : '';
+  const marketKey = normalizeKey(name);
+  const marketExpanded = state.expandedMarketKeys.has(marketKey);
+  const gap = Number(price?.marketGapRate || 0);
+  const marketDate = price?.marketHistoryCollectedAt
+    ? `<time>${escapeHtml(formatDate(price.marketHistoryCollectedAt))}</time>`
+    : '';
+  const marketMeta = marketHistoryMeso > 0
+    ? `<small class="market-reference-meta">
+        <strong>시세 탭 ${formatMeso(marketHistoryMeso)}</strong>
+        <span>계산 ${formatMeso(appliedMeso)}</span>
+        ${gap > 0 ? `<span class="market-gap">괴리 ${Math.round(gap)}%</span>` : ''}
+        ${marketDate}
+      </small>`
+    : '';
+  const marketEditor = marketExpanded
+    ? `<span class="inline-market-row">
+        <span class="inline-market-label">시세</span>
+        <input class="inline-market-input" type="number" min="0" step="0.01" inputmode="decimal"
+          value="${marketInputMeso || ''}" data-inline-market-name="${escapeAttribute(name)}"
+          aria-label="${escapeAttribute(name)} 시세 탭 참고가 (억 메소)">
+        <span class="inline-price-unit">억</span>
+        <button class="inline-market-save" type="button"
+          data-inline-market-save="${escapeAttribute(name)}"
+          aria-label="${escapeAttribute(name)} 시세 참고가 적용" title="시세 참고가 적용">&#10003;</button>
+      </span>`
+    : '';
   return `
-    <span class="inline-price-editor${compact ? ' compact' : ''}">
+    <span class="inline-price-editor${compact ? ' compact' : ''}${marketHistoryMeso > 0 ? ' has-market' : ''}">
       <span class="inline-price-row">
         <input class="inline-price-input" type="number" min="0" step="0.01" inputmode="decimal"
           value="${inputMeso || ''}" data-inline-price-name="${escapeAttribute(name)}"
-          aria-label="${escapeAttribute(name)} 가격 (억 메소)">
+          aria-label="${escapeAttribute(name)} 현재 매물가 (억 메소)">
         <span class="inline-price-unit">억</span>
+        <button class="inline-market-toggle${marketHistoryMeso > 0 ? ' has-value' : ''}" type="button"
+          data-inline-market-toggle="${escapeAttribute(name)}" aria-expanded="${marketExpanded}"
+          aria-label="${escapeAttribute(name)} 시세 참고가 입력" title="시세 탭 참고가 입력">시세</button>
         <button class="inline-price-save" type="button"
           data-inline-price-save="${escapeAttribute(name)}"
-          aria-label="${escapeAttribute(name)} 가격 적용" title="가격 적용">&#10003;</button>
+          aria-label="${escapeAttribute(name)} 매물가 적용" title="매물가 적용">&#10003;</button>
       </span>
       <small class="inline-price-meta"><span>${escapeHtml(meta)}</span>${date}</small>
+      ${marketMeta}
+      ${marketEditor}
     </span>
   `;
 }
@@ -958,11 +985,13 @@ function renderComponentQuote(price) {
   }
   const label = price.source === 'manual'
     ? '수동입력'
-    : price.source === 'live'
-      ? '확인가'
-      : price.source === 'mixed'
-        ? '일부 확인'
-        : auctionStatusLabel(status);
+    : price.source === 'history'
+      ? '시세 반영'
+      : price.source === 'live'
+        ? '확인가'
+        : price.source === 'mixed'
+          ? '일부 확인'
+          : auctionStatusLabel(status);
   return `<span class="component-quote"><strong>${formatMeso(price.meso)}</strong><em>${escapeHtml(label)}</em></span>`;
 }
 
@@ -1153,26 +1182,6 @@ function setSyncState(kind, title, detail) {
   $('#sync-detail').textContent = detail;
 }
 
-function unlockMode() {
-  const input = $('#mode-password');
-  const mode = MODE_PASSWORDS[input.value.trim()];
-  if (!mode) {
-    input.value = '';
-    setSyncState('error', '모드 잠금', '비밀번호를 확인해 주세요.');
-    return;
-  }
-  state.mode = mode;
-  input.value = '';
-  setSyncState('ready', MODE_LABELS[mode], MODE_DETAILS[mode]);
-  render();
-}
-
-function lockMode() {
-  state.mode = 'public';
-  setSyncState('ready', '공개 모드', MODE_DETAILS.public);
-  render();
-}
-
 function nextItemId() {
   const maxId = state.items.reduce((max, item) => Math.max(max, Number(item.id) || 0), 0);
   return maxId + 1;
@@ -1215,7 +1224,9 @@ function upsertLocalPrice(name, meso, status = 'live') {
   if (!cleanName) return;
   const key = normalizeKey(cleanName);
   const roundedMeso = roundMeso(meso);
+  const existing = findPriceRow(cleanName) || {};
   const row = {
+    ...existing,
     itemName: cleanName,
     query: cleanName,
     listingLowestMeso: status === 'live' || status === 'seed' ? roundedMeso : 0,
@@ -1231,6 +1242,33 @@ function upsertLocalPrice(name, meso, status = 'live') {
   persistLocalData();
 }
 
+function upsertLocalMarketPrice(name, meso) {
+  const cleanName = String(name || '').trim();
+  if (!cleanName) return;
+  const key = normalizeKey(cleanName);
+  const roundedMeso = roundMeso(meso);
+  const existing = findPriceRow(cleanName) || {};
+  const listingMeso = roundMeso(existing.listingLowestMeso);
+  const row = {
+    ...existing,
+    itemName: cleanName,
+    query: cleanName,
+    listingLowestMeso: listingMeso,
+    listingLowestText: listingMeso > 0 ? formatMeso(listingMeso) : '',
+    marketHistoryMaxMeso: roundedMeso,
+    marketHistoryMaxText: roundedMeso > 0 ? formatMeso(roundedMeso) : '',
+    marketHistoryBasis: existing.marketHistoryBasis || '시세 탭 체결 상단',
+    marketHistoryCollectedAt: nowIso(),
+    status: listingMeso > 0 ? existing.status || 'ok' : 'manual',
+    source: 'manual',
+    filter: '수동'
+  };
+  const index = state.localAuctionRows.findIndex(price => normalizeKey(price.itemName || price.name || price.query) === key);
+  if (index >= 0) state.localAuctionRows.splice(index, 1, row);
+  else state.localAuctionRows.push(row);
+  persistLocalData();
+}
+
 function saveInlinePrice(name, rawValue) {
   const cleanName = String(name || '').trim();
   if (!cleanName) return;
@@ -1238,13 +1276,30 @@ function saveInlinePrice(name, rawValue) {
   state.pendingPreviousRanks = new Map(state.currentRanks);
   if (meso > 0) {
     upsertLocalPrice(cleanName, meso, 'live');
-    setSyncState('ready', '가격 적용', `${cleanName} 가격을 이 브라우저 계산에 반영했습니다.`);
+    setSyncState('ready', '매물가 적용', `${cleanName} 가격을 이 브라우저 계산에 반영했습니다.`);
   } else {
     const key = normalizeKey(cleanName);
     state.localAuctionRows = state.localAuctionRows.filter(row => normalizeKey(row.itemName || row.name || row.query) !== key);
     persistLocalData();
     setSyncState('ready', '기본 가격 복원', `${cleanName}의 로컬 가격을 해제했습니다.`);
   }
+  render();
+}
+
+function saveInlineMarketPrice(name, rawValue) {
+  const cleanName = String(name || '').trim();
+  if (!cleanName) return;
+  const meso = mesoFromInputUnit(rawValue);
+  state.pendingPreviousRanks = new Map(state.currentRanks);
+  upsertLocalMarketPrice(cleanName, meso);
+  state.expandedMarketKeys.delete(normalizeKey(cleanName));
+  setSyncState(
+    'ready',
+    meso > 0 ? '시세 참고가 적용' : '시세 참고가 해제',
+    meso > 0
+      ? `${cleanName} 시세를 보수 계산에 반영했습니다.`
+      : `${cleanName}의 브라우저 시세 참고값을 해제했습니다.`
+  );
   render();
 }
 
@@ -1387,7 +1442,8 @@ function exportPrices() {
     generatedAt: nowIso(),
     source: 'manual-browser-overrides',
     policy: {
-      priceBasis: 'listingLowestMeso',
+      priceBasis: 'min(listingLowestMeso, marketHistoryMaxMeso)',
+      marketHistorySupported: true,
       manualEditable: true
     },
     prices: mergedAuctionRows(),
@@ -1470,12 +1526,6 @@ function on(selector, eventName, handler) {
   const element = $(selector);
   if (element) element.addEventListener(eventName, handler);
 }
-
-on('#unlock-mode', 'click', unlockMode);
-on('#lock-mode', 'click', lockMode);
-on('#mode-password', 'keydown', event => {
-  if (event.key === 'Enter') unlockMode();
-});
 
 on('#search-input', 'input', event => {
   state.search = event.target.value;
@@ -1597,6 +1647,23 @@ on('#item-rows', 'click', event => {
     return;
   }
 
+  const marketToggle = event.target.closest('button[data-inline-market-toggle]');
+  if (marketToggle) {
+    const key = normalizeKey(marketToggle.dataset.inlineMarketToggle);
+    if (state.expandedMarketKeys.has(key)) state.expandedMarketKeys.delete(key);
+    else state.expandedMarketKeys.add(key);
+    render();
+    return;
+  }
+
+  const marketButton = event.target.closest('button[data-inline-market-save]');
+  if (marketButton) {
+    const editor = marketButton.closest('.inline-price-editor');
+    const input = editor?.querySelector('.inline-market-input');
+    saveInlineMarketPrice(marketButton.dataset.inlineMarketSave, input?.value);
+    return;
+  }
+
   const button = event.target.closest('button[data-inline-price-save]');
   if (!button) return;
   const editor = button.closest('.inline-price-editor');
@@ -1605,14 +1672,20 @@ on('#item-rows', 'click', event => {
 });
 
 on('#item-rows', 'input', event => {
-  if (!event.target.matches('.inline-price-input')) return;
+  if (!event.target.matches('.inline-price-input, .inline-market-input')) return;
   event.target.closest('.inline-price-editor')?.classList.add('is-dirty');
 });
 
 on('#item-rows', 'keydown', event => {
-  if (event.key !== 'Enter' || !event.target.matches('.inline-price-input')) return;
-  event.preventDefault();
-  saveInlinePrice(event.target.dataset.inlinePriceName, event.target.value);
+  if (event.key !== 'Enter') return;
+  if (event.target.matches('.inline-price-input')) {
+    event.preventDefault();
+    saveInlinePrice(event.target.dataset.inlinePriceName, event.target.value);
+  }
+  if (event.target.matches('.inline-market-input')) {
+    event.preventDefault();
+    saveInlineMarketPrice(event.target.dataset.inlineMarketName, event.target.value);
+  }
 });
 
 on('#price-target-select', 'change', event => {
