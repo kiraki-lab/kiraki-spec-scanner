@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Jua&amp;family=Noto+Sans+KR:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./styles.css?v=0.9.4">
+  <link rel="stylesheet" href="./styles.css?v=0.10.0">
 </head>
 <body>
   <div class="app-shell">
@@ -46,7 +46,7 @@
         <strong id="rank-mode-label">매물 최저가</strong>
       </article>
       <article class="metric">
-        <span class="metric-label">최고 효율</span>
+        <span class="metric-label">현재 필터 최고</span>
         <strong id="best-efficiency">-</strong>
       </article>
       <article class="metric">
@@ -54,7 +54,7 @@
         <strong id="auction-updated">-</strong>
       </article>
       <article class="metric">
-        <span class="metric-label">판매 품목</span>
+        <span class="metric-label">계산 품목</span>
         <strong id="sale-item-count">-</strong>
       </article>
     </section>
@@ -67,7 +67,7 @@
 
       <div class="control-field">
         <div class="control-label-row">
-          <label for="category-filter">표 분류</label>
+          <label for="category-filter">세부 분류</label>
           <label class="package-toggle">
                 <input id="package-filter-toggle" type="checkbox" checked>
                 <span class="toggle-track" aria-hidden="true"></span>
@@ -110,13 +110,12 @@
     </section>
 
     <details class="filter-panel compact-panel" aria-label="큰 분류 필터" open>
-      <summary class="compact-summary"><span>큰 분류</span></summary>
+      <summary class="compact-summary filter-summary">
+        <span>큰 분류</span>
+        <button id="major-filter-reset" type="button">초기화</button>
+      </summary>
       <div class="filter-panel-body">
         <div class="filter-group major-filter-group">
-          <div class="filter-heading">
-            <h2>큰 분류</h2>
-            <button id="major-filter-reset" type="button">초기화</button>
-          </div>
           <div id="major-filter-list" class="major-filter-list" role="group" aria-label="큰 분류"></div>
           <div id="job-group-filter-wrap" class="job-group-filter" hidden>
             <span class="job-group-label">직업군</span>
@@ -255,8 +254,8 @@
           <div class="table-heading-actions">
             <label class="page-size-control">
               <select id="page-size" aria-label="페이지당 표시 개수">
-                <option value="15">15개씩</option>
-                <option value="30">30개씩</option>
+                <option value="10">10개씩</option>
+                <option value="20">20개씩</option>
                 <option value="0">전체</option>
               </select>
             </label>
@@ -271,7 +270,7 @@
                 <th scope="col">아이템</th>
                 <th scope="col">구매 가격</th>
                 <th scope="col">매물가/참고가</th>
-                <th scope="col">판매 효율/절약</th>
+                <th scope="col" class="efficiency-heading"><span>판매 효율</span><small>1억당 현금</small></th>
               </tr>
             </thead>
             <tbody id="item-rows"></tbody>
@@ -344,6 +343,6 @@
     </tr>
   </template>
 
-  <script type="module" src="./app.js?v=0.9.6"></script>
+  <script type="module" src="./app.js?v=0.10.0"></script>
 </body>
 </html>
