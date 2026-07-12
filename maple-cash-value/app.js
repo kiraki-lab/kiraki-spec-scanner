@@ -528,14 +528,15 @@ function priceFor(target, index) {
 }
 
 function totalPriceFor(item, index) {
-  if (!Array.isArray(item.components) || !item.components.length) {
+  const tradableComponents = componentList(item.components);
+  if (!tradableComponents.length) {
     return priceFor(item, index);
   }
 
   let liveCount = 0;
   let manualCount = 0;
   let latest = null;
-  const components = item.components.map(component => {
+  const components = tradableComponents.map(component => {
     const price = priceFor(component, index);
     if (price.source === 'live') liveCount += 1;
     if (price.source === 'manual') manualCount += 1;
@@ -548,7 +549,7 @@ function totalPriceFor(item, index) {
 
   return {
     meso,
-    source: filledCount === item.components.length ? (manualCount ? 'manual' : 'live') : filledCount > 0 ? 'mixed' : 'seed',
+    source: filledCount === tradableComponents.length ? (manualCount ? 'manual' : 'live') : filledCount > 0 ? 'mixed' : 'seed',
     auctionStatus: summarizeAuctionStatus(componentPrices),
     collectedAt: latest,
     components
