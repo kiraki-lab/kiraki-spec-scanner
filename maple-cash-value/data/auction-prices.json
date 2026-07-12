@@ -1,7 +1,7 @@
 {
   "version": 2,
   "world": "스카니아",
-  "generatedAt": "2026-07-11T21:44:18.020+09:00",
+  "generatedAt": "2026-07-12T15:28:50.618Z",
   "source": "manual-maple-auction-two-account",
   "policy": {
     "searchTab": "구매",
@@ -960,14 +960,21 @@
       "aliases": [
         "영웅 은월 슈트 (남)"
       ],
-      "listingLowestMeso": 387500000,
-      "listingLowestText": "3억 8750만",
-      "resultCount": 7,
+      "listingLowestMeso": 382000000,
+      "listingLowestText": "3억 8200만",
+      "resultCount": 11,
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 1,
-      "searchIndex": 30,
-      "collectedAt": "2026-07-11T20:01:55.235+09:00"
+      "searchIndex": 1,
+      "collectedAt": "2026-07-12T15:24:04.096Z",
+      "marketHistoryStatus": "verified",
+      "marketHistoryBasis": "최근 3개월 체결 범위",
+      "marketHistoryMinMeso": 354900000,
+      "marketHistoryMaxMeso": 409999999,
+      "marketHistorySaleCount": 2,
+      "marketHistoryCollectedAt": "2026-07-12T15:24:04.096Z",
+      "marketHistoryNote": "최근 3개월 2건 · 3.55억~4.10억"
     },
     {
       "itemName": "영웅 은월 너클",
@@ -4201,6 +4208,258 @@
       "source": "manual",
       "filter": "캐시",
       "collectedAt": "2026-07-12T14:54:53.491Z"
+    },
+    {
+      "itemName": "찬란한 흉성 슈트(남)",
+      "query": "찬란한 흉성 슈트 (남)",
+      "aliases": [
+        "찬란한 흉성 슈트 (남)"
+      ],
+      "listingLowestMeso": 129999999,
+      "listingLowestText": "1억 2999만 9999",
+      "resultCount": 5,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 3,
+      "collectedAt": "2026-07-12T15:25:46.769Z"
+    },
+    {
+      "itemName": "찬란한 흉성 슈트(여)",
+      "query": "찬란한 흉성 슈트 (여)",
+      "aliases": [
+        "찬란한 흉성 슈트 (여)"
+      ],
+      "listingLowestMeso": 122222222,
+      "listingLowestText": "1억 2222만 2222",
+      "resultCount": 20,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 4,
+      "collectedAt": "2026-07-12T15:26:19.018Z"
+    },
+    {
+      "itemName": "곰도리 귀 머리띠",
+      "query": "곰도리 귀 머리띠",
+      "aliases": [],
+      "listingLowestMeso": 57777777,
+      "listingLowestText": "5777만 7777",
+      "resultCount": 14,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 5,
+      "collectedAt": "2026-07-12T15:26:25.201Z"
+    },
+    {
+      "itemName": "곰도리 귀",
+      "query": "곰도리 귀",
+      "aliases": [],
+      "listingLowestMeso": 50000000,
+      "listingLowestText": "5000만",
+      "resultCount": 18,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 6,
+      "collectedAt": "2026-07-12T15:26:31.393Z"
+    },
+    {
+      "itemName": "카링 비단옷(남)",
+      "query": "카링 비단옷 (남)",
+      "aliases": [
+        "카링 비단옷 (남)"
+      ],
+      "listingLowestMeso": 300000000,
+      "listingLowestText": "3억",
+      "resultCount": 1,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 7,
+      "collectedAt": "2026-07-12T15:26:37.561Z"
+    },
+    {
+      "itemName": "카링 비단 치마(여)",
+      "query": "카링 비단 치마 (여)",
+      "aliases": [
+        "카링 비단 치마 (여)"
+      ],
+      "listingLowestMeso": 317700000,
+      "listingLowestText": "3억 1770만",
+      "resultCount": 8,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 8,
+      "collectedAt": "2026-07-12T15:26:48.820Z"
+    },
+    {
+      "itemName": "심연의 그림자(남)",
+      "query": "심연의 그림자 (남)",
+      "aliases": [
+        "심연의 그림자 (남)"
+      ],
+      "listingLowestMeso": 34440000,
+      "listingLowestText": "3444만",
+      "resultCount": 13,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 9,
+      "collectedAt": "2026-07-12T15:26:54.995Z"
+    },
+    {
+      "itemName": "심연의 거울(여)",
+      "query": "심연의 거울 (여)",
+      "aliases": [
+        "심연의 거울 (여)"
+      ],
+      "listingLowestMeso": 115555555,
+      "listingLowestText": "1억 1555만 5555",
+      "resultCount": 12,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 10,
+      "collectedAt": "2026-07-12T15:27:01.188Z"
+    },
+    {
+      "itemName": "굳건한 명예",
+      "query": "굳건한 명예",
+      "aliases": [],
+      "listingLowestMeso": 230000000,
+      "listingLowestText": "2억 3000만",
+      "resultCount": 3,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 11,
+      "collectedAt": "2026-07-12T15:27:07.374Z"
+    },
+    {
+      "itemName": "레프 일리움 건틀렛",
+      "query": "레프 일리움 건틀렛",
+      "aliases": [],
+      "listingLowestMeso": 333333333,
+      "listingLowestText": "3억 3333만 3333",
+      "resultCount": 1,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 12,
+      "collectedAt": "2026-07-12T15:27:16.487Z"
+    },
+    {
+      "itemName": "레프 일리움 윙",
+      "query": "레프 일리움 윙",
+      "aliases": [],
+      "listingLowestMeso": 140999999,
+      "listingLowestText": "1억 4099만 9999",
+      "resultCount": 3,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 13,
+      "collectedAt": "2026-07-12T15:27:29.508Z"
+    },
+    {
+      "itemName": "파멸의 날개",
+      "query": "파멸의 날개",
+      "aliases": [],
+      "listingLowestMeso": 339977777,
+      "listingLowestText": "3억 3997만 7777",
+      "resultCount": 6,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 14,
+      "collectedAt": "2026-07-12T15:27:35.704Z"
+    },
+    {
+      "itemName": "노바 엔젤릭버스터 슈트(여)",
+      "query": "노바 엔젤릭버스터 슈트 (여)",
+      "aliases": [
+        "노바 엔젤릭버스터 슈트 (여)"
+      ],
+      "listingLowestMeso": 150599999,
+      "listingLowestText": "1억 5059만 9999",
+      "resultCount": 4,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 15,
+      "collectedAt": "2026-07-12T15:27:45.150Z"
+    },
+    {
+      "itemName": "노바 카데나 슈트",
+      "query": "노바 카데나 슈트",
+      "aliases": [],
+      "listingLowestMeso": 122122222,
+      "listingLowestText": "1억 2212만 2222",
+      "resultCount": 3,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 16,
+      "collectedAt": "2026-07-12T15:27:51.314Z"
+    },
+    {
+      "itemName": "노바 카이저 갑옷",
+      "query": "노바 카이저 갑옷",
+      "aliases": [],
+      "listingLowestMeso": 100800000,
+      "listingLowestText": "1억 80만",
+      "resultCount": 13,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 17,
+      "collectedAt": "2026-07-12T15:27:57.484Z"
+    },
+    {
+      "itemName": "레트로 마법소년 슈트(남)",
+      "query": "레트로 마법소년 슈트 (남)",
+      "aliases": [
+        "레트로 마법소년 슈트 (남)"
+      ],
+      "listingLowestMeso": 43000000,
+      "listingLowestText": "4300만",
+      "resultCount": 1,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 18,
+      "collectedAt": "2026-07-12T15:28:03.646Z"
+    },
+    {
+      "itemName": "레프 일리움 슈트",
+      "query": "레프 일리움 슈트",
+      "aliases": [],
+      "listingLowestMeso": 419900000,
+      "listingLowestText": "4억 1990만",
+      "resultCount": 2,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 19,
+      "collectedAt": "2026-07-12T15:28:13.270Z"
+    },
+    {
+      "itemName": "북치는 토끼 슈트(남)",
+      "query": "북치는 토끼 슈트 (남)",
+      "aliases": [
+        "북치는 토끼 슈트 (남)"
+      ],
+      "listingLowestMeso": 25000000,
+      "listingLowestText": "2500만",
+      "resultCount": 12,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 20,
+      "collectedAt": "2026-07-12T15:28:19.436Z"
     }
   ],
   "skipped": [
@@ -4381,40 +4640,39 @@
       "status": "no_listing",
       "reason": "정확 후보 선택 후 필터 검색 결과 0건",
       "resultCount": 0
+    },
+    {
+      "itemName": "노바 엔젤릭버스터 윙",
+      "query": "노바 엔젤릭버스터 윙",
+      "status": "no_candidate",
+      "reason": "5초 대기 후 자동완성 정확 후보 없음",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "collectedAt": "2026-07-12T15:27:23.231Z"
     }
   ],
-  "updatedAt": "2026-07-12T15:02:19.494Z",
+  "updatedAt": "2026-07-12T15:28:50.618Z",
   "lastSearchRun": {
-    "searchAccount": 2,
+    "date": "2026-07-13",
+    "searchAccount": 1,
+    "accountCharacter": "스카니아 / 헤성",
     "searchLimit": 100,
-    "usedSearches": 100,
-    "validPrices": 95,
-    "noListingSearches": 5,
-    "noCandidateChecks": 3,
+    "usedSearches": 20,
+    "listingSearches": 19,
+    "marketSearches": 1,
+    "validPrices": 19,
+    "noListingSearches": 0,
+    "noCandidateChecks": 1,
     "duplicateSearches": 0,
-    "priorityQueueComplete": true,
-    "nextItem": "천족의 날개귀",
-    "completedAt": "2026-07-12T15:17:02.920+09:00",
+    "priorityQueueComplete": false,
+    "queueMode": "unsearched_first_then_unverified",
+    "queueCursor": 19,
+    "queueRemaining": 220,
+    "nextItem": "빅토리안 드레스(여)",
+    "checkpointAt": "2026-07-12T15:28:50.618Z",
     "manualNoCandidate": [
-      "라스트 서바이버(여)",
-      "로즈 원드",
-      "림보 날"
+      "노바 엔젤릭버스터 윙"
     ],
-    "remainingExtraPriority": [
-      "천족의 날개귀",
-      "찬란한 흉성 슈트(남)",
-      "찬란한 흉성 슈트(여)",
-      "발드릭스 장갑",
-      "듄켈 장갑",
-      "파워풀 빅풋",
-      "곰도리 귀 머리띠",
-      "곰도리 귀",
-      "카링 비단옷(남)",
-      "카링 비단 치마(여)",
-      "심연의 그림자(남)",
-      "심연의 거울(여)"
-    ],
-    "queueMode": "package_completion_by_known_value",
     "safetyRulesDocument": "maple-cash-value/docs/daily-auction-search-routine.md"
   },
   "marketHistoryUpdatedAt": "2026-07-12T15:02:19.494Z",
