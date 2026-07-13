@@ -1,14 +1,14 @@
 {
   "version": 2,
   "world": "스카니아",
-  "generatedAt": "2026-07-13T14:08:44.788Z",
+  "generatedAt": "2026-07-13T14:14:24.334Z",
   "source": "manual-maple-auction-two-account",
   "policy": {
     "searchTab": "구매",
     "priceBasis": "listingLowestMeso",
     "candidateCheckBeforeSearch": true,
     "officialSearchLimit": 100,
-    "notes": "Account 2 completed 100 unseen-item searches; items corrected in today's sheet remained deferred."
+    "notes": "Account 2 completed 100 searches. Three corrected names now use user-confirmed manual prices; six corrected names are queued before remaining unseen items."
   },
   "prices": [
     {
@@ -6720,6 +6720,55 @@
       "searchAccount": 2,
       "searchIndex": 100,
       "collectedAt": "2026-07-13T14:07:22.818Z"
+    },
+    {
+      "itemName": "문 트레벨러(남)",
+      "query": "문 트레벨러 (남)",
+      "aliases": [
+        "문 트레벨러",
+        "문 트레벨러 (남)",
+        "문 트래블러(남)",
+        "문 트래블러 (남)"
+      ],
+      "listingLowestMeso": 11110000,
+      "listingLowestText": "1111만",
+      "status": "manual",
+      "source": "manual",
+      "manualReason": "사용자 옥션 확인",
+      "filter": "캐시",
+      "collectedAt": "2026-07-13T14:14:24.334Z"
+    },
+    {
+      "itemName": "아니마 렌 백혜(남)",
+      "query": "아니마 렌 백혜 (남)",
+      "aliases": [
+        "아니마 렌 백혜 (남)",
+        "아니마 렌 백해(남)",
+        "아니마 렌 백해 (남)"
+      ],
+      "listingLowestMeso": 20000000,
+      "listingLowestText": "2000만",
+      "status": "manual",
+      "source": "manual",
+      "manualReason": "사용자 옥션 확인",
+      "filter": "캐시",
+      "collectedAt": "2026-07-13T14:14:24.334Z"
+    },
+    {
+      "itemName": "아니마 렌 백혜(여)",
+      "query": "아니마 렌 백혜 (여)",
+      "aliases": [
+        "아니마 렌 백혜 (여)",
+        "아니마 렌 백해(여)",
+        "아니마 렌 백해 (여)"
+      ],
+      "listingLowestMeso": 10000000,
+      "listingLowestText": "1000만",
+      "status": "manual",
+      "source": "manual",
+      "manualReason": "사용자 옥션 확인",
+      "filter": "캐시",
+      "collectedAt": "2026-07-13T14:14:24.334Z"
     }
   ],
   "skipped": [
@@ -6981,90 +7030,9 @@
       "searchIndex": 83,
       "collectedAt": "2026-07-13T14:03:44.255Z",
       "reason": "정확 후보 선택 후 필터 검색 결과 0건"
-    },
-    {
-      "itemName": "문 트래블러(남)",
-      "query": "문 트래블러(남)",
-      "status": "no_candidate",
-      "filter": "캐시",
-      "searchAccount": 2,
-      "collectedAt": "2026-07-13T13:44:52.994Z",
-      "reason": "검색어를 지우고 5초 이상 기다려도 자동완성 정확 후보 없음; 필터 검색 미실행"
-    },
-    {
-      "itemName": "민트",
-      "query": "민트",
-      "status": "no_candidate",
-      "filter": "캐시",
-      "searchAccount": 2,
-      "collectedAt": "2026-07-13T13:45:13.492Z",
-      "reason": "검색어를 지우고 5초 이상 기다려도 자동완성 정확 후보 없음; 필터 검색 미실행"
-    },
-    {
-      "itemName": "버싸잉",
-      "query": "버싸잉",
-      "status": "no_candidate",
-      "filter": "캐시",
-      "searchAccount": 2,
-      "collectedAt": "2026-07-13T13:46:23.562Z",
-      "reason": "검색어를 지우고 5초 이상 기다려도 자동완성 정확 후보 없음; 필터 검색 미실행"
-    },
-    {
-      "itemName": "베리",
-      "query": "베리",
-      "status": "no_candidate",
-      "filter": "캐시",
-      "searchAccount": 2,
-      "collectedAt": "2026-07-13T13:46:32.590Z",
-      "reason": "검색어를 지우고 5초 이상 기다려도 자동완성 정확 후보 없음; 필터 검색 미실행"
-    },
-    {
-      "itemName": "북빛 갓",
-      "query": "북빛 갓",
-      "status": "no_candidate",
-      "filter": "캐시",
-      "searchAccount": 2,
-      "collectedAt": "2026-07-13T13:50:02.467Z",
-      "reason": "검색어를 지우고 5초 이상 기다려도 자동완성 정확 후보 없음; 필터 검색 미실행"
-    },
-    {
-      "itemName": "북빛 너울",
-      "query": "북빛 너울",
-      "status": "no_candidate",
-      "filter": "캐시",
-      "searchAccount": 2,
-      "collectedAt": "2026-07-13T13:50:11.519Z",
-      "reason": "검색어를 지우고 5초 이상 기다려도 자동완성 정확 후보 없음; 필터 검색 미실행"
-    },
-    {
-      "itemName": "아니마 렌 백해(남)",
-      "query": "아니마 렌 백해(남)",
-      "status": "no_candidate",
-      "filter": "캐시",
-      "searchAccount": 2,
-      "collectedAt": "2026-07-13T13:58:22.098Z",
-      "reason": "검색어를 지우고 5초 이상 기다려도 자동완성 정확 후보 없음; 필터 검색 미실행"
-    },
-    {
-      "itemName": "아니마 렌 백해(여)",
-      "query": "아니마 렌 백해(여)",
-      "status": "no_candidate",
-      "filter": "캐시",
-      "searchAccount": 2,
-      "collectedAt": "2026-07-13T13:58:31.105Z",
-      "reason": "검색어를 지우고 5초 이상 기다려도 자동완성 정확 후보 없음; 필터 검색 미실행"
-    },
-    {
-      "itemName": "으스스깜",
-      "query": "으스스깜",
-      "status": "no_candidate",
-      "filter": "캐시",
-      "searchAccount": 2,
-      "collectedAt": "2026-07-13T14:03:37.461Z",
-      "reason": "검색어를 지우고 5초 이상 기다려도 자동완성 정확 후보 없음; 필터 검색 미실행"
     }
   ],
-  "updatedAt": "2026-07-13T14:08:44.788Z",
+  "updatedAt": "2026-07-13T14:14:24.334Z",
   "lastSearchRun": {
     "date": "2026-07-13",
     "searchAccount": 2,
@@ -7080,31 +7048,48 @@
     "duplicateSearches": 0,
     "accountComplete": true,
     "priorityQueueComplete": false,
-    "queueMode": "unsearched_first_then_unverified_sheet_deferred_last",
+    "queueMode": "corrected_names_then_unsearched_then_sheet_deferred_last",
     "queueCursor": 209,
     "accountQueueCursor": 109,
-    "queueRemaining": 27,
-    "nextItem": "초월자 제로 알파 라즐리",
+    "queueRemaining": 33,
+    "nextItem": "묵빛 갓",
     "completedAt": "2026-07-13T14:08:44.788Z",
-    "manualNoCandidate": [
-      "문 트래블러(남)",
-      "민트",
-      "버싸잉",
-      "베리",
-      "북빛 갓",
-      "북빛 너울",
-      "아니마 렌 백해(남)",
-      "아니마 렌 백해(여)",
-      "으스스깜"
-    ],
+    "manualNoCandidate": [],
     "deferredSheetItems": [
       "아니마 호영 흑운선",
       "영웅 메르세데스 슈트(남)",
       "영웅 메르세데스 듀얼보우건",
       "데몬 어벤져 슈트(남)"
     ],
-    "safetyRulesDocument": "maple-cash-value/docs/daily-auction-search-routine.md"
+    "safetyRulesDocument": "maple-cash-value/docs/daily-auction-search-routine.md",
+    "unresolvedNoCandidates": 0,
+    "manualResolvedAfterRun": [
+      "문 트레벨러(남)",
+      "아니마 렌 백혜(남)",
+      "아니마 렌 백혜(여)"
+    ],
+    "correctedNamePendingSearch": [
+      "묵빛 갓",
+      "묵빛 너울",
+      "바싹잉",
+      "으스스깽",
+      "베티",
+      "민티"
+    ],
+    "nameCorrectionsAfterRun": {
+      "문 트래블러(남)": "문 트레벨러(남)",
+      "아니마 렌 백해(남)": "아니마 렌 백혜(남)",
+      "아니마 렌 백해(여)": "아니마 렌 백혜(여)",
+      "북빛 갓": "묵빛 갓",
+      "북빛 너울": "묵빛 너울",
+      "버싸잉": "바싹잉",
+      "으스스깜": "으스스깽",
+      "베리": "베티",
+      "민트": "민티"
+    },
+    "effectivePricedItems": 99,
+    "postRunUpdatedAt": "2026-07-13T14:14:24.334Z"
   },
   "marketHistoryUpdatedAt": "2026-07-12T15:02:19.494Z",
-  "manualUpdatedAt": "2026-07-13T11:08:55.162Z"
+  "manualUpdatedAt": "2026-07-13T14:14:24.334Z"
 }
