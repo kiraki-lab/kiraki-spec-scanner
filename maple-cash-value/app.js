@@ -660,13 +660,11 @@ function priceFor(target, index) {
   const marketHistoryMeso = roundMeso(row?.marketHistoryMaxMeso || row?.marketHistoryMeso);
   const marketHistoryStatus = row?.marketHistoryStatus || '';
   const pendingMarketHistory = isMarketHistoryPending(marketHistoryStatus) && marketHistoryMeso <= 0;
-  const candidateMeso = listingMeso > 0 && marketHistoryMeso > 0
-    ? Math.min(listingMeso, marketHistoryMeso)
-    : listingMeso || marketHistoryMeso;
+  const candidateMeso = marketHistoryMeso || listingMeso;
   const meso = pendingMarketHistory ? 0 : candidateMeso;
-  const usesMarketHistory = marketHistoryMeso > 0 && (!listingMeso || marketHistoryMeso < listingMeso);
-  const marketGapRate = listingMeso > 0 && marketHistoryMeso > 0 && marketHistoryMeso < listingMeso
-    ? (listingMeso - marketHistoryMeso) / listingMeso * 100
+  const usesMarketHistory = marketHistoryMeso > 0;
+  const marketGapRate = listingMeso > 0 && marketHistoryMeso > 0 && listingMeso !== marketHistoryMeso
+    ? Math.abs(listingMeso - marketHistoryMeso) / listingMeso * 100
     : 0;
 
   if (candidateMeso > 0 || pendingMarketHistory) {
@@ -903,7 +901,7 @@ function render() {
 
   syncCategoryOptions(allRows);
   syncPackageToggle();
-  $('#rank-mode-label').textContent = '보수적 적용가';
+  $('#rank-mode-label').textContent = '시세 우선 적용가';
   $('#row-count').textContent = referenceCount ? `${saleRows.length}개 + 참고 ${referenceCount}개` : `${saleRows.length}개`;
   $('#sale-item-count').textContent = `${rows.length}개`;
   $('#auction-updated').textContent = formatDate(state.localAuctionRows.length ? state.localDataUpdatedAt : state.metadata.auctionUpdatedAt);
@@ -1644,7 +1642,7 @@ function exportPrices() {
     generatedAt: nowIso(),
     source: 'manual-browser-overrides',
     policy: {
-      priceBasis: 'min(listingLowestMeso, marketHistoryMaxMeso)',
+      priceBasis: 'marketHistoryMaxMeso || listingLowestMeso',
       marketHistorySupported: true,
       manualEditable: true
     },
