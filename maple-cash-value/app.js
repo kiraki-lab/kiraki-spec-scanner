@@ -5,6 +5,12 @@ const DATA_PATHS = {
   saleItems: './data/cashshop-sale-items.json'
 };
 
+const SHEET_MARKET_SOURCE = Object.freeze({
+  spreadsheetId: '1w8z0vlDyOzAqWgya0TPfL2mP8Ah01qAWiOIM8Gtzezs',
+  gid: '229558034',
+  range: 'A1:F500'
+});
+
 const SETTINGS_KEY = 'maple-cash-value-settings-v2';
 const LOCAL_DATA_KEY = 'maple-cash-value-local-data-v1';
 const FIXED_MILEAGE_MESO_RATE = 10000;
@@ -81,6 +87,9 @@ const state = {
   hasLocalItems: false,
   auctionRows: [],
   auctionSkips: [],
+  sheetAuctionRows: [],
+  sheetDataUpdatedAt: null,
+  sheetRefreshPending: false,
   localAuctionRows: [],
   localDataUpdatedAt: null,
   notices: [],
@@ -221,6 +230,122 @@ function persistLocalData() {
   }));
 }
 
+function sheetCellText(cell) {
+  return String(cell?.f ?? cell?.v ?? '').trim();
+}
+
+function sheetDateIso(value) {
+  const text = String(value || '').trim();
+  if (!text) return null;
+  if (/^\d{4}-\d{2}-\d{2}$/.test(text)) return new Date(`${text}T00:00:00+09:00`).toISOString();
+  const parsed = new Date(text);
+  return Number.isNaN(parsed.getTime()) ? null : parsed.toISOString();
+}
+
+function normalizeSheetMarketRows(response) {
+  if (response?.status !== 'ok' || !Array.isArray(response?.table?.rows)) return [];
+  const statusMap = {
+    '체결가 확인': 'verified',
+    '체결 없음': 'no_sales',
+    '현재가 미확인': 'listing_unconfirmed'
+  };
+
+  return response.table.rows.map(row => {
+    const cells = row?.c || [];
+    if (sheetCellText(cells[0]).toUpperCase() !== 'ON') return null;
+    const itemName = sheetCellText(cells[1]);
+    const statusText = sheetCellText(cells[3]);
+    const marketHistoryStatus = statusMap[statusText];
+    if (!itemName || !marketHistoryStatus) return null;
+    const rawEok = toNumber(cells[2]?.v ?? sheetCellText(cells[2]), 0);
+    const marketHistoryMaxMeso = marketHistoryStatus === 'verified'
+      ? roundMeso(rawEok * MESO_INPUT_UNIT)
+      : 0;
+    if (marketHistoryStatus === 'verified' && marketHistoryMaxMeso <= 0) return null;
+    const updatedAt = sheetDateIso(sheetCellText(cells[5]));
+
+    return {
+      itemName,
+      query: itemName,
+      marketHistoryMaxMeso,
+      marketHistoryMaxText: marketHistoryMaxMeso > 0 ? formatMeso(marketHistoryMaxMeso) : '',
+      marketHistoryBasis: '구글 시트 시세 보정',
+      marketHistoryCollectedAt: updatedAt,
+      marketHistoryStatus,
+      marketHistoryNote: sheetCellText(cells[4]) || statusText,
+      source: 'sheet',
+      filter: '시세 보정'
+    };
+  }).filter(Boolean);
+}
+
+function loadSheetMarketRows() {
+  return new Promise(resolve => {
+    const callbackName = `__kirakiSheetMarket${Date.now()}${Math.random().toString(36).slice(2)}`;
+    const script = document.createElement('script');
+    let timer = null;
+    const finish = result => {
+      if (timer) clearTimeout(timer);
+      delete window[callbackName];
+      script.remove();
+      resolve(result);
+    };
+
+    window[callbackName] = response => finish({
+      ok: response?.status === 'ok',
+      rows: normalizeSheetMarketRows(response)
+    });
+    script.onerror = () => finish({ ok: false, rows: [] });
+    timer = setTimeout(() => finish({ ok: false, rows: [] }), 6000);
+
+    const query = new URLSearchParams({
+      gid: SHEET_MARKET_SOURCE.gid,
+      range: SHEET_MARKET_SOURCE.range,
+      headers: '1',
+      tqx: `responseHandler:${callbackName}`,
+      _: String(Date.now())
+    });
+    script.src = `https://docs.google.com/spreadsheets/d/${SHEET_MARKET_SOURCE.spreadsheetId}/gviz/tq?${query}`;
+    script.referrerPolicy = 'no-referrer';
+    document.head.append(script);
+  });
+}
+
+function mergeSheetMarketRows(rows) {
+  const auctionByName = new Map();
+  state.auctionRows.forEach(row => {
+    [row.itemName, row.name, row.query, ...(row.aliases || [])].filter(Boolean)
+      .forEach(name => auctionByName.set(normalizeKey(name), row));
+  });
+  return rows.map(row => {
+    const base = auctionByName.get(normalizeKey(row.itemName));
+    return base ? { ...base, ...row, itemId: base.itemId ?? row.itemId } : row;
+  });
+}
+
+async function refreshSheetMarketRows() {
+  if (state.sheetRefreshPending) return;
+  state.sheetRefreshPending = true;
+  try {
+    const result = await loadSheetMarketRows();
+    if (!result.ok) return;
+    state.sheetAuctionRows = mergeSheetMarketRows(result.rows);
+    state.sheetDataUpdatedAt = result.rows
+      .map(row => row.marketHistoryCollectedAt)
+      .filter(Boolean)
+      .sort()
+      .at(-1) || null;
+    setSyncState(
+      'ready',
+      '데이터 로딩 완료',
+      `${state.metadata.world || '스카니아'} 기준 · 시세 보정 ${result.rows.length}개 연결`
+    );
+    render();
+  } finally {
+    state.sheetRefreshPending = false;
+  }
+}
+
 async function loadJson(path, fallback) {
   const response = await fetch(`${path}?v=${Date.now()}`, { cache: 'no-store' });
   if (!response.ok) return fallback;
@@ -251,6 +376,7 @@ async function loadData() {
     state.saleCatalog = normalizeSaleCatalog(saleDoc.sales || []);
     syncSaleFilterOptions();
     setSyncState('ready', '데이터 로딩 완료', `${state.metadata.world} 기준 데이터를 불러왔습니다.`);
+    void refreshSheetMarketRows();
   } catch (error) {
     console.error(error);
     setSyncState('error', '데이터 로딩 실패', '잠시 후 다시 시도해 주세요.');
@@ -411,7 +537,7 @@ function rowKey(row) {
 
 function mergedAuctionRows() {
   const rows = new Map();
-  [...state.auctionRows, ...state.localAuctionRows].forEach(row => {
+  [...state.auctionRows, ...state.sheetAuctionRows, ...state.localAuctionRows].forEach(row => {
     const key = rowKey(row);
     if (key !== 'name:') rows.set(key, row);
   });
@@ -910,10 +1036,11 @@ function renderReferencePrice(item) {
 
 function renderPrice(price) {
   const status = price.auctionStatus || 'unverified';
+  const isSheetOverride = String(price.marketHistoryBasis || '').includes('구글 시트');
   const label = price.source === 'manual'
     ? '수동입력'
     : price.source === 'history'
-      ? '시세 반영'
+      ? isSheetOverride ? '시트 보정' : '시세 반영'
       : price.source === 'pending'
         ? '검증 필요'
         : price.source === 'live'
@@ -966,6 +1093,7 @@ function renderInlinePriceEditor(name, price, compact = false) {
   const marketDate = price?.marketHistoryCollectedAt
     ? `<time>${escapeHtml(formatDate(price.marketHistoryCollectedAt))}</time>`
     : '';
+  const marketLabel = String(price?.marketHistoryBasis || '').includes('구글 시트') ? '시트 보정' : '시세 탭';
   const marketMeta = pendingMarketHistory
     ? `<small class="market-reference-meta warning">
         <strong>${escapeHtml(price?.marketHistoryNote || marketHistoryStatusLabel(marketHistoryStatus))}</strong>
@@ -974,7 +1102,7 @@ function renderInlinePriceEditor(name, price, compact = false) {
       </small>`
     : marketHistoryMeso > 0
       ? `<small class="market-reference-meta">
-          <strong>시세 탭 ${formatMeso(marketHistoryMeso)}</strong>
+          <strong>${marketLabel} ${formatMeso(marketHistoryMeso)}</strong>
           <span>계산 ${formatMeso(appliedMeso)}</span>
           ${gap > 0 ? `<span class="market-gap">괴리 ${Math.round(gap)}%</span>` : ''}
           ${marketDate}
@@ -1024,10 +1152,11 @@ function renderComponentQuote(price) {
   if (Number(price.meso || 0) <= 0) {
     return `<span class="component-quote"><strong>${escapeHtml(auctionStatusLabel(status))}</strong><em>가격 없음</em></span>`;
   }
+  const isSheetOverride = String(price.marketHistoryBasis || '').includes('구글 시트');
   const label = price.source === 'manual'
     ? '수동입력'
     : price.source === 'history'
-      ? '시세 반영'
+      ? isSheetOverride ? '시트 보정' : '시세 반영'
       : price.source === 'live'
         ? '확인가'
         : price.source === 'mixed'
@@ -1762,6 +1891,10 @@ on('#import-items', 'click', importItems);
 on('#clear-import', 'click', () => {
   $('#data-import').value = '';
   setImportState('대기');
+});
+
+window.addEventListener('focus', () => {
+  void refreshSheetMarketRows();
 });
 
 loadData();
