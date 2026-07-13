@@ -330,6 +330,8 @@ async function refreshSheetMarketRows() {
   try {
     const result = await loadSheetMarketRows();
     if (!result.ok) return;
+    state.pendingPreviousRanks = new Map(state.currentRanks);
+    state.stableRowOrder = [];
     state.sheetAuctionRows = mergeSheetMarketRows(result.rows);
     state.sheetDataUpdatedAt = result.rows
       .map(row => row.marketHistoryCollectedAt)
