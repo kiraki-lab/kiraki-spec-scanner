@@ -1,7 +1,7 @@
 {
   "version": 3,
   "world": "스카니아",
-  "updatedAt": "2026-07-12T14:54:53.491Z",
+  "updatedAt": "2026-07-13T11:08:55.162Z",
   "settings": {
     "baseMpRate": 6990,
     "discountRate": 6,
@@ -5161,6 +5161,15 @@
       "category": "기본",
       "cashPrice": 18900,
       "seedMesoPrice": 860000000,
+      "aliases": [],
+      "mileageType": "none"
+    },
+    {
+      "id": 685,
+      "name": "혈맹의 반지",
+      "category": "기본",
+      "cashPrice": 5900,
+      "seedMesoPrice": 258000000,
       "aliases": [],
       "mileageType": "none"
     }
