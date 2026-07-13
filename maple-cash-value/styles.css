@@ -3836,6 +3836,21 @@ html[data-theme="pink"] .channel-link:hover {
   color: #fff;
 }
 
+.sheet-link,
+html[data-theme="pink"] .sheet-link {
+  border-color: #e8a9bc;
+  background: #fff9fb;
+  color: var(--rose-dark);
+  box-shadow: 0 7px 16px rgba(201, 93, 130, .1);
+}
+
+.sheet-link:hover,
+html[data-theme="pink"] .sheet-link:hover {
+  border-color: var(--rose);
+  background: #fff0f5;
+  color: var(--rose-dark);
+}
+
 .channel-link:focus-visible {
   outline-color: rgba(255, 95, 137, .35);
 }
