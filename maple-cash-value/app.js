@@ -10,6 +10,7 @@ const SHEET_MARKET_SOURCE = Object.freeze({
   gid: '229558034',
   range: 'A1:F500'
 });
+const SHEET_REFRESH_INTERVAL_MS = 30000;
 
 const SETTINGS_KEY = 'maple-cash-value-settings-v2';
 const LOCAL_DATA_KEY = 'maple-cash-value-local-data-v1';
@@ -537,9 +538,32 @@ function rowKey(row) {
 
 function mergedAuctionRows() {
   const rows = new Map();
-  [...state.auctionRows, ...state.sheetAuctionRows, ...state.localAuctionRows].forEach(row => {
+  [...state.auctionRows, ...state.localAuctionRows].forEach(row => {
     const key = rowKey(row);
     if (key !== 'name:') rows.set(key, row);
+  });
+
+  state.sheetAuctionRows.forEach(sheetRow => {
+    const key = rowKey(sheetRow);
+    if (key === 'name:') return;
+    const current = rows.get(key);
+    if (!current) {
+      rows.set(key, sheetRow);
+      return;
+    }
+    rows.set(key, {
+      ...sheetRow,
+      ...current,
+      itemId: current.itemId ?? sheetRow.itemId,
+      itemName: current.itemName || sheetRow.itemName,
+      query: current.query || sheetRow.query,
+      marketHistoryMaxMeso: sheetRow.marketHistoryMaxMeso,
+      marketHistoryMaxText: sheetRow.marketHistoryMaxText,
+      marketHistoryBasis: sheetRow.marketHistoryBasis,
+      marketHistoryCollectedAt: sheetRow.marketHistoryCollectedAt,
+      marketHistoryStatus: sheetRow.marketHistoryStatus,
+      marketHistoryNote: sheetRow.marketHistoryNote
+    });
   });
   return [...rows.values()];
 }
@@ -1896,5 +1920,13 @@ on('#clear-import', 'click', () => {
 window.addEventListener('focus', () => {
   void refreshSheetMarketRows();
 });
+
+document.addEventListener('visibilitychange', () => {
+  if (!document.hidden) void refreshSheetMarketRows();
+});
+
+window.setInterval(() => {
+  if (!document.hidden) void refreshSheetMarketRows();
+}, SHEET_REFRESH_INTERVAL_MS);
 
 loadData();
