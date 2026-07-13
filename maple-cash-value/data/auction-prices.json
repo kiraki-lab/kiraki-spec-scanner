@@ -1,226 +1,16 @@
 {
   "version": 2,
   "world": "스카니아",
-  "generatedAt": "2026-07-13T15:48:26.806Z",
+  "generatedAt": "2026-07-13T15:52:08.753Z",
   "source": "manual-maple-auction-two-account",
   "policy": {
     "searchTab": "구매",
     "priceBasis": "listingLowestMeso",
     "candidateCheckBeforeSearch": true,
     "officialSearchLimit": 100,
-    "notes": "July 14 account 1 refresh; all primary unseen and direct items completed before package rotation."
+    "notes": "July 14 account 1 package rotation continues after all frequent-refresh groups completed."
   },
   "prices": [
-    {
-      "itemName": "데몬 슬레이어 슈즈",
-      "query": "데몬 슬레이어 슈즈",
-      "listingLowestMeso": 7500000,
-      "listingLowestText": "750만",
-      "status": "ok",
-      "filter": "캐시",
-      "collectedAt": "2026-07-09T23:05:00+09:00"
-    },
-    {
-      "itemName": "데몬 어벤져 머리띠(여)",
-      "query": "데몬 어벤져 머리띠 (여)",
-      "aliases": [
-        "데몬 어벤져 머리띠 (여)"
-      ],
-      "listingLowestMeso": 565900000,
-      "listingLowestText": "5억 6590만",
-      "status": "ok",
-      "filter": "캐시",
-      "collectedAt": "2026-07-09T23:10:00+09:00"
-    },
-    {
-      "itemName": "데몬 어벤져 슈트(여)",
-      "query": "데몬 어벤져 슈트 (여)",
-      "aliases": [
-        "데몬 어벤져 슈트 (여)"
-      ],
-      "listingLowestMeso": 47000000,
-      "listingLowestText": "4700만",
-      "status": "ok",
-      "filter": "캐시",
-      "collectedAt": "2026-07-09T23:10:00+09:00"
-    },
-    {
-      "itemName": "데몬 어벤져 슈즈",
-      "query": "데몬 어벤져 슈즈",
-      "listingLowestMeso": 11999998,
-      "listingLowestText": "1199만 9998",
-      "status": "ok",
-      "filter": "캐시",
-      "collectedAt": "2026-07-09T23:10:00+09:00"
-    },
-    {
-      "itemName": "데몬 어벤져 데스페라도",
-      "query": "데몬 어벤져 데스페라도",
-      "listingLowestMeso": 55950000,
-      "listingLowestText": "5595만",
-      "status": "ok",
-      "filter": "캐시",
-      "collectedAt": "2026-07-09T23:10:00+09:00"
-    },
-    {
-      "itemName": "데몬 어벤져 윙",
-      "query": "데몬 어벤져 윙",
-      "listingLowestMeso": 254900000,
-      "listingLowestText": "2억 5490만",
-      "status": "ok",
-      "filter": "캐시",
-      "collectedAt": "2026-07-09T23:10:00+09:00"
-    },
-    {
-      "itemName": "레지스탕스 블래스터 헤어핀(여)",
-      "query": "레지스탕스 블래스터 헤어핀 (여)",
-      "aliases": [
-        "레지스탕스 블래스터 헤어핀 (여)"
-      ],
-      "listingLowestMeso": 375700000,
-      "listingLowestText": "3억 7570만",
-      "status": "ok",
-      "filter": "캐시",
-      "collectedAt": "2026-07-09T23:18:00+09:00"
-    },
-    {
-      "itemName": "레지스탕스 블래스터 슈트(남)",
-      "query": "레지스탕스 블래스터 슈트 (남)",
-      "aliases": [
-        "레지스탕스 블래스터 슈트 (남)"
-      ],
-      "listingLowestMeso": 133333332,
-      "listingLowestText": "1억 3333만 3332",
-      "status": "ok",
-      "filter": "캐시",
-      "collectedAt": "2026-07-09T23:18:00+09:00"
-    },
-    {
-      "itemName": "레지스탕스 블래스터 슈트(여)",
-      "query": "레지스탕스 블래스터 슈트 (여)",
-      "aliases": [
-        "레지스탕스 블래스터 슈트 (여)"
-      ],
-      "listingLowestMeso": 139888888,
-      "listingLowestText": "1억 3988만 8888",
-      "status": "ok",
-      "filter": "캐시",
-      "collectedAt": "2026-07-09T23:18:00+09:00"
-    },
-    {
-      "itemName": "레지스탕스 블래스터 슈즈(남)",
-      "query": "레지스탕스 블래스터 슈즈 (남)",
-      "aliases": [
-        "레지스탕스 블래스터 슈즈 (남)"
-      ],
-      "listingLowestMeso": 59999999,
-      "listingLowestText": "5999만 9999",
-      "status": "ok",
-      "filter": "캐시",
-      "collectedAt": "2026-07-09T23:18:00+09:00"
-    },
-    {
-      "itemName": "레지스탕스 블래스터 슈즈(여)",
-      "query": "레지스탕스 블래스터 슈즈 (여)",
-      "aliases": [
-        "레지스탕스 블래스터 슈즈 (여)"
-      ],
-      "listingLowestMeso": 49388888,
-      "listingLowestText": "4938만 8888",
-      "status": "ok",
-      "filter": "캐시",
-      "collectedAt": "2026-07-09T23:18:00+09:00"
-    },
-    {
-      "itemName": "레지스탕스 블래스터 건틀렛 리볼버",
-      "query": "레지스탕스 블래스터 건틀렛 리볼버",
-      "listingLowestMeso": 398900000,
-      "listingLowestText": "3억 9890만",
-      "status": "ok",
-      "filter": "캐시",
-      "collectedAt": "2026-07-09T23:18:00+09:00"
-    },
-    {
-      "itemName": "레지스탕스 배틀메이지 슈트(남)",
-      "query": "레지스탕스 배틀메이지 슈트 (남)",
-      "aliases": [
-        "레지스탕스 배틀메이지 슈트 (남)"
-      ],
-      "listingLowestMeso": 111111111,
-      "listingLowestText": "1억 1111만 1111",
-      "status": "ok",
-      "filter": "캐시",
-      "collectedAt": "2026-07-09T23:24:00+09:00"
-    },
-    {
-      "itemName": "레지스탕스 배틀메이지 슈트(여)",
-      "query": "레지스탕스 배틀메이지 슈트 (여)",
-      "aliases": [
-        "레지스탕스 배틀메이지 슈트 (여)"
-      ],
-      "listingLowestMeso": 98800000,
-      "listingLowestText": "9880만",
-      "status": "ok",
-      "filter": "캐시",
-      "collectedAt": "2026-07-09T23:24:00+09:00"
-    },
-    {
-      "itemName": "레지스탕스 배틀메이지 슈즈",
-      "query": "레지스탕스 배틀메이지 슈즈",
-      "listingLowestMeso": 33333333,
-      "listingLowestText": "3333만 3333",
-      "status": "ok",
-      "filter": "캐시",
-      "collectedAt": "2026-07-09T23:24:00+09:00"
-    },
-    {
-      "itemName": "레지스탕스 배틀메이지 스태프",
-      "query": "레지스탕스 배틀메이지 스태프",
-      "listingLowestMeso": 144444444,
-      "listingLowestText": "1억 4444만 4444",
-      "status": "ok",
-      "filter": "캐시",
-      "collectedAt": "2026-07-09T23:24:00+09:00"
-    },
-    {
-      "itemName": "레지스탕스 와일드헌터 헤어핀",
-      "query": "레지스탕스 와일드헌터 헤어핀",
-      "listingLowestMeso": 99999999,
-      "listingLowestText": "9999만 9999",
-      "status": "ok",
-      "filter": "캐시",
-      "collectedAt": "2026-07-09T23:31:00+09:00"
-    },
-    {
-      "itemName": "레지스탕스 와일드헌터 슈트(남)",
-      "query": "레지스탕스 와일드헌터 슈트 (남)",
-      "aliases": [
-        "레지스탕스 와일드헌터 슈트 (남)"
-      ],
-      "listingLowestMeso": 198888888,
-      "listingLowestText": "1억 9888만 8888",
-      "status": "ok",
-      "filter": "캐시",
-      "collectedAt": "2026-07-09T23:31:00+09:00"
-    },
-    {
-      "itemName": "레지스탕스 와일드헌터 슈즈",
-      "query": "레지스탕스 와일드헌터 슈즈",
-      "listingLowestMeso": 87888888,
-      "listingLowestText": "8788만 8888",
-      "status": "ok",
-      "filter": "캐시",
-      "collectedAt": "2026-07-09T23:31:00+09:00"
-    },
-    {
-      "itemName": "레지스탕스 와일드헌터 석궁",
-      "query": "레지스탕스 와일드헌터 석궁",
-      "listingLowestMeso": 198888888,
-      "listingLowestText": "1억 9888만 8888",
-      "status": "ok",
-      "filter": "캐시",
-      "collectedAt": "2026-07-09T23:31:00+09:00"
-    },
     {
       "itemName": "레지스탕스 제논 이어피스",
       "query": "레지스탕스 제논 이어피스",
@@ -7171,6 +6961,267 @@
       "aliases": [
         "데몬 슬레이어 슈트 (여)"
       ]
+    },
+    {
+      "itemName": "데몬 슬레이어 슈즈",
+      "query": "데몬 슬레이어 슈즈",
+      "listingLowestMeso": 78888888,
+      "listingLowestText": "7888만 8888",
+      "resultCount": 2,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 61,
+      "queueGroup": "packageRotation",
+      "collectedAt": "2026-07-13T15:48:46.731Z"
+    },
+    {
+      "itemName": "데몬 어벤져 머리띠(여)",
+      "query": "데몬 어벤져 머리띠 (여)",
+      "listingLowestMeso": 473900000,
+      "listingLowestText": "4억 7390만",
+      "resultCount": 6,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 62,
+      "queueGroup": "packageRotation",
+      "collectedAt": "2026-07-13T15:48:55.228Z",
+      "aliases": [
+        "데몬 어벤져 머리띠 (여)"
+      ]
+    },
+    {
+      "itemName": "데몬 어벤져 윙",
+      "query": "데몬 어벤져 윙",
+      "listingLowestMeso": 320000000,
+      "listingLowestText": "3억 2000만",
+      "resultCount": 9,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 63,
+      "queueGroup": "packageRotation",
+      "collectedAt": "2026-07-13T15:49:03.699Z"
+    },
+    {
+      "itemName": "데몬 어벤져 데스페라도",
+      "query": "데몬 어벤져 데스페라도",
+      "listingLowestMeso": 63940000,
+      "listingLowestText": "6394만",
+      "resultCount": 16,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 64,
+      "queueGroup": "packageRotation",
+      "collectedAt": "2026-07-13T15:49:12.176Z"
+    },
+    {
+      "itemName": "데몬 어벤져 슈트(여)",
+      "query": "데몬 어벤져 슈트 (여)",
+      "listingLowestMeso": 27998888,
+      "listingLowestText": "2799만 8888",
+      "resultCount": 10,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 65,
+      "queueGroup": "packageRotation",
+      "collectedAt": "2026-07-13T15:49:20.651Z",
+      "aliases": [
+        "데몬 어벤져 슈트 (여)"
+      ]
+    },
+    {
+      "itemName": "데몬 어벤져 슈즈",
+      "query": "데몬 어벤져 슈즈",
+      "listingLowestMeso": 14490086,
+      "listingLowestText": "1449만 86",
+      "resultCount": 6,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 66,
+      "queueGroup": "packageRotation",
+      "collectedAt": "2026-07-13T15:49:33.261Z"
+    },
+    {
+      "itemName": "레지스탕스 블래스터 건틀렛 리볼버",
+      "query": "레지스탕스 블래스터 건틀렛 리볼버",
+      "listingLowestMeso": 319800000,
+      "listingLowestText": "3억 1980만",
+      "resultCount": 5,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 67,
+      "queueGroup": "packageRotation",
+      "collectedAt": "2026-07-13T15:49:41.709Z"
+    },
+    {
+      "itemName": "레지스탕스 블래스터 헤어핀(여)",
+      "query": "레지스탕스 블래스터 헤어핀 (여)",
+      "listingLowestMeso": 375177777,
+      "listingLowestText": "3억 7517만 7777",
+      "resultCount": 3,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 68,
+      "queueGroup": "packageRotation",
+      "collectedAt": "2026-07-13T15:49:50.220Z",
+      "aliases": [
+        "레지스탕스 블래스터 헤어핀 (여)"
+      ]
+    },
+    {
+      "itemName": "레지스탕스 블래스터 슈트(여)",
+      "query": "레지스탕스 블래스터 슈트 (여)",
+      "listingLowestMeso": 119800000,
+      "listingLowestText": "1억 1980만",
+      "resultCount": 9,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 69,
+      "queueGroup": "packageRotation",
+      "collectedAt": "2026-07-13T15:49:58.734Z",
+      "aliases": [
+        "레지스탕스 블래스터 슈트 (여)"
+      ]
+    },
+    {
+      "itemName": "레지스탕스 블래스터 슈트(남)",
+      "query": "레지스탕스 블래스터 슈트 (남)",
+      "listingLowestMeso": 133333332,
+      "listingLowestText": "1억 3333만 3332",
+      "resultCount": 2,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 70,
+      "queueGroup": "packageRotation",
+      "collectedAt": "2026-07-13T15:50:07.206Z",
+      "aliases": [
+        "레지스탕스 블래스터 슈트 (남)"
+      ]
+    },
+    {
+      "itemName": "레지스탕스 블래스터 슈즈(남)",
+      "query": "레지스탕스 블래스터 슈즈 (남)",
+      "listingLowestMeso": 59999998,
+      "listingLowestText": "5999만 9998",
+      "resultCount": 1,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 71,
+      "queueGroup": "packageRotation",
+      "collectedAt": "2026-07-13T15:50:19.151Z",
+      "aliases": [
+        "레지스탕스 블래스터 슈즈 (남)"
+      ]
+    },
+    {
+      "itemName": "레지스탕스 블래스터 슈즈(여)",
+      "query": "레지스탕스 블래스터 슈즈 (여)",
+      "listingLowestMeso": 48300000,
+      "listingLowestText": "4830만",
+      "resultCount": 7,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 72,
+      "queueGroup": "packageRotation",
+      "collectedAt": "2026-07-13T15:50:27.945Z",
+      "aliases": [
+        "레지스탕스 블래스터 슈즈 (여)"
+      ]
+    },
+    {
+      "itemName": "레지스탕스 배틀메이지 스태프",
+      "query": "레지스탕스 배틀메이지 스태프",
+      "listingLowestMeso": 122222222,
+      "listingLowestText": "1억 2222만 2222",
+      "resultCount": 3,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 73,
+      "queueGroup": "packageRotation",
+      "collectedAt": "2026-07-13T15:50:36.126Z"
+    },
+    {
+      "itemName": "레지스탕스 배틀메이지 슈트(남)",
+      "query": "레지스탕스 배틀메이지 슈트 (남)",
+      "listingLowestMeso": 149455545,
+      "listingLowestText": "1억 4945만 5545",
+      "resultCount": 6,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 74,
+      "queueGroup": "packageRotation",
+      "collectedAt": "2026-07-13T15:50:43.908Z",
+      "aliases": [
+        "레지스탕스 배틀메이지 슈트 (남)"
+      ]
+    },
+    {
+      "itemName": "레지스탕스 배틀메이지 슈트(여)",
+      "query": "레지스탕스 배틀메이지 슈트 (여)",
+      "listingLowestMeso": 97950000,
+      "listingLowestText": "9795만",
+      "resultCount": 3,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 75,
+      "queueGroup": "packageRotation",
+      "collectedAt": "2026-07-13T15:50:56.825Z",
+      "aliases": [
+        "레지스탕스 배틀메이지 슈트 (여)"
+      ]
+    },
+    {
+      "itemName": "레지스탕스 배틀메이지 슈즈",
+      "query": "레지스탕스 배틀메이지 슈즈",
+      "listingLowestMeso": 33333333,
+      "listingLowestText": "3333만 3333",
+      "resultCount": 4,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 76,
+      "queueGroup": "packageRotation",
+      "collectedAt": "2026-07-13T15:51:14.435Z"
+    },
+    {
+      "itemName": "레지스탕스 와일드헌터 석궁",
+      "query": "레지스탕스 와일드헌터 석궁",
+      "listingLowestMeso": 699999888,
+      "listingLowestText": "6억 9999만 9888",
+      "resultCount": 2,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 78,
+      "queueGroup": "packageRotation",
+      "collectedAt": "2026-07-13T15:51:31.432Z"
+    },
+    {
+      "itemName": "레지스탕스 와일드헌터 슈즈",
+      "query": "레지스탕스 와일드헌터 슈즈",
+      "listingLowestMeso": 139999999,
+      "listingLowestText": "1억 3999만 9999",
+      "resultCount": 2,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 80,
+      "queueGroup": "packageRotation",
+      "collectedAt": "2026-07-13T15:51:48.425Z"
     }
   ],
   "skipped": [
@@ -7482,6 +7533,36 @@
       "manualFallbackPriceRetained": false
     },
     {
+      "itemName": "레지스탕스 와일드헌터 슈트(남)",
+      "query": "레지스탕스 와일드헌터 슈트 (남)",
+      "listingLowestMeso": 0,
+      "listingLowestText": "",
+      "resultCount": 0,
+      "status": "no_listing",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 77,
+      "queueGroup": "packageRotation",
+      "collectedAt": "2026-07-13T15:51:22.930Z",
+      "reason": "정확 후보 선택 후 필터 검색 결과 0건",
+      "manualFallbackPriceRetained": false
+    },
+    {
+      "itemName": "레지스탕스 와일드헌터 헤어핀",
+      "query": "레지스탕스 와일드헌터 헤어핀",
+      "listingLowestMeso": 0,
+      "listingLowestText": "",
+      "resultCount": 0,
+      "status": "no_listing",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 79,
+      "queueGroup": "packageRotation",
+      "collectedAt": "2026-07-13T15:51:39.920Z",
+      "reason": "정확 후보 선택 후 필터 검색 결과 0건",
+      "manualFallbackPriceRetained": false
+    },
+    {
       "itemName": "레지스탕스 배틀메이지 모자",
       "query": "레지스탕스 배틀메이지 모자",
       "status": "no_candidate",
@@ -7502,18 +7583,18 @@
       "collectedAt": "2026-07-13T15:47:33.170Z"
     }
   ],
-  "updatedAt": "2026-07-13T15:48:26.806Z",
+  "updatedAt": "2026-07-13T15:52:08.753Z",
   "lastSearchRun": {
     "date": "2026-07-14",
     "searchAccount": 1,
     "accountCharacter": "스카니아 / 헤성",
     "searchLimit": 100,
-    "usedSearches": 60,
-    "screenUsedSearches": 60,
-    "listingSearches": 60,
+    "usedSearches": 80,
+    "screenUsedSearches": 80,
+    "listingSearches": 80,
     "marketSearches": 0,
-    "validPrices": 56,
-    "noListingSearches": 4,
+    "validPrices": 74,
+    "noListingSearches": 6,
     "noCandidateChecks": 2,
     "duplicateSearches": 0,
     "manualFallbackPricesRetained": [
@@ -7523,10 +7604,10 @@
     "accountComplete": false,
     "priorityQueueComplete": true,
     "queueMode": "corrected_then_unsearched_then_sheet_deferred_then_direct_then_package_rotation",
-    "queueCursor": 62,
-    "queueRemaining": 526,
+    "queueCursor": 82,
+    "queueRemaining": 506,
     "priorityQueueRemaining": 0,
-    "nextItem": "데몬 슬레이어 슈즈",
+    "nextItem": "레지스탕스 제논 이어피스",
     "group": "packageRotation",
     "queueGroups": {
       "corrected": {
@@ -7560,7 +7641,7 @@
       "레지스탕스 배틀메이지 모자",
       "레지스탕스 메카닉 무기"
     ],
-    "checkpointAt": "2026-07-13T15:48:26.806Z",
+    "checkpointAt": "2026-07-13T15:52:08.753Z",
     "safetyRulesDocument": "maple-cash-value/docs/daily-auction-search-routine.md"
   },
   "marketHistoryUpdatedAt": "2026-07-12T15:02:19.494Z",
