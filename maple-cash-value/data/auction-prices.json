@@ -1,14 +1,14 @@
 {
   "version": 2,
   "world": "스카니아",
-  "generatedAt": "2026-07-13T14:14:24.334Z",
+  "generatedAt": "2026-07-13T15:40:05.570Z",
   "source": "manual-maple-auction-two-account",
   "policy": {
     "searchTab": "구매",
     "priceBasis": "listingLowestMeso",
     "candidateCheckBeforeSearch": true,
     "officialSearchLimit": 100,
-    "notes": "Account 2 completed 100 searches. Three corrected names now use user-confirmed manual prices; six corrected names are queued before remaining unseen items."
+    "notes": "July 14 account 1 refresh: corrected names, unseen primary components, sheet-deferred items, direct items, then package rotation."
   },
   "prices": [
     {
@@ -6769,6 +6769,253 @@
       "manualReason": "사용자 옥션 확인",
       "filter": "캐시",
       "collectedAt": "2026-07-13T14:14:24.334Z"
+    },
+    {
+      "itemName": "묵빛 갓",
+      "query": "묵빛 갓",
+      "listingLowestMeso": 55000000,
+      "listingLowestText": "5500만",
+      "resultCount": 7,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 1,
+      "queueGroup": "corrected",
+      "collectedAt": "2026-07-13T15:36:23.076Z"
+    },
+    {
+      "itemName": "묵빛 너울",
+      "query": "묵빛 너울",
+      "listingLowestMeso": 393990000,
+      "listingLowestText": "3억 9399만",
+      "resultCount": 7,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 2,
+      "queueGroup": "corrected",
+      "collectedAt": "2026-07-13T15:36:37.163Z"
+    },
+    {
+      "itemName": "바싹잉",
+      "query": "바싹잉",
+      "listingLowestMeso": 68888888,
+      "listingLowestText": "6888만 8888",
+      "resultCount": 6,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 3,
+      "queueGroup": "corrected",
+      "collectedAt": "2026-07-13T15:36:45.640Z"
+    },
+    {
+      "itemName": "으스스깽",
+      "query": "으스스깽",
+      "listingLowestMeso": 311111111,
+      "listingLowestText": "3억 1111만 1111",
+      "resultCount": 1,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 4,
+      "queueGroup": "corrected",
+      "collectedAt": "2026-07-13T15:36:54.104Z"
+    },
+    {
+      "itemName": "베티",
+      "query": "베티",
+      "listingLowestMeso": 222222222,
+      "listingLowestText": "2억 2222만 2222",
+      "resultCount": 1,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 5,
+      "queueGroup": "corrected",
+      "collectedAt": "2026-07-13T15:37:02.575Z"
+    },
+    {
+      "itemName": "민티",
+      "query": "민티",
+      "listingLowestMeso": 555555555,
+      "listingLowestText": "5억 5555만 5555",
+      "resultCount": 1,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 6,
+      "queueGroup": "corrected",
+      "collectedAt": "2026-07-13T15:37:18.752Z"
+    },
+    {
+      "itemName": "프렌즈 월드 키네시스 교복(남)",
+      "query": "프렌즈 월드 키네시스 교복 (남)",
+      "listingLowestMeso": 431999999,
+      "listingLowestText": "4억 3199만 9999",
+      "resultCount": 9,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 7,
+      "queueGroup": "unsearched",
+      "collectedAt": "2026-07-13T15:37:27.254Z"
+    },
+    {
+      "itemName": "프렌즈 월드 키네시스 교복(여)",
+      "query": "프렌즈 월드 키네시스 교복 (여)",
+      "listingLowestMeso": 449999999,
+      "listingLowestText": "4억 4999만 9999",
+      "resultCount": 3,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 8,
+      "queueGroup": "unsearched",
+      "collectedAt": "2026-07-13T15:37:35.753Z"
+    },
+    {
+      "itemName": "초월자 제로 알파 라즐리",
+      "query": "초월자 제로 알파 라즐리",
+      "listingLowestMeso": 499999999,
+      "listingLowestText": "4억 9999만 9999",
+      "resultCount": 11,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 9,
+      "queueGroup": "unsearched",
+      "collectedAt": "2026-07-13T15:37:44.246Z"
+    },
+    {
+      "itemName": "파멸의 검",
+      "query": "파멸의 검",
+      "listingLowestMeso": 77777777,
+      "listingLowestText": "7777만 7777",
+      "resultCount": 11,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 10,
+      "queueGroup": "unsearched",
+      "collectedAt": "2026-07-13T15:37:53.412Z"
+    },
+    {
+      "itemName": "트루 윌",
+      "query": "트루 윌",
+      "listingLowestMeso": 20000000,
+      "listingLowestText": "2000만",
+      "resultCount": 7,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 11,
+      "queueGroup": "unsearched",
+      "collectedAt": "2026-07-13T15:38:08.391Z"
+    },
+    {
+      "itemName": "파괴와 창조의 기사",
+      "query": "파괴와 창조의 기사",
+      "listingLowestMeso": 30000000,
+      "listingLowestText": "3000만",
+      "resultCount": 13,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 12,
+      "queueGroup": "unsearched",
+      "collectedAt": "2026-07-13T15:38:16.882Z"
+    },
+    {
+      "itemName": "화중신선(여)",
+      "query": "화중신선 (여)",
+      "listingLowestMeso": 89999999,
+      "listingLowestText": "8999만 9999",
+      "resultCount": 13,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 13,
+      "queueGroup": "unsearched",
+      "collectedAt": "2026-07-13T15:38:25.384Z"
+    },
+    {
+      "itemName": "큐티 펑크(여)",
+      "query": "큐티 펑크 (여)",
+      "listingLowestMeso": 43333000,
+      "listingLowestText": "4333만 3000",
+      "resultCount": 10,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 14,
+      "queueGroup": "unsearched",
+      "collectedAt": "2026-07-13T15:38:33.886Z"
+    },
+    {
+      "itemName": "희망의 별(여)",
+      "query": "희망의 별 (여)",
+      "listingLowestMeso": 399999988,
+      "listingLowestText": "3억 9999만 9988",
+      "resultCount": 2,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 16,
+      "queueGroup": "unsearched",
+      "collectedAt": "2026-07-13T15:38:55.380Z"
+    },
+    {
+      "itemName": "황금 별 구두(여)",
+      "query": "황금 별 구두 (여)",
+      "listingLowestMeso": 19999999,
+      "listingLowestText": "1999만 9999",
+      "resultCount": 4,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 17,
+      "queueGroup": "unsearched",
+      "collectedAt": "2026-07-13T15:39:03.861Z"
+    },
+    {
+      "itemName": "푸르른 믿음(남)",
+      "query": "푸르른 믿음 (남)",
+      "listingLowestMeso": 98000000,
+      "listingLowestText": "9800만",
+      "resultCount": 4,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 18,
+      "queueGroup": "unsearched",
+      "collectedAt": "2026-07-13T15:39:12.338Z"
+    },
+    {
+      "itemName": "푸르른 노래(여)",
+      "query": "푸르른 노래 (여)",
+      "listingLowestMeso": 50000000,
+      "listingLowestText": "5000만",
+      "resultCount": 7,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 19,
+      "queueGroup": "unsearched",
+      "collectedAt": "2026-07-13T15:39:20.836Z"
+    },
+    {
+      "itemName": "하늘 달토끼",
+      "query": "하늘 달토끼",
+      "listingLowestMeso": 178999990,
+      "listingLowestText": "1억 7899만 9990",
+      "resultCount": 8,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 20,
+      "queueGroup": "unsearched",
+      "collectedAt": "2026-07-13T15:39:29.327Z"
     }
   ],
   "skipped": [
@@ -7030,45 +7277,67 @@
       "searchIndex": 83,
       "collectedAt": "2026-07-13T14:03:44.255Z",
       "reason": "정확 후보 선택 후 필터 검색 결과 0건"
+    },
+    {
+      "itemName": "큐티 펑크 구두(여)",
+      "query": "큐티 펑크 구두 (여)",
+      "listingLowestMeso": 0,
+      "listingLowestText": "",
+      "resultCount": 0,
+      "status": "no_listing",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 15,
+      "queueGroup": "unsearched",
+      "collectedAt": "2026-07-13T15:38:42.385Z",
+      "reason": "정확 후보 선택 후 필터 검색 결과 0건"
     }
   ],
-  "updatedAt": "2026-07-13T14:14:24.334Z",
+  "updatedAt": "2026-07-13T15:40:05.570Z",
   "lastSearchRun": {
-    "date": "2026-07-13",
-    "searchAccount": 2,
-    "accountCharacter": "챌린저스 / 키랴키",
+    "date": "2026-07-14",
+    "searchAccount": 1,
+    "accountCharacter": "스카니아 / 헤성",
     "searchLimit": 100,
-    "usedSearches": 100,
-    "screenUsedSearches": 100,
-    "listingSearches": 100,
+    "usedSearches": 20,
+    "screenUsedSearches": 20,
+    "listingSearches": 20,
     "marketSearches": 0,
-    "validPrices": 96,
-    "noListingSearches": 4,
-    "noCandidateChecks": 9,
+    "validPrices": 19,
+    "noListingSearches": 1,
+    "noCandidateChecks": 0,
     "duplicateSearches": 0,
-    "accountComplete": true,
+    "accountComplete": false,
     "priorityQueueComplete": false,
-    "queueMode": "corrected_names_then_unsearched_then_sheet_deferred_last",
-    "queueCursor": 209,
-    "accountQueueCursor": 109,
-    "queueRemaining": 33,
-    "nextItem": "묵빛 갓",
-    "completedAt": "2026-07-13T14:08:44.788Z",
-    "manualNoCandidate": [],
-    "deferredSheetItems": [
-      "아니마 호영 흑운선",
-      "영웅 메르세데스 슈트(남)",
-      "영웅 메르세데스 듀얼보우건",
-      "데몬 어벤져 슈트(남)"
-    ],
-    "safetyRulesDocument": "maple-cash-value/docs/daily-auction-search-routine.md",
-    "unresolvedNoCandidates": 0,
-    "manualResolvedAfterRun": [
-      "문 트레벨러(남)",
-      "아니마 렌 백혜(남)",
-      "아니마 렌 백혜(여)"
-    ],
-    "correctedNamePendingSearch": [
+    "queueMode": "corrected_then_unsearched_then_sheet_deferred_then_direct_then_package_rotation",
+    "queueCursor": 20,
+    "queueRemaining": 568,
+    "priorityQueueRemaining": 36,
+    "nextItem": "해저 탐사냥",
+    "group": "unsearched",
+    "queueGroups": {
+      "corrected": {
+        "start": 0,
+        "end": 6
+      },
+      "unsearched": {
+        "start": 6,
+        "end": 29
+      },
+      "sheetDeferred": {
+        "start": 29,
+        "end": 33
+      },
+      "directRefresh": {
+        "start": 33,
+        "end": 56
+      },
+      "packageRotation": {
+        "start": 56,
+        "end": 588
+      }
+    },
+    "correctedNamesResolved": [
       "묵빛 갓",
       "묵빛 너울",
       "바싹잉",
@@ -7076,19 +7345,9 @@
       "베티",
       "민티"
     ],
-    "nameCorrectionsAfterRun": {
-      "문 트래블러(남)": "문 트레벨러(남)",
-      "아니마 렌 백해(남)": "아니마 렌 백혜(남)",
-      "아니마 렌 백해(여)": "아니마 렌 백혜(여)",
-      "북빛 갓": "묵빛 갓",
-      "북빛 너울": "묵빛 너울",
-      "버싸잉": "바싹잉",
-      "으스스깜": "으스스깽",
-      "베리": "베티",
-      "민트": "민티"
-    },
-    "effectivePricedItems": 99,
-    "postRunUpdatedAt": "2026-07-13T14:14:24.334Z"
+    "manualNoCandidate": [],
+    "checkpointAt": "2026-07-13T15:40:05.570Z",
+    "safetyRulesDocument": "maple-cash-value/docs/daily-auction-search-routine.md"
   },
   "marketHistoryUpdatedAt": "2026-07-12T15:02:19.494Z",
   "manualUpdatedAt": "2026-07-13T14:14:24.334Z"
