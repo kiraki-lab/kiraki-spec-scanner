@@ -1,7 +1,7 @@
 {
   "version": 3,
   "world": "스카니아",
-  "updatedAt": "2026-07-13T11:08:55.162Z",
+  "updatedAt": "2026-07-13T14:13:50.481Z",
   "settings": {
     "baseMpRate": 6990,
     "discountRate": 6,
@@ -1932,7 +1932,7 @@
           "seedMesoPrice": 0
         },
         {
-          "name": "아니마 렌 백해(남)",
+          "name": "아니마 렌 백혜(남)",
           "seedMesoPrice": 0
         },
         {
@@ -1957,7 +1957,7 @@
           "seedMesoPrice": 0
         },
         {
-          "name": "아니마 렌 백해(여)",
+          "name": "아니마 렌 백혜(여)",
           "seedMesoPrice": 0
         },
         {
@@ -3104,7 +3104,7 @@
       "mileageType": "none",
       "components": [
         {
-          "name": "북빛 갓",
+          "name": "묵빛 갓",
           "seedMesoPrice": 0
         },
         {
@@ -3133,7 +3133,7 @@
       "mileageType": "none",
       "components": [
         {
-          "name": "북빛 너울",
+          "name": "묵빛 너울",
           "seedMesoPrice": 0
         },
         {
@@ -3721,7 +3721,7 @@
           "seedMesoPrice": 0
         },
         {
-          "name": "문 트래블러(남)",
+          "name": "문 트레벨러(남)",
           "seedMesoPrice": 0
         },
         {
@@ -4589,7 +4589,7 @@
       "mileageType": "none",
       "components": [
         {
-          "name": "버싸잉",
+          "name": "바싹잉",
           "seedMesoPrice": 0
         },
         {
@@ -4803,7 +4803,7 @@
           "seedMesoPrice": 0
         },
         {
-          "name": "으스스깜",
+          "name": "으스스깽",
           "seedMesoPrice": 0
         },
         {
@@ -5048,11 +5048,11 @@
           "seedMesoPrice": 0
         },
         {
-          "name": "베리",
+          "name": "베티",
           "seedMesoPrice": 0
         },
         {
-          "name": "민트",
+          "name": "민티",
           "seedMesoPrice": 0
         }
       ],
