@@ -4210,6 +4210,17 @@
       "collectedAt": "2026-07-12T14:54:53.491Z"
     },
     {
+      "itemName": "혈맹의 반지",
+      "query": "혈맹의 반지",
+      "aliases": [],
+      "listingLowestMeso": 258000000,
+      "listingLowestText": "2억 5800만",
+      "status": "ok",
+      "source": "manual",
+      "filter": "캐시",
+      "collectedAt": "2026-07-13T11:08:55.162Z"
+    },
+    {
       "itemName": "찬란한 흉성 슈트(남)",
       "query": "찬란한 흉성 슈트 (남)",
       "aliases": [
@@ -5768,7 +5779,7 @@
       "collectedAt": "2026-07-12T15:34:05.970Z"
     }
   ],
-  "updatedAt": "2026-07-12T15:42:56.742Z",
+  "updatedAt": "2026-07-13T11:08:55.162Z",
   "lastSearchRun": {
     "date": "2026-07-13",
     "searchAccount": 1,
@@ -5795,5 +5806,5 @@
     "safetyRulesDocument": "maple-cash-value/docs/daily-auction-search-routine.md"
   },
   "marketHistoryUpdatedAt": "2026-07-12T15:02:19.494Z",
-  "manualUpdatedAt": "2026-07-12T14:54:53.491Z"
+  "manualUpdatedAt": "2026-07-13T11:08:55.162Z"
 }
