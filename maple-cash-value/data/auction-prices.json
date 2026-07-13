@@ -1,14 +1,14 @@
 {
   "version": 2,
   "world": "스카니아",
-  "generatedAt": "2026-07-13T15:40:05.570Z",
+  "generatedAt": "2026-07-13T15:44:21.760Z",
   "source": "manual-maple-auction-two-account",
   "policy": {
     "searchTab": "구매",
     "priceBasis": "listingLowestMeso",
     "candidateCheckBeforeSearch": true,
     "officialSearchLimit": 100,
-    "notes": "July 14 account 1 refresh: corrected names, unseen primary components, sheet-deferred items, direct items, then package rotation."
+    "notes": "July 14 account 1 refresh; manual fallback prices are retained when a current exact listing has zero results."
   },
   "prices": [
     {
@@ -1124,41 +1124,6 @@
       "collectedAt": "2026-07-11T20:01:55.235+09:00"
     },
     {
-      "itemName": "영웅 메르세데스 슈트(남)",
-      "query": "영웅 메르세데스 슈트 (남)",
-      "aliases": [
-        "영웅 메르세데스 슈트 (남)"
-      ],
-      "listingLowestMeso": 499000000,
-      "listingLowestText": "4억 9900만",
-      "resultCount": 3,
-      "status": "ok",
-      "filter": "캐시",
-      "searchAccount": 1,
-      "searchIndex": 42,
-      "collectedAt": "2026-07-11T20:01:55.235+09:00",
-      "marketHistoryStatus": "no_sales",
-      "marketHistoryNote": "시세 탭 체결 기록 없음",
-      "marketHistoryBasis": "시세 탭",
-      "marketHistoryCollectedAt": "2026-07-12T15:02:19.494Z"
-    },
-    {
-      "itemName": "영웅 메르세데스 듀얼보우건",
-      "query": "영웅 메르세데스 듀얼보우건",
-      "listingLowestMeso": 199999988,
-      "listingLowestText": "1억 9999만 9988",
-      "resultCount": 2,
-      "status": "ok",
-      "filter": "캐시",
-      "searchAccount": 1,
-      "searchIndex": 43,
-      "collectedAt": "2026-07-11T20:01:55.235+09:00",
-      "marketHistoryStatus": "listing_unconfirmed",
-      "marketHistoryNote": "현재 매물가 수준의 체결 기록 없음",
-      "marketHistoryBasis": "시세 탭",
-      "marketHistoryCollectedAt": "2026-07-12T15:02:19.494Z"
-    },
-    {
       "itemName": "영웅 메르세데스 슈즈(남)",
       "query": "영웅 메르세데스 슈즈 (남)",
       "aliases": [
@@ -1985,52 +1950,6 @@
       "searchAccount": 2,
       "searchIndex": 8,
       "collectedAt": "2026-07-11T21:42:41.901+09:00"
-    },
-    {
-      "itemName": "잠재능력 전승스크롤",
-      "query": "잠재능력 전승 스크롤",
-      "aliases": [
-        "잠재능력 전승 스크롤"
-      ],
-      "listingLowestMeso": 4180000000,
-      "listingLowestText": "41억 8000만",
-      "resultCount": 33,
-      "status": "ok",
-      "filter": "캐시",
-      "searchAccount": 2,
-      "searchIndex": 9,
-      "collectedAt": "2026-07-11T21:44:18.020+09:00"
-    },
-    {
-      "itemName": "블레어 살롱 헤어 쿠폰",
-      "query": "블레어 살롱 헤어 쿠폰",
-      "listingLowestMeso": 1271111110,
-      "listingLowestText": "12억 7111만 1110",
-      "resultCount": 49,
-      "status": "ok",
-      "filter": "캐시",
-      "searchAccount": 1,
-      "searchIndex": 20,
-      "collectedAt": "2026-07-12T11:01:10.446+09:00"
-    },
-    {
-      "itemName": "데몬 어벤져 슈트(남)",
-      "query": "데몬 어벤져 슈트 (남)",
-      "aliases": [
-        "데몬 어벤져 슈트 (남)"
-      ],
-      "listingLowestMeso": 599999999,
-      "listingLowestText": "5억 9999만 9999",
-      "resultCount": 1,
-      "status": "ok",
-      "filter": "캐시",
-      "searchAccount": 2,
-      "searchIndex": 11,
-      "collectedAt": "2026-07-11T21:44:18.020+09:00",
-      "marketHistoryStatus": "no_sales",
-      "marketHistoryNote": "시세 탭 체결 기록 없음",
-      "marketHistoryBasis": "시세 탭",
-      "marketHistoryCollectedAt": "2026-07-12T15:02:19.494Z"
     },
     {
       "itemName": "기사단장 미하일 아머",
@@ -3602,22 +3521,6 @@
       "status": "ok"
     },
     {
-      "itemName": "아니마 호영 흑운선",
-      "query": "아니마 호영 흑운선",
-      "filter": "캐시",
-      "searchAccount": 2,
-      "searchIndex": 54,
-      "collectedAt": "2026-07-12T15:01:47.923+09:00",
-      "listingLowestMeso": 599900000,
-      "listingLowestText": "5억 9990만",
-      "resultCount": 2,
-      "status": "ok",
-      "marketHistoryMaxMeso": 400000000,
-      "marketHistoryMaxText": "4억",
-      "marketHistoryBasis": "시세 탭 체결 상단",
-      "marketHistoryCollectedAt": "2026-07-12T14:43:58.209Z"
-    },
-    {
       "itemName": "프렌즈 월드 키네시스 신발",
       "query": "프렌즈 월드 키네시스 신발",
       "filter": "캐시",
@@ -4148,20 +4051,10 @@
       "status": "ok",
       "source": "manual",
       "filter": "캐시",
-      "collectedAt": "2026-07-12T14:54:53.491Z"
-    },
-    {
-      "itemName": "추가옵션 전승 스크롤",
-      "query": "추가옵션 전승 스크롤",
-      "aliases": [
-        "추가옵션 전승스크롤"
-      ],
-      "listingLowestMeso": 2242000000,
-      "listingLowestText": "22억 4200만",
-      "status": "ok",
-      "source": "manual",
-      "filter": "캐시",
-      "collectedAt": "2026-07-12T14:54:53.491Z"
+      "collectedAt": "2026-07-12T14:54:53.491Z",
+      "latestListingStatus": "no_listing",
+      "latestListingResultCount": 0,
+      "lastListingCheckedAt": "2026-07-13T15:43:41.225Z"
     },
     {
       "itemName": "커스텀 믹스염색 쿠폰",
@@ -4174,18 +4067,10 @@
       "status": "ok",
       "source": "manual",
       "filter": "캐시",
-      "collectedAt": "2026-07-12T14:54:53.491Z"
-    },
-    {
-      "itemName": "커스텀 믹스 컬러렌즈 쿠폰",
-      "query": "커스텀 믹스 컬러렌즈 쿠폰",
-      "aliases": [],
-      "listingLowestMeso": 1000000000,
-      "listingLowestText": "10억",
-      "status": "ok",
-      "source": "manual",
-      "filter": "캐시",
-      "collectedAt": "2026-07-12T14:54:53.491Z"
+      "collectedAt": "2026-07-12T14:54:53.491Z",
+      "latestListingStatus": "no_listing",
+      "latestListingResultCount": 0,
+      "lastListingCheckedAt": "2026-07-13T15:43:07.235Z"
     },
     {
       "itemName": "컬러링 프리즘",
@@ -4193,17 +4078,6 @@
       "aliases": [],
       "listingLowestMeso": 230000000,
       "listingLowestText": "2억 3000만",
-      "status": "ok",
-      "source": "manual",
-      "filter": "캐시",
-      "collectedAt": "2026-07-12T14:54:53.491Z"
-    },
-    {
-      "itemName": "마네킹",
-      "query": "마네킹",
-      "aliases": [],
-      "listingLowestMeso": 860000000,
-      "listingLowestText": "8억 6000만",
       "status": "ok",
       "source": "manual",
       "filter": "캐시",
@@ -7016,6 +6890,252 @@
       "searchIndex": 20,
       "queueGroup": "unsearched",
       "collectedAt": "2026-07-13T15:39:29.327Z"
+    },
+    {
+      "itemName": "해저 탐사냥",
+      "query": "해저 탐사냥",
+      "listingLowestMeso": 77000000,
+      "listingLowestText": "7700만",
+      "resultCount": 9,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 21,
+      "queueGroup": "unsearched",
+      "collectedAt": "2026-07-13T15:40:34.435Z"
+    },
+    {
+      "itemName": "하얀 달토끼",
+      "query": "하얀 달토끼",
+      "listingLowestMeso": 105000000,
+      "listingLowestText": "1억 500만",
+      "resultCount": 11,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 22,
+      "queueGroup": "unsearched",
+      "collectedAt": "2026-07-13T15:40:45.157Z"
+    },
+    {
+      "itemName": "축제의 꽃(여)",
+      "query": "축제의 꽃 (여)",
+      "listingLowestMeso": 103000000,
+      "listingLowestText": "1억 300만",
+      "resultCount": 23,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 23,
+      "queueGroup": "unsearched",
+      "collectedAt": "2026-07-13T15:40:53.658Z"
+    },
+    {
+      "itemName": "코어 젬젬이",
+      "query": "코어 젬젬이",
+      "listingLowestMeso": 144444444,
+      "listingLowestText": "1억 4444만 4444",
+      "resultCount": 4,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 24,
+      "queueGroup": "unsearched",
+      "collectedAt": "2026-07-13T15:41:02.141Z"
+    },
+    {
+      "itemName": "탔다잉",
+      "query": "탔다잉",
+      "listingLowestMeso": 73333333,
+      "listingLowestText": "7333만 3333",
+      "resultCount": 7,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 25,
+      "queueGroup": "unsearched",
+      "collectedAt": "2026-07-13T15:41:10.623Z"
+    },
+    {
+      "itemName": "토리",
+      "query": "토리",
+      "listingLowestMeso": 77777777,
+      "listingLowestText": "7777만 7777",
+      "resultCount": 6,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 26,
+      "queueGroup": "unsearched",
+      "collectedAt": "2026-07-13T15:41:22.893Z"
+    },
+    {
+      "itemName": "초코",
+      "query": "초코",
+      "listingLowestMeso": 99995555,
+      "listingLowestText": "9999만 5555",
+      "resultCount": 4,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 27,
+      "queueGroup": "unsearched",
+      "collectedAt": "2026-07-13T15:41:31.397Z"
+    },
+    {
+      "itemName": "팬케오리",
+      "query": "팬케오리",
+      "listingLowestMeso": 222222222,
+      "listingLowestText": "2억 2222만 2222",
+      "resultCount": 1,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 28,
+      "queueGroup": "unsearched",
+      "collectedAt": "2026-07-13T15:41:39.877Z"
+    },
+    {
+      "itemName": "토미",
+      "query": "토미",
+      "listingLowestMeso": 150000000,
+      "listingLowestText": "1억 5000만",
+      "resultCount": 5,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 29,
+      "queueGroup": "unsearched",
+      "collectedAt": "2026-07-13T15:41:48.354Z"
+    },
+    {
+      "itemName": "아니마 호영 흑운선",
+      "query": "아니마 호영 흑운선",
+      "listingLowestMeso": 599999999,
+      "listingLowestText": "5억 9999만 9999",
+      "resultCount": 2,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 30,
+      "queueGroup": "sheetDeferred",
+      "collectedAt": "2026-07-13T15:41:56.843Z"
+    },
+    {
+      "itemName": "영웅 메르세데스 슈트(남)",
+      "query": "영웅 메르세데스 슈트 (남)",
+      "listingLowestMeso": 495554555,
+      "listingLowestText": "4억 9555만 4555",
+      "resultCount": 5,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 31,
+      "queueGroup": "sheetDeferred",
+      "collectedAt": "2026-07-13T15:42:10.393Z",
+      "aliases": [
+        "영웅 메르세데스 슈트 (남)"
+      ]
+    },
+    {
+      "itemName": "영웅 메르세데스 듀얼보우건",
+      "query": "영웅 메르세데스 듀얼보우건",
+      "listingLowestMeso": 188888888,
+      "listingLowestText": "1억 8888만 8888",
+      "resultCount": 8,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 32,
+      "queueGroup": "sheetDeferred",
+      "collectedAt": "2026-07-13T15:42:18.855Z"
+    },
+    {
+      "itemName": "데몬 어벤져 슈트(남)",
+      "query": "데몬 어벤져 슈트 (남)",
+      "listingLowestMeso": 390000000,
+      "listingLowestText": "3억 9000만",
+      "resultCount": 2,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 33,
+      "queueGroup": "sheetDeferred",
+      "collectedAt": "2026-07-13T15:42:27.345Z",
+      "aliases": [
+        "데몬 어벤져 슈트 (남)"
+      ]
+    },
+    {
+      "itemName": "잠재능력 전승스크롤",
+      "query": "잠재능력 전승 스크롤",
+      "listingLowestMeso": 4100000000,
+      "listingLowestText": "41억",
+      "resultCount": 13,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 34,
+      "queueGroup": "directRefresh",
+      "collectedAt": "2026-07-13T15:42:35.826Z",
+      "aliases": [
+        "잠재능력 전승 스크롤"
+      ]
+    },
+    {
+      "itemName": "추가옵션 전승 스크롤",
+      "query": "추가옵션 전승 스크롤",
+      "listingLowestMeso": 2100000000,
+      "listingLowestText": "21억",
+      "resultCount": 39,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 35,
+      "queueGroup": "directRefresh",
+      "collectedAt": "2026-07-13T15:42:44.342Z",
+      "aliases": [
+        "추가옵션 전승스크롤"
+      ]
+    },
+    {
+      "itemName": "블레어 살롱 헤어 쿠폰",
+      "query": "블레어 살롱 헤어 쿠폰",
+      "listingLowestMeso": 1300000000,
+      "listingLowestText": "13억",
+      "resultCount": 30,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 37,
+      "queueGroup": "directRefresh",
+      "collectedAt": "2026-07-13T15:43:15.725Z"
+    },
+    {
+      "itemName": "커스텀 믹스 컬러렌즈 쿠폰",
+      "query": "커스텀 믹스 컬러렌즈 쿠폰",
+      "listingLowestMeso": 800000000,
+      "listingLowestText": "8억",
+      "resultCount": 4,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 38,
+      "queueGroup": "directRefresh",
+      "collectedAt": "2026-07-13T15:43:24.244Z"
+    },
+    {
+      "itemName": "마네킹",
+      "query": "마네킹",
+      "listingLowestMeso": 929999998,
+      "listingLowestText": "9억 2999만 9998",
+      "resultCount": 5,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 39,
+      "queueGroup": "directRefresh",
+      "collectedAt": "2026-07-13T15:43:32.719Z"
     }
   ],
   "skipped": [
@@ -7290,31 +7410,66 @@
       "searchIndex": 15,
       "queueGroup": "unsearched",
       "collectedAt": "2026-07-13T15:38:42.385Z",
-      "reason": "정확 후보 선택 후 필터 검색 결과 0건"
+      "reason": "정확 후보 선택 후 필터 검색 결과 0건",
+      "manualFallbackPriceRetained": false
+    },
+    {
+      "itemName": "커스텀 믹스염색 쿠폰",
+      "query": "커스텀 믹스염색 쿠폰",
+      "listingLowestMeso": 0,
+      "listingLowestText": "",
+      "resultCount": 0,
+      "status": "no_listing",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 36,
+      "queueGroup": "directRefresh",
+      "collectedAt": "2026-07-13T15:43:07.235Z",
+      "reason": "정확 후보 검색 결과 0건; 기존 사용자 수동가 유지",
+      "manualFallbackPriceRetained": true
+    },
+    {
+      "itemName": "성별 변경 쿠폰",
+      "query": "성별 변경 쿠폰",
+      "listingLowestMeso": 0,
+      "listingLowestText": "",
+      "resultCount": 0,
+      "status": "no_listing",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "searchIndex": 40,
+      "queueGroup": "directRefresh",
+      "collectedAt": "2026-07-13T15:43:41.225Z",
+      "reason": "정확 후보 검색 결과 0건; 기존 사용자 수동가 유지",
+      "manualFallbackPriceRetained": true
     }
   ],
-  "updatedAt": "2026-07-13T15:40:05.570Z",
+  "updatedAt": "2026-07-13T15:44:21.760Z",
   "lastSearchRun": {
     "date": "2026-07-14",
     "searchAccount": 1,
     "accountCharacter": "스카니아 / 헤성",
     "searchLimit": 100,
-    "usedSearches": 20,
-    "screenUsedSearches": 20,
-    "listingSearches": 20,
+    "usedSearches": 40,
+    "screenUsedSearches": 40,
+    "listingSearches": 40,
     "marketSearches": 0,
-    "validPrices": 19,
-    "noListingSearches": 1,
+    "validPrices": 37,
+    "noListingSearches": 3,
     "noCandidateChecks": 0,
     "duplicateSearches": 0,
+    "manualFallbackPricesRetained": [
+      "커스텀 믹스염색 쿠폰",
+      "성별 변경 쿠폰"
+    ],
     "accountComplete": false,
     "priorityQueueComplete": false,
     "queueMode": "corrected_then_unsearched_then_sheet_deferred_then_direct_then_package_rotation",
-    "queueCursor": 20,
-    "queueRemaining": 568,
-    "priorityQueueRemaining": 36,
-    "nextItem": "해저 탐사냥",
-    "group": "unsearched",
+    "queueCursor": 40,
+    "queueRemaining": 548,
+    "priorityQueueRemaining": 16,
+    "nextItem": "혈맹의 반지",
+    "group": "directRefresh",
     "queueGroups": {
       "corrected": {
         "start": 0,
@@ -7346,7 +7501,7 @@
       "민티"
     ],
     "manualNoCandidate": [],
-    "checkpointAt": "2026-07-13T15:40:05.570Z",
+    "checkpointAt": "2026-07-13T15:44:21.760Z",
     "safetyRulesDocument": "maple-cash-value/docs/daily-auction-search-routine.md"
   },
   "marketHistoryUpdatedAt": "2026-07-12T15:02:19.494Z",
