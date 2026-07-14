@@ -620,6 +620,10 @@ function isPackageItem(item) {
   return !item.referenceOnly && isPackageCategory(categoryFor(item));
 }
 
+function isRankEligible(item) {
+  return !item.referenceOnly && item.listingPrice?.source !== 'pending';
+}
+
 function syncPackageToggle() {
   const toggle = $('#package-filter-toggle');
   const status = $('#package-filter-state');
@@ -838,6 +842,7 @@ function rowIdentity(item) {
 function compareRankRows(a, b) {
   if (Boolean(a.referenceOnly) !== Boolean(b.referenceOnly)) return a.referenceOnly ? 1 : -1;
   if (a.referenceOnly) return b.referenceMesoPerThousand - a.referenceMesoPerThousand;
+  if (isRankEligible(a) !== isRankEligible(b)) return isRankEligible(a) ? -1 : 1;
   return a.listingEfficiency - b.listingEfficiency;
 }
 
@@ -845,7 +850,7 @@ function createRankMap(rows) {
   const ranks = new Map();
   let rank = 0;
   rows.forEach(item => {
-    if (!item.referenceOnly) ranks.set(rowIdentity(item), ++rank);
+    if (isRankEligible(item)) ranks.set(rowIdentity(item), ++rank);
   });
   return ranks;
 }
@@ -887,7 +892,7 @@ function render() {
 
   const filtered = filteredRows(allRows);
   const rows = stableDisplayRows(filtered);
-  const rankedVisibleSales = filtered.filter(item => !item.referenceOnly).sort(compareRankRows);
+  const rankedVisibleSales = filtered.filter(isRankEligible).sort(compareRankRows);
   const saleRows = rows.filter(item => !item.referenceOnly);
   const referenceCount = rows.length - saleRows.length;
   const visibleSaleCatalog = filteredSaleCatalog();
@@ -995,9 +1000,12 @@ function renderTable(rows, rankByKey = new Map(), rankChanges = new Map()) {
       : rankDelta < 0
         ? `<small class="rank-change down">↓${Math.abs(rankDelta)}</small>`
         : '';
+    const rankExcluded = !isReference && !isRankEligible(item);
     const rank = isReference
       ? '<span class="source-pill seed">참고</span>'
-      : `<span class="rank-cell"><span class="rank">${rankNumber}</span>${rankChange}</span>`;
+      : rankExcluded
+        ? '<span class="source-pill pending">체결 제외</span>'
+        : `<span class="rank-cell"><span class="rank">${rankNumber}</span>${rankChange}</span>`;
     const turnoverWarning = !isReference && isPackageItem(item)
       ? '<span class="turnover-pill" title="패키지는 판매까지 시간이 걸릴 수 있습니다." aria-label="회전율 주의">회전율 주의</span>'
       : '';
@@ -1018,7 +1026,9 @@ function renderTable(rows, rankByKey = new Map(), rankChanges = new Map()) {
         : renderInlinePriceEditor(item.name, item.listingPrice);
     const result = isReference
       ? `<span class="eff-value">${formatReferenceMeso(item.referenceMesoPerThousand)}</span><span class="price-meta">1,000 마일리지당 절약</span>`
-      : `<span class="eff-value">${formatWon(item.listingEfficiency)}</span><span class="price-meta">${item.listingPrice?.source === 'pending' ? '검증 합산 기준' : '1억당 현금'}</span>`;
+      : rankExcluded
+        ? '<span class="eff-value">제외</span><span class="price-meta">체결가 확인 전</span>'
+        : `<span class="eff-value">${formatWon(item.listingEfficiency)}</span><span class="price-meta">1억당 현금</span>`;
     const rowClass = [
       isReference ? 'reference-row' : '',
       isPackageItem(item) ? 'package-row' : '',
