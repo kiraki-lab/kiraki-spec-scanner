@@ -149,6 +149,26 @@ function formatDate(value) {
   return `${parts.month}.${parts.day} ${parts.hour}:${parts.minute}`;
 }
 
+function formatRefreshDate(value) {
+  if (!value) return '-';
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return String(value);
+  const parts = Object.fromEntries(
+    new Intl.DateTimeFormat('ko-KR', {
+      timeZone: 'Asia/Seoul',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hourCycle: 'h23'
+    }).formatToParts(date)
+      .filter(part => part.type !== 'literal')
+      .map(part => [part.type, part.value])
+  );
+  return `${parts.month}.${parts.day} ${parts.hour}:${parts.minute}:${parts.second}`;
+}
+
 function formatMeso(value) {
   const meso = Number(value || 0);
   if (!meso) return '-';
@@ -370,7 +390,9 @@ async function loadData() {
     state.items = [...state.baseItems];
     loadLocalData();
     state.metadata.itemsUpdatedAt = itemsDoc.updatedAt;
-    state.metadata.auctionUpdatedAt = auctionDoc.generatedAt || auctionDoc.updatedAt;
+    state.metadata.auctionUpdatedAt = auctionDoc.lastSearchRun?.completedAt
+      || auctionDoc.updatedAt
+      || auctionDoc.generatedAt;
     state.metadata.saleItemsUpdatedAt = saleDoc.generatedAt;
     state.metadata.world = auctionDoc.world || saleDoc.world || itemsDoc.world || '스카니아';
     state.auctionRows = normalizeAuctionRows(auctionDoc.prices);
@@ -911,7 +933,8 @@ function render() {
   $('#rank-mode-label').textContent = '시세 우선 적용가';
   $('#row-count').textContent = referenceCount ? `${saleRows.length}개 + 참고 ${referenceCount}개` : `${saleRows.length}개`;
   $('#sale-item-count').textContent = `${rows.length}개`;
-  $('#auction-updated').textContent = formatDate(state.localAuctionRows.length ? state.localDataUpdatedAt : state.metadata.auctionUpdatedAt);
+  const auctionUpdatedAt = state.localAuctionRows.length ? state.localDataUpdatedAt : state.metadata.auctionUpdatedAt;
+  $('#auction-updated').textContent = formatRefreshDate(auctionUpdatedAt);
   $('#best-efficiency').textContent = rankedVisibleSales.length ? formatWon(rankedVisibleSales[0].listingEfficiency) : '-';
   renderNotices();
   renderSaleItems(visibleSaleCatalog);
