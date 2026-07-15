@@ -1,7 +1,7 @@
 {
   "version": 2,
   "world": "스카니아",
-  "generatedAt": "2026-07-15T15:51:13.053Z",
+  "generatedAt": "2026-07-15T16:01:13.029Z",
   "source": "manual-maple-auction-two-account",
   "policy": {
     "searchTab": "구매",
@@ -45,7 +45,7 @@
       "searchIndex": 28,
       "queueGroup": "packageDeferred",
       "collectedAt": "2026-07-15T15:45:39.952Z",
-      "updatedAt": "2026-07-15T15:51:13.053Z"
+      "updatedAt": "2026-07-15T16:01:13.029Z"
     },
     {
       "itemName": "서바이버 워커",
@@ -59,7 +59,7 @@
       "searchIndex": 29,
       "queueGroup": "packageDeferred",
       "collectedAt": "2026-07-15T15:45:53.481Z",
-      "updatedAt": "2026-07-15T15:51:13.053Z"
+      "updatedAt": "2026-07-15T16:01:13.029Z"
     },
     {
       "itemName": "서바이버 뱅글",
@@ -73,7 +73,7 @@
       "searchIndex": 31,
       "queueGroup": "packageDeferred",
       "collectedAt": "2026-07-15T15:46:10.551Z",
-      "updatedAt": "2026-07-15T15:51:13.053Z"
+      "updatedAt": "2026-07-15T16:01:13.029Z"
     },
     {
       "itemName": "잠식의 흔적",
@@ -87,7 +87,7 @@
       "searchIndex": 32,
       "queueGroup": "packageDeferred",
       "collectedAt": "2026-07-15T15:46:19.041Z",
-      "updatedAt": "2026-07-15T15:51:13.053Z"
+      "updatedAt": "2026-07-15T16:01:13.029Z"
     },
     {
       "itemName": "불멸의 걸음",
@@ -101,7 +101,7 @@
       "searchIndex": 33,
       "queueGroup": "packageDeferred",
       "collectedAt": "2026-07-15T15:46:48.782Z",
-      "updatedAt": "2026-07-15T15:51:13.053Z"
+      "updatedAt": "2026-07-15T16:01:13.029Z"
     },
     {
       "itemName": "짊어지는 악몽",
@@ -115,7 +115,7 @@
       "searchIndex": 34,
       "queueGroup": "packageDeferred",
       "collectedAt": "2026-07-15T15:46:56.117Z",
-      "updatedAt": "2026-07-15T15:51:13.053Z"
+      "updatedAt": "2026-07-15T16:01:13.029Z"
     },
     {
       "itemName": "동방흑태도",
@@ -129,7 +129,7 @@
       "searchIndex": 35,
       "queueGroup": "packageDeferred",
       "collectedAt": "2026-07-15T15:47:04.554Z",
-      "updatedAt": "2026-07-15T15:51:13.053Z"
+      "updatedAt": "2026-07-15T16:01:13.029Z"
     },
     {
       "itemName": "도원향",
@@ -143,7 +143,7 @@
       "searchIndex": 37,
       "queueGroup": "packageDeferred",
       "collectedAt": "2026-07-15T15:47:37.188Z",
-      "updatedAt": "2026-07-15T15:51:13.053Z"
+      "updatedAt": "2026-07-15T16:01:13.029Z"
     },
     {
       "itemName": "천년의 약속",
@@ -157,7 +157,7 @@
       "searchIndex": 38,
       "queueGroup": "packageDeferred",
       "collectedAt": "2026-07-15T15:47:45.670Z",
-      "updatedAt": "2026-07-15T15:51:13.053Z"
+      "updatedAt": "2026-07-15T16:01:13.029Z"
     },
     {
       "itemName": "별님 고깔 모자",
@@ -186,7 +186,7 @@
       "searchIndex": 40,
       "queueGroup": "packageDeferred",
       "collectedAt": "2026-07-15T15:48:37.322Z",
-      "updatedAt": "2026-07-15T15:51:13.053Z"
+      "updatedAt": "2026-07-15T16:01:13.029Z"
     },
     {
       "itemName": "선물이 좋아",
@@ -200,7 +200,7 @@
       "searchIndex": 41,
       "queueGroup": "packageDeferred",
       "collectedAt": "2026-07-15T15:48:46.022Z",
-      "updatedAt": "2026-07-15T15:51:13.053Z"
+      "updatedAt": "2026-07-15T16:01:13.029Z"
     },
     {
       "itemName": "팡팡 생일폭죽",
@@ -214,7 +214,7 @@
       "searchIndex": 42,
       "queueGroup": "packageDeferred",
       "collectedAt": "2026-07-15T15:48:54.545Z",
-      "updatedAt": "2026-07-15T15:51:13.053Z"
+      "updatedAt": "2026-07-15T16:01:13.029Z"
     },
     {
       "itemName": "마법세계와 로그인",
@@ -228,7 +228,7 @@
       "searchIndex": 44,
       "queueGroup": "packageDeferred",
       "collectedAt": "2026-07-15T15:49:34.820Z",
-      "updatedAt": "2026-07-15T15:51:13.053Z"
+      "updatedAt": "2026-07-15T16:01:13.029Z"
     },
     {
       "itemName": "하트달랑 빗자루",
@@ -242,7 +242,7 @@
       "searchIndex": 45,
       "queueGroup": "packageDeferred",
       "collectedAt": "2026-07-15T15:49:43.467Z",
-      "updatedAt": "2026-07-15T15:51:13.053Z"
+      "updatedAt": "2026-07-15T16:01:13.029Z"
     },
     {
       "itemName": "별빛 그림자",
@@ -256,7 +256,7 @@
       "searchIndex": 47,
       "queueGroup": "packageDeferred",
       "collectedAt": "2026-07-15T15:50:11.427Z",
-      "updatedAt": "2026-07-15T15:51:13.053Z"
+      "updatedAt": "2026-07-15T16:01:13.029Z"
     },
     {
       "itemName": "빛의 연회",
@@ -270,63 +270,63 @@
       "searchIndex": 48,
       "queueGroup": "packageDeferred",
       "collectedAt": "2026-07-15T15:50:31.115Z",
-      "updatedAt": "2026-07-15T15:51:13.053Z"
+      "updatedAt": "2026-07-15T16:01:13.029Z"
     },
     {
       "itemName": "성야의 단죄자",
       "query": "성야의 단죄자",
       "listingLowestMeso": 74000000,
       "listingLowestText": "7400만",
-      "resultCount": 16,
+      "resultCount": 15,
       "status": "ok",
       "filter": "캐시",
-      "searchAccount": 1,
-      "searchIndex": 17,
-      "collectedAt": "2026-07-15T14:10:35.336Z",
-      "globalSearchIndex": 22,
-      "queueGroup": "packageRotation"
+      "searchAccount": 2,
+      "searchIndex": 49,
+      "queueGroup": "packageDeferred",
+      "collectedAt": "2026-07-15T15:51:48.590Z",
+      "updatedAt": "2026-07-15T16:01:13.029Z"
     },
     {
       "itemName": "반가운 손님",
       "query": "반가운 손님",
-      "listingLowestMeso": 38888888,
-      "listingLowestText": "3888만 8888",
-      "resultCount": 24,
+      "listingLowestMeso": 38080000,
+      "listingLowestText": "3808만",
+      "resultCount": 26,
       "status": "ok",
       "filter": "캐시",
-      "searchAccount": 1,
-      "searchIndex": 18,
-      "collectedAt": "2026-07-15T14:10:41.472Z",
-      "globalSearchIndex": 23,
-      "queueGroup": "packageRotation"
+      "searchAccount": 2,
+      "searchIndex": 51,
+      "queueGroup": "packageDeferred",
+      "collectedAt": "2026-07-15T15:52:45.828Z",
+      "updatedAt": "2026-07-15T16:01:13.029Z"
     },
     {
       "itemName": "매화도",
       "query": "매화도",
-      "listingLowestMeso": 14444442,
-      "listingLowestText": "1444만 4442",
-      "resultCount": 12,
+      "listingLowestMeso": 14300000,
+      "listingLowestText": "1430만",
+      "resultCount": 16,
       "status": "ok",
       "filter": "캐시",
-      "searchAccount": 1,
-      "searchIndex": 19,
-      "collectedAt": "2026-07-15T14:10:47.597Z",
-      "globalSearchIndex": 24,
-      "queueGroup": "packageRotation"
+      "searchAccount": 2,
+      "searchIndex": 52,
+      "queueGroup": "packageDeferred",
+      "collectedAt": "2026-07-15T15:52:54.517Z",
+      "updatedAt": "2026-07-15T16:01:13.029Z"
     },
     {
       "itemName": "올곧은 마음",
       "query": "올곧은 마음",
-      "listingLowestMeso": 125000000,
-      "listingLowestText": "1억 2500만",
-      "resultCount": 7,
+      "listingLowestMeso": 153000000,
+      "listingLowestText": "1억 5300만",
+      "resultCount": 10,
       "status": "ok",
       "filter": "캐시",
-      "searchAccount": 1,
-      "searchIndex": 20,
-      "collectedAt": "2026-07-15T14:10:53.707Z",
-      "globalSearchIndex": 25,
-      "queueGroup": "packageRotation"
+      "searchAccount": 2,
+      "searchIndex": 53,
+      "queueGroup": "packageDeferred",
+      "collectedAt": "2026-07-15T15:53:03.202Z",
+      "updatedAt": "2026-07-15T16:01:13.029Z"
     },
     {
       "itemName": "토이 롤러",
@@ -336,11 +336,11 @@
       "resultCount": 4,
       "status": "ok",
       "filter": "캐시",
-      "searchAccount": 1,
-      "searchIndex": 21,
-      "collectedAt": "2026-07-15T14:11:09.484Z",
-      "globalSearchIndex": 26,
-      "queueGroup": "packageRotation"
+      "searchAccount": 2,
+      "searchIndex": 56,
+      "queueGroup": "packageDeferred",
+      "collectedAt": "2026-07-15T15:53:43.724Z",
+      "updatedAt": "2026-07-15T16:01:13.029Z"
     },
     {
       "itemName": "멈춰? 달려!",
@@ -350,11 +350,11 @@
       "resultCount": 4,
       "status": "ok",
       "filter": "캐시",
-      "searchAccount": 1,
-      "searchIndex": 22,
-      "collectedAt": "2026-07-15T14:11:15.592Z",
-      "globalSearchIndex": 27,
-      "queueGroup": "packageRotation"
+      "searchAccount": 2,
+      "searchIndex": 57,
+      "queueGroup": "packageDeferred",
+      "collectedAt": "2026-07-15T15:53:52.412Z",
+      "updatedAt": "2026-07-15T16:01:13.029Z"
     },
     {
       "itemName": "달려달려! 멍뭉카",
@@ -364,221 +364,221 @@
       "resultCount": 6,
       "status": "ok",
       "filter": "캐시",
-      "searchAccount": 1,
-      "searchIndex": 23,
-      "collectedAt": "2026-07-15T14:11:21.702Z",
-      "globalSearchIndex": 28,
-      "queueGroup": "packageRotation"
+      "searchAccount": 2,
+      "searchIndex": 58,
+      "queueGroup": "packageDeferred",
+      "collectedAt": "2026-07-15T15:54:00.959Z",
+      "updatedAt": "2026-07-15T16:01:13.029Z"
     },
     {
       "itemName": "락스타 소울",
       "query": "락스타 소울",
       "listingLowestMeso": 19999990,
       "listingLowestText": "1999만 9990",
-      "resultCount": 7,
+      "resultCount": 8,
       "status": "ok",
       "filter": "캐시",
-      "searchAccount": 1,
-      "searchIndex": 24,
-      "collectedAt": "2026-07-15T14:11:27.824Z",
-      "globalSearchIndex": 29,
-      "queueGroup": "packageRotation"
+      "searchAccount": 2,
+      "searchIndex": 66,
+      "queueGroup": "packageDeferred",
+      "collectedAt": "2026-07-15T15:55:29.727Z",
+      "updatedAt": "2026-07-15T16:01:13.029Z"
     },
     {
       "itemName": "오늘은 내가 락스타!",
       "query": "오늘은 내가 락스타!",
       "listingLowestMeso": 25555555,
       "listingLowestText": "2555만 5555",
-      "resultCount": 6,
+      "resultCount": 7,
       "status": "ok",
       "filter": "캐시",
-      "searchAccount": 1,
-      "searchIndex": 25,
-      "collectedAt": "2026-07-15T14:11:33.954Z",
-      "globalSearchIndex": 30,
-      "queueGroup": "packageRotation"
+      "searchAccount": 2,
+      "searchIndex": 67,
+      "queueGroup": "packageDeferred",
+      "collectedAt": "2026-07-15T15:55:38.368Z",
+      "updatedAt": "2026-07-15T16:01:13.029Z"
     },
     {
       "itemName": "별의 영광",
       "query": "별의 영광",
       "listingLowestMeso": 84444444,
       "listingLowestText": "8444만 4444",
-      "resultCount": 15,
+      "resultCount": 14,
       "status": "ok",
       "filter": "캐시",
-      "searchAccount": 1,
-      "searchIndex": 26,
-      "collectedAt": "2026-07-15T14:11:44.880Z",
-      "globalSearchIndex": 31,
-      "queueGroup": "packageRotation"
+      "searchAccount": 2,
+      "searchIndex": 69,
+      "queueGroup": "packageDeferred",
+      "collectedAt": "2026-07-15T15:56:10.828Z",
+      "updatedAt": "2026-07-15T16:01:13.029Z"
     },
     {
       "itemName": "도시의 별무리",
       "query": "도시의 별무리",
-      "listingLowestMeso": 87777777,
-      "listingLowestText": "8777만 7777",
-      "resultCount": 24,
+      "listingLowestMeso": 86666666,
+      "listingLowestText": "8666만 6666",
+      "resultCount": 27,
       "status": "ok",
       "filter": "캐시",
-      "searchAccount": 1,
-      "searchIndex": 27,
-      "collectedAt": "2026-07-15T14:11:51.020Z",
-      "globalSearchIndex": 32,
-      "queueGroup": "packageRotation"
+      "searchAccount": 2,
+      "searchIndex": 70,
+      "queueGroup": "packageDeferred",
+      "collectedAt": "2026-07-15T15:56:30.199Z",
+      "updatedAt": "2026-07-15T16:01:13.029Z"
     },
     {
       "itemName": "별의 긍지",
       "query": "별의 긍지",
       "listingLowestMeso": 122000000,
       "listingLowestText": "1억 2200만",
-      "resultCount": 28,
+      "resultCount": 25,
       "status": "ok",
       "filter": "캐시",
-      "searchAccount": 1,
-      "searchIndex": 28,
-      "collectedAt": "2026-07-15T14:11:57.151Z",
-      "globalSearchIndex": 33,
-      "queueGroup": "packageRotation"
+      "searchAccount": 2,
+      "searchIndex": 71,
+      "queueGroup": "packageDeferred",
+      "collectedAt": "2026-07-15T15:56:38.713Z",
+      "updatedAt": "2026-07-15T16:01:13.029Z"
     },
     {
       "itemName": "밤하늘 호수",
       "query": "밤하늘 호수",
-      "listingLowestMeso": 14444444,
-      "listingLowestText": "1444만 4444",
+      "listingLowestMeso": 14333333,
+      "listingLowestText": "1433만 3333",
       "resultCount": 17,
       "status": "ok",
       "filter": "캐시",
-      "searchAccount": 1,
-      "searchIndex": 29,
-      "collectedAt": "2026-07-15T14:12:03.271Z",
-      "globalSearchIndex": 34,
-      "queueGroup": "packageRotation"
+      "searchAccount": 2,
+      "searchIndex": 73,
+      "queueGroup": "packageDeferred",
+      "collectedAt": "2026-07-15T15:57:11.472Z",
+      "updatedAt": "2026-07-15T16:01:13.029Z"
     },
     {
       "itemName": "밤 비단 두루마기",
       "query": "밤 비단 두루마기",
-      "listingLowestMeso": 393888888,
-      "listingLowestText": "3억 9388만 8888",
-      "resultCount": 41,
+      "listingLowestMeso": 389999999,
+      "listingLowestText": "3억 8999만 9999",
+      "resultCount": 45,
       "status": "ok",
       "filter": "캐시",
-      "searchAccount": 1,
-      "searchIndex": 30,
-      "collectedAt": "2026-07-15T14:12:09.408Z",
-      "globalSearchIndex": 35,
-      "queueGroup": "packageRotation"
+      "searchAccount": 2,
+      "searchIndex": 74,
+      "queueGroup": "packageDeferred",
+      "collectedAt": "2026-07-15T15:57:27.310Z",
+      "updatedAt": "2026-07-15T16:01:13.029Z"
     },
     {
       "itemName": "한밤 수묵",
       "query": "한밤 수묵",
       "listingLowestMeso": 17777777,
       "listingLowestText": "1777만 7777",
-      "resultCount": 26,
+      "resultCount": 25,
       "status": "ok",
       "filter": "캐시",
-      "searchAccount": 1,
-      "searchIndex": 31,
-      "collectedAt": "2026-07-15T14:12:19.169Z",
-      "globalSearchIndex": 36,
-      "queueGroup": "packageRotation"
+      "searchAccount": 2,
+      "searchIndex": 75,
+      "queueGroup": "packageDeferred",
+      "collectedAt": "2026-07-15T15:57:35.965Z",
+      "updatedAt": "2026-07-15T16:01:13.029Z"
     },
     {
       "itemName": "별빛 베레모",
       "query": "별빛 베레모",
-      "listingLowestMeso": 66000000,
-      "listingLowestText": "6600만",
-      "resultCount": 18,
+      "listingLowestMeso": 65000000,
+      "listingLowestText": "6500만",
+      "resultCount": 20,
       "status": "ok",
       "filter": "캐시",
-      "searchAccount": 1,
-      "searchIndex": 32,
-      "collectedAt": "2026-07-15T14:12:25.273Z",
-      "globalSearchIndex": 37,
-      "queueGroup": "packageRotation"
+      "searchAccount": 2,
+      "searchIndex": 77,
+      "queueGroup": "packageDeferred",
+      "collectedAt": "2026-07-15T15:57:58.441Z",
+      "updatedAt": "2026-07-15T16:01:13.029Z"
     },
     {
       "itemName": "길잡이 별",
       "query": "길잡이 별",
-      "listingLowestMeso": 20900000,
-      "listingLowestText": "2090만",
-      "resultCount": 12,
+      "listingLowestMeso": 20888888,
+      "listingLowestText": "2088만 8888",
+      "resultCount": 13,
       "status": "ok",
       "filter": "캐시",
-      "searchAccount": 1,
-      "searchIndex": 33,
-      "collectedAt": "2026-07-15T14:12:31.404Z",
-      "globalSearchIndex": 38,
-      "queueGroup": "packageRotation"
+      "searchAccount": 2,
+      "searchIndex": 78,
+      "queueGroup": "packageDeferred",
+      "collectedAt": "2026-07-15T15:58:18.235Z",
+      "updatedAt": "2026-07-15T16:01:13.029Z"
     },
     {
       "itemName": "별빛 나팔",
       "query": "별빛 나팔",
-      "listingLowestMeso": 20000000,
-      "listingLowestText": "2000만",
-      "resultCount": 9,
+      "listingLowestMeso": 19888888,
+      "listingLowestText": "1988만 8888",
+      "resultCount": 10,
       "status": "ok",
       "filter": "캐시",
-      "searchAccount": 1,
-      "searchIndex": 34,
-      "collectedAt": "2026-07-15T14:12:37.521Z",
-      "globalSearchIndex": 39,
-      "queueGroup": "packageRotation"
+      "searchAccount": 2,
+      "searchIndex": 79,
+      "queueGroup": "packageDeferred",
+      "collectedAt": "2026-07-15T15:58:26.861Z",
+      "updatedAt": "2026-07-15T16:01:13.029Z"
     },
     {
       "itemName": "아기곰 보닛",
       "query": "아기곰 보닛",
-      "listingLowestMeso": 21111111,
-      "listingLowestText": "2111만 1111",
-      "resultCount": 20,
+      "listingLowestMeso": 22220000,
+      "listingLowestText": "2222만",
+      "resultCount": 19,
       "status": "ok",
       "filter": "캐시",
-      "searchAccount": 1,
-      "searchIndex": 35,
-      "collectedAt": "2026-07-15T14:12:43.658Z",
-      "globalSearchIndex": 40,
-      "queueGroup": "packageRotation"
+      "searchAccount": 2,
+      "searchIndex": 80,
+      "queueGroup": "packageDeferred",
+      "collectedAt": "2026-07-15T15:58:53.322Z",
+      "updatedAt": "2026-07-15T16:01:13.029Z"
     },
     {
       "itemName": "곰곰 리본 양말",
       "query": "곰곰 리본 양말",
-      "listingLowestMeso": 41111111,
-      "listingLowestText": "4111만 1111",
-      "resultCount": 22,
+      "listingLowestMeso": 42999999,
+      "listingLowestText": "4299만 9999",
+      "resultCount": 20,
       "status": "ok",
       "filter": "캐시",
-      "searchAccount": 1,
-      "searchIndex": 36,
-      "collectedAt": "2026-07-15T14:12:53.993Z",
-      "globalSearchIndex": 41,
-      "queueGroup": "packageRotation"
+      "searchAccount": 2,
+      "searchIndex": 81,
+      "queueGroup": "packageDeferred",
+      "collectedAt": "2026-07-15T15:59:08.079Z",
+      "updatedAt": "2026-07-15T16:01:13.029Z"
     },
     {
       "itemName": "리본 컨페티",
       "query": "리본 컨페티",
       "listingLowestMeso": 8888888,
       "listingLowestText": "888만 8888",
-      "resultCount": 10,
+      "resultCount": 9,
       "status": "ok",
       "filter": "캐시",
-      "searchAccount": 1,
-      "searchIndex": 37,
-      "collectedAt": "2026-07-15T14:13:00.127Z",
-      "globalSearchIndex": 42,
-      "queueGroup": "packageRotation"
+      "searchAccount": 2,
+      "searchIndex": 82,
+      "queueGroup": "packageDeferred",
+      "collectedAt": "2026-07-15T15:59:18.615Z",
+      "updatedAt": "2026-07-15T16:01:13.029Z"
     },
     {
       "itemName": "곰곰 리본",
       "query": "곰곰 리본",
-      "listingLowestMeso": 110000000,
-      "listingLowestText": "1억 1000만",
-      "resultCount": 16,
+      "listingLowestMeso": 119999997,
+      "listingLowestText": "1억 1999만 9997",
+      "resultCount": 19,
       "status": "ok",
       "filter": "캐시",
-      "searchAccount": 1,
-      "searchIndex": 38,
-      "collectedAt": "2026-07-15T14:13:06.249Z",
-      "globalSearchIndex": 43,
-      "queueGroup": "packageRotation"
+      "searchAccount": 2,
+      "searchIndex": 83,
+      "queueGroup": "packageDeferred",
+      "collectedAt": "2026-07-15T15:59:27.288Z",
+      "updatedAt": "2026-07-15T16:01:13.029Z"
     },
     {
       "itemName": "리듬 음표",
@@ -1931,7 +1931,7 @@
       "searchIndex": 26,
       "queueGroup": "packageDeferred",
       "collectedAt": "2026-07-15T15:45:22.639Z",
-      "updatedAt": "2026-07-15T15:51:13.053Z"
+      "updatedAt": "2026-07-15T16:01:13.029Z"
     },
     {
       "itemName": "듄켈 망토",
@@ -1998,7 +1998,7 @@
       "searchIndex": 25,
       "queueGroup": "packageDeferred",
       "collectedAt": "2026-07-15T15:45:14.022Z",
-      "updatedAt": "2026-07-15T15:51:13.053Z"
+      "updatedAt": "2026-07-15T16:01:13.029Z"
     },
     {
       "itemName": "림보 슈트",
@@ -2300,7 +2300,7 @@
       "searchIndex": 27,
       "queueGroup": "packageDeferred",
       "collectedAt": "2026-07-15T15:45:31.289Z",
-      "updatedAt": "2026-07-15T15:51:13.053Z"
+      "updatedAt": "2026-07-15T16:01:13.029Z"
     },
     {
       "itemName": "아니마 호영 도사복(남)",
@@ -2787,28 +2787,30 @@
     {
       "itemName": "스컬 헤어밴드",
       "query": "스컬 헤어밴드",
-      "aliases": [],
-      "listingLowestMeso": 100000000,
-      "listingLowestText": "1억",
-      "resultCount": 6,
+      "listingLowestMeso": 197698888,
+      "listingLowestText": "1억 9769만 8888",
+      "resultCount": 3,
       "status": "ok",
       "filter": "캐시",
-      "searchAccount": 1,
-      "searchIndex": 35,
-      "collectedAt": "2026-07-12T15:30:57.822Z"
+      "searchAccount": 2,
+      "searchIndex": 65,
+      "queueGroup": "packageDeferred",
+      "collectedAt": "2026-07-15T15:55:10.197Z",
+      "updatedAt": "2026-07-15T16:01:13.029Z"
     },
     {
       "itemName": "쫑긋 토끼 모자",
       "query": "쫑긋 토끼 모자",
-      "aliases": [],
-      "listingLowestMeso": 23999888,
-      "listingLowestText": "2399만 9888",
-      "resultCount": 11,
+      "listingLowestMeso": 22000000,
+      "listingLowestText": "2200만",
+      "resultCount": 7,
       "status": "ok",
       "filter": "캐시",
-      "searchAccount": 1,
-      "searchIndex": 36,
-      "collectedAt": "2026-07-12T15:31:03.998Z"
+      "searchAccount": 2,
+      "searchIndex": 84,
+      "queueGroup": "packageDeferred",
+      "collectedAt": "2026-07-15T15:59:41.107Z",
+      "updatedAt": "2026-07-15T16:01:13.029Z"
     },
     {
       "itemName": "가려진 빛",
@@ -2822,7 +2824,7 @@
       "searchIndex": 39,
       "queueGroup": "packageDeferred",
       "collectedAt": "2026-07-15T15:47:54.151Z",
-      "updatedAt": "2026-07-15T15:51:13.053Z"
+      "updatedAt": "2026-07-15T16:01:13.029Z"
     },
     {
       "itemName": "거울 젬젬이",
@@ -3329,7 +3331,7 @@
       "searchIndex": 36,
       "queueGroup": "packageDeferred",
       "collectedAt": "2026-07-15T15:47:17.814Z",
-      "updatedAt": "2026-07-15T15:51:13.053Z"
+      "updatedAt": "2026-07-15T16:01:13.029Z"
     },
     {
       "itemName": "도도",
@@ -3360,67 +3362,72 @@
     {
       "itemName": "돌의 정령 베레모",
       "query": "돌의 정령 베레모",
-      "aliases": [],
-      "listingLowestMeso": 60000000,
-      "listingLowestText": "6000만",
+      "listingLowestMeso": 58000000,
+      "listingLowestText": "5800만",
       "resultCount": 9,
       "status": "ok",
       "filter": "캐시",
-      "searchAccount": 1,
-      "searchIndex": 77,
-      "collectedAt": "2026-07-12T15:38:44.653Z"
+      "searchAccount": 2,
+      "searchIndex": 60,
+      "queueGroup": "packageDeferred",
+      "collectedAt": "2026-07-15T15:54:22.819Z",
+      "updatedAt": "2026-07-15T16:01:13.029Z"
     },
     {
       "itemName": "돌의 정령 우비",
       "query": "돌의 정령 우비",
-      "aliases": [],
-      "listingLowestMeso": 200000000,
-      "listingLowestText": "2억",
-      "resultCount": 4,
+      "listingLowestMeso": 199999998,
+      "listingLowestText": "1억 9999만 9998",
+      "resultCount": 6,
       "status": "ok",
       "filter": "캐시",
-      "searchAccount": 1,
-      "searchIndex": 78,
-      "collectedAt": "2026-07-12T15:38:50.847Z"
+      "searchAccount": 2,
+      "searchIndex": 61,
+      "queueGroup": "packageDeferred",
+      "collectedAt": "2026-07-15T15:54:31.311Z",
+      "updatedAt": "2026-07-15T16:01:13.029Z"
     },
     {
       "itemName": "돌의 정령 응원봉",
       "query": "돌의 정령 응원봉",
-      "aliases": [],
-      "listingLowestMeso": 63000000,
-      "listingLowestText": "6300만",
-      "resultCount": 4,
+      "listingLowestMeso": 65000000,
+      "listingLowestText": "6500만",
+      "resultCount": 5,
       "status": "ok",
       "filter": "캐시",
-      "searchAccount": 1,
-      "searchIndex": 79,
-      "collectedAt": "2026-07-12T15:38:57.050Z"
+      "searchAccount": 2,
+      "searchIndex": 64,
+      "queueGroup": "packageDeferred",
+      "collectedAt": "2026-07-15T15:55:01.551Z",
+      "updatedAt": "2026-07-15T16:01:13.029Z"
     },
     {
       "itemName": "돌의 정령 장화",
       "query": "돌의 정령 장화",
-      "aliases": [],
-      "listingLowestMeso": 36666666,
-      "listingLowestText": "3666만 6666",
-      "resultCount": 16,
+      "listingLowestMeso": 37777777,
+      "listingLowestText": "3777만 7777",
+      "resultCount": 11,
       "status": "ok",
       "filter": "캐시",
-      "searchAccount": 1,
-      "searchIndex": 80,
-      "collectedAt": "2026-07-12T15:39:03.350Z"
+      "searchAccount": 2,
+      "searchIndex": 62,
+      "queueGroup": "packageDeferred",
+      "collectedAt": "2026-07-15T15:54:39.998Z",
+      "updatedAt": "2026-07-15T16:01:13.029Z"
     },
     {
       "itemName": "돌의 정령의 반짝임",
       "query": "돌의 정령의 반짝임",
-      "aliases": [],
-      "listingLowestMeso": 52222222,
-      "listingLowestText": "5222만 2222",
-      "resultCount": 10,
+      "listingLowestMeso": 55000000,
+      "listingLowestText": "5500만",
+      "resultCount": 6,
       "status": "ok",
       "filter": "캐시",
-      "searchAccount": 1,
-      "searchIndex": 81,
-      "collectedAt": "2026-07-12T15:40:13.696Z"
+      "searchAccount": 2,
+      "searchIndex": 63,
+      "queueGroup": "packageDeferred",
+      "collectedAt": "2026-07-15T15:54:52.916Z",
+      "updatedAt": "2026-07-15T16:01:13.029Z"
     },
     {
       "itemName": "딸기",
@@ -3707,7 +3714,7 @@
       "searchIndex": 43,
       "queueGroup": "packageDeferred",
       "collectedAt": "2026-07-15T15:49:08.116Z",
-      "updatedAt": "2026-07-15T15:51:13.053Z"
+      "updatedAt": "2026-07-15T16:01:13.029Z"
     },
     {
       "itemName": "리리컬 핑크 리본",
@@ -3721,7 +3728,7 @@
       "searchIndex": 46,
       "queueGroup": "packageDeferred",
       "collectedAt": "2026-07-15T15:49:51.925Z",
-      "updatedAt": "2026-07-15T15:51:13.053Z"
+      "updatedAt": "2026-07-15T16:01:13.029Z"
     },
     {
       "itemName": "리링",
@@ -3774,26 +3781,30 @@
     {
       "itemName": "멍뭉 네온캡",
       "query": "멍뭉 네온캡",
-      "listingLowestMeso": 35333333,
-      "listingLowestText": "3533만 3333",
-      "resultCount": 11,
+      "listingLowestMeso": 35000000,
+      "listingLowestText": "3500만",
+      "resultCount": 16,
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 2,
-      "searchIndex": 8,
-      "collectedAt": "2026-07-13T13:43:54.567Z"
+      "searchIndex": 59,
+      "queueGroup": "packageDeferred",
+      "collectedAt": "2026-07-15T15:54:09.421Z",
+      "updatedAt": "2026-07-15T16:01:13.029Z"
     },
     {
       "itemName": "멍뭉 토이캡",
       "query": "멍뭉 토이캡",
-      "listingLowestMeso": 36000000,
-      "listingLowestText": "3600만",
-      "resultCount": 15,
+      "listingLowestMeso": 35666665,
+      "listingLowestText": "3566만 6665",
+      "resultCount": 9,
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 2,
-      "searchIndex": 9,
-      "collectedAt": "2026-07-13T13:44:06.189Z"
+      "searchIndex": 55,
+      "queueGroup": "packageDeferred",
+      "collectedAt": "2026-07-15T15:53:30.410Z",
+      "updatedAt": "2026-07-15T16:01:13.029Z"
     },
     {
       "itemName": "메이플 여신",
@@ -3882,14 +3893,16 @@
     {
       "itemName": "백립",
       "query": "백립",
-      "listingLowestMeso": 32000000,
-      "listingLowestText": "3200만",
-      "resultCount": 6,
+      "listingLowestMeso": 25000000,
+      "listingLowestText": "2500만",
+      "resultCount": 5,
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 2,
-      "searchIndex": 18,
-      "collectedAt": "2026-07-13T13:46:15.182Z"
+      "searchIndex": 72,
+      "queueGroup": "packageDeferred",
+      "collectedAt": "2026-07-15T15:56:58.218Z",
+      "updatedAt": "2026-07-15T16:01:13.029Z"
     },
     {
       "itemName": "별무리(여)",
@@ -4266,14 +4279,16 @@
     {
       "itemName": "스컬 바니",
       "query": "스컬 바니",
-      "listingLowestMeso": 388000000,
-      "listingLowestText": "3억 8800만",
-      "resultCount": 9,
+      "listingLowestMeso": 369999999,
+      "listingLowestText": "3억 6999만 9999",
+      "resultCount": 11,
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 2,
-      "searchIndex": 50,
-      "collectedAt": "2026-07-13T13:55:50.872Z"
+      "searchIndex": 68,
+      "queueGroup": "packageDeferred",
+      "collectedAt": "2026-07-15T15:55:47.117Z",
+      "updatedAt": "2026-07-15T16:01:13.029Z"
     },
     {
       "itemName": "심판의 의지(여)",
@@ -4638,14 +4653,16 @@
     {
       "itemName": "은호",
       "query": "은호",
-      "listingLowestMeso": 55000000,
-      "listingLowestText": "5500만",
-      "resultCount": 28,
+      "listingLowestMeso": 53999999,
+      "listingLowestText": "5399만 9999",
+      "resultCount": 51,
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 2,
-      "searchIndex": 84,
-      "collectedAt": "2026-07-13T14:03:55.510Z"
+      "searchIndex": 76,
+      "queueGroup": "packageDeferred",
+      "collectedAt": "2026-07-15T15:57:44.554Z",
+      "updatedAt": "2026-07-15T16:01:13.029Z"
     },
     {
       "itemName": "잔잔한 물결(여)",
@@ -4891,28 +4908,30 @@
     {
       "itemName": "묵빛 갓",
       "query": "묵빛 갓",
-      "listingLowestMeso": 55000000,
-      "listingLowestText": "5500만",
+      "listingLowestMeso": 54000000,
+      "listingLowestText": "5400만",
       "resultCount": 7,
       "status": "ok",
       "filter": "캐시",
-      "searchAccount": 1,
-      "searchIndex": 1,
-      "queueGroup": "corrected",
-      "collectedAt": "2026-07-13T15:36:23.076Z"
+      "searchAccount": 2,
+      "searchIndex": 50,
+      "queueGroup": "packageDeferred",
+      "collectedAt": "2026-07-15T15:52:32.151Z",
+      "updatedAt": "2026-07-15T16:01:13.029Z"
     },
     {
       "itemName": "묵빛 너울",
       "query": "묵빛 너울",
-      "listingLowestMeso": 393990000,
-      "listingLowestText": "3억 9399만",
-      "resultCount": 7,
+      "listingLowestMeso": 343000000,
+      "listingLowestText": "3억 4300만",
+      "resultCount": 23,
       "status": "ok",
       "filter": "캐시",
-      "searchAccount": 1,
-      "searchIndex": 2,
-      "queueGroup": "corrected",
-      "collectedAt": "2026-07-13T15:36:37.163Z"
+      "searchAccount": 2,
+      "searchIndex": 54,
+      "queueGroup": "packageDeferred",
+      "collectedAt": "2026-07-15T15:53:11.965Z",
+      "updatedAt": "2026-07-15T16:01:13.029Z"
     },
     {
       "itemName": "바싹잉",
@@ -7326,7 +7345,7 @@
       "searchIndex": 30,
       "queueGroup": "packageDeferred",
       "collectedAt": "2026-07-15T15:46:02.099Z",
-      "updatedAt": "2026-07-15T15:51:13.053Z"
+      "updatedAt": "2026-07-15T16:01:13.029Z"
     },
     {
       "itemName": "잠재능력 전승스크롤",
@@ -7877,21 +7896,6 @@
       "reason": "정확 후보 선택 후 필터 검색 결과 0건"
     },
     {
-      "itemName": "큐티 펑크 구두(여)",
-      "query": "큐티 펑크 구두 (여)",
-      "listingLowestMeso": 0,
-      "listingLowestText": "",
-      "resultCount": 0,
-      "status": "no_listing",
-      "filter": "캐시",
-      "searchAccount": 1,
-      "searchIndex": 15,
-      "queueGroup": "unsearched",
-      "collectedAt": "2026-07-13T15:38:42.385Z",
-      "reason": "정확 후보 선택 후 필터 검색 결과 0건",
-      "manualFallbackPriceRetained": false
-    },
-    {
       "itemName": "레지스탕스 와일드헌터 슈트(남)",
       "query": "레지스탕스 와일드헌터 슈트 (남)",
       "listingLowestMeso": 0,
@@ -8046,7 +8050,7 @@
       "searchAccount": 2,
       "queueGroup": "packageDeferred",
       "collectedAt": "2026-07-15T15:45:45.982Z",
-      "updatedAt": "2026-07-15T15:51:13.053Z"
+      "updatedAt": "2026-07-15T16:01:13.029Z"
     },
     {
       "itemName": "해결사의 흑의(남)",
@@ -8057,7 +8061,7 @@
       "searchAccount": 2,
       "queueGroup": "packageDeferred",
       "collectedAt": "2026-07-15T15:46:25.022Z",
-      "updatedAt": "2026-07-15T15:51:13.053Z"
+      "updatedAt": "2026-07-15T16:01:13.029Z"
     },
     {
       "itemName": "사냥꾼의 흑의(여)",
@@ -8068,7 +8072,7 @@
       "searchAccount": 2,
       "queueGroup": "packageDeferred",
       "collectedAt": "2026-07-15T15:47:10.562Z",
-      "updatedAt": "2026-07-15T15:51:13.053Z"
+      "updatedAt": "2026-07-15T16:01:13.029Z"
     },
     {
       "itemName": "우화등선(남)",
@@ -8079,7 +8083,7 @@
       "searchAccount": 2,
       "queueGroup": "packageDeferred",
       "collectedAt": "2026-07-15T15:47:23.802Z",
-      "updatedAt": "2026-07-15T15:51:13.053Z"
+      "updatedAt": "2026-07-15T16:01:13.029Z"
     },
     {
       "itemName": "선인의 자존심(남)",
@@ -8090,7 +8094,7 @@
       "searchAccount": 2,
       "queueGroup": "packageDeferred",
       "collectedAt": "2026-07-15T15:47:29.775Z",
-      "updatedAt": "2026-07-15T15:51:13.053Z"
+      "updatedAt": "2026-07-15T16:01:13.029Z"
     },
     {
       "itemName": "화중신선(여)",
@@ -8101,7 +8105,7 @@
       "searchAccount": 2,
       "queueGroup": "packageDeferred",
       "collectedAt": "2026-07-15T15:48:12.053Z",
-      "updatedAt": "2026-07-15T15:51:13.053Z"
+      "updatedAt": "2026-07-15T16:01:13.029Z"
     },
     {
       "itemName": "선녀의 자존심(여)",
@@ -8112,7 +8116,7 @@
       "searchAccount": 2,
       "queueGroup": "packageDeferred",
       "collectedAt": "2026-07-15T15:48:18.051Z",
-      "updatedAt": "2026-07-15T15:51:13.053Z"
+      "updatedAt": "2026-07-15T16:01:13.029Z"
     },
     {
       "itemName": "별님 고깔 모자",
@@ -8123,7 +8127,7 @@
       "searchAccount": 2,
       "queueGroup": "packageDeferred",
       "collectedAt": "2026-07-15T15:48:24.037Z",
-      "updatedAt": "2026-07-15T15:51:13.053Z"
+      "updatedAt": "2026-07-15T16:01:13.029Z"
     },
     {
       "itemName": "신나는 생일(남)",
@@ -8134,7 +8138,7 @@
       "searchAccount": 2,
       "queueGroup": "packageDeferred",
       "collectedAt": "2026-07-15T15:48:30.031Z",
-      "updatedAt": "2026-07-15T15:51:13.053Z"
+      "updatedAt": "2026-07-15T16:01:13.029Z"
     },
     {
       "itemName": "행복한 생일(여)",
@@ -8145,7 +8149,7 @@
       "searchAccount": 2,
       "queueGroup": "packageDeferred",
       "collectedAt": "2026-07-15T15:49:00.589Z",
-      "updatedAt": "2026-07-15T15:51:13.053Z"
+      "updatedAt": "2026-07-15T16:01:13.029Z"
     },
     {
       "itemName": "레트로 마법소년 슈트(남)",
@@ -8156,7 +8160,7 @@
       "searchAccount": 2,
       "queueGroup": "packageDeferred",
       "collectedAt": "2026-07-15T15:49:14.205Z",
-      "updatedAt": "2026-07-15T15:51:13.053Z"
+      "updatedAt": "2026-07-15T16:01:13.029Z"
     },
     {
       "itemName": "매지컬 블루 슈즈(남)",
@@ -8167,7 +8171,7 @@
       "searchAccount": 2,
       "queueGroup": "packageDeferred",
       "collectedAt": "2026-07-15T15:49:27.218Z",
-      "updatedAt": "2026-07-15T15:51:13.053Z"
+      "updatedAt": "2026-07-15T16:01:13.029Z"
     },
     {
       "itemName": "레트로 마법소녀 원피스(여)",
@@ -8178,7 +8182,7 @@
       "searchAccount": 2,
       "queueGroup": "packageDeferred",
       "collectedAt": "2026-07-15T15:49:58.005Z",
-      "updatedAt": "2026-07-15T15:51:13.053Z"
+      "updatedAt": "2026-07-15T16:01:13.029Z"
     },
     {
       "itemName": "매지컬 핑크 슈즈(여)",
@@ -8189,7 +8193,7 @@
       "searchAccount": 2,
       "queueGroup": "packageDeferred",
       "collectedAt": "2026-07-15T15:50:04.062Z",
-      "updatedAt": "2026-07-15T15:51:13.053Z"
+      "updatedAt": "2026-07-15T16:01:13.029Z"
     },
     {
       "itemName": "성야의 판결(남)",
@@ -8200,7 +8204,7 @@
       "searchAccount": 2,
       "queueGroup": "packageDeferred",
       "collectedAt": "2026-07-15T15:50:17.573Z",
-      "updatedAt": "2026-07-15T15:51:13.053Z"
+      "updatedAt": "2026-07-15T16:01:13.029Z"
     },
     {
       "itemName": "단죄의 의지(남)",
@@ -8211,39 +8215,303 @@
       "searchAccount": 2,
       "queueGroup": "packageDeferred",
       "collectedAt": "2026-07-15T15:50:23.586Z",
-      "updatedAt": "2026-07-15T15:51:13.053Z"
+      "updatedAt": "2026-07-15T16:01:13.029Z"
+    },
+    {
+      "itemName": "성야의 심판(여)",
+      "query": "성야의 심판(여)",
+      "status": "no_candidate",
+      "reason": "자동완성 정확 후보 없음; 필터 검색 미실행",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "queueGroup": "packageDeferred",
+      "collectedAt": "2026-07-15T15:52:18.504Z",
+      "updatedAt": "2026-07-15T16:01:13.029Z"
+    },
+    {
+      "itemName": "심판의 의지(여)",
+      "query": "심판의 의지(여)",
+      "status": "no_candidate",
+      "reason": "자동완성 정확 후보 없음; 필터 검색 미실행",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "queueGroup": "packageDeferred",
+      "collectedAt": "2026-07-15T15:52:24.522Z",
+      "updatedAt": "2026-07-15T16:01:13.029Z"
+    },
+    {
+      "itemName": "정결한 기품(남)",
+      "query": "정결한 기품(남)",
+      "status": "no_candidate",
+      "reason": "자동완성 정확 후보 없음; 필터 검색 미실행",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "queueGroup": "packageDeferred",
+      "collectedAt": "2026-07-15T15:52:38.283Z",
+      "updatedAt": "2026-07-15T16:01:13.029Z"
+    },
+    {
+      "itemName": "고결한 기품(여)",
+      "query": "고결한 기품(여)",
+      "status": "no_candidate",
+      "reason": "자동완성 정확 후보 없음; 필터 검색 미실행",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "queueGroup": "packageDeferred",
+      "collectedAt": "2026-07-15T15:53:18.074Z",
+      "updatedAt": "2026-07-15T16:01:13.029Z"
+    },
+    {
+      "itemName": "꼬마 정비사(남)",
+      "query": "꼬마 정비사(남)",
+      "status": "no_candidate",
+      "reason": "자동완성 정확 후보 없음; 필터 검색 미실행",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "queueGroup": "packageDeferred",
+      "collectedAt": "2026-07-15T15:53:36.473Z",
+      "updatedAt": "2026-07-15T16:01:13.029Z"
+    },
+    {
+      "itemName": "꼬마 정비공(여)",
+      "query": "꼬마 정비공(여)",
+      "status": "no_candidate",
+      "reason": "자동완성 정확 후보 없음; 필터 검색 미실행",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "queueGroup": "packageDeferred",
+      "collectedAt": "2026-07-15T15:54:15.410Z",
+      "updatedAt": "2026-07-15T16:01:13.029Z"
+    },
+    {
+      "itemName": "스윗 펑크(남)",
+      "query": "스윗 펑크(남)",
+      "status": "no_candidate",
+      "reason": "자동완성 정확 후보 없음; 필터 검색 미실행",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "queueGroup": "packageDeferred",
+      "collectedAt": "2026-07-15T15:55:16.243Z",
+      "updatedAt": "2026-07-15T16:01:13.029Z"
+    },
+    {
+      "itemName": "스윗 펑크 부츠(남)",
+      "query": "스윗 펑크 부츠(남)",
+      "status": "no_candidate",
+      "reason": "자동완성 정확 후보 없음; 필터 검색 미실행",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "queueGroup": "packageDeferred",
+      "collectedAt": "2026-07-15T15:55:22.254Z",
+      "updatedAt": "2026-07-15T16:01:13.029Z"
+    },
+    {
+      "itemName": "큐티 펑크(여)",
+      "query": "큐티 펑크(여)",
+      "status": "no_candidate",
+      "reason": "자동완성 정확 후보 없음; 필터 검색 미실행",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "queueGroup": "packageDeferred",
+      "collectedAt": "2026-07-15T15:55:53.285Z",
+      "updatedAt": "2026-07-15T16:01:13.029Z"
+    },
+    {
+      "itemName": "큐티 펑크 구두(여)",
+      "query": "큐티 펑크 구두(여)",
+      "status": "no_candidate",
+      "reason": "자동완성 정확 후보 없음; 필터 검색 미실행",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "queueGroup": "packageDeferred",
+      "collectedAt": "2026-07-15T15:55:59.318Z",
+      "updatedAt": "2026-07-15T16:01:13.029Z"
+    },
+    {
+      "itemName": "잿빛 도시의 별(남)",
+      "query": "잿빛 도시의 별(남)",
+      "status": "no_candidate",
+      "reason": "자동완성 정확 후보 없음; 필터 검색 미실행",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "queueGroup": "packageDeferred",
+      "collectedAt": "2026-07-15T15:56:16.847Z",
+      "updatedAt": "2026-07-15T16:01:13.029Z"
+    },
+    {
+      "itemName": "별의 일주(남)",
+      "query": "별의 일주(남)",
+      "status": "no_candidate",
+      "reason": "자동완성 정확 후보 없음; 필터 검색 미실행",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "queueGroup": "packageDeferred",
+      "collectedAt": "2026-07-15T15:56:22.805Z",
+      "updatedAt": "2026-07-15T16:01:13.029Z"
+    },
+    {
+      "itemName": "잿빛 도시의 빛(여)",
+      "query": "잿빛 도시의 빛(여)",
+      "status": "no_candidate",
+      "reason": "자동완성 정확 후보 없음; 필터 검색 미실행",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "queueGroup": "packageDeferred",
+      "collectedAt": "2026-07-15T15:56:44.791Z",
+      "updatedAt": "2026-07-15T16:01:13.029Z"
+    },
+    {
+      "itemName": "빛의 일주(여)",
+      "query": "빛의 일주(여)",
+      "status": "no_candidate",
+      "reason": "자동완성 정확 후보 없음; 필터 검색 미실행",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "queueGroup": "packageDeferred",
+      "collectedAt": "2026-07-15T15:56:50.863Z",
+      "updatedAt": "2026-07-15T16:01:13.029Z"
+    },
+    {
+      "itemName": "달빛 풍류(남)",
+      "query": "달빛 풍류(남)",
+      "status": "no_candidate",
+      "reason": "자동완성 정확 후보 없음; 필터 검색 미실행",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "queueGroup": "packageDeferred",
+      "collectedAt": "2026-07-15T15:57:04.218Z",
+      "updatedAt": "2026-07-15T16:01:13.029Z"
+    },
+    {
+      "itemName": "별빛 풍류(여)",
+      "query": "별빛 풍류(여)",
+      "status": "no_candidate",
+      "reason": "자동완성 정확 후보 없음; 필터 검색 미실행",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "queueGroup": "packageDeferred",
+      "collectedAt": "2026-07-15T15:57:50.684Z",
+      "updatedAt": "2026-07-15T16:01:13.029Z"
+    },
+    {
+      "itemName": "소망의 별(남)",
+      "query": "소망의 별(남)",
+      "status": "no_candidate",
+      "reason": "자동완성 정확 후보 없음; 필터 검색 미실행",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "queueGroup": "packageDeferred",
+      "collectedAt": "2026-07-15T15:58:04.554Z",
+      "updatedAt": "2026-07-15T16:01:13.029Z"
+    },
+    {
+      "itemName": "순백 별 부츠(남)",
+      "query": "순백 별 부츠(남)",
+      "status": "no_candidate",
+      "reason": "자동완성 정확 후보 없음; 필터 검색 미실행",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "queueGroup": "packageDeferred",
+      "collectedAt": "2026-07-15T15:58:10.566Z",
+      "updatedAt": "2026-07-15T16:01:13.029Z"
+    },
+    {
+      "itemName": "희망의 별(여)",
+      "query": "희망의 별(여)",
+      "status": "no_candidate",
+      "reason": "자동완성 정확 후보 없음; 필터 검색 미실행",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "queueGroup": "packageDeferred",
+      "collectedAt": "2026-07-15T15:58:32.900Z",
+      "updatedAt": "2026-07-15T16:01:13.029Z"
+    },
+    {
+      "itemName": "황금 별 구두(여)",
+      "query": "황금 별 구두(여)",
+      "status": "no_candidate",
+      "reason": "자동완성 정확 후보 없음; 필터 검색 미실행",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "queueGroup": "packageDeferred",
+      "collectedAt": "2026-07-15T15:58:45.960Z",
+      "updatedAt": "2026-07-15T16:01:13.029Z"
+    },
+    {
+      "itemName": "곰곰 멜빵(남)",
+      "query": "곰곰 멜빵(남)",
+      "status": "no_candidate",
+      "reason": "자동완성 정확 후보 없음; 필터 검색 미실행",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "queueGroup": "packageDeferred",
+      "collectedAt": "2026-07-15T15:58:59.383Z",
+      "updatedAt": "2026-07-15T16:01:13.029Z"
+    },
+    {
+      "itemName": "곰곰 원피스(여)",
+      "query": "곰곰 원피스(여)",
+      "status": "no_candidate",
+      "reason": "자동완성 정확 후보 없음; 필터 검색 미실행",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "queueGroup": "packageDeferred",
+      "collectedAt": "2026-07-15T15:59:33.478Z",
+      "updatedAt": "2026-07-15T16:01:13.029Z"
+    },
+    {
+      "itemName": "북치는 토끼 슈트(남)",
+      "query": "북치는 토끼 슈트(남)",
+      "status": "no_candidate",
+      "reason": "자동완성 정확 후보 없음; 필터 검색 미실행",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "queueGroup": "packageDeferred",
+      "collectedAt": "2026-07-15T15:59:47.267Z",
+      "updatedAt": "2026-07-15T16:01:13.029Z"
+    },
+    {
+      "itemName": "짤랑 로퍼(남)",
+      "query": "짤랑 로퍼(남)",
+      "status": "no_candidate",
+      "reason": "자동완성 정확 후보 없음; 필터 검색 미실행",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "queueGroup": "packageDeferred",
+      "collectedAt": "2026-07-15T15:59:53.315Z",
+      "updatedAt": "2026-07-15T16:01:13.029Z"
     }
   ],
-  "updatedAt": "2026-07-15T15:51:13.053Z",
+  "updatedAt": "2026-07-15T16:01:13.029Z",
   "lastSearchRun": {
     "date": "2026-07-16",
     "searchAccount": 2,
     "accountCharacter": "스카니아 / 키라데벤져",
     "worldScope": "월드 통합",
     "searchLimit": 100,
-    "usedSearches": 48,
-    "screenUsedSearches": 48,
+    "usedSearches": 84,
+    "screenUsedSearches": 84,
     "preexistingSearches": 1,
     "preexistingSearchItems": [
       "듄켈의 대검"
     ],
-    "listingSearches": 47,
+    "listingSearches": 83,
     "marketSearches": 0,
-    "validPrices": 44,
+    "validPrices": 80,
     "noListingSearches": 3,
-    "noCandidateChecks": 16,
+    "noCandidateChecks": 40,
     "duplicateSearches": 0,
     "accountComplete": false,
     "queueMode": "direct_daily_then_deferred_package_rotation",
     "group": "packageDeferred",
     "dailyPriorityComplete": true,
     "dailyPriorityItems": 23,
-    "packageItemsProcessed": 40,
-    "packageListingSearches": 24,
-    "packageNoCandidateChecks": 16,
+    "packageItemsProcessed": 100,
+    "packageListingSearches": 60,
+    "packageNoCandidateChecks": 40,
     "deferredPackageStart": "림보 슈즈",
-    "deferredPackageItemsRemaining": 185,
-    "nextItem": "성야의 단죄자",
+    "deferredPackageItemsRemaining": 125,
+    "nextItem": "리듬 음표",
     "sparseListingCandidates": [
       {
         "itemName": "커스텀 믹스염색 쿠폰",
@@ -8258,6 +8526,11 @@
       {
         "itemName": "잠식의 흔적",
         "listingLowestMeso": 78888888,
+        "resultCount": 3
+      },
+      {
+        "itemName": "스컬 헤어밴드",
+        "listingLowestMeso": 197698888,
         "resultCount": 3
       }
     ],
@@ -8282,9 +8555,33 @@
       "레트로 마법소녀 원피스(여)",
       "매지컬 핑크 슈즈(여)",
       "성야의 판결(남)",
-      "단죄의 의지(남)"
+      "단죄의 의지(남)",
+      "성야의 심판(여)",
+      "심판의 의지(여)",
+      "정결한 기품(남)",
+      "고결한 기품(여)",
+      "꼬마 정비사(남)",
+      "꼬마 정비공(여)",
+      "스윗 펑크(남)",
+      "스윗 펑크 부츠(남)",
+      "큐티 펑크(여)",
+      "큐티 펑크 구두(여)",
+      "잿빛 도시의 별(남)",
+      "별의 일주(남)",
+      "잿빛 도시의 빛(여)",
+      "빛의 일주(여)",
+      "달빛 풍류(남)",
+      "별빛 풍류(여)",
+      "소망의 별(남)",
+      "순백 별 부츠(남)",
+      "희망의 별(여)",
+      "황금 별 구두(여)",
+      "곰곰 멜빵(남)",
+      "곰곰 원피스(여)",
+      "북치는 토끼 슈트(남)",
+      "짤랑 로퍼(남)"
     ],
-    "completedAt": "2026-07-15T15:51:13.053Z",
+    "completedAt": "2026-07-15T16:01:13.029Z",
     "safetyRulesDocument": "maple-cash-value/docs/daily-auction-search-routine.md"
   },
   "marketHistoryUpdatedAt": "2026-07-15T14:34:07.994Z",
