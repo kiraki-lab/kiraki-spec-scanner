@@ -933,7 +933,12 @@ function render() {
   $('#rank-mode-label').textContent = '시세 우선 적용가';
   $('#row-count').textContent = referenceCount ? `${saleRows.length}개 + 참고 ${referenceCount}개` : `${saleRows.length}개`;
   $('#sale-item-count').textContent = `${rows.length}개`;
-  const auctionUpdatedAt = state.localAuctionRows.length ? state.localDataUpdatedAt : state.metadata.auctionUpdatedAt;
+  const auctionUpdatedAt = [
+    state.metadata.auctionUpdatedAt,
+    state.localAuctionRows.length ? state.localDataUpdatedAt : null
+  ]
+    .filter(Boolean)
+    .sort((a, b) => (Date.parse(b) || 0) - (Date.parse(a) || 0))[0] || null;
   $('#auction-updated').textContent = formatRefreshDate(auctionUpdatedAt);
   $('#best-efficiency').textContent = rankedVisibleSales.length ? formatWon(rankedVisibleSales[0].listingEfficiency) : '-';
   renderNotices();
