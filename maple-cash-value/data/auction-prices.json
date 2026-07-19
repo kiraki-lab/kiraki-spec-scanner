@@ -1,14 +1,14 @@
 {
   "version": 2,
   "world": "스카니아",
-  "generatedAt": "2026-07-19T03:09:17.300Z",
+  "generatedAt": "2026-07-19T13:13:10.024Z",
   "source": "manual-maple-auction-two-account",
   "policy": {
     "searchTab": "구매",
     "priceBasis": "listingLowestMeso",
     "candidateCheckBeforeSearch": true,
     "officialSearchLimit": 100,
-    "notes": "July 19 account 1 completed: 23 direct daily items first, then deferred package-component rotation. Korean 억/만 values validated before commit."
+    "notes": "July 19 manual addition: 다람쥐 꿈방울 7,900 Cash, 30% mileage discount eligible, 435,000,000 mesos."
   },
   "prices": [
     {
@@ -8078,6 +8078,19 @@
       "searchIndex": 62,
       "collectedAt": "2026-07-19T03:04:27.815Z",
       "updatedAt": "2026-07-19T03:09:17.300Z"
+    },
+    {
+      "itemName": "다람쥐 꿈방울",
+      "query": "다람쥐 꿈방울",
+      "aliases": [],
+      "listingLowestMeso": 435000000,
+      "listingLowestText": "4억 3500만",
+      "status": "manual",
+      "source": "manual",
+      "manualReason": "사용자 옥션 확인",
+      "filter": "캐시",
+      "collectedAt": "2026-07-19T13:13:10.024Z",
+      "updatedAt": "2026-07-19T13:13:10.024Z"
     }
   ],
   "skipped": [
@@ -9690,7 +9703,7 @@
       "updatedAt": "2026-07-19T03:09:17.300Z"
     }
   ],
-  "updatedAt": "2026-07-19T03:09:17.300Z",
+  "updatedAt": "2026-07-19T13:13:10.024Z",
   "lastSearchRun": {
     "date": "2026-07-19",
     "searchAccount": 1,
@@ -9740,5 +9753,5 @@
     }
   },
   "marketHistoryUpdatedAt": "2026-07-15T14:34:07.994Z",
-  "manualUpdatedAt": "2026-07-13T14:14:24.334Z"
+  "manualUpdatedAt": "2026-07-19T13:13:10.024Z"
 }
