@@ -1,7 +1,7 @@
 {
   "version": 3,
   "world": "스카니아",
-  "updatedAt": "2026-07-14T09:25:14.051Z",
+  "updatedAt": "2026-07-19T13:13:10.024Z",
   "settings": {
     "baseMpRate": 6990,
     "discountRate": 6,
@@ -5172,6 +5172,15 @@
       "seedMesoPrice": 258000000,
       "aliases": [],
       "mileageType": "none"
+    },
+    {
+      "id": 686,
+      "name": "다람쥐 꿈방울",
+      "category": "기본",
+      "cashPrice": 7900,
+      "seedMesoPrice": 435000000,
+      "aliases": [],
+      "mileageType": "partial"
     }
   ]
 }
