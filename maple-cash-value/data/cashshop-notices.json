@@ -1,10 +1,74 @@
 {
   "version": 1,
-  "generatedAt": "2026-07-22T19:54:31.521Z",
+  "generatedAt": "2026-07-23T19:50:33.131Z",
   "source": "nexon-open-api",
   "endpoint": "/maplestory/v1/notice-cashshop",
   "status": "ok",
   "notices": [
+    {
+      "id": 638,
+      "title": "7월 23일 캐시아이템 업데이트 - 부티크 기프트",
+      "date": "2026-07-23T08:12+09:00",
+      "url": "https://maplestory.nexon.com/News/CashShop/638",
+      "items": [
+        "부티크 기프트"
+      ],
+      "summary": ""
+    },
+    {
+      "id": 637,
+      "title": "7월 23일 캐시아이템 업데이트 - 컬러링 프리즘 프로 & 무기 이펙트 프리즘",
+      "date": "2026-07-23T08:12+09:00",
+      "url": "https://maplestory.nexon.com/News/CashShop/637",
+      "items": [
+        "컬러링 프리즘 프로",
+        "무기 이펙트 프리즘"
+      ],
+      "summary": ""
+    },
+    {
+      "id": 636,
+      "title": "7월 23일 캐시아이템 업데이트 - 몬스터파크 핸즈 이용권",
+      "date": "2026-07-23T08:12+09:00",
+      "url": "https://maplestory.nexon.com/News/CashShop/636",
+      "items": [
+        "몬스터파크 핸즈 이용권"
+      ],
+      "summary": ""
+    },
+    {
+      "id": 635,
+      "title": "7월 23일 캐시아이템 업데이트 - 로얄스타일 &  마스터피스",
+      "date": "2026-07-23T08:12+09:00",
+      "url": "https://maplestory.nexon.com/News/CashShop/635",
+      "items": [
+        "로얄스타일",
+        "마스터피스"
+      ],
+      "summary": ""
+    },
+    {
+      "id": 634,
+      "title": "7월 23일 캐시아이템 업데이트 - 상반기 BEST 프리미엄 헤어 & 성형 쿠폰",
+      "date": "2026-07-23T08:12+09:00",
+      "url": "https://maplestory.nexon.com/News/CashShop/634",
+      "items": [
+        "상반기 BEST 프리미엄 헤어",
+        "성형 쿠폰"
+      ],
+      "summary": ""
+    },
+    {
+      "id": 633,
+      "title": "7월 23일 캐시아이템 업데이트 - 프리미엄 헤어 &  성형 쿠폰",
+      "date": "2026-07-23T08:12+09:00",
+      "url": "https://maplestory.nexon.com/News/CashShop/633",
+      "items": [
+        "프리미엄 헤어",
+        "성형 쿠폰"
+      ],
+      "summary": ""
+    },
     {
       "id": 632,
       "title": "6월 18일 캐시아이템 업데이트 - 제네시스 패스 & 제네시스 패스 PLUS",
@@ -17,16 +81,6 @@
       "summary": "제네시스 패스 PLUS 에 아래 안내 문구가 추가되었습니다 . - 제네시스 무기 해방을 완료한 주간 / 월간에 이미 미션이 오픈된 주간 / 월간 보스를 처치한 경우 , 해당 미션은 자동으로 완료됩니다 . (2026 년 6 월 22 일 ( 월 ) 오전 10 시 45 분 수정 ) -------------------------------------------------------------------------------------"
     },
     {
-      "id": 631,
-      "title": "6월 18일 캐시아이템 업데이트 - 블레어 살롱 헤어 쿠폰",
-      "date": "2026-06-18T08:50+09:00",
-      "url": "https://maplestory.nexon.com/News/CashShop/631",
-      "items": [
-        "블레어 살롱 헤어 쿠폰"
-      ],
-      "summary": ""
-    },
-    {
       "id": 630,
       "title": "6월 18일 캐시아이템 업데이트 - 위습의 원더베리 & 루나 크리스탈",
       "date": "2026-06-18T08:50+09:00",
@@ -34,57 +88,6 @@
       "items": [
         "위습의 원더베리",
         "루나 크리스탈"
-      ],
-      "summary": ""
-    },
-    {
-      "id": 629,
-      "title": "6월 18일 캐시아이템 업데이트 - 스페셜 루나 크리스탈",
-      "date": "2026-06-18T08:50+09:00",
-      "url": "https://maplestory.nexon.com/News/CashShop/629",
-      "items": [
-        "스페셜 루나 크리스탈"
-      ],
-      "summary": ""
-    },
-    {
-      "id": 628,
-      "title": "6월 18일 캐시아이템 업데이트 - 로얄스타일 & 마스터피스",
-      "date": "2026-06-18T08:50+09:00",
-      "url": "https://maplestory.nexon.com/News/CashShop/628",
-      "items": [
-        "로얄스타일",
-        "마스터피스"
-      ],
-      "summary": ""
-    },
-    {
-      "id": 627,
-      "title": "6월 18일 캐시아이템 업데이트 - 전 직업 일러스트 컬렉션 : 모험가",
-      "date": "2026-06-18T08:50+09:00",
-      "url": "https://maplestory.nexon.com/News/CashShop/627",
-      "items": [
-        "전 직업 일러스트 컬렉션 : 모험가"
-      ],
-      "summary": ""
-    },
-    {
-      "id": 626,
-      "title": "6월 18일 캐시아이템 업데이트 - 전 직업 일러스트 컬렉션 : 시그너스 & 영웅",
-      "date": "2026-06-18T08:50+09:00",
-      "url": "https://maplestory.nexon.com/News/CashShop/626",
-      "items": [
-        "전 직업 일러스트 컬렉션 : 시그너스 & 영웅"
-      ],
-      "summary": ""
-    },
-    {
-      "id": 625,
-      "title": "6월 18일 캐시아이템 업데이트 - 전 직업 일러스트 컬렉션 : 데몬 & 레지스탕스",
-      "date": "2026-06-18T08:50+09:00",
-      "url": "https://maplestory.nexon.com/News/CashShop/625",
-      "items": [
-        "전 직업 일러스트 컬렉션 : 데몬 & 레지스탕스"
       ],
       "summary": ""
     }
