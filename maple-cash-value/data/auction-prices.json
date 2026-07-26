@@ -1,14 +1,14 @@
 {
   "version": 2,
   "world": "스카니아",
-  "generatedAt": "2026-07-26T14:18:41.808Z",
+  "generatedAt": "2026-07-26T14:45:55.549Z",
   "source": "manual-maple-auction-two-account",
   "policy": {
     "searchTab": "구매",
     "priceBasis": "listingLowestMeso",
     "candidateCheckBeforeSearch": true,
     "officialSearchLimit": 100,
-    "notes": "July 26 account 1 refresh complete: 24 direct daily priorities first, then package rotation from 잔잔한 물결(여). Single-listing search-cap outliers are retained as observations without replacing the prior calculator price."
+    "notes": "July 26 two-account refresh complete: account 1 handled 24 direct daily priorities and package rotation from 잔잔한 물결(여); account 2 continued package rotation from 레프 여신. Search-cap outliers are held without replacing the prior calculator price."
   },
   "prices": [
     {
@@ -3036,16 +3036,16 @@
       "itemName": "꼬미",
       "query": "꼬미",
       "aliases": [],
-      "listingLowestMeso": 200000000,
-      "listingLowestText": "2억",
-      "resultCount": 3,
+      "listingLowestMeso": 222222222,
+      "listingLowestText": "2억 2222만 2222",
+      "resultCount": 2,
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 2,
-      "searchIndex": 13,
-      "collectedAt": "2026-07-21T13:47:03.571Z",
+      "searchIndex": 29,
+      "collectedAt": "2026-07-26T14:36:51.066Z",
       "queueGroup": "packageDeferred",
-      "updatedAt": "2026-07-21T13:58:54.583Z"
+      "updatedAt": "2026-07-26T14:45:55.549Z"
     },
     {
       "itemName": "네스",
@@ -3053,14 +3053,14 @@
       "aliases": [],
       "listingLowestMeso": 222222222,
       "listingLowestText": "2억 2222만 2222",
-      "resultCount": 2,
+      "resultCount": 1,
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 2,
-      "searchIndex": 24,
-      "collectedAt": "2026-07-21T13:48:17.309Z",
+      "searchIndex": 34,
+      "collectedAt": "2026-07-26T14:37:27.058Z",
       "queueGroup": "packageDeferred",
-      "updatedAt": "2026-07-21T13:58:54.583Z"
+      "updatedAt": "2026-07-26T14:45:55.549Z"
     },
     {
       "itemName": "노릇잉",
@@ -3470,16 +3470,16 @@
       "itemName": "도롱",
       "query": "도롱",
       "aliases": [],
-      "listingLowestMeso": 119999999,
-      "listingLowestText": "1억 1999만 9999",
-      "resultCount": 4,
+      "listingLowestMeso": 144444444,
+      "listingLowestText": "1억 4444만 4444",
+      "resultCount": 2,
       "status": "ok",
       "filter": "캐시",
-      "searchAccount": 1,
-      "searchIndex": 62,
-      "collectedAt": "2026-07-21T12:24:00.138Z",
+      "searchAccount": 2,
+      "searchIndex": 3,
+      "collectedAt": "2026-07-26T14:33:19.187Z",
       "queueGroup": "packageDeferred",
-      "updatedAt": "2026-07-21T12:29:38.381Z"
+      "updatedAt": "2026-07-26T14:45:55.549Z"
     },
     {
       "itemName": "돌의 정령 베레모",
@@ -3527,46 +3527,46 @@
       "itemName": "딸기",
       "query": "딸기",
       "aliases": [],
-      "listingLowestMeso": 310000000,
-      "listingLowestText": "3억 1000만",
-      "resultCount": 1,
+      "listingLowestMeso": 332222222,
+      "listingLowestText": "3억 3222만 2222",
+      "resultCount": 2,
       "status": "ok",
       "filter": "캐시",
-      "searchAccount": 1,
-      "searchIndex": 74,
-      "collectedAt": "2026-07-21T12:25:29.384Z",
+      "searchAccount": 2,
+      "searchIndex": 9,
+      "collectedAt": "2026-07-26T14:34:25.193Z",
       "queueGroup": "packageDeferred",
-      "updatedAt": "2026-07-21T12:29:38.381Z"
+      "updatedAt": "2026-07-26T14:45:55.549Z"
     },
     {
       "itemName": "라미",
       "query": "라미",
       "aliases": [],
-      "listingLowestMeso": 190000000,
-      "listingLowestText": "1억 9000만",
+      "listingLowestMeso": 100000000,
+      "listingLowestText": "1억",
       "resultCount": 5,
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 2,
-      "searchIndex": 15,
-      "collectedAt": "2026-07-21T13:47:15.836Z",
+      "searchIndex": 31,
+      "collectedAt": "2026-07-26T14:37:08.664Z",
       "queueGroup": "packageDeferred",
-      "updatedAt": "2026-07-21T13:58:54.583Z"
+      "updatedAt": "2026-07-26T14:45:55.549Z"
     },
     {
       "itemName": "레비",
       "query": "레비",
       "aliases": [],
-      "listingLowestMeso": 81000000,
-      "listingLowestText": "8100만",
-      "resultCount": 3,
+      "listingLowestMeso": 82000000,
+      "listingLowestText": "8200만",
+      "resultCount": 1,
       "status": "ok",
       "filter": "캐시",
-      "searchAccount": 1,
-      "searchIndex": 70,
-      "collectedAt": "2026-07-21T12:24:58.009Z",
+      "searchAccount": 2,
+      "searchIndex": 8,
+      "collectedAt": "2026-07-26T14:34:16.084Z",
       "queueGroup": "packageDeferred",
-      "updatedAt": "2026-07-21T12:29:38.381Z"
+      "updatedAt": "2026-07-26T14:45:55.549Z"
     },
     {
       "itemName": "레트로 마법소녀 원피스(여)",
@@ -3670,14 +3670,14 @@
       "aliases": [],
       "listingLowestMeso": 377777777,
       "listingLowestText": "3억 7777만 7777",
-      "resultCount": 1,
+      "resultCount": 2,
       "status": "ok",
       "filter": "캐시",
-      "searchAccount": 1,
-      "searchIndex": 57,
-      "collectedAt": "2026-07-21T12:23:29.438Z",
+      "searchAccount": 2,
+      "searchIndex": 1,
+      "collectedAt": "2026-07-26T14:32:56.397Z",
       "queueGroup": "packageDeferred",
-      "updatedAt": "2026-07-21T12:29:38.381Z"
+      "updatedAt": "2026-07-26T14:45:55.549Z"
     },
     {
       "itemName": "레프 일리움 슈즈",
@@ -3825,16 +3825,16 @@
     {
       "itemName": "루시",
       "query": "루시",
-      "listingLowestMeso": 311111110,
-      "listingLowestText": "3억 1111만 1110",
-      "resultCount": 4,
+      "listingLowestMeso": 988888887,
+      "listingLowestText": "9억 8888만 8887",
+      "resultCount": 2,
       "status": "ok",
       "filter": "캐시",
-      "searchAccount": 1,
-      "searchIndex": 69,
-      "collectedAt": "2026-07-21T12:24:51.879Z",
+      "searchAccount": 2,
+      "searchIndex": 7,
+      "collectedAt": "2026-07-26T14:34:04.682Z",
       "queueGroup": "packageDeferred",
-      "updatedAt": "2026-07-21T12:29:38.381Z"
+      "updatedAt": "2026-07-26T14:45:55.549Z"
     },
     {
       "itemName": "리리컬 블루 리본",
@@ -3867,16 +3867,16 @@
     {
       "itemName": "리링",
       "query": "리링",
-      "listingLowestMeso": 144444443,
-      "listingLowestText": "1억 4444만 4443",
+      "listingLowestMeso": 144444444,
+      "listingLowestText": "1억 4444만 4444",
       "resultCount": 2,
       "status": "ok",
       "filter": "캐시",
-      "searchAccount": 1,
-      "searchIndex": 64,
-      "collectedAt": "2026-07-21T12:24:12.438Z",
+      "searchAccount": 2,
+      "searchIndex": 5,
+      "collectedAt": "2026-07-26T14:33:41.950Z",
       "queueGroup": "packageDeferred",
-      "updatedAt": "2026-07-21T12:29:38.381Z"
+      "updatedAt": "2026-07-26T14:45:55.549Z"
     },
     {
       "itemName": "매지컬 블루 슈즈(남)",
@@ -3984,25 +3984,25 @@
       "resultCount": 3,
       "status": "ok",
       "filter": "캐시",
-      "searchAccount": 1,
-      "searchIndex": 89,
-      "collectedAt": "2026-07-21T12:27:45.004Z",
+      "searchAccount": 2,
+      "searchIndex": 17,
+      "collectedAt": "2026-07-26T14:35:29.008Z",
       "queueGroup": "packageDeferred",
-      "updatedAt": "2026-07-21T12:29:38.381Z"
+      "updatedAt": "2026-07-26T14:45:55.549Z"
     },
     {
       "itemName": "바알",
       "query": "바알",
-      "listingLowestMeso": 366666665,
-      "listingLowestText": "3억 6666만 6665",
-      "resultCount": 6,
+      "listingLowestMeso": 90000000,
+      "listingLowestText": "9000만",
+      "resultCount": 4,
       "status": "ok",
       "filter": "캐시",
-      "searchAccount": 1,
-      "searchIndex": 68,
-      "collectedAt": "2026-07-21T12:24:45.755Z",
+      "searchAccount": 2,
+      "searchIndex": 6,
+      "collectedAt": "2026-07-26T14:33:53.312Z",
       "queueGroup": "packageDeferred",
-      "updatedAt": "2026-07-21T12:29:38.381Z"
+      "updatedAt": "2026-07-26T14:45:55.549Z"
     },
     {
       "itemName": "바우",
@@ -4175,16 +4175,16 @@
     {
       "itemName": "블링토잉",
       "query": "블링토잉",
-      "listingLowestMeso": 317777777,
-      "listingLowestText": "3억 1777만 7777",
-      "resultCount": 4,
+      "listingLowestMeso": 259999999,
+      "listingLowestText": "2억 5999만 9999",
+      "resultCount": 5,
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 2,
-      "searchIndex": 4,
-      "collectedAt": "2026-07-21T13:45:54.619Z",
+      "searchIndex": 25,
+      "collectedAt": "2026-07-26T14:36:26.531Z",
       "queueGroup": "packageDeferred",
-      "updatedAt": "2026-07-21T13:58:54.583Z"
+      "updatedAt": "2026-07-26T14:45:55.549Z"
     },
     {
       "itemName": "비비",
@@ -4194,11 +4194,11 @@
       "resultCount": 1,
       "status": "ok",
       "filter": "캐시",
-      "searchAccount": 1,
-      "searchIndex": 85,
-      "collectedAt": "2026-07-21T12:27:05.620Z",
+      "searchAccount": 2,
+      "searchIndex": 16,
+      "collectedAt": "2026-07-26T14:35:22.876Z",
       "queueGroup": "packageDeferred",
-      "updatedAt": "2026-07-21T12:29:38.381Z"
+      "updatedAt": "2026-07-26T14:45:55.549Z"
     },
     {
       "itemName": "비쥬",
@@ -4209,24 +4209,24 @@
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 2,
-      "searchIndex": 26,
-      "collectedAt": "2026-07-21T13:48:37.290Z",
+      "searchIndex": 36,
+      "collectedAt": "2026-07-26T14:37:39.308Z",
       "queueGroup": "packageDeferred",
-      "updatedAt": "2026-07-21T13:58:54.583Z"
+      "updatedAt": "2026-07-26T14:45:55.549Z"
     },
     {
       "itemName": "비치볼 검마",
       "query": "비치볼 검마",
-      "listingLowestMeso": 222222222,
-      "listingLowestText": "2억 2222만 2222",
+      "listingLowestMeso": 99999999,
+      "listingLowestText": "9999만 9999",
       "resultCount": 2,
       "status": "ok",
       "filter": "캐시",
-      "searchAccount": 1,
-      "searchIndex": 91,
-      "collectedAt": "2026-07-21T12:27:57.283Z",
+      "searchAccount": 2,
+      "searchIndex": 19,
+      "collectedAt": "2026-07-26T14:35:41.278Z",
       "queueGroup": "packageDeferred",
-      "updatedAt": "2026-07-21T12:29:38.381Z"
+      "updatedAt": "2026-07-26T14:45:55.549Z"
     },
     {
       "itemName": "빅토리안 리본",
@@ -4297,20 +4297,6 @@
       "collectedAt": "2026-07-25T14:39:57.174Z",
       "queueGroup": "packageDeferred",
       "updatedAt": "2026-07-25T14:56:39.121Z"
-    },
-    {
-      "itemName": "쁘띠토벤",
-      "query": "쁘띠토벤",
-      "listingLowestMeso": 746999999,
-      "listingLowestText": "7억 4699만 9999",
-      "resultCount": 1,
-      "status": "ok",
-      "filter": "캐시",
-      "searchAccount": 2,
-      "searchIndex": 2,
-      "collectedAt": "2026-07-21T13:45:42.330Z",
-      "queueGroup": "packageDeferred",
-      "updatedAt": "2026-07-21T13:58:54.583Z"
     },
     {
       "itemName": "사나운 물결(남)",
@@ -4401,14 +4387,14 @@
       "query": "소다",
       "listingLowestMeso": 222222222,
       "listingLowestText": "2억 2222만 2222",
-      "resultCount": 2,
+      "resultCount": 1,
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 2,
-      "searchIndex": 19,
-      "collectedAt": "2026-07-21T13:47:46.627Z",
+      "searchIndex": 32,
+      "collectedAt": "2026-07-26T14:37:14.794Z",
       "queueGroup": "packageDeferred",
-      "updatedAt": "2026-07-21T13:58:54.583Z"
+      "updatedAt": "2026-07-26T14:45:55.549Z"
     },
     {
       "itemName": "소망의 별(남)",
@@ -4614,53 +4600,53 @@
       "resultCount": 2,
       "status": "ok",
       "filter": "캐시",
-      "searchAccount": 1,
-      "searchIndex": 58,
-      "collectedAt": "2026-07-21T12:23:35.585Z",
+      "searchAccount": 2,
+      "searchIndex": 2,
+      "collectedAt": "2026-07-26T14:33:07.770Z",
       "queueGroup": "packageDeferred",
-      "updatedAt": "2026-07-21T12:29:38.381Z"
+      "updatedAt": "2026-07-26T14:45:55.549Z"
     },
     {
       "itemName": "아이스슬라임",
       "query": "아이스슬라임",
-      "listingLowestMeso": 120000000,
-      "listingLowestText": "1억 2000만",
-      "resultCount": 5,
-      "status": "ok",
-      "filter": "캐시",
-      "searchAccount": 2,
-      "searchIndex": 8,
-      "collectedAt": "2026-07-21T13:46:24.960Z",
-      "queueGroup": "packageDeferred",
-      "updatedAt": "2026-07-21T13:58:54.583Z"
-    },
-    {
-      "itemName": "아이스핑크빈",
-      "query": "아이스핑크빈",
-      "listingLowestMeso": 130000000,
-      "listingLowestText": "1억 3000만",
+      "listingLowestMeso": 98000000,
+      "listingLowestText": "9800만",
       "resultCount": 3,
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 2,
-      "searchIndex": 7,
-      "collectedAt": "2026-07-21T13:46:18.813Z",
+      "searchIndex": 27,
+      "collectedAt": "2026-07-26T14:36:38.807Z",
       "queueGroup": "packageDeferred",
-      "updatedAt": "2026-07-21T13:58:54.583Z"
+      "updatedAt": "2026-07-26T14:45:55.549Z"
+    },
+    {
+      "itemName": "아이스핑크빈",
+      "query": "아이스핑크빈",
+      "listingLowestMeso": 173333332,
+      "listingLowestText": "1억 7333만 3332",
+      "resultCount": 1,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 26,
+      "collectedAt": "2026-07-26T14:36:32.671Z",
+      "queueGroup": "packageDeferred",
+      "updatedAt": "2026-07-26T14:45:55.549Z"
     },
     {
       "itemName": "아케인토벤",
       "query": "아케인토벤",
-      "listingLowestMeso": 145999999,
-      "listingLowestText": "1억 4599만 9999",
-      "resultCount": 5,
+      "listingLowestMeso": 132000000,
+      "listingLowestText": "1억 3200만",
+      "resultCount": 3,
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 2,
-      "searchIndex": 3,
-      "collectedAt": "2026-07-21T13:45:48.484Z",
+      "searchIndex": 24,
+      "collectedAt": "2026-07-26T14:36:20.421Z",
       "queueGroup": "packageDeferred",
-      "updatedAt": "2026-07-21T13:58:54.583Z"
+      "updatedAt": "2026-07-26T14:45:55.549Z"
     },
     {
       "itemName": "어디든지 슝슝(여)",
@@ -4751,14 +4737,14 @@
       "query": "오리 검마",
       "listingLowestMeso": 222222222,
       "listingLowestText": "2억 2222만 2222",
-      "resultCount": 2,
+      "resultCount": 1,
       "status": "ok",
       "filter": "캐시",
-      "searchAccount": 1,
-      "searchIndex": 90,
-      "collectedAt": "2026-07-21T12:27:51.150Z",
+      "searchAccount": 2,
+      "searchIndex": 18,
+      "collectedAt": "2026-07-26T14:35:35.148Z",
       "queueGroup": "packageDeferred",
-      "updatedAt": "2026-07-21T12:29:38.381Z"
+      "updatedAt": "2026-07-26T14:45:55.549Z"
     },
     {
       "itemName": "우아한 래빗",
@@ -4875,16 +4861,16 @@
     {
       "itemName": "으스스곰",
       "query": "으스스곰",
-      "listingLowestMeso": 99999999,
-      "listingLowestText": "9999만 9999",
-      "resultCount": 1,
+      "listingLowestMeso": 151111111,
+      "listingLowestText": "1억 5111만 1111",
+      "resultCount": 3,
       "status": "ok",
       "filter": "캐시",
-      "searchAccount": 1,
-      "searchIndex": 77,
-      "collectedAt": "2026-07-21T12:26:05.938Z",
+      "searchAccount": 2,
+      "searchIndex": 11,
+      "collectedAt": "2026-07-26T14:34:52.218Z",
       "queueGroup": "packageDeferred",
-      "updatedAt": "2026-07-21T12:29:38.381Z"
+      "updatedAt": "2026-07-26T14:45:55.549Z"
     },
     {
       "itemName": "은호",
@@ -5210,25 +5196,25 @@
       "resultCount": 2,
       "status": "ok",
       "filter": "캐시",
-      "searchAccount": 1,
-      "searchIndex": 78,
+      "searchAccount": 2,
+      "searchIndex": 12,
       "queueGroup": "packageDeferred",
-      "collectedAt": "2026-07-21T12:26:22.691Z",
-      "updatedAt": "2026-07-21T12:29:38.381Z"
+      "collectedAt": "2026-07-26T14:34:58.333Z",
+      "updatedAt": "2026-07-26T14:45:55.549Z"
     },
     {
       "itemName": "베티",
       "query": "베티",
       "listingLowestMeso": 222222222,
       "listingLowestText": "2억 2222만 2222",
-      "resultCount": 2,
+      "resultCount": 1,
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 2,
-      "searchIndex": 20,
+      "searchIndex": 33,
       "queueGroup": "packageDeferred",
-      "collectedAt": "2026-07-21T13:47:52.757Z",
-      "updatedAt": "2026-07-21T13:58:54.583Z"
+      "collectedAt": "2026-07-26T14:37:20.923Z",
+      "updatedAt": "2026-07-26T14:45:55.549Z"
     },
     {
       "itemName": "민티",
@@ -5484,44 +5470,44 @@
     {
       "itemName": "토리",
       "query": "토리",
-      "listingLowestMeso": 99999999,
-      "listingLowestText": "9999만 9999",
-      "resultCount": 3,
+      "listingLowestMeso": 199999999,
+      "listingLowestText": "1억 9999만 9999",
+      "resultCount": 1,
       "status": "ok",
       "filter": "캐시",
-      "searchAccount": 1,
-      "searchIndex": 63,
+      "searchAccount": 2,
+      "searchIndex": 4,
       "queueGroup": "packageDeferred",
-      "collectedAt": "2026-07-21T12:24:06.295Z",
-      "updatedAt": "2026-07-21T12:29:38.381Z"
+      "collectedAt": "2026-07-26T14:33:30.564Z",
+      "updatedAt": "2026-07-26T14:45:55.549Z"
     },
     {
       "itemName": "초코",
       "query": "초코",
-      "listingLowestMeso": 200000000,
-      "listingLowestText": "2억",
-      "resultCount": 1,
+      "listingLowestMeso": 99999999,
+      "listingLowestText": "9999만 9999",
+      "resultCount": 2,
       "status": "ok",
       "filter": "캐시",
-      "searchAccount": 1,
-      "searchIndex": 75,
+      "searchAccount": 2,
+      "searchIndex": 10,
       "queueGroup": "packageDeferred",
-      "collectedAt": "2026-07-21T12:25:35.519Z",
-      "updatedAt": "2026-07-21T12:29:38.381Z"
+      "collectedAt": "2026-07-26T14:34:31.321Z",
+      "updatedAt": "2026-07-26T14:45:55.549Z"
     },
     {
       "itemName": "토미",
       "query": "토미",
-      "listingLowestMeso": 90000000,
-      "listingLowestText": "9000만",
-      "resultCount": 7,
+      "listingLowestMeso": 89000000,
+      "listingLowestText": "8900만",
+      "resultCount": 4,
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 2,
-      "searchIndex": 14,
+      "searchIndex": 30,
       "queueGroup": "packageDeferred",
-      "collectedAt": "2026-07-21T13:47:09.713Z",
-      "updatedAt": "2026-07-21T13:58:54.583Z"
+      "collectedAt": "2026-07-26T14:36:57.193Z",
+      "updatedAt": "2026-07-26T14:45:55.549Z"
     },
     {
       "itemName": "아니마 호영 흑운선",
@@ -5577,534 +5563,534 @@
     {
       "itemName": "데몬 슬레이어 머리띠(여)",
       "query": "데몬 슬레이어 머리띠 (여)",
-      "listingLowestMeso": 594300000,
-      "listingLowestText": "5억 9430만",
-      "resultCount": 3,
-      "status": "ok",
-      "filter": "캐시",
-      "searchAccount": 2,
-      "searchIndex": 34,
-      "queueGroup": "packageDeferred",
-      "collectedAt": "2026-07-21T13:49:36.959Z",
-      "aliases": [
-        "데몬 슬레이어 머리띠 (여)"
-      ],
-      "updatedAt": "2026-07-21T13:58:54.583Z"
-    },
-    {
-      "itemName": "데몬 슬레이어 윙",
-      "query": "데몬 슬레이어 윙",
-      "listingLowestMeso": 799000000,
-      "listingLowestText": "7억 9900만",
-      "resultCount": 4,
-      "status": "ok",
-      "filter": "캐시",
-      "searchAccount": 2,
-      "searchIndex": 33,
-      "queueGroup": "packageDeferred",
-      "collectedAt": "2026-07-21T13:49:30.801Z",
-      "updatedAt": "2026-07-21T13:58:54.583Z"
-    },
-    {
-      "itemName": "데몬 슬레이어 엑스",
-      "query": "데몬 슬레이어 엑스",
-      "listingLowestMeso": 90000000,
-      "listingLowestText": "9000만",
-      "resultCount": 2,
-      "status": "ok",
-      "filter": "캐시",
-      "searchAccount": 2,
-      "searchIndex": 32,
-      "queueGroup": "packageDeferred",
-      "collectedAt": "2026-07-21T13:49:14.082Z",
-      "updatedAt": "2026-07-21T13:58:54.583Z"
-    },
-    {
-      "itemName": "데몬 슬레이어 슈트(여)",
-      "query": "데몬 슬레이어 슈트 (여)",
-      "listingLowestMeso": 77650000,
-      "listingLowestText": "7765만",
-      "resultCount": 8,
-      "status": "ok",
-      "filter": "캐시",
-      "searchAccount": 2,
-      "searchIndex": 35,
-      "queueGroup": "packageDeferred",
-      "collectedAt": "2026-07-21T13:49:43.103Z",
-      "aliases": [
-        "데몬 슬레이어 슈트 (여)"
-      ],
-      "updatedAt": "2026-07-21T13:58:54.583Z"
-    },
-    {
-      "itemName": "데몬 슬레이어 슈즈",
-      "query": "데몬 슬레이어 슈즈",
-      "listingLowestMeso": 8888888,
-      "listingLowestText": "888만 8888",
-      "resultCount": 2,
-      "status": "ok",
-      "filter": "캐시",
-      "searchAccount": 2,
-      "searchIndex": 31,
-      "queueGroup": "packageDeferred",
-      "collectedAt": "2026-07-21T13:49:07.956Z",
-      "updatedAt": "2026-07-21T13:58:54.583Z"
-    },
-    {
-      "itemName": "데몬 어벤져 머리띠(여)",
-      "query": "데몬 어벤져 머리띠 (여)",
-      "listingLowestMeso": 574111111,
-      "listingLowestText": "5억 7411만 1111",
-      "resultCount": 9,
-      "status": "ok",
-      "filter": "캐시",
-      "searchAccount": 2,
-      "searchIndex": 40,
-      "queueGroup": "packageDeferred",
-      "collectedAt": "2026-07-21T13:50:16.159Z",
-      "aliases": [
-        "데몬 어벤져 머리띠 (여)"
-      ],
-      "updatedAt": "2026-07-21T13:58:54.583Z"
-    },
-    {
-      "itemName": "데몬 어벤져 윙",
-      "query": "데몬 어벤져 윙",
-      "listingLowestMeso": 447000000,
-      "listingLowestText": "4억 4700만",
-      "resultCount": 10,
-      "status": "ok",
-      "filter": "캐시",
-      "searchAccount": 2,
-      "searchIndex": 39,
-      "queueGroup": "packageDeferred",
-      "collectedAt": "2026-07-21T13:50:10.014Z",
-      "updatedAt": "2026-07-21T13:58:54.583Z"
-    },
-    {
-      "itemName": "데몬 어벤져 데스페라도",
-      "query": "데몬 어벤져 데스페라도",
-      "listingLowestMeso": 36999999,
-      "listingLowestText": "3699만 9999",
-      "resultCount": 7,
-      "status": "ok",
-      "filter": "캐시",
-      "searchAccount": 2,
-      "searchIndex": 38,
-      "queueGroup": "packageDeferred",
-      "collectedAt": "2026-07-21T13:50:03.857Z",
-      "updatedAt": "2026-07-21T13:58:54.583Z"
-    },
-    {
-      "itemName": "데몬 어벤져 슈트(여)",
-      "query": "데몬 어벤져 슈트 (여)",
-      "listingLowestMeso": 67450000,
-      "listingLowestText": "6745만",
-      "resultCount": 13,
+      "listingLowestMeso": 649900000,
+      "listingLowestText": "6억 4990만",
+      "resultCount": 5,
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 2,
       "searchIndex": 41,
       "queueGroup": "packageDeferred",
-      "collectedAt": "2026-07-21T13:50:31.535Z",
+      "collectedAt": "2026-07-26T14:38:16.179Z",
       "aliases": [
-        "데몬 어벤져 슈트 (여)"
+        "데몬 슬레이어 머리띠 (여)"
       ],
-      "updatedAt": "2026-07-21T13:58:54.583Z"
+      "updatedAt": "2026-07-26T14:45:55.549Z"
     },
     {
-      "itemName": "데몬 어벤져 슈즈",
-      "query": "데몬 어벤져 슈즈",
-      "listingLowestMeso": 10000000,
-      "listingLowestText": "1000만",
-      "resultCount": 9,
+      "itemName": "데몬 슬레이어 윙",
+      "query": "데몬 슬레이어 윙",
+      "listingLowestMeso": 546700000,
+      "listingLowestText": "5억 4670만",
+      "resultCount": 7,
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 2,
-      "searchIndex": 37,
+      "searchIndex": 40,
       "queueGroup": "packageDeferred",
-      "collectedAt": "2026-07-21T13:49:55.364Z",
-      "updatedAt": "2026-07-21T13:58:54.583Z"
+      "collectedAt": "2026-07-26T14:38:03.911Z",
+      "updatedAt": "2026-07-26T14:45:55.549Z"
     },
     {
-      "itemName": "레지스탕스 블래스터 건틀렛 리볼버",
-      "query": "레지스탕스 블래스터 건틀렛 리볼버",
-      "listingLowestMeso": 308200000,
-      "listingLowestText": "3억 820만",
+      "itemName": "데몬 슬레이어 엑스",
+      "query": "데몬 슬레이어 엑스",
+      "listingLowestMeso": 65555555,
+      "listingLowestText": "6555만 5555",
+      "resultCount": 4,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 39,
+      "queueGroup": "packageDeferred",
+      "collectedAt": "2026-07-26T14:37:57.768Z",
+      "updatedAt": "2026-07-26T14:45:55.549Z"
+    },
+    {
+      "itemName": "데몬 슬레이어 슈트(여)",
+      "query": "데몬 슬레이어 슈트 (여)",
+      "listingLowestMeso": 40000000,
+      "listingLowestText": "4000만",
+      "resultCount": 6,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 42,
+      "queueGroup": "packageDeferred",
+      "collectedAt": "2026-07-26T14:38:22.315Z",
+      "aliases": [
+        "데몬 슬레이어 슈트 (여)"
+      ],
+      "updatedAt": "2026-07-26T14:45:55.549Z"
+    },
+    {
+      "itemName": "데몬 슬레이어 슈즈",
+      "query": "데몬 슬레이어 슈즈",
+      "listingLowestMeso": 15000000,
+      "listingLowestText": "1500만",
       "resultCount": 5,
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 2,
-      "searchIndex": 45,
+      "searchIndex": 38,
       "queueGroup": "packageDeferred",
-      "collectedAt": "2026-07-21T13:50:56.055Z",
-      "updatedAt": "2026-07-21T13:58:54.583Z"
+      "collectedAt": "2026-07-26T14:37:51.637Z",
+      "updatedAt": "2026-07-26T14:45:55.549Z"
     },
     {
-      "itemName": "레지스탕스 블래스터 헤어핀(여)",
-      "query": "레지스탕스 블래스터 헤어핀 (여)",
-      "listingLowestMeso": 376244444,
-      "listingLowestText": "3억 7624만 4444",
-      "resultCount": 2,
-      "status": "ok",
-      "filter": "캐시",
-      "searchAccount": 2,
-      "searchIndex": 46,
-      "queueGroup": "packageDeferred",
-      "collectedAt": "2026-07-21T13:51:02.186Z",
-      "aliases": [
-        "레지스탕스 블래스터 헤어핀 (여)"
-      ],
-      "updatedAt": "2026-07-21T13:58:54.583Z"
-    },
-    {
-      "itemName": "레지스탕스 블래스터 슈트(여)",
-      "query": "레지스탕스 블래스터 슈트 (여)",
-      "listingLowestMeso": 96500000,
-      "listingLowestText": "9650만",
-      "resultCount": 8,
+      "itemName": "데몬 어벤져 머리띠(여)",
+      "query": "데몬 어벤져 머리띠 (여)",
+      "listingLowestMeso": 534400000,
+      "listingLowestText": "5억 3440만",
+      "resultCount": 5,
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 2,
       "searchIndex": 47,
       "queueGroup": "packageDeferred",
-      "collectedAt": "2026-07-21T13:51:08.325Z",
+      "collectedAt": "2026-07-26T14:38:52.972Z",
       "aliases": [
-        "레지스탕스 블래스터 슈트 (여)"
+        "데몬 어벤져 머리띠 (여)"
       ],
-      "updatedAt": "2026-07-21T13:58:54.583Z"
+      "updatedAt": "2026-07-26T14:45:55.549Z"
     },
     {
-      "itemName": "레지스탕스 블래스터 슈트(남)",
-      "query": "레지스탕스 블래스터 슈트 (남)",
-      "listingLowestMeso": 155499999,
-      "listingLowestText": "1억 5549만 9999",
-      "resultCount": 1,
+      "itemName": "데몬 어벤져 윙",
+      "query": "데몬 어벤져 윙",
+      "listingLowestMeso": 369800000,
+      "listingLowestText": "3억 6980만",
+      "resultCount": 7,
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 2,
-      "searchIndex": 43,
+      "searchIndex": 46,
       "queueGroup": "packageDeferred",
-      "collectedAt": "2026-07-21T13:50:43.796Z",
-      "aliases": [
-        "레지스탕스 블래스터 슈트 (남)"
-      ],
-      "updatedAt": "2026-07-21T13:58:54.583Z"
+      "collectedAt": "2026-07-26T14:38:46.850Z",
+      "updatedAt": "2026-07-26T14:45:55.549Z"
     },
     {
-      "itemName": "레지스탕스 블래스터 슈즈(남)",
-      "query": "레지스탕스 블래스터 슈즈 (남)",
-      "listingLowestMeso": 49999999,
-      "listingLowestText": "4999만 9999",
-      "resultCount": 1,
+      "itemName": "데몬 어벤져 데스페라도",
+      "query": "데몬 어벤져 데스페라도",
+      "listingLowestMeso": 88800000,
+      "listingLowestText": "8880만",
+      "resultCount": 15,
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 2,
-      "searchIndex": 44,
+      "searchIndex": 45,
       "queueGroup": "packageDeferred",
-      "collectedAt": "2026-07-21T13:50:49.914Z",
-      "aliases": [
-        "레지스탕스 블래스터 슈즈 (남)"
-      ],
-      "updatedAt": "2026-07-21T13:58:54.583Z"
+      "collectedAt": "2026-07-26T14:38:40.737Z",
+      "updatedAt": "2026-07-26T14:45:55.549Z"
     },
     {
-      "itemName": "레지스탕스 블래스터 슈즈(여)",
-      "query": "레지스탕스 블래스터 슈즈 (여)",
-      "listingLowestMeso": 44840000,
-      "listingLowestText": "4484만",
-      "resultCount": 9,
+      "itemName": "데몬 어벤져 슈트(여)",
+      "query": "데몬 어벤져 슈트 (여)",
+      "listingLowestMeso": 68850000,
+      "listingLowestText": "6885만",
+      "resultCount": 12,
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 2,
       "searchIndex": 48,
       "queueGroup": "packageDeferred",
-      "collectedAt": "2026-07-21T13:51:14.463Z",
+      "collectedAt": "2026-07-26T14:38:59.118Z",
       "aliases": [
-        "레지스탕스 블래스터 슈즈 (여)"
+        "데몬 어벤져 슈트 (여)"
       ],
-      "updatedAt": "2026-07-21T13:58:54.583Z"
+      "updatedAt": "2026-07-26T14:45:55.549Z"
     },
     {
-      "itemName": "레지스탕스 배틀메이지 스태프",
-      "query": "레지스탕스 배틀메이지 스태프",
-      "listingLowestMeso": 498999999,
-      "listingLowestText": "4억 9899만 9999",
-      "resultCount": 5,
-      "status": "ok",
-      "filter": "캐시",
-      "searchAccount": 2,
-      "searchIndex": 51,
-      "queueGroup": "packageDeferred",
-      "collectedAt": "2026-07-21T13:51:46.555Z",
-      "updatedAt": "2026-07-21T13:58:54.583Z"
-    },
-    {
-      "itemName": "레지스탕스 배틀메이지 슈트(남)",
-      "query": "레지스탕스 배틀메이지 슈트 (남)",
-      "listingLowestMeso": 139900000,
-      "listingLowestText": "1억 3990만",
+      "itemName": "데몬 어벤져 슈즈",
+      "query": "데몬 어벤져 슈즈",
+      "listingLowestMeso": 11111110,
+      "listingLowestText": "1111만 1110",
       "resultCount": 8,
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 2,
-      "searchIndex": 49,
+      "searchIndex": 44,
       "queueGroup": "packageDeferred",
-      "collectedAt": "2026-07-21T13:51:34.282Z",
-      "aliases": [
-        "레지스탕스 배틀메이지 슈트 (남)"
-      ],
-      "updatedAt": "2026-07-21T13:58:54.583Z"
+      "collectedAt": "2026-07-26T14:38:34.582Z",
+      "updatedAt": "2026-07-26T14:45:55.549Z"
     },
     {
-      "itemName": "레지스탕스 배틀메이지 슈트(여)",
-      "query": "레지스탕스 배틀메이지 슈트 (여)",
-      "listingLowestMeso": 77770000,
-      "listingLowestText": "7777만",
+      "itemName": "레지스탕스 블래스터 건틀렛 리볼버",
+      "query": "레지스탕스 블래스터 건틀렛 리볼버",
+      "listingLowestMeso": 721888888,
+      "listingLowestText": "7억 2188만 8888",
       "resultCount": 3,
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 2,
       "searchIndex": 52,
       "queueGroup": "packageDeferred",
-      "collectedAt": "2026-07-21T13:51:52.700Z",
-      "aliases": [
-        "레지스탕스 배틀메이지 슈트 (여)"
-      ],
-      "updatedAt": "2026-07-21T13:58:54.583Z"
+      "collectedAt": "2026-07-26T14:39:30.107Z",
+      "updatedAt": "2026-07-26T14:45:55.549Z"
     },
     {
-      "itemName": "레지스탕스 배틀메이지 슈즈",
-      "query": "레지스탕스 배틀메이지 슈즈",
-      "listingLowestMeso": 41950000,
-      "listingLowestText": "4195만",
-      "resultCount": 6,
+      "itemName": "레지스탕스 블래스터 헤어핀(여)",
+      "query": "레지스탕스 블래스터 헤어핀 (여)",
+      "listingLowestMeso": 643888888,
+      "listingLowestText": "6억 4388만 8888",
+      "resultCount": 2,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 53,
+      "queueGroup": "packageDeferred",
+      "collectedAt": "2026-07-26T14:39:36.248Z",
+      "aliases": [
+        "레지스탕스 블래스터 헤어핀 (여)"
+      ],
+      "updatedAt": "2026-07-26T14:45:55.549Z"
+    },
+    {
+      "itemName": "레지스탕스 블래스터 슈트(여)",
+      "query": "레지스탕스 블래스터 슈트 (여)",
+      "listingLowestMeso": 88744444,
+      "listingLowestText": "8874만 4444",
+      "resultCount": 5,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 54,
+      "queueGroup": "packageDeferred",
+      "collectedAt": "2026-07-26T14:39:42.383Z",
+      "aliases": [
+        "레지스탕스 블래스터 슈트 (여)"
+      ],
+      "updatedAt": "2026-07-26T14:45:55.549Z"
+    },
+    {
+      "itemName": "레지스탕스 블래스터 슈트(남)",
+      "query": "레지스탕스 블래스터 슈트 (남)",
+      "listingLowestMeso": 155499999,
+      "listingLowestText": "1억 5549만 9999",
+      "resultCount": 2,
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 2,
       "searchIndex": 50,
       "queueGroup": "packageDeferred",
-      "collectedAt": "2026-07-21T13:51:40.409Z",
-      "updatedAt": "2026-07-21T13:58:54.583Z"
+      "collectedAt": "2026-07-26T14:39:11.389Z",
+      "aliases": [
+        "레지스탕스 블래스터 슈트 (남)"
+      ],
+      "updatedAt": "2026-07-26T14:45:55.549Z"
     },
     {
-      "itemName": "레지스탕스 와일드헌터 석궁",
-      "query": "레지스탕스 와일드헌터 석궁",
-      "listingLowestMeso": 698888888,
-      "listingLowestText": "6억 9888만 8888",
+      "itemName": "레지스탕스 블래스터 슈즈(남)",
+      "query": "레지스탕스 블래스터 슈즈 (남)",
+      "listingLowestMeso": 44444444,
+      "listingLowestText": "4444만 4444",
       "resultCount": 2,
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 2,
-      "searchIndex": 56,
+      "searchIndex": 51,
       "queueGroup": "packageDeferred",
-      "collectedAt": "2026-07-21T13:52:26.287Z",
-      "updatedAt": "2026-07-21T13:58:54.583Z"
+      "collectedAt": "2026-07-26T14:39:23.973Z",
+      "aliases": [
+        "레지스탕스 블래스터 슈즈 (남)"
+      ],
+      "updatedAt": "2026-07-26T14:45:55.549Z"
     },
     {
-      "itemName": "레지스탕스 와일드헌터 슈즈",
-      "query": "레지스탕스 와일드헌터 슈즈",
-      "listingLowestMeso": 97999999,
-      "listingLowestText": "9799만 9999",
-      "resultCount": 3,
+      "itemName": "레지스탕스 블래스터 슈즈(여)",
+      "query": "레지스탕스 블래스터 슈즈 (여)",
+      "listingLowestMeso": 35499999,
+      "listingLowestText": "3549만 9999",
+      "resultCount": 6,
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 2,
       "searchIndex": 55,
       "queueGroup": "packageDeferred",
-      "collectedAt": "2026-07-21T13:52:11.094Z",
-      "updatedAt": "2026-07-21T13:58:54.583Z"
+      "collectedAt": "2026-07-26T14:39:48.515Z",
+      "aliases": [
+        "레지스탕스 블래스터 슈즈 (여)"
+      ],
+      "updatedAt": "2026-07-26T14:45:55.549Z"
     },
     {
-      "itemName": "레지스탕스 제논 이어피스",
-      "query": "레지스탕스 제논 이어피스",
-      "listingLowestMeso": 177767777,
-      "listingLowestText": "1억 7776만 7777",
-      "resultCount": 2,
+      "itemName": "레지스탕스 배틀메이지 스태프",
+      "query": "레지스탕스 배틀메이지 스태프",
+      "listingLowestMeso": 218888888,
+      "listingLowestText": "2억 1888만 8888",
+      "resultCount": 4,
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 2,
       "searchIndex": 58,
       "queueGroup": "packageDeferred",
-      "collectedAt": "2026-07-21T13:52:38.566Z",
-      "updatedAt": "2026-07-21T13:58:54.583Z"
+      "collectedAt": "2026-07-26T14:40:12.847Z",
+      "updatedAt": "2026-07-26T14:45:55.549Z"
     },
     {
-      "itemName": "레지스탕스 제논 에너지소드",
-      "query": "레지스탕스 제논 에너지소드",
-      "listingLowestMeso": 299999999,
-      "listingLowestText": "2억 9999만 9999",
-      "resultCount": 3,
-      "status": "ok",
-      "filter": "캐시",
-      "searchAccount": 2,
-      "searchIndex": 61,
-      "queueGroup": "packageDeferred",
-      "collectedAt": "2026-07-21T13:52:56.971Z",
-      "updatedAt": "2026-07-21T13:58:54.583Z"
-    },
-    {
-      "itemName": "레지스탕스 제논 슈즈",
-      "query": "레지스탕스 제논 슈즈",
-      "listingLowestMeso": 19777777,
-      "listingLowestText": "1977만 7777",
+      "itemName": "레지스탕스 배틀메이지 슈트(남)",
+      "query": "레지스탕스 배틀메이지 슈트 (남)",
+      "listingLowestMeso": 136600000,
+      "listingLowestText": "1억 3660만",
       "resultCount": 6,
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 2,
-      "searchIndex": 60,
+      "searchIndex": 56,
       "queueGroup": "packageDeferred",
-      "collectedAt": "2026-07-21T13:52:50.839Z",
-      "updatedAt": "2026-07-21T13:58:54.583Z"
+      "collectedAt": "2026-07-26T14:40:00.603Z",
+      "aliases": [
+        "레지스탕스 배틀메이지 슈트 (남)"
+      ],
+      "updatedAt": "2026-07-26T14:45:55.549Z"
     },
     {
-      "itemName": "레지스탕스 메카닉 바이저",
-      "query": "레지스탕스 메카닉 바이저",
-      "listingLowestMeso": 955555555,
-      "listingLowestText": "9억 5555만 5555",
-      "resultCount": 1,
+      "itemName": "레지스탕스 배틀메이지 슈트(여)",
+      "query": "레지스탕스 배틀메이지 슈트 (여)",
+      "listingLowestMeso": 110000000,
+      "listingLowestText": "1억 1000만",
+      "resultCount": 4,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 59,
+      "queueGroup": "packageDeferred",
+      "collectedAt": "2026-07-26T14:40:18.973Z",
+      "aliases": [
+        "레지스탕스 배틀메이지 슈트 (여)"
+      ],
+      "updatedAt": "2026-07-26T14:45:55.549Z"
+    },
+    {
+      "itemName": "레지스탕스 배틀메이지 슈즈",
+      "query": "레지스탕스 배틀메이지 슈즈",
+      "listingLowestMeso": 39550000,
+      "listingLowestText": "3955만",
+      "resultCount": 5,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 57,
+      "queueGroup": "packageDeferred",
+      "collectedAt": "2026-07-26T14:40:06.744Z",
+      "updatedAt": "2026-07-26T14:45:55.549Z"
+    },
+    {
+      "itemName": "레지스탕스 와일드헌터 석궁",
+      "query": "레지스탕스 와일드헌터 석궁",
+      "listingLowestMeso": 697888888,
+      "listingLowestText": "6억 9788만 8888",
+      "resultCount": 2,
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 2,
       "searchIndex": 63,
       "queueGroup": "packageDeferred",
-      "collectedAt": "2026-07-21T13:53:09.230Z",
-      "updatedAt": "2026-07-21T13:58:54.583Z"
+      "collectedAt": "2026-07-26T14:41:00.094Z",
+      "updatedAt": "2026-07-26T14:45:55.549Z"
     },
     {
-      "itemName": "레지스탕스 메카닉 슈트(남)",
-      "query": "레지스탕스 메카닉 슈트 (남)",
-      "listingLowestMeso": 85500000,
-      "listingLowestText": "8550만",
-      "resultCount": 2,
+      "itemName": "레지스탕스 와일드헌터 슈즈",
+      "query": "레지스탕스 와일드헌터 슈즈",
+      "listingLowestMeso": 91000000,
+      "listingLowestText": "9100만",
+      "resultCount": 3,
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 2,
-      "searchIndex": 64,
+      "searchIndex": 62,
       "queueGroup": "packageDeferred",
-      "collectedAt": "2026-07-21T13:53:22.750Z",
-      "aliases": [
-        "레지스탕스 메카닉 슈트 (남)"
-      ],
-      "updatedAt": "2026-07-21T13:58:54.583Z"
+      "collectedAt": "2026-07-26T14:40:53.946Z",
+      "updatedAt": "2026-07-26T14:45:55.549Z"
     },
     {
-      "itemName": "레지스탕스 메카닉 슈트(여)",
-      "query": "레지스탕스 메카닉 슈트 (여)",
-      "listingLowestMeso": 66666666,
-      "listingLowestText": "6666만 6666",
-      "resultCount": 4,
-      "status": "ok",
-      "filter": "캐시",
-      "searchAccount": 2,
-      "searchIndex": 66,
-      "queueGroup": "packageDeferred",
-      "collectedAt": "2026-07-21T13:53:40.746Z",
-      "aliases": [
-        "레지스탕스 메카닉 슈트 (여)"
-      ],
-      "updatedAt": "2026-07-21T13:58:54.583Z"
-    },
-    {
-      "itemName": "레지스탕스 메카닉 슈즈",
-      "query": "레지스탕스 메카닉 슈즈",
-      "listingLowestMeso": 19999999,
-      "listingLowestText": "1999만 9999",
-      "resultCount": 4,
+      "itemName": "레지스탕스 제논 이어피스",
+      "query": "레지스탕스 제논 이어피스",
+      "listingLowestMeso": 399999999,
+      "listingLowestText": "3억 9999만 9999",
+      "resultCount": 1,
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 2,
       "searchIndex": 65,
       "queueGroup": "packageDeferred",
-      "collectedAt": "2026-07-21T13:53:28.878Z",
-      "updatedAt": "2026-07-21T13:58:54.583Z"
+      "collectedAt": "2026-07-26T14:41:16.342Z",
+      "updatedAt": "2026-07-26T14:45:55.549Z"
     },
     {
-      "itemName": "기사단장 미하일 소드",
-      "query": "기사단장 미하일 소드",
-      "listingLowestMeso": 255555555,
-      "listingLowestText": "2억 5555만 5555",
-      "resultCount": 4,
+      "itemName": "레지스탕스 제논 에너지소드",
+      "query": "레지스탕스 제논 에너지소드",
+      "listingLowestMeso": 249999999,
+      "listingLowestText": "2억 4999만 9999",
+      "resultCount": 5,
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 2,
-      "searchIndex": 70,
+      "searchIndex": 68,
       "queueGroup": "packageDeferred",
-      "collectedAt": "2026-07-21T13:54:05.283Z",
-      "updatedAt": "2026-07-21T13:58:54.583Z"
+      "collectedAt": "2026-07-26T14:41:34.740Z",
+      "updatedAt": "2026-07-26T14:45:55.549Z"
     },
     {
-      "itemName": "기사단장 미하일 투구",
-      "query": "기사단장 미하일 투구",
-      "listingLowestMeso": 48888888,
-      "listingLowestText": "4888만 8888",
-      "resultCount": 7,
+      "itemName": "레지스탕스 제논 슈즈",
+      "query": "레지스탕스 제논 슈즈",
+      "listingLowestMeso": 8888888,
+      "listingLowestText": "888만 8888",
+      "resultCount": 9,
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 2,
       "searchIndex": 67,
       "queueGroup": "packageDeferred",
-      "collectedAt": "2026-07-21T13:53:46.879Z",
-      "updatedAt": "2026-07-21T13:58:54.583Z"
+      "collectedAt": "2026-07-26T14:41:28.611Z",
+      "updatedAt": "2026-07-26T14:45:55.549Z"
     },
     {
-      "itemName": "기사단장 미하일 부츠",
-      "query": "기사단장 미하일 부츠",
-      "listingLowestMeso": 59986666,
-      "listingLowestText": "5998만 6666",
-      "resultCount": 9,
+      "itemName": "레지스탕스 메카닉 바이저",
+      "query": "레지스탕스 메카닉 바이저",
+      "listingLowestMeso": 952100000,
+      "listingLowestText": "9억 5210만",
+      "resultCount": 2,
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 2,
-      "searchIndex": 69,
+      "searchIndex": 70,
       "queueGroup": "packageDeferred",
-      "collectedAt": "2026-07-21T13:53:59.154Z",
-      "updatedAt": "2026-07-21T13:58:54.583Z"
+      "collectedAt": "2026-07-26T14:41:46.963Z",
+      "updatedAt": "2026-07-26T14:45:55.549Z"
     },
     {
-      "itemName": "기사단장 오즈 로브(남)",
-      "query": "기사단장 오즈 로브 (남)",
-      "listingLowestMeso": 344000000,
-      "listingLowestText": "3억 4400만",
-      "resultCount": 7,
-      "status": "ok",
-      "filter": "캐시",
-      "searchAccount": 2,
-      "searchIndex": 72,
-      "queueGroup": "packageDeferred",
-      "collectedAt": "2026-07-21T13:54:25.748Z",
-      "aliases": [
-        "기사단장 오즈 로브 (남)"
-      ],
-      "updatedAt": "2026-07-21T13:58:54.583Z"
-    },
-    {
-      "itemName": "기사단장 오즈 햇",
-      "query": "기사단장 오즈 햇",
-      "listingLowestMeso": 344444444,
-      "listingLowestText": "3억 4444만 4444",
-      "resultCount": 3,
+      "itemName": "레지스탕스 메카닉 슈트(남)",
+      "query": "레지스탕스 메카닉 슈트 (남)",
+      "listingLowestMeso": 73950000,
+      "listingLowestText": "7395만",
+      "resultCount": 4,
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 2,
       "searchIndex": 71,
       "queueGroup": "packageDeferred",
-      "collectedAt": "2026-07-21T13:54:19.618Z",
-      "updatedAt": "2026-07-21T13:58:54.583Z"
+      "collectedAt": "2026-07-26T14:42:00.398Z",
+      "aliases": [
+        "레지스탕스 메카닉 슈트 (남)"
+      ],
+      "updatedAt": "2026-07-26T14:45:55.549Z"
     },
     {
-      "itemName": "기사단장 오즈 부츠",
-      "query": "기사단장 오즈 부츠",
-      "listingLowestMeso": 27777777,
-      "listingLowestText": "2777만 7777",
-      "resultCount": 7,
+      "itemName": "레지스탕스 메카닉 슈트(여)",
+      "query": "레지스탕스 메카닉 슈트 (여)",
+      "listingLowestMeso": 25444444,
+      "listingLowestText": "2544만 4444",
+      "resultCount": 4,
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 2,
       "searchIndex": 73,
       "queueGroup": "packageDeferred",
-      "collectedAt": "2026-07-21T13:54:31.879Z",
-      "updatedAt": "2026-07-21T13:58:54.583Z"
+      "collectedAt": "2026-07-26T14:42:18.564Z",
+      "aliases": [
+        "레지스탕스 메카닉 슈트 (여)"
+      ],
+      "updatedAt": "2026-07-26T14:45:55.549Z"
+    },
+    {
+      "itemName": "레지스탕스 메카닉 슈즈",
+      "query": "레지스탕스 메카닉 슈즈",
+      "listingLowestMeso": 48888888,
+      "listingLowestText": "4888만 8888",
+      "resultCount": 3,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 72,
+      "queueGroup": "packageDeferred",
+      "collectedAt": "2026-07-26T14:42:06.535Z",
+      "updatedAt": "2026-07-26T14:45:55.549Z"
+    },
+    {
+      "itemName": "기사단장 미하일 소드",
+      "query": "기사단장 미하일 소드",
+      "listingLowestMeso": 330000000,
+      "listingLowestText": "3억 3000만",
+      "resultCount": 2,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 77,
+      "queueGroup": "packageDeferred",
+      "collectedAt": "2026-07-26T14:42:43.118Z",
+      "updatedAt": "2026-07-26T14:45:55.549Z"
+    },
+    {
+      "itemName": "기사단장 미하일 투구",
+      "query": "기사단장 미하일 투구",
+      "listingLowestMeso": 19999999,
+      "listingLowestText": "1999만 9999",
+      "resultCount": 7,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 74,
+      "queueGroup": "packageDeferred",
+      "collectedAt": "2026-07-26T14:42:24.713Z",
+      "updatedAt": "2026-07-26T14:45:55.549Z"
+    },
+    {
+      "itemName": "기사단장 미하일 부츠",
+      "query": "기사단장 미하일 부츠",
+      "listingLowestMeso": 50000000,
+      "listingLowestText": "5000만",
+      "resultCount": 11,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 76,
+      "queueGroup": "packageDeferred",
+      "collectedAt": "2026-07-26T14:42:36.984Z",
+      "updatedAt": "2026-07-26T14:45:55.549Z"
+    },
+    {
+      "itemName": "기사단장 오즈 로브(남)",
+      "query": "기사단장 오즈 로브 (남)",
+      "listingLowestMeso": 342200000,
+      "listingLowestText": "3억 4220만",
+      "resultCount": 5,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 79,
+      "queueGroup": "packageDeferred",
+      "collectedAt": "2026-07-26T14:42:55.378Z",
+      "aliases": [
+        "기사단장 오즈 로브 (남)"
+      ],
+      "updatedAt": "2026-07-26T14:45:55.549Z"
+    },
+    {
+      "itemName": "기사단장 오즈 햇",
+      "query": "기사단장 오즈 햇",
+      "listingLowestMeso": 199999999,
+      "listingLowestText": "1억 9999만 9999",
+      "resultCount": 8,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 78,
+      "queueGroup": "packageDeferred",
+      "collectedAt": "2026-07-26T14:42:49.253Z",
+      "updatedAt": "2026-07-26T14:45:55.549Z"
+    },
+    {
+      "itemName": "기사단장 오즈 부츠",
+      "query": "기사단장 오즈 부츠",
+      "listingLowestMeso": 19900000,
+      "listingLowestText": "1990만",
+      "resultCount": 7,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 80,
+      "queueGroup": "packageDeferred",
+      "collectedAt": "2026-07-26T14:43:01.520Z",
+      "updatedAt": "2026-07-26T14:45:55.549Z"
     },
     {
       "itemName": "책사 나인하트 도서",
@@ -6123,33 +6109,33 @@
     {
       "itemName": "기사단장 이카르트 가면",
       "query": "기사단장 이카르트 가면",
-      "listingLowestMeso": 345000000,
-      "listingLowestText": "3억 4500만",
-      "resultCount": 6,
+      "listingLowestMeso": 395000000,
+      "listingLowestText": "3억 9500만",
+      "resultCount": 10,
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 2,
-      "searchIndex": 82,
+      "searchIndex": 89,
       "queueGroup": "packageDeferred",
-      "collectedAt": "2026-07-21T13:55:48.368Z",
-      "updatedAt": "2026-07-21T13:58:54.583Z"
+      "collectedAt": "2026-07-26T14:44:02.090Z",
+      "updatedAt": "2026-07-26T14:45:55.549Z"
     },
     {
       "itemName": "기사단장 호크아이 슈트(여)",
       "query": "기사단장 호크아이 슈트 (여)",
-      "listingLowestMeso": 299999999,
-      "listingLowestText": "2억 9999만 9999",
-      "resultCount": 5,
+      "listingLowestMeso": 280000000,
+      "listingLowestText": "2억 8000만",
+      "resultCount": 6,
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 2,
-      "searchIndex": 91,
+      "searchIndex": 98,
       "queueGroup": "packageDeferred",
-      "collectedAt": "2026-07-21T13:56:49.025Z",
+      "collectedAt": "2026-07-26T14:45:03.213Z",
       "aliases": [
         "기사단장 호크아이 슈트 (여)"
       ],
-      "updatedAt": "2026-07-21T13:58:54.583Z"
+      "updatedAt": "2026-07-26T14:45:55.549Z"
     },
     {
       "itemName": "기사단장 이리나 보우",
@@ -6160,27 +6146,10 @@
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 2,
-      "searchIndex": 79,
+      "searchIndex": 86,
       "queueGroup": "packageDeferred",
-      "collectedAt": "2026-07-21T13:55:29.993Z",
-      "updatedAt": "2026-07-21T13:58:54.583Z"
-    },
-    {
-      "itemName": "기사단장 이리나 슈트(여)",
-      "query": "기사단장 이리나 슈트 (여)",
-      "listingLowestMeso": 334444444,
-      "listingLowestText": "3억 3444만 4444",
-      "resultCount": 1,
-      "status": "ok",
-      "filter": "캐시",
-      "searchAccount": 2,
-      "searchIndex": 80,
-      "queueGroup": "packageDeferred",
-      "collectedAt": "2026-07-21T13:55:36.110Z",
-      "aliases": [
-        "기사단장 이리나 슈트 (여)"
-      ],
-      "updatedAt": "2026-07-21T13:58:54.583Z"
+      "collectedAt": "2026-07-26T14:43:43.697Z",
+      "updatedAt": "2026-07-26T14:45:55.549Z"
     },
     {
       "itemName": "레지스탕스 제논 슈트(남)",
@@ -6188,17 +6157,17 @@
       "aliases": [
         "레지스탕스 제논 슈트 (남)"
       ],
-      "listingLowestMeso": 1111111000,
-      "listingLowestText": "11억 1111만 1000",
-      "resultCount": 2,
+      "listingLowestMeso": 249999999,
+      "listingLowestText": "2억 4999만 9999",
+      "resultCount": 5,
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 2,
-      "searchIndex": 59,
+      "searchIndex": 66,
       "queueGroup": "packageDeferred",
       "worldObserved": "챌린저스 (월드 통합)",
-      "collectedAt": "2026-07-21T13:52:44.693Z",
-      "updatedAt": "2026-07-21T13:58:54.583Z"
+      "collectedAt": "2026-07-26T14:41:22.480Z",
+      "updatedAt": "2026-07-26T14:45:55.549Z"
     },
     {
       "itemName": "기사단장 이리나 슈트(남)",
@@ -6206,17 +6175,17 @@
       "aliases": [
         "기사단장 이리나 슈트 (남)"
       ],
-      "listingLowestMeso": 219999999,
-      "listingLowestText": "2억 1999만 9999",
+      "listingLowestMeso": 219799999,
+      "listingLowestText": "2억 1979만 9999",
       "resultCount": 7,
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 2,
-      "searchIndex": 77,
+      "searchIndex": 84,
       "queueGroup": "packageDeferred",
       "worldObserved": "스카니아",
-      "collectedAt": "2026-07-21T13:54:56.427Z",
-      "updatedAt": "2026-07-21T13:58:54.583Z"
+      "collectedAt": "2026-07-26T14:43:31.409Z",
+      "updatedAt": "2026-07-26T14:45:55.549Z"
     },
     {
       "itemName": "여제 시그너스 드레스(여)",
@@ -6238,64 +6207,64 @@
     {
       "itemName": "기사단장 이카르트 표창",
       "query": "기사단장 이카르트 표창",
-      "listingLowestMeso": 221700000,
-      "listingLowestText": "2억 2170만",
-      "resultCount": 7,
+      "listingLowestMeso": 189900000,
+      "listingLowestText": "1억 8990만",
+      "resultCount": 10,
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 2,
-      "searchIndex": 85,
+      "searchIndex": 92,
       "queueGroup": "packageDeferred",
-      "collectedAt": "2026-07-21T13:56:06.775Z",
-      "updatedAt": "2026-07-21T13:58:54.583Z"
+      "collectedAt": "2026-07-26T14:44:26.448Z",
+      "updatedAt": "2026-07-26T14:45:55.549Z"
     },
     {
       "itemName": "기사단장 이카르트 슈트(남)",
       "query": "기사단장 이카르트 슈트 (남)",
-      "listingLowestMeso": 111111111,
-      "listingLowestText": "1억 1111만 1111",
+      "listingLowestMeso": 221100000,
+      "listingLowestText": "2억 2110만",
       "resultCount": 5,
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 2,
-      "searchIndex": 83,
+      "searchIndex": 90,
       "queueGroup": "packageDeferred",
-      "collectedAt": "2026-07-21T13:55:54.502Z",
+      "collectedAt": "2026-07-26T14:44:08.255Z",
       "aliases": [
         "기사단장 이카르트 슈트 (남)"
       ],
-      "updatedAt": "2026-07-21T13:58:54.583Z"
+      "updatedAt": "2026-07-26T14:45:55.549Z"
     },
     {
       "itemName": "기사단장 이카르트 슈트(여)",
       "query": "기사단장 이카르트 슈트 (여)",
-      "listingLowestMeso": 384900000,
-      "listingLowestText": "3억 8490만",
-      "resultCount": 2,
+      "listingLowestMeso": 239900000,
+      "listingLowestText": "2억 3990만",
+      "resultCount": 3,
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 2,
-      "searchIndex": 86,
+      "searchIndex": 93,
       "queueGroup": "packageDeferred",
-      "collectedAt": "2026-07-21T13:56:12.898Z",
+      "collectedAt": "2026-07-26T14:44:32.577Z",
       "aliases": [
         "기사단장 이카르트 슈트 (여)"
       ],
-      "updatedAt": "2026-07-21T13:58:54.583Z"
+      "updatedAt": "2026-07-26T14:45:55.549Z"
     },
     {
       "itemName": "기사단장 오즈 스태프",
       "query": "기사단장 오즈 스태프",
-      "listingLowestMeso": 88888888,
-      "listingLowestText": "8888만 8888",
-      "resultCount": 7,
+      "listingLowestMeso": 122200000,
+      "listingLowestText": "1억 2220만",
+      "resultCount": 11,
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 2,
-      "searchIndex": 74,
+      "searchIndex": 81,
       "queueGroup": "packageDeferred",
-      "collectedAt": "2026-07-21T13:54:38.013Z",
-      "updatedAt": "2026-07-21T13:58:54.583Z"
+      "collectedAt": "2026-07-26T14:43:13.008Z",
+      "updatedAt": "2026-07-26T14:45:55.549Z"
     },
     {
       "itemName": "여제 시그너스 슈즈",
@@ -6314,47 +6283,47 @@
     {
       "itemName": "기사단장 호크아이 너클",
       "query": "기사단장 호크아이 너클",
-      "listingLowestMeso": 122222222,
-      "listingLowestText": "1억 2222만 2222",
-      "resultCount": 10,
+      "listingLowestMeso": 119990000,
+      "listingLowestText": "1억 1999만",
+      "resultCount": 12,
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 2,
-      "searchIndex": 90,
+      "searchIndex": 97,
       "queueGroup": "packageDeferred",
-      "collectedAt": "2026-07-21T13:56:42.890Z",
-      "updatedAt": "2026-07-21T13:58:54.583Z"
+      "collectedAt": "2026-07-26T14:44:57.097Z",
+      "updatedAt": "2026-07-26T14:45:55.549Z"
     },
     {
       "itemName": "기사단장 호크아이 햇",
       "query": "기사단장 호크아이 햇",
-      "listingLowestMeso": 266666666,
-      "listingLowestText": "2억 6666만 6666",
-      "resultCount": 4,
+      "listingLowestMeso": 143333333,
+      "listingLowestText": "1억 4333만 3333",
+      "resultCount": 5,
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 2,
-      "searchIndex": 87,
+      "searchIndex": 94,
       "queueGroup": "packageDeferred",
-      "collectedAt": "2026-07-21T13:56:24.488Z",
-      "updatedAt": "2026-07-21T13:58:54.583Z"
+      "collectedAt": "2026-07-26T14:44:38.697Z",
+      "updatedAt": "2026-07-26T14:45:55.549Z"
     },
     {
       "itemName": "기사단장 호크아이 슈트(남)",
       "query": "기사단장 호크아이 슈트 (남)",
-      "listingLowestMeso": 360000000,
-      "listingLowestText": "3억 6000만",
-      "resultCount": 4,
+      "listingLowestMeso": 199999999,
+      "listingLowestText": "1억 9999만 9999",
+      "resultCount": 5,
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 2,
-      "searchIndex": 88,
+      "searchIndex": 95,
       "queueGroup": "packageDeferred",
-      "collectedAt": "2026-07-21T13:56:30.613Z",
+      "collectedAt": "2026-07-26T14:44:44.821Z",
       "aliases": [
         "기사단장 호크아이 슈트 (남)"
       ],
-      "updatedAt": "2026-07-21T13:58:54.583Z"
+      "updatedAt": "2026-07-26T14:45:55.549Z"
     },
     {
       "itemName": "신수의 부름",
@@ -6379,13 +6348,13 @@
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 2,
-      "searchIndex": 78,
+      "searchIndex": 85,
       "queueGroup": "packageDeferred",
-      "collectedAt": "2026-07-21T13:55:05.315Z",
+      "collectedAt": "2026-07-26T14:43:37.570Z",
       "aliases": [
         "기사단장 이리나 슈즈 (남)"
       ],
-      "updatedAt": "2026-07-21T13:58:54.583Z"
+      "updatedAt": "2026-07-26T14:45:55.549Z"
     },
     {
       "itemName": "여제 시그너스 써클릿",
@@ -6404,89 +6373,89 @@
     {
       "itemName": "책사 나인하트 모노클",
       "query": "책사 나인하트 모노클",
-      "listingLowestMeso": 20000000,
-      "listingLowestText": "2000만",
-      "resultCount": 8,
-      "status": "ok",
-      "filter": "캐시",
-      "searchAccount": 2,
-      "searchIndex": 92,
-      "queueGroup": "packageDeferred",
-      "collectedAt": "2026-07-21T13:56:55.166Z",
-      "updatedAt": "2026-07-21T13:58:54.583Z"
-    },
-    {
-      "itemName": "기사단장 이리나 크라운",
-      "query": "기사단장 이리나 크라운",
-      "listingLowestMeso": 26000000,
-      "listingLowestText": "2600만",
-      "resultCount": 5,
-      "status": "ok",
-      "filter": "캐시",
-      "searchAccount": 2,
-      "searchIndex": 76,
-      "queueGroup": "packageDeferred",
-      "collectedAt": "2026-07-21T13:54:50.288Z",
-      "updatedAt": "2026-07-21T13:58:54.583Z"
-    },
-    {
-      "itemName": "책사 나인하트 로브",
-      "query": "책사 나인하트 로브",
-      "listingLowestMeso": 66000000,
-      "listingLowestText": "6600만",
-      "resultCount": 16,
-      "status": "ok",
-      "filter": "캐시",
-      "searchAccount": 2,
-      "searchIndex": 93,
-      "queueGroup": "packageDeferred",
-      "collectedAt": "2026-07-21T13:57:01.301Z",
-      "updatedAt": "2026-07-21T13:58:54.583Z"
-    },
-    {
-      "itemName": "기사단장 이카르트 부츠",
-      "query": "기사단장 이카르트 부츠",
-      "listingLowestMeso": 17750000,
-      "listingLowestText": "1775만",
+      "listingLowestMeso": 47850000,
+      "listingLowestText": "4785만",
       "resultCount": 7,
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 2,
-      "searchIndex": 84,
+      "searchIndex": 99,
       "queueGroup": "packageDeferred",
-      "collectedAt": "2026-07-21T13:56:00.639Z",
-      "updatedAt": "2026-07-21T13:58:54.583Z"
+      "collectedAt": "2026-07-26T14:45:09.351Z",
+      "updatedAt": "2026-07-26T14:45:55.549Z"
     },
     {
-      "itemName": "기사단장 이리나 슈즈(여)",
-      "query": "기사단장 이리나 슈즈 (여)",
-      "listingLowestMeso": 35000000,
-      "listingLowestText": "3500만",
-      "resultCount": 2,
+      "itemName": "기사단장 이리나 크라운",
+      "query": "기사단장 이리나 크라운",
+      "listingLowestMeso": 22222222,
+      "listingLowestText": "2222만 2222",
+      "resultCount": 3,
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 2,
-      "searchIndex": 81,
+      "searchIndex": 83,
       "queueGroup": "packageDeferred",
-      "collectedAt": "2026-07-21T13:55:42.249Z",
-      "aliases": [
-        "기사단장 이리나 슈즈 (여)"
-      ],
-      "updatedAt": "2026-07-21T13:58:54.583Z"
+      "collectedAt": "2026-07-26T14:43:25.243Z",
+      "updatedAt": "2026-07-26T14:45:55.549Z"
     },
     {
-      "itemName": "기사단장 호크아이 부츠",
-      "query": "기사단장 호크아이 부츠",
-      "listingLowestMeso": 11111111,
-      "listingLowestText": "1111만 1111",
+      "itemName": "책사 나인하트 로브",
+      "query": "책사 나인하트 로브",
+      "listingLowestMeso": 48750000,
+      "listingLowestText": "4875만",
+      "resultCount": 10,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 100,
+      "queueGroup": "packageDeferred",
+      "collectedAt": "2026-07-26T14:45:15.503Z",
+      "updatedAt": "2026-07-26T14:45:55.549Z"
+    },
+    {
+      "itemName": "기사단장 이카르트 부츠",
+      "query": "기사단장 이카르트 부츠",
+      "listingLowestMeso": 17599999,
+      "listingLowestText": "1759만 9999",
       "resultCount": 5,
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 2,
-      "searchIndex": 89,
+      "searchIndex": 91,
       "queueGroup": "packageDeferred",
-      "collectedAt": "2026-07-21T13:56:36.753Z",
-      "updatedAt": "2026-07-21T13:58:54.583Z"
+      "collectedAt": "2026-07-26T14:44:20.274Z",
+      "updatedAt": "2026-07-26T14:45:55.549Z"
+    },
+    {
+      "itemName": "기사단장 이리나 슈즈(여)",
+      "query": "기사단장 이리나 슈즈 (여)",
+      "listingLowestMeso": 25000000,
+      "listingLowestText": "2500만",
+      "resultCount": 2,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 88,
+      "queueGroup": "packageDeferred",
+      "collectedAt": "2026-07-26T14:43:55.966Z",
+      "aliases": [
+        "기사단장 이리나 슈즈 (여)"
+      ],
+      "updatedAt": "2026-07-26T14:45:55.549Z"
+    },
+    {
+      "itemName": "기사단장 호크아이 부츠",
+      "query": "기사단장 호크아이 부츠",
+      "listingLowestMeso": 10000000,
+      "listingLowestText": "1000만",
+      "resultCount": 6,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 96,
+      "queueGroup": "packageDeferred",
+      "collectedAt": "2026-07-26T14:44:50.950Z",
+      "updatedAt": "2026-07-26T14:45:55.549Z"
     },
     {
       "itemName": "책사 나인하트 슈즈",
@@ -7573,19 +7542,19 @@
     {
       "itemName": "기사단장 오즈 로브(여)",
       "query": "기사단장 오즈 로브 (여)",
-      "listingLowestMeso": 755500000,
-      "listingLowestText": "7억 5550만",
-      "resultCount": 3,
+      "listingLowestMeso": 625800000,
+      "listingLowestText": "6억 2580만",
+      "resultCount": 6,
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 2,
-      "searchIndex": 75,
+      "searchIndex": 82,
       "queueGroup": "packageDeferred",
-      "collectedAt": "2026-07-21T13:54:44.145Z",
+      "collectedAt": "2026-07-26T14:43:19.122Z",
       "aliases": [
         "기사단장 오즈 로브 (여)"
       ],
-      "updatedAt": "2026-07-21T13:58:54.583Z"
+      "updatedAt": "2026-07-26T14:45:55.549Z"
     },
     {
       "itemName": "모험가 캡틴 부츠(여)",
@@ -7652,16 +7621,16 @@
     {
       "itemName": "기사단장 미하일 아머",
       "query": "기사단장 미하일 아머",
-      "listingLowestMeso": 220000000,
-      "listingLowestText": "2억 2000만",
+      "listingLowestMeso": 130000000,
+      "listingLowestText": "1억 3000만",
       "resultCount": 8,
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 2,
-      "searchIndex": 68,
+      "searchIndex": 75,
       "queueGroup": "packageDeferred",
-      "collectedAt": "2026-07-21T13:53:53.018Z",
-      "updatedAt": "2026-07-21T13:58:54.583Z"
+      "collectedAt": "2026-07-26T14:42:30.847Z",
+      "updatedAt": "2026-07-26T14:45:55.549Z"
     },
     {
       "itemName": "배틀 라이플",
@@ -7922,20 +7891,6 @@
       "updatedAt": "2026-07-26T14:18:41.808Z"
     },
     {
-      "itemName": "으스스냥",
-      "query": "으스스냥",
-      "listingLowestMeso": 99999999,
-      "listingLowestText": "9999만 9999",
-      "resultCount": 1,
-      "status": "ok",
-      "filter": "캐시",
-      "searchAccount": 1,
-      "searchIndex": 79,
-      "queueGroup": "packageDeferred",
-      "collectedAt": "2026-07-21T12:26:28.820Z",
-      "updatedAt": "2026-07-21T12:29:38.381Z"
-    },
-    {
       "itemName": "혈맹의 반지",
       "query": "혈맹의 반지",
       "queueGroup": "dailyPriority",
@@ -7953,15 +7908,15 @@
       "itemName": "레지스탕스 와일드헌터 헤어핀",
       "query": "레지스탕스 와일드헌터 헤어핀",
       "queueGroup": "packageDeferred",
-      "listingLowestMeso": 85777777,
-      "listingLowestText": "8577만 7777",
+      "listingLowestMeso": 82477777,
+      "listingLowestText": "8247만 7777",
       "resultCount": 2,
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 2,
-      "searchIndex": 53,
-      "collectedAt": "2026-07-21T13:51:58.830Z",
-      "updatedAt": "2026-07-21T13:58:54.583Z"
+      "searchIndex": 60,
+      "collectedAt": "2026-07-26T14:40:25.118Z",
+      "updatedAt": "2026-07-26T14:45:55.549Z"
     },
     {
       "itemName": "모험가 썬콜 부츠(남)",
@@ -8082,15 +8037,15 @@
       "itemName": "아이스예티",
       "query": "아이스예티",
       "queueGroup": "packageDeferred",
-      "listingLowestMeso": 150000000,
-      "listingLowestText": "1억 5000만",
-      "resultCount": 2,
+      "listingLowestMeso": 222222222,
+      "listingLowestText": "2억 2222만 2222",
+      "resultCount": 1,
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 2,
-      "searchIndex": 9,
-      "collectedAt": "2026-07-21T13:46:39.024Z",
-      "updatedAt": "2026-07-21T13:58:54.583Z"
+      "searchIndex": 28,
+      "collectedAt": "2026-07-26T14:36:44.934Z",
+      "updatedAt": "2026-07-26T14:45:55.549Z"
     },
     {
       "itemName": "레지스탕스 와일드헌터 슈트(남)",
@@ -8102,9 +8057,9 @@
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 2,
-      "searchIndex": 54,
-      "collectedAt": "2026-07-21T13:52:04.964Z",
-      "updatedAt": "2026-07-21T13:58:54.583Z"
+      "searchIndex": 61,
+      "collectedAt": "2026-07-26T14:40:47.821Z",
+      "updatedAt": "2026-07-26T14:45:55.549Z"
     },
     {
       "itemName": "모험가 불독 로브(남)",
@@ -8273,6 +8228,76 @@
       "searchIndex": 83,
       "collectedAt": "2026-07-25T14:52:21.620Z",
       "updatedAt": "2026-07-25T14:56:39.121Z"
+    },
+    {
+      "itemName": "누누",
+      "query": "누누",
+      "queueGroup": "packageDeferred",
+      "listingLowestMeso": 222222222,
+      "listingLowestText": "2억 2222만 2222",
+      "resultCount": 1,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 14,
+      "collectedAt": "2026-07-26T14:35:10.589Z",
+      "updatedAt": "2026-07-26T14:45:55.549Z"
+    },
+    {
+      "itemName": "구구",
+      "query": "구구",
+      "queueGroup": "packageDeferred",
+      "listingLowestMeso": 222222222,
+      "listingLowestText": "2억 2222만 2222",
+      "resultCount": 1,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 15,
+      "collectedAt": "2026-07-26T14:35:16.740Z",
+      "updatedAt": "2026-07-26T14:45:55.549Z"
+    },
+    {
+      "itemName": "마들고렌",
+      "query": "마들고렌",
+      "queueGroup": "packageDeferred",
+      "listingLowestMeso": 222222222,
+      "listingLowestText": "2억 2222만 2222",
+      "resultCount": 1,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 22,
+      "collectedAt": "2026-07-26T14:36:05.460Z",
+      "updatedAt": "2026-07-26T14:45:55.549Z"
+    },
+    {
+      "itemName": "데몬 어벤져 슈트(남)",
+      "query": "데몬 어벤져 슈트 (남)",
+      "queueGroup": "packageDeferred",
+      "listingLowestMeso": 399999999,
+      "listingLowestText": "3억 9999만 9999",
+      "resultCount": 1,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 43,
+      "collectedAt": "2026-07-26T14:38:28.422Z",
+      "updatedAt": "2026-07-26T14:45:55.549Z"
+    },
+    {
+      "itemName": "레지스탕스 제논 슈트(여)",
+      "query": "레지스탕스 제논 슈트 (여)",
+      "queueGroup": "packageDeferred",
+      "listingLowestMeso": 357888888,
+      "listingLowestText": "3억 5788만 8888",
+      "resultCount": 2,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 69,
+      "collectedAt": "2026-07-26T14:41:40.856Z",
+      "updatedAt": "2026-07-26T14:45:55.549Z"
     }
   ],
   "skipped": [
@@ -8309,18 +8334,6 @@
       "queueGroup": "packageDeferred",
       "collectedAt": "2026-07-16T14:05:16.231Z",
       "reason": "자동완성 정확 후보 없음; 필터 검색 미실행",
-      "updatedAt": "2026-07-16T14:07:15.051Z"
-    },
-    {
-      "itemName": "아이스예티",
-      "query": "아이스예티",
-      "status": "no_listing",
-      "filter": "캐시",
-      "searchAccount": 2,
-      "searchIndex": 98,
-      "queueGroup": "packageDeferred",
-      "collectedAt": "2026-07-16T14:05:33.485Z",
-      "reason": "현재 캐시 필터 매물 없음",
       "updatedAt": "2026-07-16T14:07:15.051Z"
     },
     {
@@ -8425,17 +8438,6 @@
       "updatedAt": "2026-07-17T14:35:59.818Z"
     },
     {
-      "itemName": "미미",
-      "query": "미미",
-      "queueGroup": "packageDeferred",
-      "status": "no_listing",
-      "reason": "현재 캐시 필터 매물 없음",
-      "searchAccount": 1,
-      "searchIndex": 37,
-      "collectedAt": "2026-07-17T14:27:54.541Z",
-      "updatedAt": "2026-07-17T14:35:59.818Z"
-    },
-    {
       "itemName": "네스의 물고기",
       "query": "네스의 물고기",
       "queueGroup": "packageDeferred",
@@ -8466,68 +8468,6 @@
       "searchAccount": 1,
       "searchIndex": 41,
       "collectedAt": "2026-07-17T14:28:36.884Z",
-      "updatedAt": "2026-07-17T14:35:59.818Z"
-    },
-    {
-      "itemName": "데몬 슬레이어 슈트(남)",
-      "query": "데몬 슬레이어 슈트 (남)",
-      "queueGroup": "packageDeferred",
-      "status": "no_listing",
-      "reason": "현재 캐시 필터 매물 없음",
-      "searchAccount": 1,
-      "searchIndex": 42,
-      "collectedAt": "2026-07-17T14:28:48.713Z",
-      "updatedAt": "2026-07-17T14:35:59.818Z"
-    },
-    {
-      "itemName": "레지스탕스 블래스터 헤어밴드(남)",
-      "query": "레지스탕스 블래스터 헤어밴드 (남)",
-      "queueGroup": "packageDeferred",
-      "status": "no_listing",
-      "reason": "현재 캐시 필터 매물 없음",
-      "searchAccount": 1,
-      "searchIndex": 54,
-      "collectedAt": "2026-07-17T14:30:07.965Z",
-      "updatedAt": "2026-07-17T14:35:59.818Z"
-    },
-    {
-      "itemName": "레지스탕스 배틀메이지 모자",
-      "query": "레지스탕스 배틀메이지 모자",
-      "queueGroup": "packageDeferred",
-      "status": "no_candidate",
-      "reason": "자동완성 정확 후보 없음; 필터 검색 미실행",
-      "collectedAt": "2026-07-17T14:30:55.521Z",
-      "updatedAt": "2026-07-17T14:35:59.818Z"
-    },
-    {
-      "itemName": "레지스탕스 와일드헌터 슈트(남)",
-      "query": "레지스탕스 와일드헌터 슈트 (남)",
-      "queueGroup": "packageDeferred",
-      "status": "no_listing",
-      "reason": "현재 캐시 필터 매물 없음",
-      "searchAccount": 1,
-      "searchIndex": 66,
-      "collectedAt": "2026-07-17T14:31:36.242Z",
-      "updatedAt": "2026-07-17T14:35:59.818Z"
-    },
-    {
-      "itemName": "레지스탕스 와일드헌터 슈트(여)",
-      "query": "레지스탕스 와일드헌터 슈트 (여)",
-      "queueGroup": "packageDeferred",
-      "status": "no_listing",
-      "reason": "현재 캐시 필터 매물 없음",
-      "searchAccount": 1,
-      "searchIndex": 69,
-      "collectedAt": "2026-07-17T14:31:54.711Z",
-      "updatedAt": "2026-07-17T14:35:59.818Z"
-    },
-    {
-      "itemName": "레지스탕스 메카닉 무기",
-      "query": "레지스탕스 메카닉 무기",
-      "queueGroup": "packageDeferred",
-      "status": "no_candidate",
-      "reason": "자동완성 정확 후보 없음; 필터 검색 미실행",
-      "collectedAt": "2026-07-17T14:32:55.909Z",
       "updatedAt": "2026-07-17T14:35:59.818Z"
     },
     {
@@ -8747,15 +8687,6 @@
       "updatedAt": "2026-07-21T12:29:38.381Z"
     },
     {
-      "itemName": "날라",
-      "query": "날라",
-      "queueGroup": "packageDeferred",
-      "status": "no_candidate",
-      "searchAccount": 1,
-      "collectedAt": "2026-07-21T12:25:42.068Z",
-      "updatedAt": "2026-07-21T12:29:38.381Z"
-    },
-    {
       "itemName": "딸기맛 아이스크림",
       "query": "딸기맛 아이스크림",
       "queueGroup": "packageDeferred",
@@ -8819,30 +8750,6 @@
       "searchAccount": 1,
       "searchIndex": 82,
       "collectedAt": "2026-07-21T12:26:47.220Z",
-      "updatedAt": "2026-07-21T12:29:38.381Z"
-    },
-    {
-      "itemName": "누누",
-      "query": "누누",
-      "queueGroup": "packageDeferred",
-      "resultCount": 0,
-      "status": "no_listing",
-      "filter": "캐시",
-      "searchAccount": 1,
-      "searchIndex": 83,
-      "collectedAt": "2026-07-21T12:26:53.354Z",
-      "updatedAt": "2026-07-21T12:29:38.381Z"
-    },
-    {
-      "itemName": "구구",
-      "query": "구구",
-      "queueGroup": "packageDeferred",
-      "resultCount": 0,
-      "status": "no_listing",
-      "filter": "캐시",
-      "searchAccount": 1,
-      "searchIndex": 84,
-      "collectedAt": "2026-07-21T12:26:59.497Z",
       "updatedAt": "2026-07-21T12:29:38.381Z"
     },
     {
@@ -8915,42 +8822,6 @@
       "searchAccount": 1,
       "searchIndex": 94,
       "collectedAt": "2026-07-21T12:28:23.959Z",
-      "updatedAt": "2026-07-21T12:29:38.381Z"
-    },
-    {
-      "itemName": "팬케오리",
-      "query": "팬케오리",
-      "queueGroup": "packageDeferred",
-      "resultCount": 0,
-      "status": "no_listing",
-      "filter": "캐시",
-      "searchAccount": 1,
-      "searchIndex": 95,
-      "collectedAt": "2026-07-21T12:28:30.084Z",
-      "updatedAt": "2026-07-21T12:29:38.381Z"
-    },
-    {
-      "itemName": "다쿠아부기",
-      "query": "다쿠아부기",
-      "queueGroup": "packageDeferred",
-      "resultCount": 0,
-      "status": "no_listing",
-      "filter": "캐시",
-      "searchAccount": 1,
-      "searchIndex": 96,
-      "collectedAt": "2026-07-21T12:28:36.224Z",
-      "updatedAt": "2026-07-21T12:29:38.381Z"
-    },
-    {
-      "itemName": "마들고렌",
-      "query": "마들고렌",
-      "queueGroup": "packageDeferred",
-      "resultCount": 0,
-      "status": "no_listing",
-      "filter": "캐시",
-      "searchAccount": 1,
-      "searchIndex": 97,
-      "collectedAt": "2026-07-21T12:28:42.359Z",
       "updatedAt": "2026-07-21T12:29:38.381Z"
     },
     {
@@ -9131,18 +9002,6 @@
       "updatedAt": "2026-07-21T13:58:54.583Z"
     },
     {
-      "itemName": "미미",
-      "query": "미미",
-      "queueGroup": "packageDeferred",
-      "resultCount": 0,
-      "status": "no_listing",
-      "filter": "캐시",
-      "searchAccount": 2,
-      "searchIndex": 25,
-      "collectedAt": "2026-07-21T13:48:31.127Z",
-      "updatedAt": "2026-07-21T13:58:54.583Z"
-    },
-    {
       "itemName": "네스의 물고기",
       "query": "네스의 물고기",
       "queueGroup": "packageDeferred",
@@ -9176,84 +9035,6 @@
       "searchAccount": 2,
       "searchIndex": 29,
       "collectedAt": "2026-07-21T13:48:55.682Z",
-      "updatedAt": "2026-07-21T13:58:54.583Z"
-    },
-    {
-      "itemName": "데몬 슬레이어 슈트(남)",
-      "query": "데몬 슬레이어 슈트 (남)",
-      "queueGroup": "packageDeferred",
-      "resultCount": 0,
-      "status": "no_listing",
-      "filter": "캐시",
-      "searchAccount": 2,
-      "searchIndex": 30,
-      "collectedAt": "2026-07-21T13:49:01.813Z",
-      "updatedAt": "2026-07-21T13:58:54.583Z"
-    },
-    {
-      "itemName": "데몬 어벤져 슈트(남)",
-      "query": "데몬 어벤져 슈트 (남)",
-      "queueGroup": "packageDeferred",
-      "resultCount": 0,
-      "status": "no_listing",
-      "filter": "캐시",
-      "searchAccount": 2,
-      "searchIndex": 36,
-      "collectedAt": "2026-07-21T13:49:49.222Z",
-      "updatedAt": "2026-07-21T13:58:54.583Z"
-    },
-    {
-      "itemName": "레지스탕스 블래스터 헤어밴드(남)",
-      "query": "레지스탕스 블래스터 헤어밴드 (남)",
-      "queueGroup": "packageDeferred",
-      "resultCount": 0,
-      "status": "no_listing",
-      "filter": "캐시",
-      "searchAccount": 2,
-      "searchIndex": 42,
-      "collectedAt": "2026-07-21T13:50:37.659Z",
-      "updatedAt": "2026-07-21T13:58:54.583Z"
-    },
-    {
-      "itemName": "레지스탕스 배틀메이지 모자",
-      "query": "레지스탕스 배틀메이지 모자",
-      "queueGroup": "packageDeferred",
-      "status": "no_candidate",
-      "searchAccount": 2,
-      "collectedAt": "2026-07-21T13:51:28.890Z",
-      "updatedAt": "2026-07-21T13:58:54.583Z"
-    },
-    {
-      "itemName": "레지스탕스 와일드헌터 슈트(여)",
-      "query": "레지스탕스 와일드헌터 슈트 (여)",
-      "queueGroup": "packageDeferred",
-      "resultCount": 0,
-      "status": "no_listing",
-      "filter": "캐시",
-      "searchAccount": 2,
-      "searchIndex": 57,
-      "collectedAt": "2026-07-21T13:52:32.433Z",
-      "updatedAt": "2026-07-21T13:58:54.583Z"
-    },
-    {
-      "itemName": "레지스탕스 제논 슈트(여)",
-      "query": "레지스탕스 제논 슈트 (여)",
-      "queueGroup": "packageDeferred",
-      "resultCount": 0,
-      "status": "no_listing",
-      "filter": "캐시",
-      "searchAccount": 2,
-      "searchIndex": 62,
-      "collectedAt": "2026-07-21T13:53:03.088Z",
-      "updatedAt": "2026-07-21T13:58:54.583Z"
-    },
-    {
-      "itemName": "레지스탕스 메카닉 무기",
-      "query": "레지스탕스 메카닉 무기",
-      "queueGroup": "packageDeferred",
-      "status": "no_candidate",
-      "searchAccount": 2,
-      "collectedAt": "2026-07-21T13:53:35.413Z",
       "updatedAt": "2026-07-21T13:58:54.583Z"
     },
     {
@@ -9663,66 +9444,205 @@
       "searchIndex": 97,
       "collectedAt": "2026-07-26T14:16:56.760Z",
       "updatedAt": "2026-07-26T14:18:41.808Z"
+    },
+    {
+      "itemName": "날라",
+      "query": "날라",
+      "queueGroup": "packageDeferred",
+      "status": "no_candidate",
+      "searchAccount": 2,
+      "collectedAt": "2026-07-26T14:34:46.733Z",
+      "updatedAt": "2026-07-26T14:45:55.549Z"
+    },
+    {
+      "itemName": "으스스냥",
+      "query": "으스스냥",
+      "queueGroup": "packageDeferred",
+      "resultCount": 0,
+      "status": "no_listing",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 13,
+      "collectedAt": "2026-07-26T14:35:04.460Z",
+      "updatedAt": "2026-07-26T14:45:55.549Z"
+    },
+    {
+      "itemName": "팬케오리",
+      "query": "팬케오리",
+      "queueGroup": "packageDeferred",
+      "resultCount": 0,
+      "status": "no_listing",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 20,
+      "collectedAt": "2026-07-26T14:35:47.403Z",
+      "updatedAt": "2026-07-26T14:45:55.549Z"
+    },
+    {
+      "itemName": "다쿠아부기",
+      "query": "다쿠아부기",
+      "queueGroup": "packageDeferred",
+      "resultCount": 0,
+      "status": "no_listing",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 21,
+      "collectedAt": "2026-07-26T14:35:59.328Z",
+      "updatedAt": "2026-07-26T14:45:55.549Z"
+    },
+    {
+      "itemName": "쁘띠토벤",
+      "query": "쁘띠토벤",
+      "queueGroup": "packageDeferred",
+      "resultCount": 0,
+      "status": "no_listing",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 23,
+      "collectedAt": "2026-07-26T14:36:14.290Z",
+      "updatedAt": "2026-07-26T14:45:55.549Z"
+    },
+    {
+      "itemName": "미미",
+      "query": "미미",
+      "queueGroup": "packageDeferred",
+      "resultCount": 0,
+      "status": "no_listing",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 35,
+      "collectedAt": "2026-07-26T14:37:33.185Z",
+      "updatedAt": "2026-07-26T14:45:55.549Z"
+    },
+    {
+      "itemName": "데몬 슬레이어 슈트(남)",
+      "query": "데몬 슬레이어 슈트 (남)",
+      "queueGroup": "packageDeferred",
+      "resultCount": 0,
+      "status": "no_listing",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 37,
+      "collectedAt": "2026-07-26T14:37:45.455Z",
+      "updatedAt": "2026-07-26T14:45:55.549Z"
+    },
+    {
+      "itemName": "레지스탕스 블래스터 헤어밴드(남)",
+      "query": "레지스탕스 블래스터 헤어밴드 (남)",
+      "queueGroup": "packageDeferred",
+      "resultCount": 0,
+      "status": "no_listing",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 49,
+      "collectedAt": "2026-07-26T14:39:05.238Z",
+      "updatedAt": "2026-07-26T14:45:55.549Z"
+    },
+    {
+      "itemName": "레지스탕스 배틀메이지 모자",
+      "query": "레지스탕스 배틀메이지 모자",
+      "queueGroup": "packageDeferred",
+      "status": "no_candidate",
+      "searchAccount": 2,
+      "collectedAt": "2026-07-26T14:39:55.128Z",
+      "updatedAt": "2026-07-26T14:45:55.549Z"
+    },
+    {
+      "itemName": "레지스탕스 와일드헌터 슈트(여)",
+      "query": "레지스탕스 와일드헌터 슈트 (여)",
+      "queueGroup": "packageDeferred",
+      "resultCount": 0,
+      "status": "no_listing",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 64,
+      "collectedAt": "2026-07-26T14:41:06.221Z",
+      "updatedAt": "2026-07-26T14:45:55.549Z"
+    },
+    {
+      "itemName": "레지스탕스 메카닉 무기",
+      "query": "레지스탕스 메카닉 무기",
+      "queueGroup": "packageDeferred",
+      "status": "no_candidate",
+      "searchAccount": 2,
+      "collectedAt": "2026-07-26T14:42:13.121Z",
+      "updatedAt": "2026-07-26T14:45:55.549Z"
+    },
+    {
+      "itemName": "기사단장 이리나 슈트(여)",
+      "query": "기사단장 이리나 슈트 (여)",
+      "queueGroup": "packageDeferred",
+      "resultCount": 0,
+      "status": "no_listing",
+      "filter": "캐시",
+      "searchAccount": 2,
+      "searchIndex": 87,
+      "collectedAt": "2026-07-26T14:43:49.825Z",
+      "updatedAt": "2026-07-26T14:45:55.549Z"
     }
   ],
-  "updatedAt": "2026-07-26T14:18:41.808Z",
+  "updatedAt": "2026-07-26T14:45:55.549Z",
   "lastSearchRun": {
     "date": "2026-07-26",
-    "searchAccount": 1,
-    "accountCharacter": "스카니아 / 키라데벤져",
+    "searchAccount": 2,
+    "accountCharacter": "스카니아 / 헤성",
     "worldScope": "월드 통합",
     "searchLimit": 100,
     "usedSearches": 100,
     "screenUsedSearches": 100,
     "preexistingSearches": 0,
     "listingSearches": 100,
-    "validPrices": 97,
-    "noListingSearches": 3,
-    "noCandidateChecks": 2,
+    "validPrices": 91,
+    "noListingSearches": 9,
+    "noCandidateChecks": 3,
     "duplicateSearches": 0,
     "accountComplete": true,
-    "queueMode": "daily_priority_then_deferred_package_rotation",
-    "group": "mixed",
+    "queueMode": "deferred_package_rotation_after_daily_priority",
+    "group": "packageDeferred",
     "dailyPriorityComplete": true,
-    "dailyPriorityItems": 24,
-    "dailyPriorityValidPrices": 23,
-    "packageItemsProcessed": 78,
-    "packageListingSearches": 76,
-    "packageValidPrices": 74,
-    "packageNoListingSearches": 2,
-    "packageNoCandidateChecks": 2,
-    "deferredPackageStart": "잔잔한 물결(여)",
-    "nextItem": "레프 여신",
+    "dailyPriorityHandledByAccount1": "스카니아 / 키라데벤져",
+    "packageItemsProcessed": 103,
+    "packageListingSearches": 100,
+    "packageValidPrices": 91,
+    "packageNoListingSearches": 9,
+    "packageNoCandidateChecks": 3,
+    "deferredPackageStart": "레프 여신",
+    "nextItem": "책사 나인하트 슈즈",
     "noListingItems": [
-      "성별 변경 쿠폰",
-      "빅토리안 만년필",
-      "아루루"
+      "으스스냥",
+      "팬케오리",
+      "다쿠아부기",
+      "쁘띠토벤",
+      "미미",
+      "데몬 슬레이어 슈트(남)",
+      "레지스탕스 블래스터 헤어밴드(남)",
+      "레지스탕스 와일드헌터 슈트(여)",
+      "기사단장 이리나 슈트(여)"
     ],
     "noCandidateItems": [
-      "화가! 난다",
-      "로즈 원드"
+      "날라",
+      "레지스탕스 배틀메이지 모자",
+      "레지스탕스 메카닉 무기"
     ],
-    "qualityHeldOutliers": [
-      "마네킹"
-    ],
-    "completedAt": "2026-07-26T14:18:41.808Z",
+    "qualityHeldOutliers": [],
+    "completedAt": "2026-07-26T14:45:55.549Z",
     "parserValidation": {
-      "checkedRows": 97,
+      "checkedRows": 91,
       "mismatches": 0,
       "rule": "억×100000000 + 만×10000 + 나머지"
     },
     "safetyRulesDocument": "maple-cash-value/docs/daily-auction-search-routine.md",
     "otherAccountState": {
-      "searchAccount": 2,
-      "accountCharacter": "스카니아 / 헤성",
-      "usedSearches": 0,
-      "validPrices": 0,
-      "remainingSearches": 100,
-      "accountComplete": false
+      "searchAccount": 1,
+      "accountCharacter": "스카니아 / 키라데벤져",
+      "usedSearches": 100,
+      "validPrices": 97,
+      "remainingSearches": 0,
+      "accountComplete": true
     },
     "daySummary": {
       "date": "2026-07-26",
-      "totalSearches": 100,
+      "totalSearches": 200,
       "accounts": [
         {
           "searchAccount": 1,
@@ -9738,15 +9658,16 @@
         {
           "searchAccount": 2,
           "accountCharacter": "스카니아 / 헤성",
-          "listingSearches": 0,
-          "validPrices": 0,
-          "noListingSearches": 0,
-          "noCandidateChecks": 0,
-          "accountComplete": false,
-          "remainingSearches": 100
+          "listingSearches": 100,
+          "validPrices": 91,
+          "noListingSearches": 9,
+          "noCandidateChecks": 3,
+          "qualityHeldOutliers": 0,
+          "accountComplete": true,
+          "remainingSearches": 0
         }
       ],
-      "nextItem": "레프 여신"
+      "nextItem": "책사 나인하트 슈즈"
     }
   },
   "marketHistoryUpdatedAt": "2026-07-15T14:34:07.994Z",
