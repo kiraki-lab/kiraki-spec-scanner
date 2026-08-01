@@ -1,14 +1,18 @@
 {
   "version": 2,
   "world": "스카니아",
-  "generatedAt": "2026-07-28T14:47:40.927Z",
-  "source": "manual-maple-auction-two-account",
+  "generatedAt": "2026-08-01T04:00:38.923Z",
+  "source": "메이플 옥션 웹 실시간 조회 + 2026-07-31 GitHub 복구 기준본",
   "policy": {
     "searchTab": "구매",
     "priceBasis": "listingLowestMeso",
     "candidateCheckBeforeSearch": true,
     "officialSearchLimit": 100,
-    "notes": "July 28 first-account refresh complete: direct daily priorities were checked first, then package rotation continued through 사이버 래빗 마스크. Search-cap outliers are held without replacing the prior calculator price."
+    "notes": "July 28 first-account refresh complete: direct daily priorities were checked first, then package rotation continued through 사이버 래빗 마스크. Search-cap outliers are held without replacing the prior calculator price.",
+    "searchCooldownSeconds": 5.25,
+    "listingPolicy": "비패키지 전 품목 매일 우선 최저가 갱신",
+    "marketHistoryPolicy": "예비 효율 상위 5개만 시세 탭 확인",
+    "marketHistoryRankBasis": "최근 3개월 최고 체결가"
   },
   "prices": [
     {
@@ -7619,50 +7623,53 @@
     {
       "itemName": "잠재능력 전승스크롤",
       "query": "잠재능력 전승 스크롤",
-      "listingLowestMeso": 5644444444,
-      "listingLowestText": "56억 4444만 4444",
-      "resultCount": 21,
+      "listingLowestMeso": 4999999999,
+      "listingLowestText": "49억 9999만 9999",
+      "resultCount": 62,
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 1,
-      "searchIndex": 75,
+      "searchIndex": 13,
       "queueGroup": "dailyPriority",
-      "collectedAt": "2026-07-28T14:40:15.619Z",
+      "collectedAt": "2026-08-01T03:39:18.445Z",
       "aliases": [
         "잠재능력 전승 스크롤"
       ],
-      "updatedAt": "2026-07-28T14:47:40.927Z"
+      "updatedAt": "2026-07-28T14:47:40.927Z",
+      "accountCharacter": "스카니아 / 헤성"
     },
     {
       "itemName": "추가옵션 전승 스크롤",
       "query": "추가옵션 전승 스크롤",
-      "listingLowestMeso": 2989999999,
-      "listingLowestText": "29억 8999만 9999",
-      "resultCount": 6,
+      "listingLowestMeso": 2550000000,
+      "listingLowestText": "25억 5000만",
+      "resultCount": 32,
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 1,
-      "searchIndex": 85,
+      "searchIndex": 23,
       "queueGroup": "dailyPriority",
-      "collectedAt": "2026-07-28T14:42:56.053Z",
+      "collectedAt": "2026-08-01T03:41:27.100Z",
       "aliases": [
         "추가옵션 전승스크롤"
       ],
-      "updatedAt": "2026-07-28T14:47:40.927Z"
+      "updatedAt": "2026-07-28T14:47:40.927Z",
+      "accountCharacter": "스카니아 / 헤성"
     },
     {
       "itemName": "블레어 살롱 헤어 쿠폰",
       "query": "블레어 살롱 헤어 쿠폰",
-      "listingLowestMeso": 1689333333,
-      "listingLowestText": "16억 8933만 3333",
-      "resultCount": 121,
+      "listingLowestMeso": 1578000000,
+      "listingLowestText": "15억 7800만",
+      "resultCount": 127,
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 1,
-      "searchIndex": 76,
+      "searchIndex": 14,
       "queueGroup": "dailyPriority",
-      "collectedAt": "2026-07-28T14:40:05.475Z",
-      "updatedAt": "2026-07-28T14:47:40.927Z"
+      "collectedAt": "2026-08-01T03:39:25.279Z",
+      "updatedAt": "2026-07-28T14:47:40.927Z",
+      "accountCharacter": "스카니아 / 헤성"
     },
     {
       "itemName": "마네킹",
@@ -7707,103 +7714,110 @@
     {
       "itemName": "전 직업 일러스트 컬렉션 헤어 쿠폰",
       "query": "전 직업 일러스트 컬렉션 헤어 쿠폰",
-      "listingLowestMeso": 379999999,
-      "listingLowestText": "3억 7999만 9999",
-      "resultCount": 3,
+      "listingLowestMeso": 297999999,
+      "listingLowestText": "2억 9799만 9999",
+      "resultCount": 37,
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 1,
-      "searchIndex": 84,
+      "searchIndex": 21,
       "queueGroup": "dailyPriority",
-      "collectedAt": "2026-07-28T14:42:36.687Z",
-      "updatedAt": "2026-07-28T14:47:40.927Z"
+      "collectedAt": "2026-08-01T03:40:33.069Z",
+      "updatedAt": "2026-08-01T03:40:33.069Z",
+      "accountCharacter": "스카니아 / 헤성"
     },
     {
       "itemName": "보스 헤어 쿠폰",
       "query": "보스 헤어 쿠폰",
-      "listingLowestMeso": 375999999,
-      "listingLowestText": "3억 7599만 9999",
-      "resultCount": 5,
+      "listingLowestMeso": 297999999,
+      "listingLowestText": "2억 9799만 9999",
+      "resultCount": 22,
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 1,
-      "searchIndex": 81,
+      "searchIndex": 17,
       "queueGroup": "dailyPriority",
-      "collectedAt": "2026-07-28T14:42:01.208Z",
-      "updatedAt": "2026-07-28T14:47:40.927Z"
+      "collectedAt": "2026-08-01T03:40:06.206Z",
+      "updatedAt": "2026-08-01T03:40:06.206Z",
+      "accountCharacter": "스카니아 / 헤성"
     },
     {
       "itemName": "플래티넘 카르마의 가위",
       "query": "플래티넘 카르마의 가위",
-      "listingLowestMeso": 270000000,
-      "listingLowestText": "2억 7000만",
-      "resultCount": 1952,
+      "listingLowestMeso": 239999999,
+      "listingLowestText": "2억 3999만 9999",
+      "resultCount": 2211,
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 1,
-      "searchIndex": 2,
+      "searchIndex": 8,
       "queueGroup": "dailyPriority",
-      "collectedAt": "2026-07-28T14:12:11.469Z",
-      "updatedAt": "2026-07-28T14:47:40.927Z"
+      "collectedAt": "2026-08-01T03:38:44.815Z",
+      "updatedAt": "2026-07-28T14:47:40.927Z",
+      "accountCharacter": "스카니아 / 헤성"
     },
     {
       "itemName": "컬러링 프리즘",
       "query": "컬러링 프리즘",
-      "listingLowestMeso": 333333333,
-      "listingLowestText": "3억 3333만 3333",
-      "resultCount": 31,
+      "listingLowestMeso": 306000000,
+      "listingLowestText": "3억 600만",
+      "resultCount": 204,
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 1,
-      "searchIndex": 22,
+      "searchIndex": 26,
       "queueGroup": "dailyPriority",
-      "collectedAt": "2026-07-28T14:35:10.282Z",
-      "updatedAt": "2026-07-28T14:47:40.927Z"
+      "collectedAt": "2026-08-01T03:41:47.262Z",
+      "updatedAt": "2026-07-28T14:47:40.927Z",
+      "accountCharacter": "스카니아 / 헤성"
     },
     {
       "itemName": "프리미엄 헤어쿠폰",
       "query": "프리미엄 헤어 쿠폰",
-      "listingLowestMeso": 269999999,
-      "listingLowestText": "2억 6999만 9999",
-      "resultCount": 47,
+      "listingLowestMeso": 233333322,
+      "listingLowestText": "2억 3333만 3322",
+      "resultCount": 149,
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 1,
-      "searchIndex": 72,
+      "searchIndex": 10,
       "queueGroup": "dailyPriority",
-      "collectedAt": "2026-07-28T14:40:55.192Z",
+      "collectedAt": "2026-08-01T03:38:58.290Z",
       "aliases": [
         "프리미엄 헤어 쿠폰"
       ],
-      "updatedAt": "2026-07-28T14:47:40.927Z"
+      "updatedAt": "2026-07-28T14:47:40.927Z",
+      "accountCharacter": "스카니아 / 헤성"
     },
     {
       "itemName": "위습의 원더베리",
       "query": "위습의 원더베리",
-      "listingLowestMeso": 272626263,
-      "listingLowestText": "2억 7262만 6263",
-      "resultCount": 417,
+      "listingLowestMeso": 240909091,
+      "listingLowestText": "2억 4090만 9091",
+      "resultCount": 855,
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 1,
-      "searchIndex": 77,
+      "searchIndex": 15,
       "queueGroup": "dailyPriority",
-      "collectedAt": "2026-07-28T14:39:55.342Z",
-      "updatedAt": "2026-07-28T14:47:40.927Z"
+      "collectedAt": "2026-08-01T03:39:52.693Z",
+      "updatedAt": "2026-07-28T14:47:40.927Z",
+      "accountCharacter": "스카니아 / 헤성"
     },
     {
       "itemName": "스페셜 루나 크리스탈",
       "query": "스페셜 루나 크리스탈",
-      "listingLowestMeso": 237500000,
-      "listingLowestText": "2억 3750만",
-      "resultCount": 231,
+      "listingLowestMeso": 205444444,
+      "listingLowestText": "2억 544만 4444",
+      "resultCount": 412,
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 1,
-      "searchIndex": 78,
+      "searchIndex": 16,
       "queueGroup": "dailyPriority",
-      "collectedAt": "2026-07-28T14:39:45.207Z",
-      "updatedAt": "2026-07-28T14:47:40.927Z"
+      "collectedAt": "2026-08-01T03:39:59.458Z",
+      "updatedAt": "2026-07-28T14:47:40.927Z",
+      "accountCharacter": "스카니아 / 헤성"
     },
     {
       "itemName": "금손 은손 성형외과 쿠폰",
@@ -7822,44 +7836,53 @@
     {
       "itemName": "루나 크리스탈",
       "query": "루나 크리스탈",
-      "listingLowestMeso": 229988888,
-      "listingLowestText": "2억 2998만 8888",
-      "resultCount": 302,
+      "listingLowestMeso": 194000000,
+      "listingLowestText": "1억 9400만",
+      "resultCount": 763,
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 1,
-      "searchIndex": 74,
+      "searchIndex": 12,
       "queueGroup": "dailyPriority",
-      "collectedAt": "2026-07-28T14:40:34.954Z",
-      "updatedAt": "2026-07-28T14:47:40.927Z"
+      "collectedAt": "2026-08-01T03:39:11.742Z",
+      "updatedAt": "2026-07-28T14:47:40.927Z",
+      "accountCharacter": "스카니아 / 헤성"
     },
     {
       "itemName": "메이플 로얄 스타일",
       "query": "메이플 로얄 스타일",
-      "listingLowestMeso": 124000000,
-      "listingLowestText": "1억 2400만",
-      "resultCount": 524,
+      "listingLowestMeso": 104444444,
+      "listingLowestText": "1억 444만 4444",
+      "resultCount": 1018,
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 1,
-      "searchIndex": 71,
+      "searchIndex": 9,
       "queueGroup": "dailyPriority",
-      "collectedAt": "2026-07-28T14:41:05.325Z",
-      "updatedAt": "2026-07-28T14:47:40.927Z"
+      "collectedAt": "2026-08-01T03:38:51.578Z",
+      "updatedAt": "2026-07-28T14:47:40.927Z",
+      "accountCharacter": "스카니아 / 헤성"
     },
     {
       "itemName": "혈맹의 반지",
       "query": "혈맹의 반지",
       "queueGroup": "dailyPriority",
-      "listingLowestMeso": 339890000,
-      "listingLowestText": "3억 3989만",
-      "resultCount": 14,
+      "listingLowestMeso": 337000000,
+      "listingLowestText": "3억 3700만",
+      "resultCount": 15,
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 1,
-      "searchIndex": 24,
-      "collectedAt": "2026-07-28T14:34:30.670Z",
-      "updatedAt": "2026-07-28T14:47:40.927Z"
+      "searchIndex": 28,
+      "collectedAt": "2026-08-01T03:42:00.724Z",
+      "updatedAt": "2026-07-28T14:47:40.927Z",
+      "accountCharacter": "스카니아 / 헤성",
+      "marketHistoryStatus": "verified",
+      "marketHistoryBasis": "최근 거래 20건 중 동일 품목 최고 체결가",
+      "marketHistoryObservedMaxMeso": 379999000,
+      "marketHistorySaleCount": 20,
+      "marketHistoryCollectedAt": "2026-08-01T03:50:00.000Z",
+      "marketHistoryNote": "시세 최고 체결가가 현재 최저가 이상이라 매물가 유지"
     },
     {
       "itemName": "레지스탕스 와일드헌터 헤어핀",
@@ -7918,23 +7941,6 @@
       "updatedAt": "2026-07-27T15:01:43.529Z"
     },
     {
-      "itemName": "다람쥐 꿈방울",
-      "query": "다람쥐 꿈방울",
-      "aliases": [],
-      "listingLowestMeso": 489900000,
-      "listingLowestText": "4억 8990만",
-      "status": "ok",
-      "source": "manual",
-      "manualReason": "사용자 옥션 확인",
-      "filter": "캐시",
-      "collectedAt": "2026-07-28T14:34:20.548Z",
-      "updatedAt": "2026-07-28T14:47:40.927Z",
-      "queueGroup": "dailyPriority",
-      "resultCount": 19,
-      "searchAccount": 1,
-      "searchIndex": 25
-    },
-    {
       "itemName": "고통의 속박",
       "query": "고통의 속박",
       "queueGroup": "packageDeferred",
@@ -7980,15 +7986,16 @@
       "itemName": "전 직업 헤어 쿠폰",
       "query": "전 직업 헤어 쿠폰",
       "queueGroup": "dailyPriority",
-      "listingLowestMeso": 244000000,
-      "listingLowestText": "2억 4400만",
-      "resultCount": 11,
+      "listingLowestMeso": 214999999,
+      "listingLowestText": "2억 1499만 9999",
+      "resultCount": 35,
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 1,
-      "searchIndex": 82,
-      "collectedAt": "2026-07-28T14:42:12.656Z",
-      "updatedAt": "2026-07-28T14:47:40.927Z"
+      "searchIndex": 19,
+      "collectedAt": "2026-08-01T03:40:19.698Z",
+      "updatedAt": "2026-07-28T14:47:40.927Z",
+      "accountCharacter": "스카니아 / 헤성"
     },
     {
       "itemName": "아이스예티",
@@ -8050,57 +8057,61 @@
       "itemName": "프리미엄 성형쿠폰",
       "query": "프리미엄 성형 쿠폰",
       "queueGroup": "dailyPriority",
-      "listingLowestMeso": 179999000,
-      "listingLowestText": "1억 7999만 9000",
-      "resultCount": 3,
+      "listingLowestMeso": 159797666,
+      "listingLowestText": "1억 5979만 7666",
+      "resultCount": 64,
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 1,
-      "searchIndex": 73,
-      "collectedAt": "2026-07-28T14:40:45.055Z",
-      "updatedAt": "2026-07-28T14:47:40.927Z"
+      "searchIndex": 11,
+      "collectedAt": "2026-08-01T03:39:04.979Z",
+      "updatedAt": "2026-07-28T14:47:40.927Z",
+      "accountCharacter": "스카니아 / 헤성"
     },
     {
       "itemName": "전 직업 성형 쿠폰",
       "query": "전 직업 성형 쿠폰",
       "queueGroup": "dailyPriority",
-      "listingLowestMeso": 128988899,
-      "listingLowestText": "1억 2898만 8899",
-      "resultCount": 43,
+      "listingLowestMeso": 133333333,
+      "listingLowestText": "1억 3333만 3333",
+      "resultCount": 2,
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 1,
-      "searchIndex": 83,
-      "collectedAt": "2026-07-28T14:42:24.091Z",
-      "updatedAt": "2026-07-28T14:47:40.927Z"
+      "searchIndex": 20,
+      "collectedAt": "2026-08-01T03:40:26.407Z",
+      "updatedAt": "2026-07-28T14:47:40.927Z",
+      "accountCharacter": "스카니아 / 헤성"
     },
     {
       "itemName": "커스텀 믹스염색 쿠폰",
       "query": "커스텀 믹스염색 쿠폰",
       "queueGroup": "dailyPriority",
-      "listingLowestMeso": 1544333333,
-      "listingLowestText": "15억 4433만 3333",
-      "resultCount": 10,
+      "listingLowestMeso": 1487666666,
+      "listingLowestText": "14억 8766만 6666",
+      "resultCount": 13,
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 1,
-      "searchIndex": 20,
-      "collectedAt": "2026-07-28T14:15:02.779Z",
-      "updatedAt": "2026-07-28T14:47:40.927Z"
+      "searchIndex": 24,
+      "collectedAt": "2026-08-01T03:41:33.885Z",
+      "updatedAt": "2026-07-28T14:47:40.927Z",
+      "accountCharacter": "스카니아 / 헤성"
     },
     {
       "itemName": "커스텀 믹스 컬러렌즈 쿠폰",
       "query": "커스텀 믹스 컬러렌즈 쿠폰",
       "queueGroup": "dailyPriority",
-      "listingLowestMeso": 787666666,
-      "listingLowestText": "7억 8766만 6666",
-      "resultCount": 11,
+      "listingLowestMeso": 749999999,
+      "listingLowestText": "7억 4999만 9999",
+      "resultCount": 12,
       "status": "ok",
       "filter": "캐시",
       "searchAccount": 1,
-      "searchIndex": 21,
-      "collectedAt": "2026-07-28T14:35:20.389Z",
-      "updatedAt": "2026-07-28T14:47:40.927Z"
+      "searchIndex": 25,
+      "collectedAt": "2026-08-01T03:41:40.577Z",
+      "updatedAt": "2026-07-28T14:47:40.927Z",
+      "accountCharacter": "스카니아 / 헤성"
     },
     {
       "itemName": "파멸의 검",
@@ -8339,6 +8350,72 @@
       "listingLowestMeso": 800000000,
       "listingLowestText": "8억",
       "updatedAt": "2026-07-28T14:47:40.927Z"
+    },
+    {
+      "itemId": "cashshop-638-boutique-gift",
+      "itemName": "부티크 기프트",
+      "query": "부티크 기프트",
+      "listingLowestMeso": 155000000,
+      "listingLowestText": "1억 5500만",
+      "resultCount": 952,
+      "listingQuantity": 10,
+      "listingTotalMeso": 1549999999,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "accountCharacter": "스카니아 / 헤성",
+      "searchIndex": 1,
+      "queueGroup": "newCashFirst",
+      "collectedAt": "2026-08-01T03:24:26.305Z"
+    },
+    {
+      "itemId": "cashshop-634-best-premium-hair",
+      "itemName": "상반기 BEST 프리미엄 헤어 쿠폰",
+      "query": "상반기 BEST 프리미엄 헤어 쿠폰",
+      "listingLowestMeso": 255000000,
+      "listingLowestText": "2억 5500만",
+      "resultCount": 115,
+      "listingQuantity": 1,
+      "listingTotalMeso": 255000000,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "accountCharacter": "스카니아 / 헤성",
+      "searchIndex": 4,
+      "queueGroup": "newCashFirst",
+      "collectedAt": "2026-08-01T03:29:25.969Z"
+    },
+    {
+      "itemId": "cashshop-634-best-premium-face",
+      "itemName": "상반기 BEST 프리미엄 성형 쿠폰",
+      "query": "상반기 BEST 프리미엄 성형 쿠폰",
+      "listingLowestMeso": 159797666,
+      "listingLowestText": "1억 5979만 7666",
+      "resultCount": 42,
+      "listingQuantity": 1,
+      "listingTotalMeso": 159797666,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "accountCharacter": "스카니아 / 헤성",
+      "searchIndex": 6,
+      "queueGroup": "newCashFirst",
+      "collectedAt": "2026-08-01T03:32:20.532Z"
+    },
+    {
+      "itemName": "보스 성형 쿠폰",
+      "query": "보스 성형 쿠폰",
+      "listingLowestMeso": 225999988,
+      "listingLowestText": "2억 2599만 9988",
+      "resultCount": 24,
+      "status": "ok",
+      "filter": "캐시",
+      "searchAccount": 1,
+      "accountCharacter": "스카니아 / 헤성",
+      "searchIndex": 18,
+      "queueGroup": "dailyPriority",
+      "collectedAt": "2026-08-01T03:40:12.959Z",
+      "updatedAt": "2026-08-01T03:40:12.959Z"
     }
   ],
   "skipped": [
@@ -9517,28 +9594,17 @@
       "updatedAt": "2026-07-27T15:01:43.529Z"
     },
     {
-      "itemName": "보스 성형 쿠폰",
-      "query": "보스 성형 쿠폰",
-      "queueGroup": "dailyPriority",
-      "resultCount": 0,
-      "status": "no_listing",
-      "filter": "캐시",
-      "searchAccount": 1,
-      "searchIndex": 14,
-      "collectedAt": "2026-07-28T14:14:10.388Z",
-      "updatedAt": "2026-07-28T14:47:40.927Z"
-    },
-    {
       "itemName": "성별 변경 쿠폰",
       "query": "성별 변경 쿠폰",
-      "queueGroup": "dailyPriority",
-      "resultCount": 0,
       "status": "no_listing",
+      "reason": "정확 검색 결과 0건",
+      "resultCount": 0,
       "filter": "캐시",
       "searchAccount": 1,
-      "searchIndex": 18,
-      "collectedAt": "2026-07-28T14:14:45.553Z",
-      "updatedAt": "2026-07-28T14:47:40.927Z"
+      "accountCharacter": "스카니아 / 헤성",
+      "searchIndex": 22,
+      "queueGroup": "dailyPriority",
+      "collectedAt": "2026-08-01T03:41:20.467Z"
     },
     {
       "itemName": "진 힐라 슈즈",
@@ -9587,8 +9653,358 @@
       "updatedAt": "2026-07-28T14:47:40.927Z"
     }
   ],
-  "updatedAt": "2026-07-28T14:47:40.927Z",
+  "updatedAt": "2026-08-01T04:00:38.923Z",
   "lastSearchRun": {
+    "date": "2026-08-01",
+    "searchAccount": 1,
+    "accountCharacter": "스카니아 / 헤성",
+    "worldScope": "월드 통합",
+    "searchLimit": 100,
+    "usedSearches": 31,
+    "screenUsedSearches": 31,
+    "listingSearches": 25,
+    "marketHistorySearches": 5,
+    "exploratorySearches": 1,
+    "validPrices": 23,
+    "acceptedPrices": 22,
+    "noListingSearches": 1,
+    "noCandidateChecks": 0,
+    "duplicateSearches": 0,
+    "dailyPriorityComplete": true,
+    "dailyPriorityItems": 24,
+    "marketHistoryTop5Progress": 1,
+    "marketHistoryTop5Complete": false,
+    "marketHistoryTop5Targets": [
+      "보스 성형 쿠폰",
+      "전 직업 헤어 쿠폰",
+      "혈맹의 반지",
+      "컬러링 프리즘",
+      "보스 헤어 쿠폰"
+    ],
+    "qualityHeldOutliers": [
+      {
+        "itemName": "마네킹",
+        "observedListingLowestMeso": 9999999999,
+        "observedListingLowestText": "99억 9999만 9999",
+        "keptListingLowestMeso": 988888888,
+        "reason": "상한가 단일 수준 이상치; 기존 검증가 유지",
+        "collectedAt": "2026-08-01T03:41:54.001Z"
+      }
+    ],
+    "accountComplete": false,
+    "queueMode": "daily_priority_then_top5_market_history_then_deferred_package_rotation",
+    "group": "dailyPriority",
+    "deferredPackageStart": "라스트 서바이버(남)",
+    "nextItem": "라스트 서바이버(남)",
+    "searchLog": [
+      {
+        "index": 1,
+        "type": "listing",
+        "itemName": "부티크 기프트",
+        "startedAt": "2026-08-01T03:24:26.305Z"
+      },
+      {
+        "index": 2,
+        "type": "market_history_low_sort_observation",
+        "itemName": "부티크 기프트",
+        "startedAt": "2026-08-01T03:25:18.227Z",
+        "rankValueApplied": false
+      },
+      {
+        "index": 3,
+        "type": "exploratory",
+        "itemName": "프리미엄 헤어",
+        "startedAt": "2026-08-01T03:29:14.674Z",
+        "rankValueApplied": false
+      },
+      {
+        "index": 4,
+        "type": "listing",
+        "itemName": "상반기 BEST 프리미엄 헤어 쿠폰",
+        "startedAt": "2026-08-01T03:29:25.969Z"
+      },
+      {
+        "index": 5,
+        "type": "market_history_low_sort_observation",
+        "itemName": "상반기 BEST 프리미엄 헤어 쿠폰",
+        "startedAt": "2026-08-01T03:29:39.816Z",
+        "rankValueApplied": false
+      },
+      {
+        "index": 6,
+        "type": "listing",
+        "itemName": "상반기 BEST 프리미엄 성형 쿠폰",
+        "startedAt": "2026-08-01T03:32:20.532Z"
+      },
+      {
+        "index": 7,
+        "type": "market_history_low_sort_observation",
+        "itemName": "상반기 BEST 프리미엄 성형 쿠폰",
+        "startedAt": "2026-08-01T03:32:42.374Z",
+        "rankValueApplied": false
+      },
+      {
+        "index": 8,
+        "type": "listing",
+        "itemName": "플래티넘 카르마의 가위",
+        "startedAt": "2026-08-01T03:38:44.815Z",
+        "resultCount": 2211,
+        "status": "ok",
+        "qualityHold": false
+      },
+      {
+        "index": 9,
+        "type": "listing",
+        "itemName": "메이플 로얄 스타일",
+        "startedAt": "2026-08-01T03:38:51.578Z",
+        "resultCount": 1018,
+        "status": "ok",
+        "qualityHold": false
+      },
+      {
+        "index": 10,
+        "type": "listing",
+        "itemName": "프리미엄 헤어쿠폰",
+        "startedAt": "2026-08-01T03:38:58.290Z",
+        "resultCount": 149,
+        "status": "ok",
+        "qualityHold": false
+      },
+      {
+        "index": 11,
+        "type": "listing",
+        "itemName": "프리미엄 성형쿠폰",
+        "startedAt": "2026-08-01T03:39:04.979Z",
+        "resultCount": 64,
+        "status": "ok",
+        "qualityHold": false
+      },
+      {
+        "index": 12,
+        "type": "listing",
+        "itemName": "루나 크리스탈",
+        "startedAt": "2026-08-01T03:39:11.742Z",
+        "resultCount": 763,
+        "status": "ok",
+        "qualityHold": false
+      },
+      {
+        "index": 13,
+        "type": "listing",
+        "itemName": "잠재능력 전승스크롤",
+        "startedAt": "2026-08-01T03:39:18.445Z",
+        "resultCount": 62,
+        "status": "ok",
+        "qualityHold": false
+      },
+      {
+        "index": 14,
+        "type": "listing",
+        "itemName": "블레어 살롱 헤어 쿠폰",
+        "startedAt": "2026-08-01T03:39:25.279Z",
+        "resultCount": 127,
+        "status": "ok",
+        "qualityHold": false
+      },
+      {
+        "index": 15,
+        "type": "listing",
+        "itemName": "위습의 원더베리",
+        "startedAt": "2026-08-01T03:39:52.693Z",
+        "resultCount": 855,
+        "status": "ok",
+        "qualityHold": false
+      },
+      {
+        "index": 16,
+        "type": "listing",
+        "itemName": "스페셜 루나 크리스탈",
+        "startedAt": "2026-08-01T03:39:59.458Z",
+        "resultCount": 412,
+        "status": "ok",
+        "qualityHold": false
+      },
+      {
+        "index": 17,
+        "type": "listing",
+        "itemName": "보스 헤어 쿠폰",
+        "startedAt": "2026-08-01T03:40:06.206Z",
+        "resultCount": 22,
+        "status": "ok",
+        "qualityHold": false
+      },
+      {
+        "index": 18,
+        "type": "listing",
+        "itemName": "보스 성형 쿠폰",
+        "startedAt": "2026-08-01T03:40:12.959Z",
+        "resultCount": 24,
+        "status": "ok",
+        "qualityHold": false
+      },
+      {
+        "index": 19,
+        "type": "listing",
+        "itemName": "전 직업 헤어 쿠폰",
+        "startedAt": "2026-08-01T03:40:19.698Z",
+        "resultCount": 35,
+        "status": "ok",
+        "qualityHold": false
+      },
+      {
+        "index": 20,
+        "type": "listing",
+        "itemName": "전 직업 성형 쿠폰",
+        "startedAt": "2026-08-01T03:40:26.407Z",
+        "resultCount": 2,
+        "status": "ok",
+        "qualityHold": false
+      },
+      {
+        "index": 21,
+        "type": "listing",
+        "itemName": "전 직업 일러스트 컬렉션 헤어 쿠폰",
+        "startedAt": "2026-08-01T03:40:33.069Z",
+        "resultCount": 37,
+        "status": "ok",
+        "qualityHold": false
+      },
+      {
+        "index": 22,
+        "type": "listing",
+        "itemName": "성별 변경 쿠폰",
+        "startedAt": "2026-08-01T03:41:20.467Z",
+        "resultCount": 0,
+        "status": "no_listing",
+        "qualityHold": false
+      },
+      {
+        "index": 23,
+        "type": "listing",
+        "itemName": "추가옵션 전승 스크롤",
+        "startedAt": "2026-08-01T03:41:27.100Z",
+        "resultCount": 32,
+        "status": "ok",
+        "qualityHold": false
+      },
+      {
+        "index": 24,
+        "type": "listing",
+        "itemName": "커스텀 믹스염색 쿠폰",
+        "startedAt": "2026-08-01T03:41:33.885Z",
+        "resultCount": 13,
+        "status": "ok",
+        "qualityHold": false
+      },
+      {
+        "index": 25,
+        "type": "listing",
+        "itemName": "커스텀 믹스 컬러렌즈 쿠폰",
+        "startedAt": "2026-08-01T03:41:40.577Z",
+        "resultCount": 12,
+        "status": "ok",
+        "qualityHold": false
+      },
+      {
+        "index": 26,
+        "type": "listing",
+        "itemName": "컬러링 프리즘",
+        "startedAt": "2026-08-01T03:41:47.262Z",
+        "resultCount": 204,
+        "status": "ok",
+        "qualityHold": false
+      },
+      {
+        "index": 27,
+        "type": "listing",
+        "itemName": "마네킹",
+        "startedAt": "2026-08-01T03:41:54.001Z",
+        "resultCount": 5,
+        "status": "ok",
+        "qualityHold": true
+      },
+      {
+        "index": 28,
+        "type": "listing",
+        "itemName": "혈맹의 반지",
+        "startedAt": "2026-08-01T03:42:00.724Z",
+        "resultCount": 15,
+        "status": "ok",
+        "qualityHold": false
+      },
+      {
+        "index": 29,
+        "type": "listing",
+        "itemName": "다람쥐 꿈방울",
+        "startedAt": "2026-08-01T03:42:07.486Z",
+        "resultCount": 40,
+        "status": "ok",
+        "qualityHold": false,
+        "removedFromCalculator": true
+      },
+      {
+        "index": 30,
+        "type": "market_history",
+        "itemName": "다람쥐 꿈방울",
+        "startedAt": "2026-08-01T03:46:16.417Z",
+        "resultCount": 500,
+        "rankValueApplied": false,
+        "observedMaxMeso": 518999999,
+        "note": "동일 강화 상태(기본)만 비교; +8/+9 제외",
+        "removedFromCalculator": true
+      },
+      {
+        "index": 31,
+        "type": "market_history",
+        "itemName": "혈맹의 반지",
+        "startedAt": "2026-08-01T03:50:00.000Z",
+        "resultCount": 500,
+        "rankValueApplied": false,
+        "observedMaxMeso": 379999000
+      }
+    ],
+    "otherAccountState": {
+      "searchAccount": 2,
+      "accountCharacter": "스카니아 / 키라데벤져",
+      "usedSearches": 0,
+      "remainingSearches": 100,
+      "accountComplete": false
+    },
+    "daySummary": {
+      "date": "2026-08-01",
+      "totalSearches": 31,
+      "accounts": [
+        {
+          "searchAccount": 1,
+          "accountCharacter": "스카니아 / 헤성",
+          "listingSearches": 25,
+          "marketHistorySearches": 5,
+          "exploratorySearches": 1,
+          "validPrices": 23,
+          "acceptedPrices": 22,
+          "noListingSearches": 1,
+          "qualityHeldOutliers": 1,
+          "remainingSearches": 69,
+          "accountComplete": false
+        },
+        {
+          "searchAccount": 2,
+          "accountCharacter": "스카니아 / 키라데벤져",
+          "listingSearches": 0,
+          "marketHistorySearches": 0,
+          "validPrices": 0,
+          "noListingSearches": 0,
+          "remainingSearches": 100,
+          "accountComplete": false
+        }
+      ],
+      "dailyPriorityComplete": true,
+      "nextItem": "라스트 서바이버(남)"
+    }
+  },
+  "marketHistoryUpdatedAt": "2026-08-01T03:50:00.000Z",
+  "manualUpdatedAt": "2026-07-19T13:13:10.024Z",
+  "recoveryBaseLastSearchRun": {
     "date": "2026-07-28",
     "searchAccount": 1,
     "accountCharacter": "스카니아 / 키라데벤져",
@@ -9678,7 +10094,5 @@
       ],
       "nextItem": "라스트 서바이버(남)"
     }
-  },
-  "marketHistoryUpdatedAt": "2026-07-15T14:34:07.994Z",
-  "manualUpdatedAt": "2026-07-19T13:13:10.024Z"
+  }
 }
