@@ -1,7 +1,7 @@
 {
   "version": 3,
   "world": "스카니아",
-  "updatedAt": "2026-07-31T12:29:24.254Z",
+  "updatedAt": "2026-08-01T13:00:38.923+09:00",
   "settings": {
     "baseMpRate": 6990,
     "discountRate": 6,
@@ -2800,13 +2800,127 @@
       "mileageType": "none"
     },
     {
-      "id": 686,
-      "name": "다람쥐 꿈방울",
-      "category": "기본",
-      "cashPrice": 7900,
-      "seedMesoPrice": 435000000,
-      "aliases": [],
-      "mileageType": "partial"
+      "id": "cashshop-634-best-premium-hair",
+      "name": "상반기 BEST 프리미엄 헤어 쿠폰",
+      "category": "쿠폰",
+      "cashPrice": 5500,
+      "mileageType": "partial",
+      "tradable": true,
+      "rankEligible": true,
+      "availability": {
+        "type": "limited",
+        "startAt": "2026-07-23T10:00:00+09:00",
+        "endAt": "2026-08-19T23:59:00+09:00"
+      },
+      "conditions": {
+        "mileagePercent": 30,
+        "validityDays": 14,
+        "exchangeStatus": "conditional",
+        "maxTrades": 1,
+        "exchangeCondition": "넥슨캐시로 구매하고 사용하기 전"
+      },
+      "source": {
+        "noticeId": 634,
+        "url": "https://maplestory.nexon.com/News/CashShop/Sale/634",
+        "imageSha256": "ebb24fe2fd8e98be69c12b6a12d797ac1c4fa9d4fa167b1e7ee3a59979f629d8"
+      }
+    },
+    {
+      "id": "cashshop-634-best-premium-face",
+      "name": "상반기 BEST 프리미엄 성형 쿠폰",
+      "category": "쿠폰",
+      "cashPrice": 3500,
+      "mileageType": "partial",
+      "tradable": true,
+      "rankEligible": true,
+      "availability": {
+        "type": "limited",
+        "startAt": "2026-07-23T10:00:00+09:00",
+        "endAt": "2026-08-19T23:59:00+09:00"
+      },
+      "conditions": {
+        "mileagePercent": 30,
+        "validityDays": 14,
+        "exchangeStatus": "conditional",
+        "maxTrades": 1,
+        "exchangeCondition": "넥슨캐시로 구매하고 사용하기 전"
+      },
+      "source": {
+        "noticeId": 634,
+        "url": "https://maplestory.nexon.com/News/CashShop/Sale/634",
+        "imageSha256": "ebb24fe2fd8e98be69c12b6a12d797ac1c4fa9d4fa167b1e7ee3a59979f629d8"
+      }
+    },
+    {
+      "id": "cashshop-638-boutique-gift",
+      "name": "부티크 기프트",
+      "category": "랜덤",
+      "catalogCategory": "확률형 · 부티크",
+      "cashPrice": 3300,
+      "quantity": 1,
+      "mileageType": "none",
+      "tradable": true,
+      "rankEligible": true,
+      "availability": {
+        "type": "limited",
+        "startAt": "2026-07-23T10:00:00+09:00",
+        "endAt": "2026-08-19T23:59:00+09:00"
+      },
+      "conditions": {
+        "nexonCashOnly": true,
+        "maplePointsAllowed": false,
+        "mileagePercent": 0,
+        "validityDays": 7,
+        "exchangeStatus": "conditional",
+        "maxTrades": 1,
+        "exchangeCondition": "사용하기 전",
+        "probabilityItem": true
+      },
+      "source": {
+        "noticeId": 638,
+        "url": "https://maplestory.nexon.com/News/CashShop/Sale/638",
+        "imageSha256": "2aac3fe20e47bb6d205a127898e71864d8588cadffde1f153d0788af84e080e5"
+      }
+    },
+    {
+      "id": "cashshop-638-boutique-gift-10",
+      "name": "부티크 기프트 10개",
+      "category": "랜덤",
+      "catalogCategory": "확률형 · 부티크",
+      "cashPrice": 33000,
+      "quantity": 10,
+      "unitCashPrice": 3300,
+      "mileageType": "none",
+      "tradable": true,
+      "rankEligible": true,
+      "components": [
+        {
+          "id": "cashshop-638-boutique-gift",
+          "name": "부티크 기프트",
+          "quantity": 10
+        }
+      ],
+      "availability": {
+        "type": "limited",
+        "startAt": "2026-07-23T10:00:00+09:00",
+        "endAt": "2026-08-19T23:59:00+09:00"
+      },
+      "conditions": {
+        "nexonCashOnly": true,
+        "maplePointsAllowed": false,
+        "mileagePercent": 0,
+        "validityDays": 7,
+        "exchangeStatus": "conditional",
+        "maxTrades": 1,
+        "exchangeCondition": "사용하기 전",
+        "probabilityItem": true,
+        "bundleSize": 10
+      },
+      "source": {
+        "noticeId": 638,
+        "url": "https://maplestory.nexon.com/News/CashShop/Sale/638",
+        "imageSha256": "2aac3fe20e47bb6d205a127898e71864d8588cadffde1f153d0788af84e080e5"
+      }
     }
   ]
 }
