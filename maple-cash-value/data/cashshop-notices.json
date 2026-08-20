@@ -1,17 +1,54 @@
 {
   "version": 1,
-  "generatedAt": "2026-08-19T18:57:29.844Z",
+  "generatedAt": "2026-08-20T19:05:49.795Z",
   "source": "nexon-open-api",
   "endpoint": "/maplestory/v1/notice-cashshop",
   "status": "ok",
   "notices": [
     {
-      "id": 638,
-      "title": "7월 23일 캐시아이템 업데이트 - 부티크 기프트",
-      "date": "2026-07-23T08:12+09:00",
-      "url": "https://maplestory.nexon.com/News/CashShop/638",
+      "id": 642,
+      "title": "8월 20일 캐시아이템 업데이트 - 마스터라벨 플러스",
+      "date": "2026-08-20T08:14+09:00",
+      "url": "https://maplestory.nexon.com/News/CashShop/642",
       "items": [
-        "부티크 기프트"
+        "마스터라벨 플러스"
+      ],
+      "summary": ""
+    },
+    {
+      "id": 641,
+      "title": "8월 20일 캐시아이템 업데이트 - 로얄스타일 &  마스터피스",
+      "date": "2026-08-20T08:14+09:00",
+      "url": "https://maplestory.nexon.com/News/CashShop/641",
+      "items": [
+        "로얄스타일",
+        "마스터피스"
+      ],
+      "summary": "- 마스터라벨 세트 선택권, 마스터라벨 아이템의 교환 여부 및 유효 기간 안내가 추가되었습니다. (2026년 8월 20일(목) 오전 10시 15분 수정)"
+    },
+    {
+      "id": 640,
+      "title": "8월 20일 캐시아이템 업데이트 - 메이플스토리 보스 패키지",
+      "date": "2026-08-20T08:14+09:00",
+      "url": "https://maplestory.nexon.com/News/CashShop/640",
+      "items": [
+        "메이플스토리 보스 패키지",
+        "보스 헤어 쿠폰",
+        "보스 성형 쿠폰",
+        "얼굴 쿠폰",
+        "벨로나 패키지",
+        "여) 의상 패키지"
+      ],
+      "summary": "보스 헤어 쿠폰/보스 성형 쿠폰에 각각 신규보스 벨로나 헤어/얼굴 쿠폰이 구성품에 추가되었으며, 벨로나 패키지(남)/(여) 의상 패키지가 추가되었습니다. (2026년 8월 20일(목) 오전 10시 추가)"
+    },
+    {
+      "id": 639,
+      "title": "8월 20일 캐시아이템 업데이트 - 프리미엄 헤어 &  성형 쿠폰",
+      "date": "2026-08-20T08:14+09:00",
+      "url": "https://maplestory.nexon.com/News/CashShop/639",
+      "items": [
+        "프리미엄 헤어",
+        "성형 쿠폰"
       ],
       "summary": ""
     },
@@ -33,39 +70,6 @@
       "url": "https://maplestory.nexon.com/News/CashShop/636",
       "items": [
         "몬스터파크 핸즈 이용권"
-      ],
-      "summary": ""
-    },
-    {
-      "id": 635,
-      "title": "7월 23일 캐시아이템 업데이트 - 로얄스타일 &  마스터피스",
-      "date": "2026-07-23T08:12+09:00",
-      "url": "https://maplestory.nexon.com/News/CashShop/635",
-      "items": [
-        "로얄스타일",
-        "마스터피스"
-      ],
-      "summary": ""
-    },
-    {
-      "id": 634,
-      "title": "7월 23일 캐시아이템 업데이트 - 상반기 BEST 프리미엄 헤어 & 성형 쿠폰",
-      "date": "2026-07-23T08:12+09:00",
-      "url": "https://maplestory.nexon.com/News/CashShop/634",
-      "items": [
-        "상반기 BEST 프리미엄 헤어",
-        "성형 쿠폰"
-      ],
-      "summary": ""
-    },
-    {
-      "id": 633,
-      "title": "7월 23일 캐시아이템 업데이트 - 프리미엄 헤어 &  성형 쿠폰",
-      "date": "2026-07-23T08:12+09:00",
-      "url": "https://maplestory.nexon.com/News/CashShop/633",
-      "items": [
-        "프리미엄 헤어",
-        "성형 쿠폰"
       ],
       "summary": ""
     },
