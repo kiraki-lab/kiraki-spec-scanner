@@ -1,7 +1,7 @@
 {
   "version": 3,
   "world": "스카니아",
-  "updatedAt": "2026-08-01T13:00:38.923+09:00",
+  "updatedAt": "2026-08-23T10:55:00+09:00",
   "settings": {
     "baseMpRate": 6990,
     "discountRate": 6,
@@ -23,7 +23,13 @@
       "category": "랜덤",
       "cashPrice": 2200,
       "seedMesoPrice": 95000000,
-      "mileageType": "none"
+      "mileageType": "none",
+      "availability": {
+        "type": "always",
+        "checkedAt": "2026-08-23",
+        "source": "8월 20일 로얄스타일 & 마스터피스 (공지 641)",
+        "sourceUrl": "https://maplestory.nexon.com/News/CashShop"
+      }
     },
     {
       "id": 10,
@@ -31,7 +37,13 @@
       "category": "쿠폰",
       "cashPrice": 5500,
       "seedMesoPrice": 150000000,
-      "mileageType": "partial"
+      "mileageType": "partial",
+      "availability": {
+        "type": "always",
+        "checkedAt": "2026-08-23",
+        "source": "8월 20일 프리미엄 헤어 & 성형 쿠폰 (공지 639)",
+        "sourceUrl": "https://maplestory.nexon.com/News/CashShop"
+      }
     },
     {
       "id": 11,
@@ -39,7 +51,13 @@
       "category": "쿠폰",
       "cashPrice": 3500,
       "seedMesoPrice": 100000000,
-      "mileageType": "partial"
+      "mileageType": "partial",
+      "availability": {
+        "type": "always",
+        "checkedAt": "2026-08-23",
+        "source": "8월 20일 프리미엄 헤어 & 성형 쿠폰 (공지 639)",
+        "sourceUrl": "https://maplestory.nexon.com/News/CashShop"
+      }
     },
     {
       "id": 12,
@@ -47,7 +65,13 @@
       "category": "랜덤",
       "cashPrice": 3900,
       "seedMesoPrice": 179000000,
-      "mileageType": "none"
+      "mileageType": "none",
+      "availability": {
+        "type": "always",
+        "checkedAt": "2026-08-23",
+        "source": "6월 18일 위습의 원더베리 & 루나 크리스탈 (공지 630)",
+        "sourceUrl": "https://maplestory.nexon.com/News/CashShop"
+      }
     },
     {
       "id": 19,
@@ -55,7 +79,13 @@
       "category": "기본",
       "cashPrice": 99000,
       "seedMesoPrice": 5100000000,
-      "mileageType": "none"
+      "mileageType": "none",
+      "availability": {
+        "type": "always",
+        "checkedAt": "2026-08-23",
+        "source": "3월 19일 추가옵션, 잠재능력 전승 스크롤",
+        "sourceUrl": "https://maplestory.nexon.com/News/CashShop"
+      }
     },
     {
       "id": 20,
@@ -63,7 +93,15 @@
       "category": "쿠폰",
       "cashPrice": 30000,
       "seedMesoPrice": 0,
-      "mileageType": "none"
+      "mileageType": "none",
+      "availability": {
+        "type": "limited",
+        "startAt": "2026-06-18T10:00:00+09:00",
+        "endAt": "2026-07-22T23:59:00+09:00",
+        "checkedAt": "2026-08-23",
+        "source": "6월 18일 블레어 살롱 헤어 쿠폰 · 판매종료 목록",
+        "sourceUrl": "https://maplestory.nexon.com/News/CashShop"
+      }
     },
     {
       "id": 21,
@@ -71,7 +109,13 @@
       "category": "랜덤",
       "cashPrice": 5400,
       "seedMesoPrice": 0,
-      "mileageType": "none"
+      "mileageType": "none",
+      "availability": {
+        "type": "always",
+        "checkedAt": "2026-08-23",
+        "source": "6월 18일 위습의 원더베리 & 루나 크리스탈 (공지 630)",
+        "sourceUrl": "https://maplestory.nexon.com/News/CashShop"
+      }
     },
     {
       "id": 22,
@@ -86,7 +130,13 @@
           "quantity": 11,
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "availability": {
+        "type": "always",
+        "checkedAt": "2026-08-23",
+        "source": "6월 18일 위습의 원더베리 & 루나 크리스탈 (공지 630)",
+        "sourceUrl": "https://maplestory.nexon.com/News/CashShop"
+      }
     },
     {
       "id": 23,
@@ -94,7 +144,15 @@
       "category": "랜덤",
       "cashPrice": 3900,
       "seedMesoPrice": 0,
-      "mileageType": "none"
+      "mileageType": "none",
+      "availability": {
+        "type": "limited",
+        "startAt": "2026-06-18T10:00:00+09:00",
+        "endAt": "2026-09-16T23:59:00+09:00",
+        "checkedAt": "2026-08-23",
+        "source": "6월 18일 스페셜 루나 크리스탈 (공지 629)",
+        "sourceUrl": "https://maplestory.nexon.com/News/CashShop"
+      }
     },
     {
       "id": 24,
@@ -172,7 +230,15 @@
       "category": "쿠폰",
       "cashPrice": 5500,
       "seedMesoPrice": 0,
-      "mileageType": "none"
+      "mileageType": "none",
+      "availability": {
+        "type": "limited",
+        "startAt": "2026-08-20T10:00:00+09:00",
+        "endAt": "2026-09-16T23:59:00+09:00",
+        "checkedAt": "2026-08-23",
+        "source": "8월 20일 메이플스토리 보스 패키지 (공지 640)",
+        "sourceUrl": "https://maplestory.nexon.com/News/CashShop"
+      }
     },
     {
       "id": 31,
@@ -180,7 +246,15 @@
       "category": "쿠폰",
       "cashPrice": 3500,
       "seedMesoPrice": 0,
-      "mileageType": "none"
+      "mileageType": "none",
+      "availability": {
+        "type": "limited",
+        "startAt": "2026-08-20T10:00:00+09:00",
+        "endAt": "2026-09-16T23:59:00+09:00",
+        "checkedAt": "2026-08-23",
+        "source": "8월 20일 메이플스토리 보스 패키지 (공지 640)",
+        "sourceUrl": "https://maplestory.nexon.com/News/CashShop"
+      }
     },
     {
       "id": 32,
@@ -188,7 +262,15 @@
       "category": "쿠폰",
       "cashPrice": 3500,
       "seedMesoPrice": 0,
-      "mileageType": "none"
+      "mileageType": "none",
+      "availability": {
+        "type": "limited",
+        "startAt": "2026-06-18T10:00:00+09:00",
+        "endAt": "2026-09-16T23:59:00+09:00",
+        "checkedAt": "2026-08-23",
+        "source": "6월 18일 전 직업 헤어 & 성형 쿠폰",
+        "sourceUrl": "https://maplestory.nexon.com/News/CashShop"
+      }
     },
     {
       "id": 33,
@@ -196,7 +278,15 @@
       "category": "쿠폰",
       "cashPrice": 2500,
       "seedMesoPrice": 0,
-      "mileageType": "none"
+      "mileageType": "none",
+      "availability": {
+        "type": "limited",
+        "startAt": "2026-06-18T10:00:00+09:00",
+        "endAt": "2026-09-16T23:59:00+09:00",
+        "checkedAt": "2026-08-23",
+        "source": "6월 18일 전 직업 헤어 & 성형 쿠폰",
+        "sourceUrl": "https://maplestory.nexon.com/News/CashShop"
+      }
     },
     {
       "id": 34,
@@ -204,7 +294,15 @@
       "category": "쿠폰",
       "cashPrice": 5500,
       "seedMesoPrice": 0,
-      "mileageType": "none"
+      "mileageType": "none",
+      "availability": {
+        "type": "limited",
+        "startAt": "2026-06-18T10:00:00+09:00",
+        "endAt": "2026-09-16T23:59:00+09:00",
+        "checkedAt": "2026-08-23",
+        "source": "6월 18일 전 직업 일러스트 컬렉션 헤어 쿠폰",
+        "sourceUrl": "https://maplestory.nexon.com/News/CashShop"
+      }
     },
     {
       "id": 101,
@@ -2739,7 +2837,13 @@
       "cashPrice": 15000,
       "seedMesoPrice": 690000000,
       "aliases": [],
-      "mileageType": "none"
+      "mileageType": "none",
+      "availability": {
+        "type": "always",
+        "checkedAt": "2026-08-23",
+        "source": "1월 15일 성별 변경 쿠폰",
+        "sourceUrl": "https://maplestory.nexon.com/News/CashShop"
+      }
     },
     {
       "id": 680,
@@ -2750,7 +2854,13 @@
       "aliases": [
         "추가옵션 전승스크롤"
       ],
-      "mileageType": "none"
+      "mileageType": "none",
+      "availability": {
+        "type": "always",
+        "checkedAt": "2026-08-23",
+        "source": "3월 19일 추가옵션, 잠재능력 전승 스크롤",
+        "sourceUrl": "https://maplestory.nexon.com/News/CashShop"
+      }
     },
     {
       "id": 681,
@@ -2761,7 +2871,13 @@
       "aliases": [
         "커스텀 믹스 염색 쿠폰"
       ],
-      "mileageType": "none"
+      "mileageType": "none",
+      "availability": {
+        "type": "always",
+        "checkedAt": "2026-08-23",
+        "source": "6월 19일 커스텀 믹스 염색&컬러렌즈 쿠폰",
+        "sourceUrl": "https://maplestory.nexon.com/News/CashShop"
+      }
     },
     {
       "id": 682,
@@ -2770,7 +2886,13 @@
       "cashPrice": 24000,
       "seedMesoPrice": 1000000000,
       "aliases": [],
-      "mileageType": "none"
+      "mileageType": "none",
+      "availability": {
+        "type": "always",
+        "checkedAt": "2026-08-23",
+        "source": "6월 19일 커스텀 믹스 염색&컬러렌즈 쿠폰",
+        "sourceUrl": "https://maplestory.nexon.com/News/CashShop"
+      }
     },
     {
       "id": 683,
@@ -2788,7 +2910,13 @@
       "cashPrice": 18900,
       "seedMesoPrice": 860000000,
       "aliases": [],
-      "mileageType": "none"
+      "mileageType": "none",
+      "availability": {
+        "type": "always",
+        "checkedAt": "2026-08-23",
+        "source": "4월 18일 마네킹&헤어룸/성형룸 슬롯 확장권",
+        "sourceUrl": "https://maplestory.nexon.com/News/CashShop"
+      }
     },
     {
       "id": 685,
@@ -2922,5 +3050,7 @@
         "imageSha256": "2aac3fe20e47bb6d205a127898e71864d8588cadffde1f153d0788af84e080e5"
       }
     }
-  ]
+  ],
+  "availabilityCheckedAt": "2026-08-23",
+  "availabilityNote": "캐시샵 공지 판매중/판매종료 목록에서 확인. 근거를 못 찾은 품목은 availability 를 비워 두었고 상시판매로 간주된다."
 }
