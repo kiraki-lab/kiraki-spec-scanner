@@ -18,6 +18,8 @@ const FIXED_MILEAGE_MESO_RATE = 10000;
 const MESO_INPUT_UNIT = 100000000;
 const MESO_PRECISION = 1000000;
 const REFERENCE_CATEGORY = '마일리지 구매 참고';
+// 이 일수를 넘긴 근거는 판매가 후보에서 뺀다. PRICE_VERIFICATION.md 4절 참고.
+const EVIDENCE_STALE_DAYS = 14;
 const DEFAULT_SETTINGS = {
   baseMpRate: 6990,
   discountRate: 6,
@@ -147,26 +149,6 @@ function formatDate(value) {
       .map(part => [part.type, part.value])
   );
   return `${parts.month}.${parts.day} ${parts.hour}:${parts.minute}`;
-}
-
-function formatRefreshDate(value) {
-  if (!value) return '-';
-  const date = new Date(value);
-  if (Number.isNaN(date.getTime())) return String(value);
-  const parts = Object.fromEntries(
-    new Intl.DateTimeFormat('ko-KR', {
-      timeZone: 'Asia/Seoul',
-      month: '2-digit',
-      day: '2-digit',
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit',
-      hourCycle: 'h23'
-    }).formatToParts(date)
-      .filter(part => part.type !== 'literal')
-      .map(part => [part.type, part.value])
-  );
-  return `${parts.month}.${parts.day} ${parts.hour}:${parts.minute}:${parts.second}`;
 }
 
 function formatMeso(value) {
@@ -350,8 +332,6 @@ async function refreshSheetMarketRows() {
   try {
     const result = await loadSheetMarketRows();
     if (!result.ok) return;
-    state.pendingPreviousRanks = new Map(state.currentRanks);
-    state.stableRowOrder = [];
     state.sheetAuctionRows = mergeSheetMarketRows(result.rows);
     state.sheetDataUpdatedAt = result.rows
       .map(row => row.marketHistoryCollectedAt)
@@ -390,9 +370,7 @@ async function loadData() {
     state.items = [...state.baseItems];
     loadLocalData();
     state.metadata.itemsUpdatedAt = itemsDoc.updatedAt;
-    state.metadata.auctionUpdatedAt = auctionDoc.lastSearchRun?.completedAt
-      || auctionDoc.updatedAt
-      || auctionDoc.generatedAt;
+    state.metadata.auctionUpdatedAt = auctionDoc.generatedAt || auctionDoc.updatedAt;
     state.metadata.saleItemsUpdatedAt = saleDoc.generatedAt;
     state.metadata.world = auctionDoc.world || saleDoc.world || itemsDoc.world || '스카니아';
     state.auctionRows = normalizeAuctionRows(auctionDoc.prices);
@@ -642,10 +620,6 @@ function isPackageItem(item) {
   return !item.referenceOnly && isPackageCategory(categoryFor(item));
 }
 
-function isRankEligible(item) {
-  return !item.referenceOnly && item.listingPrice?.source !== 'pending';
-}
-
 function syncPackageToggle() {
   const toggle = $('#package-filter-toggle');
   const status = $('#package-filter-state');
@@ -678,6 +652,13 @@ function summarizeAuctionStatus(prices) {
   return 'unverified';
 }
 
+function isEvidenceStale(value) {
+  if (!value) return true;
+  const at = new Date(value).getTime();
+  if (!Number.isFinite(at)) return true;
+  return (Date.now() - at) / 86400000 > EVIDENCE_STALE_DAYS;
+}
+
 function priceFor(target, index) {
   const id = target.id != null ? String(target.id) : null;
   const rowById = id ? index.byId.get(id) : null;
@@ -688,9 +669,19 @@ function priceFor(target, index) {
   const marketHistoryMeso = roundMeso(row?.marketHistoryMaxMeso || row?.marketHistoryMeso);
   const marketHistoryStatus = row?.marketHistoryStatus || '';
   const pendingMarketHistory = isMarketHistoryPending(marketHistoryStatus) && marketHistoryMeso <= 0;
-  const candidateMeso = marketHistoryMeso || listingMeso;
+  // 시세 탭 최고 체결가는 3개월 내 단발 고가가 섞여 실제 판매가를 과대평가하고,
+  // 갱신이 밀리면 반대로 과소평가한다. 낡은 근거를 먼저 후보에서 뺀 뒤 낮은 쪽을 쓴다.
+  const listingStale = isEvidenceStale(row?.updatedAt || row?.collectedAt);
+  const marketStale = isEvidenceStale(row?.marketHistoryCollectedAt);
+  const candidates = [];
+  if (listingMeso > 0 && !listingStale) candidates.push(listingMeso);
+  if (marketHistoryMeso > 0 && !marketStale) candidates.push(marketHistoryMeso);
+  const candidateMeso = candidates.length
+    ? Math.min(...candidates)
+    : marketHistoryMeso || listingMeso;
   const meso = pendingMarketHistory ? 0 : candidateMeso;
-  const usesMarketHistory = marketHistoryMeso > 0;
+  const usesMarketHistory = marketHistoryMeso > 0 && candidateMeso === marketHistoryMeso;
+  const evidenceStale = !candidates.length && candidateMeso > 0;
   const marketGapRate = listingMeso > 0 && marketHistoryMeso > 0 && listingMeso !== marketHistoryMeso
     ? Math.abs(listingMeso - marketHistoryMeso) / listingMeso * 100
     : 0;
@@ -706,6 +697,7 @@ function priceFor(target, index) {
       marketHistoryCollectedAt: row?.marketHistoryCollectedAt || row?.marketHistoryUpdatedAt || null,
       marketGapRate,
       usesMarketHistory,
+      evidenceStale,
       source: pendingMarketHistory
         ? 'pending'
         : usesMarketHistory
@@ -864,7 +856,6 @@ function rowIdentity(item) {
 function compareRankRows(a, b) {
   if (Boolean(a.referenceOnly) !== Boolean(b.referenceOnly)) return a.referenceOnly ? 1 : -1;
   if (a.referenceOnly) return b.referenceMesoPerThousand - a.referenceMesoPerThousand;
-  if (isRankEligible(a) !== isRankEligible(b)) return isRankEligible(a) ? -1 : 1;
   return a.listingEfficiency - b.listingEfficiency;
 }
 
@@ -872,7 +863,7 @@ function createRankMap(rows) {
   const ranks = new Map();
   let rank = 0;
   rows.forEach(item => {
-    if (isRankEligible(item)) ranks.set(rowIdentity(item), ++rank);
+    if (!item.referenceOnly) ranks.set(rowIdentity(item), ++rank);
   });
   return ranks;
 }
@@ -914,7 +905,7 @@ function render() {
 
   const filtered = filteredRows(allRows);
   const rows = stableDisplayRows(filtered);
-  const rankedVisibleSales = filtered.filter(isRankEligible).sort(compareRankRows);
+  const rankedVisibleSales = filtered.filter(item => !item.referenceOnly).sort(compareRankRows);
   const saleRows = rows.filter(item => !item.referenceOnly);
   const referenceCount = rows.length - saleRows.length;
   const visibleSaleCatalog = filteredSaleCatalog();
@@ -933,13 +924,13 @@ function render() {
   $('#rank-mode-label').textContent = '시세 우선 적용가';
   $('#row-count').textContent = referenceCount ? `${saleRows.length}개 + 참고 ${referenceCount}개` : `${saleRows.length}개`;
   $('#sale-item-count').textContent = `${rows.length}개`;
-  const auctionUpdatedAt = [
+  const latestAuctionUpdatedAt = [
     state.metadata.auctionUpdatedAt,
     state.localAuctionRows.length ? state.localDataUpdatedAt : null
   ]
     .filter(Boolean)
     .sort((a, b) => (Date.parse(b) || 0) - (Date.parse(a) || 0))[0] || null;
-  $('#auction-updated').textContent = formatRefreshDate(auctionUpdatedAt);
+  $('#auction-updated').textContent = formatDate(latestAuctionUpdatedAt);
   $('#best-efficiency').textContent = rankedVisibleSales.length ? formatWon(rankedVisibleSales[0].listingEfficiency) : '-';
   renderNotices();
   renderSaleItems(visibleSaleCatalog);
@@ -1028,12 +1019,9 @@ function renderTable(rows, rankByKey = new Map(), rankChanges = new Map()) {
       : rankDelta < 0
         ? `<small class="rank-change down">↓${Math.abs(rankDelta)}</small>`
         : '';
-    const rankExcluded = !isReference && !isRankEligible(item);
     const rank = isReference
       ? '<span class="source-pill seed">참고</span>'
-      : rankExcluded
-        ? '<span class="source-pill pending">체결 제외</span>'
-        : `<span class="rank-cell"><span class="rank">${rankNumber}</span>${rankChange}</span>`;
+      : `<span class="rank-cell"><span class="rank">${rankNumber}</span>${rankChange}</span>`;
     const turnoverWarning = !isReference && isPackageItem(item)
       ? '<span class="turnover-pill" title="패키지는 판매까지 시간이 걸릴 수 있습니다." aria-label="회전율 주의">회전율 주의</span>'
       : '';
@@ -1054,9 +1042,7 @@ function renderTable(rows, rankByKey = new Map(), rankChanges = new Map()) {
         : renderInlinePriceEditor(item.name, item.listingPrice);
     const result = isReference
       ? `<span class="eff-value">${formatReferenceMeso(item.referenceMesoPerThousand)}</span><span class="price-meta">1,000 마일리지당 절약</span>`
-      : rankExcluded
-        ? '<span class="eff-value">제외</span><span class="price-meta">체결가 확인 전</span>'
-        : `<span class="eff-value">${formatWon(item.listingEfficiency)}</span><span class="price-meta">1억당 현금</span>`;
+      : `<span class="eff-value">${formatWon(item.listingEfficiency)}</span><span class="price-meta">${item.listingPrice?.source === 'pending' ? '검증 합산 기준' : '1억당 현금'}</span>`;
     const rowClass = [
       isReference ? 'reference-row' : '',
       isPackageItem(item) ? 'package-row' : '',
