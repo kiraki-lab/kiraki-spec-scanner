@@ -50,9 +50,11 @@ def age_days(value, today):
 def grade_row(row, today):
     """한 행의 신뢰 등급과 채택 근거를 정한다."""
     listing = row.get('listingLowestMeso') or 0
-    market = row.get('marketHistoryMaxMeso') or row.get('marketHistoryObservedMaxMeso') or 0
+    market = (row.get('marketPriceMeso') or row.get('marketHistoryMaxMeso')
+              or row.get('marketHistoryObservedMaxMeso') or 0)
+    basis = row.get('marketPriceBasis') or ('legacyMax' if market else '')
     l_age = age_days(row.get('updatedAt') or row.get('collectedAt'), today)
-    m_age = age_days(row.get('marketHistoryCollectedAt'), today)
+    m_age = age_days(row.get('marketPriceAt') or row.get('marketHistoryCollectedAt'), today)
     count = row.get('resultCount') or 0
     status = row.get('status') or ''
 
@@ -64,6 +66,7 @@ def grade_row(row, today):
         'marketAgeDays': m_age,
         'resultCount': count,
         'status': status,
+        'marketBasis': basis,
     }
 
     if status == 'uncaptured':
@@ -87,7 +90,7 @@ def grade_row(row, today):
     candidates = []
     if listing and not l_stale:
         candidates.append(('listing', listing))
-    if market and not m_stale:
+    if market and not m_stale and basis != 'legacyMax':
         candidates.append(('market', market))
     if not candidates:
         basis, adopted = ('listing', listing) if listing else ('market', market)
@@ -95,7 +98,7 @@ def grade_row(row, today):
                     reason='근거가 모두 %d일 초과로 낡음' % STALE_DAYS)
         return info
 
-    basis, adopted = min(candidates, key=lambda c: c[1])
+    basis, adopted = min(candidates, key=lambda c: c[1])  # basis: 'listing' | 'market'
 
     # 저매물 단독 근거는 이상치 위험이 크다
     thin = basis == 'listing' and 0 < count <= THIN_LISTINGS and not market
@@ -112,6 +115,9 @@ def grade_row(row, today):
     elif len(candidates) == 2:
         info.update(grade='C', basis=basis, adoptedMeso=adopted, gapRate=gap,
                     reason='두 근거의 괴리가 %d%% 초과' % GAP_WARN)
+    elif market and row.get('marketPriceBasis') == 'legacyMax':
+        info.update(grade='C', basis=basis, adoptedMeso=adopted, gapRate=gap,
+                    reason='시세가 legacyMax(3개월 최고가) · 체결 내역 재조회 필요')
     else:
         info.update(grade='C', basis=basis, adoptedMeso=adopted, gapRate=gap,
                     reason='교차검증 없음 · %s 단독' % ('매물' if basis == 'listing' else '시세'))
