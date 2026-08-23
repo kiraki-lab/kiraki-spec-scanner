@@ -387,6 +387,20 @@ async function loadData() {
   render();
 }
 
+// 캐시샵에서 지금 살 수 있는 상품인가. 살 수 없으면 "사서 팔면 이득"이라는
+// 효율 순위 자체가 성립하지 않으므로 순위에서 뺀다.
+function isPurchasable(item) {
+  if (item.rankEligible === false) return false;
+  const a = item.availability;
+  if (!a) return true;
+  const now = Date.now();
+  const start = a.startAt ? new Date(a.startAt).getTime() : null;
+  const end = a.endAt ? new Date(a.endAt).getTime() : null;
+  if (Number.isFinite(start) && now < start) return false;
+  if (Number.isFinite(end) && now > end) return false;
+  return true;
+}
+
 function normalizeItemList(items) {
   if (!Array.isArray(items)) return [];
   return items.map(item => ({
@@ -398,6 +412,8 @@ function normalizeItemList(items) {
     referenceMesoValue: toNumber(item.referenceMesoValue, 0),
     referenceOnly: Boolean(item.referenceOnly),
     tradable: item.tradable !== false,
+    purchasable: isPurchasable(item),
+    availability: item.availability || null,
     mileageType: item.mileageType || 'none',
     aliases: Array.isArray(item.aliases) ? item.aliases.map(String).filter(Boolean) : [],
     components: componentList(item.components),
@@ -860,6 +876,8 @@ function rowIdentity(item) {
 
 function compareRankRows(a, b) {
   if (Boolean(a.referenceOnly) !== Boolean(b.referenceOnly)) return a.referenceOnly ? 1 : -1;
+  const aOff = a.purchasable === false, bOff = b.purchasable === false;
+  if (aOff !== bOff) return aOff ? 1 : -1;
   if (a.referenceOnly) return b.referenceMesoPerThousand - a.referenceMesoPerThousand;
   return a.listingEfficiency - b.listingEfficiency;
 }
@@ -868,7 +886,7 @@ function createRankMap(rows) {
   const ranks = new Map();
   let rank = 0;
   rows.forEach(item => {
-    if (!item.referenceOnly) ranks.set(rowIdentity(item), ++rank);
+    if (!item.referenceOnly && item.purchasable !== false) ranks.set(rowIdentity(item), ++rank);
   });
   return ranks;
 }
@@ -1024,9 +1042,12 @@ function renderTable(rows, rankByKey = new Map(), rankChanges = new Map()) {
       : rankDelta < 0
         ? `<small class="rank-change down">↓${Math.abs(rankDelta)}</small>`
         : '';
+    const soldOut = !isReference && item.purchasable === false;
     const rank = isReference
       ? '<span class="source-pill seed">참고</span>'
-      : `<span class="rank-cell"><span class="rank">${rankNumber}</span>${rankChange}</span>`;
+      : soldOut
+        ? '<span class="source-pill seed" title="캐시샵 판매 기간이 끝나 구매할 수 없습니다.">판매 종료</span>'
+        : `<span class="rank-cell"><span class="rank">${rankNumber}</span>${rankChange}</span>`;
     const turnoverWarning = !isReference && isPackageItem(item)
       ? '<span class="turnover-pill" title="패키지는 판매까지 시간이 걸릴 수 있습니다." aria-label="회전율 주의">회전율 주의</span>'
       : '';
@@ -1035,7 +1056,10 @@ function renderTable(rows, rankByKey = new Map(), rankChanges = new Map()) {
       : '';
     const itemMeta = isReference
       ? `<span class="item-meta">마일리지 전용 · 판매 불가 · ${REFERENCE_CATEGORY}</span>`
-      : `<span class="item-meta">${escapeHtml(item.category || '캐시 아이템')}</span>
+      : `<span class="item-meta">${escapeHtml(item.category || '캐시 아이템')}${
+            soldOut && item.availability?.endAt
+              ? ` · ${escapeHtml(formatDate(item.availability.endAt))} 판매 종료`
+              : ''}</span>
          <span class="item-badges">${renderMileageBadge(item.mileageType)}${turnoverWarning}${marketWarning}</span>`;
     const cost = isReference
       ? `${nf.format(Number(item.mileagePrice || item.cashPrice || 0))} 마일리지`
