@@ -40,7 +40,13 @@
       "updatedAt": "2026-08-16T14:29:20.359Z",
       "accountCharacter": "스카니아 / 헤성",
       "listingQuantity": 1,
-      "listingTotalMeso": 325544444
+      "listingTotalMeso": 325544444,
+      "marketPriceMeso": 409999999,
+      "marketPriceBasis": "legacyMax",
+      "marketPriceAt": "2026-07-12",
+      "marketPriceFrom": {
+        "note": "최근 3개월 최고 체결가 · 체결 내역 미확보 · 과대평가 가능"
+      }
     },
     {
       "itemName": "사이버 래빗 마스크",
@@ -1686,7 +1692,13 @@
       "marketHistoryNote": "최고 체결가 666,666,666 · 매물가 상한 보정",
       "accountCharacter": "스카니아 / 헤성",
       "listingQuantity": 1,
-      "listingTotalMeso": 477777555
+      "listingTotalMeso": 477777555,
+      "marketPriceMeso": 666666666,
+      "marketPriceBasis": "legacyMax",
+      "marketPriceAt": "2026-08-01",
+      "marketPriceFrom": {
+        "note": "최근 3개월 최고 체결가 · 체결 내역 미확보 · 과대평가 가능"
+      }
     },
     {
       "itemName": "아니마 라라 지팡이",
@@ -2120,7 +2132,13 @@
       "updatedAt": "2026-08-16T14:27:12.596Z",
       "accountCharacter": "스카니아 / 헤성",
       "listingQuantity": 1,
-      "listingTotalMeso": 400000000
+      "listingTotalMeso": 400000000,
+      "marketPriceMeso": 540000000,
+      "marketPriceBasis": "legacyMax",
+      "marketPriceAt": "2026-07-15",
+      "marketPriceFrom": {
+        "note": "최근 3개월 최고 체결가 · 체결 내역 미확보 · 과대평가 가능"
+      }
     },
     {
       "itemName": "프렌즈 월드 키네시스 신발",
@@ -2440,7 +2458,17 @@
       "recentSaleText": "5억 9999만 9888",
       "recentSaleWindowCount": 20,
       "recentSaleWindowFrom": "2026-07-17",
-      "previousMarketHistoryMaxMeso": 489999999
+      "previousMarketHistoryMaxMeso": 489999999,
+      "marketPriceMeso": 599999999,
+      "marketPriceBasis": "recentSale",
+      "marketPriceAt": "2026-08-13",
+      "marketPriceFrom": {
+        "latestMeso": 599999888,
+        "latestDate": "2026-08-13",
+        "median3Meso": 599999999,
+        "sampleCount": 20,
+        "observedMaxMeso": 777777777
+      }
     },
     {
       "itemName": "매그너스 슈즈",
@@ -2480,7 +2508,13 @@
       "marketHistoryNote": "최고 체결가 325,050,000 · 오늘 최저 매물가 유지",
       "accountCharacter": "스카니아 / 키라데벤져",
       "listingQuantity": 1,
-      "listingTotalMeso": 322900000
+      "listingTotalMeso": 322900000,
+      "marketPriceMeso": 325050000,
+      "marketPriceBasis": "legacyMax",
+      "marketPriceAt": "2026-08-01",
+      "marketPriceFrom": {
+        "note": "최근 3개월 최고 체결가 · 체결 내역 미확보 · 과대평가 가능"
+      }
     },
     {
       "itemName": "매그너스의 카이세리움",
@@ -2629,7 +2663,17 @@
       "recentSaleText": "5억 1888만 8888",
       "recentSaleWindowCount": 20,
       "recentSaleWindowFrom": "2026-07-12",
-      "previousMarketHistoryMaxMeso": 168888888
+      "previousMarketHistoryMaxMeso": 168888888,
+      "marketPriceMeso": 518888888,
+      "marketPriceBasis": "recentSale",
+      "marketPriceAt": "2026-08-11",
+      "marketPriceFrom": {
+        "latestMeso": 518888888,
+        "latestDate": "2026-08-11",
+        "median3Meso": 366666666,
+        "sampleCount": 20,
+        "observedMaxMeso": 518888888
+      }
     },
     {
       "itemName": "빅풋 탈",
@@ -2676,7 +2720,17 @@
       "recentSaleText": "5억 977만 7777",
       "recentSaleWindowCount": 20,
       "recentSaleWindowFrom": "2026-07-12",
-      "previousMarketHistoryMaxMeso": 500000000
+      "previousMarketHistoryMaxMeso": 500000000,
+      "marketPriceMeso": 509777777,
+      "marketPriceBasis": "recentSale",
+      "marketPriceAt": "2026-08-15",
+      "marketPriceFrom": {
+        "latestMeso": 509777777,
+        "latestDate": "2026-08-15",
+        "median3Meso": 509777777,
+        "sampleCount": 20,
+        "observedMaxMeso": 509799999
+      }
     },
     {
       "itemName": "세렌 갑옷",
@@ -2734,7 +2788,13 @@
       "marketHistorySaleCount": 65,
       "marketHistoryCollectedAt": "2026-08-04T14:54:34.859Z",
       "marketHistoryObservedMaxMeso": 299999999,
-      "marketHistoryMaxMeso": 299999999
+      "marketHistoryMaxMeso": 299999999,
+      "marketPriceMeso": 299999999,
+      "marketPriceBasis": "legacyMax",
+      "marketPriceAt": "2026-08-04",
+      "marketPriceFrom": {
+        "note": "최근 3개월 최고 체결가 · 체결 내역 미확보 · 과대평가 가능"
+      }
     },
     {
       "itemName": "세렌의 날개",
@@ -2758,7 +2818,13 @@
       "marketHistorySaleCount": 45,
       "marketHistoryCollectedAt": "2026-08-04T14:54:45.260Z",
       "marketHistoryObservedMaxMeso": 877777777,
-      "marketHistoryMaxMeso": 877777777
+      "marketHistoryMaxMeso": 877777777,
+      "marketPriceMeso": 877777777,
+      "marketPriceBasis": "legacyMax",
+      "marketPriceAt": "2026-08-04",
+      "marketPriceFrom": {
+        "note": "최근 3개월 최고 체결가 · 체결 내역 미확보 · 과대평가 가능"
+      }
     },
     {
       "itemName": "신성검 아소르",
@@ -2839,7 +2905,17 @@
       "recentSaleText": "4억 4444만 4444",
       "recentSaleWindowCount": 7,
       "recentSaleWindowFrom": "2026-07-08",
-      "previousMarketHistoryMaxMeso": 333333333
+      "previousMarketHistoryMaxMeso": 333333333,
+      "marketPriceMeso": 455000000,
+      "marketPriceBasis": "recentSale",
+      "marketPriceAt": "2026-08-09",
+      "marketPriceFrom": {
+        "latestMeso": 444444444,
+        "latestDate": "2026-08-09",
+        "median3Meso": 455000000,
+        "sampleCount": 7,
+        "observedMaxMeso": 455555500
+      }
     },
     {
       "itemName": "아니마 호영 도사복(남)",
@@ -2980,7 +3056,13 @@
       "marketHistoryNote": "최고 체결가 453,000,000 · 오늘 최저 매물가 유지",
       "accountCharacter": "스카니아 / 헤성",
       "listingQuantity": 1,
-      "listingTotalMeso": 320000000
+      "listingTotalMeso": 320000000,
+      "marketPriceMeso": 453000000,
+      "marketPriceBasis": "legacyMax",
+      "marketPriceAt": "2026-08-01",
+      "marketPriceFrom": {
+        "note": "최근 3개월 최고 체결가 · 체결 내역 미확보 · 과대평가 가능"
+      }
     },
     {
       "itemName": "심연의 그림자(남)",
@@ -3063,7 +3145,13 @@
       "marketHistorySaleCount": 41,
       "marketHistoryCollectedAt": "2026-08-04T14:55:02.259Z",
       "marketHistoryObservedMaxMeso": 388888888,
-      "marketHistoryMaxMeso": 388888888
+      "marketHistoryMaxMeso": 388888888,
+      "marketPriceMeso": 388888888,
+      "marketPriceBasis": "legacyMax",
+      "marketPriceAt": "2026-08-04",
+      "marketPriceFrom": {
+        "note": "최근 3개월 최고 체결가 · 체결 내역 미확보 · 과대평가 가능"
+      }
     },
     {
       "itemName": "노바 엔젤릭버스터 슈트(여)",
@@ -3096,7 +3184,17 @@
       "recentSaleText": "2억 3987만 7777",
       "recentSaleWindowCount": 15,
       "recentSaleWindowFrom": "2026-07-06",
-      "previousMarketHistoryMaxMeso": 177777777
+      "previousMarketHistoryMaxMeso": 177777777,
+      "marketPriceMeso": 239877777,
+      "marketPriceBasis": "recentSale",
+      "marketPriceAt": "2026-08-16",
+      "marketPriceFrom": {
+        "latestMeso": 239877777,
+        "latestDate": "2026-08-16",
+        "median3Meso": 239877777,
+        "sampleCount": 15,
+        "observedMaxMeso": 279566666
+      }
     },
     {
       "itemName": "노바 카데나 슈트",
@@ -3182,7 +3280,17 @@
       "recentSaleDate": "2026-07-31",
       "recentSaleText": "4억 9800만",
       "recentSaleWindowCount": 4,
-      "recentSaleWindowFrom": "2026-07-13"
+      "recentSaleWindowFrom": "2026-07-13",
+      "marketPriceMeso": 498000000,
+      "marketPriceBasis": "recentSale",
+      "marketPriceAt": "2026-07-31",
+      "marketPriceFrom": {
+        "latestMeso": 498000000,
+        "latestDate": "2026-07-31",
+        "median3Meso": 419900000,
+        "sampleCount": 4,
+        "observedMaxMeso": 498000000
+      }
     },
     {
       "itemName": "북치는 토끼 슈트(남)",
@@ -3404,7 +3512,13 @@
       "marketHistoryNote": "최고 체결가 536,909,999 · 오늘 최저 매물가 유지",
       "accountCharacter": "스카니아 / 헤성",
       "listingQuantity": 1,
-      "listingTotalMeso": 469777776
+      "listingTotalMeso": 469777776,
+      "marketPriceMeso": 536909999,
+      "marketPriceBasis": "legacyMax",
+      "marketPriceAt": "2026-08-01",
+      "marketPriceFrom": {
+        "note": "최근 3개월 최고 체결가 · 체결 내역 미확보 · 과대평가 가능"
+      }
     },
     {
       "itemName": "최초의 대적자 슈트(여)",
@@ -3431,7 +3545,13 @@
       "marketHistoryNote": "최고 체결가 436,600,000 · 매물가 상한 보정",
       "accountCharacter": "스카니아 / 헤성",
       "listingQuantity": 1,
-      "listingTotalMeso": 400000000
+      "listingTotalMeso": 400000000,
+      "marketPriceMeso": 436600000,
+      "marketPriceBasis": "legacyMax",
+      "marketPriceAt": "2026-08-01",
+      "marketPriceFrom": {
+        "note": "최근 3개월 최고 체결가 · 체결 내역 미확보 · 과대평가 가능"
+      }
     },
     {
       "itemName": "깡총 토끼 모자",
@@ -3870,7 +3990,17 @@
       "recentSaleText": "7억 5450만",
       "recentSaleWindowCount": 14,
       "recentSaleWindowFrom": "2026-07-08",
-      "previousMarketHistoryMaxMeso": 537699999
+      "previousMarketHistoryMaxMeso": 537699999,
+      "marketPriceMeso": 754500000,
+      "marketPriceBasis": "recentSale",
+      "marketPriceAt": "2026-08-14",
+      "marketPriceFrom": {
+        "latestMeso": 754500000,
+        "latestDate": "2026-08-14",
+        "median3Meso": 537699999,
+        "sampleCount": 14,
+        "observedMaxMeso": 754500000
+      }
     },
     {
       "itemName": "노바 카이저 갑화",
@@ -3912,7 +4042,13 @@
       "marketHistoryNote": "최고 체결가 825,500,000 · 오늘 최저 매물가 유지",
       "accountCharacter": "스카니아 / 헤성",
       "listingQuantity": 1,
-      "listingTotalMeso": 649676666
+      "listingTotalMeso": 649676666,
+      "marketPriceMeso": 825500000,
+      "marketPriceBasis": "legacyMax",
+      "marketPriceAt": "2026-08-01",
+      "marketPriceFrom": {
+        "note": "최근 3개월 최고 체결가 · 체결 내역 미확보 · 과대평가 가능"
+      }
     },
     {
       "itemName": "노바 카인 군화",
@@ -3973,7 +4109,13 @@
       "marketHistoryObservedMaxMeso": 365255555,
       "marketHistoryMaxMeso": 365255555,
       "listingQuantity": 1,
-      "listingTotalMeso": 300000000
+      "listingTotalMeso": 300000000,
+      "marketPriceMeso": 365255555,
+      "marketPriceBasis": "legacyMax",
+      "marketPriceAt": "2026-08-04",
+      "marketPriceFrom": {
+        "note": "최근 3개월 최고 체결가 · 체결 내역 미확보 · 과대평가 가능"
+      }
     },
     {
       "itemName": "단죄의 의지(남)",
@@ -4403,7 +4545,13 @@
       "marketHistoryNote": "최고 체결가 364,000,000 · 오늘 최저 매물가 유지",
       "accountCharacter": "스카니아 / 헤성",
       "listingQuantity": 1,
-      "listingTotalMeso": 341111111
+      "listingTotalMeso": 341111111,
+      "marketPriceMeso": 364000000,
+      "marketPriceBasis": "legacyMax",
+      "marketPriceAt": "2026-08-01",
+      "marketPriceFrom": {
+        "note": "최근 3개월 최고 체결가 · 체결 내역 미확보 · 과대평가 가능"
+      }
     },
     {
       "itemName": "레프 아크 제복(남)",
@@ -4502,7 +4650,13 @@
       "marketHistoryNote": "최고 체결가 411,000,000 · 오늘 최저 매물가 유지",
       "accountCharacter": "스카니아 / 헤성",
       "listingQuantity": 1,
-      "listingTotalMeso": 376400000
+      "listingTotalMeso": 376400000,
+      "marketPriceMeso": 411000000,
+      "marketPriceBasis": "legacyMax",
+      "marketPriceAt": "2026-08-01",
+      "marketPriceFrom": {
+        "note": "최근 3개월 최고 체결가 · 체결 내역 미확보 · 과대평가 가능"
+      }
     },
     {
       "itemName": "레프 칼리 신발",
@@ -4569,7 +4723,17 @@
       "recentSaleWindowCount": 20,
       "recentSaleWindowFrom": "2026-07-17",
       "previousMarketHistoryMaxMeso": null,
-      "marketHistoryMaxMeso": 599966666
+      "marketHistoryMaxMeso": 599966666,
+      "marketPriceMeso": 595544444,
+      "marketPriceBasis": "recentSale",
+      "marketPriceAt": "2026-08-15",
+      "marketPriceFrom": {
+        "latestMeso": 595544444,
+        "latestDate": "2026-08-15",
+        "median3Meso": 595544444,
+        "sampleCount": 20,
+        "observedMaxMeso": 599966666
+      }
     },
     {
       "itemName": "로즈 위들리(남)",
@@ -6121,7 +6285,13 @@
       "marketHistoryObservedMaxMeso": 344444444,
       "marketHistoryMaxMeso": 344444444,
       "listingQuantity": 1,
-      "listingTotalMeso": 300000000
+      "listingTotalMeso": 300000000,
+      "marketPriceMeso": 344444444,
+      "marketPriceBasis": "legacyMax",
+      "marketPriceAt": "2026-08-04",
+      "marketPriceFrom": {
+        "note": "최근 3개월 최고 체결가 · 체결 내역 미확보 · 과대평가 가능"
+      }
     },
     {
       "itemName": "짤랑 로퍼(남)",
@@ -6178,7 +6348,13 @@
       "marketHistoryNote": "최고 체결가 976,666,666 · 오늘 최저 매물가 유지",
       "accountCharacter": "스카니아 / 헤성",
       "listingQuantity": 1,
-      "listingTotalMeso": 589000000
+      "listingTotalMeso": 589000000,
+      "marketPriceMeso": 976666666,
+      "marketPriceBasis": "legacyMax",
+      "marketPriceAt": "2026-08-01",
+      "marketPriceFrom": {
+        "note": "최근 3개월 최고 체결가 · 체결 내역 미확보 · 과대평가 가능"
+      }
     },
     {
       "itemName": "문 트레벨러(남)",
@@ -6356,7 +6532,13 @@
       "marketHistoryNote": "최고 체결가 597,700,000 · 오늘 최저 매물가 유지",
       "accountCharacter": "스카니아 / 헤성",
       "listingQuantity": 1,
-      "listingTotalMeso": 439999999
+      "listingTotalMeso": 439999999,
+      "marketPriceMeso": 597700000,
+      "marketPriceBasis": "legacyMax",
+      "marketPriceAt": "2026-08-01",
+      "marketPriceFrom": {
+        "note": "최근 3개월 최고 체결가 · 체결 내역 미확보 · 과대평가 가능"
+      }
     },
     {
       "itemName": "프렌즈 월드 키네시스 교복(여)",
@@ -6396,7 +6578,13 @@
       "marketHistoryNote": "오늘 최저 매물가가 이전 상한 보정값 이하라 매물가 사용",
       "accountCharacter": "스카니아 / 헤성",
       "listingQuantity": 1,
-      "listingTotalMeso": 605998888
+      "listingTotalMeso": 605998888,
+      "marketPriceMeso": 666666666,
+      "marketPriceBasis": "legacyMax",
+      "marketPriceAt": "2026-08-01",
+      "marketPriceFrom": {
+        "note": "최근 3개월 최고 체결가 · 체결 내역 미확보 · 과대평가 가능"
+      }
     },
     {
       "itemName": "트루 윌",
@@ -6705,7 +6893,13 @@
       "updatedAt": "2026-08-16T14:27:07.066Z",
       "accountCharacter": "스카니아 / 헤성",
       "listingQuantity": 1,
-      "listingTotalMeso": 500000000
+      "listingTotalMeso": 500000000,
+      "marketPriceMeso": 599000000,
+      "marketPriceBasis": "legacyMax",
+      "marketPriceAt": "2026-07-15",
+      "marketPriceFrom": {
+        "note": "최근 3개월 최고 체결가 · 체결 내역 미확보 · 과대평가 가능"
+      }
     },
     {
       "itemName": "영웅 메르세데스 슈트(남)",
@@ -6771,7 +6965,13 @@
       "marketHistoryNote": "최고 체결가 644,000,000 · 오늘 최저 매물가 유지",
       "accountCharacter": "스카니아 / 키라데벤져",
       "listingQuantity": 1,
-      "listingTotalMeso": 538888888
+      "listingTotalMeso": 538888888,
+      "marketPriceMeso": 644000000,
+      "marketPriceBasis": "legacyMax",
+      "marketPriceAt": "2026-08-01",
+      "marketPriceFrom": {
+        "note": "최근 3개월 최고 체결가 · 체결 내역 미확보 · 과대평가 가능"
+      }
     },
     {
       "itemName": "데몬 슬레이어 윙",
@@ -6794,7 +6994,13 @@
       "marketHistoryNote": "최고 체결가 699,999,999 · 오늘 최저 매물가 유지",
       "accountCharacter": "스카니아 / 키라데벤져",
       "listingQuantity": 1,
-      "listingTotalMeso": 360000000
+      "listingTotalMeso": 360000000,
+      "marketPriceMeso": 699999999,
+      "marketPriceBasis": "legacyMax",
+      "marketPriceAt": "2026-08-01",
+      "marketPriceFrom": {
+        "note": "최근 3개월 최고 체결가 · 체결 내역 미확보 · 과대평가 가능"
+      }
     },
     {
       "itemName": "데몬 슬레이어 엑스",
@@ -6871,7 +7077,13 @@
       "marketHistoryNote": "최고 체결가 666,666,666 · 오늘 최저 매물가 유지",
       "accountCharacter": "스카니아 / 헤성",
       "listingQuantity": 1,
-      "listingTotalMeso": 586666656
+      "listingTotalMeso": 586666656,
+      "marketPriceMeso": 666666666,
+      "marketPriceBasis": "legacyMax",
+      "marketPriceAt": "2026-08-01",
+      "marketPriceFrom": {
+        "note": "최근 3개월 최고 체결가 · 체결 내역 미확보 · 과대평가 가능"
+      }
     },
     {
       "itemName": "데몬 어벤져 윙",
@@ -6894,7 +7106,13 @@
       "marketHistoryNote": "최고 체결가 555,555,555 · 오늘 최저 매물가 유지",
       "accountCharacter": "스카니아 / 헤성",
       "listingQuantity": 1,
-      "listingTotalMeso": 381111101
+      "listingTotalMeso": 381111101,
+      "marketPriceMeso": 555555555,
+      "marketPriceBasis": "legacyMax",
+      "marketPriceAt": "2026-08-01",
+      "marketPriceFrom": {
+        "note": "최근 3개월 최고 체결가 · 체결 내역 미확보 · 과대평가 가능"
+      }
     },
     {
       "itemName": "데몬 어벤져 데스페라도",
@@ -6971,7 +7189,13 @@
       "marketHistoryNote": "최고 체결가 498,999,999 · 오늘 최저 매물가 유지",
       "accountCharacter": "스카니아 / 키라데벤져",
       "listingQuantity": 1,
-      "listingTotalMeso": 348988888
+      "listingTotalMeso": 348988888,
+      "marketPriceMeso": 498999999,
+      "marketPriceBasis": "legacyMax",
+      "marketPriceAt": "2026-08-01",
+      "marketPriceFrom": {
+        "note": "최근 3개월 최고 체결가 · 체결 내역 미확보 · 과대평가 가능"
+      }
     },
     {
       "itemName": "레지스탕스 블래스터 헤어핀(여)",
@@ -7004,7 +7228,17 @@
       "recentSaleText": "4억 6497만 7777",
       "recentSaleWindowCount": 16,
       "recentSaleWindowFrom": "2026-07-08",
-      "previousMarketHistoryMaxMeso": 377699998
+      "previousMarketHistoryMaxMeso": 377699998,
+      "marketPriceMeso": 464977777,
+      "marketPriceBasis": "recentSale",
+      "marketPriceAt": "2026-08-15",
+      "marketPriceFrom": {
+        "latestMeso": 464977777,
+        "latestDate": "2026-08-15",
+        "median3Meso": 464977777,
+        "sampleCount": 16,
+        "observedMaxMeso": 489800000
+      }
     },
     {
       "itemName": "레지스탕스 블래스터 슈트(여)",
@@ -7174,7 +7408,17 @@
       "recentSaleText": "5억 4999만 9999",
       "recentSaleWindowCount": 7,
       "recentSaleWindowFrom": "2026-07-10",
-      "previousMarketHistoryMaxMeso": 398888888
+      "previousMarketHistoryMaxMeso": 398888888,
+      "marketPriceMeso": 549999999,
+      "marketPriceBasis": "recentSale",
+      "marketPriceAt": "2026-08-14",
+      "marketPriceFrom": {
+        "latestMeso": 549999999,
+        "latestDate": "2026-08-14",
+        "median3Meso": 549999999,
+        "sampleCount": 7,
+        "observedMaxMeso": 600000000
+      }
     },
     {
       "itemName": "레지스탕스 와일드헌터 슈즈",
@@ -7211,7 +7455,13 @@
       "marketHistoryNote": "최고 체결가 399,900,000 · 오늘 최저 매물가 유지",
       "accountCharacter": "스카니아 / 키라데벤져",
       "listingQuantity": 1,
-      "listingTotalMeso": 244900000
+      "listingTotalMeso": 244900000,
+      "marketPriceMeso": 399900000,
+      "marketPriceBasis": "legacyMax",
+      "marketPriceAt": "2026-08-01",
+      "marketPriceFrom": {
+        "note": "최근 3개월 최고 체결가 · 체결 내역 미확보 · 과대평가 가능"
+      }
     },
     {
       "itemName": "레지스탕스 제논 에너지소드",
@@ -7269,7 +7519,17 @@
       "recentSaleText": "6억 6666만 6666",
       "recentSaleWindowCount": 11,
       "recentSaleWindowFrom": "2026-07-11",
-      "previousMarketHistoryMaxMeso": 570000000
+      "previousMarketHistoryMaxMeso": 570000000,
+      "marketPriceMeso": 688850000,
+      "marketPriceBasis": "recentSale",
+      "marketPriceAt": "2026-08-16",
+      "marketPriceFrom": {
+        "latestMeso": 666666666,
+        "latestDate": "2026-08-16",
+        "median3Meso": 688850000,
+        "sampleCount": 11,
+        "observedMaxMeso": 922222222
+      }
     },
     {
       "itemName": "레지스탕스 메카닉 슈트(남)",
@@ -7532,7 +7792,17 @@
       "recentSaleText": "5억 5000만",
       "recentSaleWindowCount": 8,
       "recentSaleWindowFrom": "2026-07-06",
-      "previousMarketHistoryMaxMeso": 328888888
+      "previousMarketHistoryMaxMeso": 328888888,
+      "marketPriceMeso": 550000000,
+      "marketPriceBasis": "recentSale",
+      "marketPriceAt": "2026-08-16",
+      "marketPriceFrom": {
+        "latestMeso": 550000000,
+        "latestDate": "2026-08-16",
+        "median3Meso": 328888888,
+        "sampleCount": 8,
+        "observedMaxMeso": 550000000
+      }
     },
     {
       "itemName": "기사단장 이카르트 표창",
@@ -7836,7 +8106,13 @@
       "marketHistoryNote": "최고 체결가 619,000,000 · 오늘 최저 매물가 유지",
       "accountCharacter": "스카니아 / 헤성",
       "listingQuantity": 1,
-      "listingTotalMeso": 591987687
+      "listingTotalMeso": 591987687,
+      "marketPriceMeso": 619000000,
+      "marketPriceBasis": "legacyMax",
+      "marketPriceAt": "2026-08-01",
+      "marketPriceFrom": {
+        "note": "최근 3개월 최고 체결가 · 체결 내역 미확보 · 과대평가 가능"
+      }
     },
     {
       "itemName": "영웅 루미너스 샤이닝로드",
@@ -7856,7 +8132,13 @@
       "marketHistorySaleCount": 5,
       "marketHistoryCollectedAt": "2026-07-15T14:34:07.994Z",
       "marketHistoryNote": "최고 체결가 4.000억 · listing_kept_override_disabled",
-      "updatedAt": "2026-07-27T14:43:14.247Z"
+      "updatedAt": "2026-07-27T14:43:14.247Z",
+      "marketPriceMeso": 399999999,
+      "marketPriceBasis": "legacyMax",
+      "marketPriceAt": "2026-07-15",
+      "marketPriceFrom": {
+        "note": "최근 3개월 최고 체결가 · 체결 내역 미확보 · 과대평가 가능"
+      }
     },
     {
       "itemName": "영웅 은월 너클",
@@ -7879,7 +8161,13 @@
       "updatedAt": "2026-08-16T14:29:31.464Z",
       "accountCharacter": "스카니아 / 헤성",
       "listingQuantity": 1,
-      "listingTotalMeso": 300000000
+      "listingTotalMeso": 300000000,
+      "marketPriceMeso": 387700000,
+      "marketPriceBasis": "legacyMax",
+      "marketPriceAt": "2026-07-15",
+      "marketPriceFrom": {
+        "note": "최근 3개월 최고 체결가 · 체결 내역 미확보 · 과대평가 가능"
+      }
     },
     {
       "itemName": "영웅 에반 스태프",
@@ -8256,7 +8544,13 @@
       "accountCharacter": "스카니아 / 헤성",
       "listingQuantity": 1,
       "listingTotalMeso": 300000000,
-      "marketHistoryMaxMeso": 422000000
+      "marketHistoryMaxMeso": 422000000,
+      "marketPriceMeso": 422000000,
+      "marketPriceBasis": "legacyMax",
+      "marketPriceAt": "2026-08-12",
+      "marketPriceFrom": {
+        "note": "최근 3개월 최고 체결가 · 체결 내역 미확보 · 과대평가 가능"
+      }
     },
     {
       "itemName": "모험가 다크나이트 스피어",
@@ -8293,7 +8587,13 @@
       "marketHistoryNote": "최고 체결가 487,000,000 · 오늘 최저 매물가 유지",
       "accountCharacter": "스카니아 / 키라데벤져",
       "listingQuantity": 1,
-      "listingTotalMeso": 227000000
+      "listingTotalMeso": 227000000,
+      "marketPriceMeso": 487000000,
+      "marketPriceBasis": "legacyMax",
+      "marketPriceAt": "2026-08-01",
+      "marketPriceFrom": {
+        "note": "최근 3개월 최고 체결가 · 체결 내역 미확보 · 과대평가 가능"
+      }
     },
     {
       "itemName": "모험가 불독 완드",
@@ -8475,7 +8775,13 @@
       "accountCharacter": "스카니아 / 헤성",
       "listingQuantity": 1,
       "listingTotalMeso": 67000000,
-      "marketHistoryMaxMeso": 119800000
+      "marketHistoryMaxMeso": 119800000,
+      "marketPriceMeso": 119800000,
+      "marketPriceBasis": "legacyMax",
+      "marketPriceAt": "2026-08-12",
+      "marketPriceFrom": {
+        "note": "최근 3개월 최고 체결가 · 체결 내역 미확보 · 과대평가 가능"
+      }
     },
     {
       "itemName": "모험가 나이트로드 슈트",
@@ -8622,7 +8928,13 @@
       "marketHistoryNote": "최고 체결가 550,000,000 · 오늘 최저 매물가 유지",
       "accountCharacter": "스카니아 / 키라데벤져",
       "listingQuantity": 1,
-      "listingTotalMeso": 487000000
+      "listingTotalMeso": 487000000,
+      "marketPriceMeso": 550000000,
+      "marketPriceBasis": "legacyMax",
+      "marketPriceAt": "2026-08-01",
+      "marketPriceFrom": {
+        "note": "최근 3개월 최고 체결가 · 체결 내역 미확보 · 과대평가 가능"
+      }
     },
     {
       "itemName": "모험가 캡틴 건",
@@ -8722,7 +9034,13 @@
       "marketHistoryNote": "최고 체결가 500,000,000 · 시세 탭 보정 적용",
       "accountCharacter": "스카니아 / 헤성",
       "listingQuantity": 1,
-      "listingTotalMeso": 400000000
+      "listingTotalMeso": 400000000,
+      "marketPriceMeso": 500000000,
+      "marketPriceBasis": "legacyMax",
+      "marketPriceAt": "2026-08-12",
+      "marketPriceFrom": {
+        "note": "최근 3개월 최고 체결가 · 체결 내역 미확보 · 과대평가 가능"
+      }
     },
     {
       "itemName": "모험가 히어로 부츠",
@@ -8962,7 +9280,13 @@
       "marketHistoryNote": "최고 체결가 746,700,000 · 오늘 최저 매물가 유지",
       "accountCharacter": "스카니아 / 키라데벤져",
       "listingQuantity": 1,
-      "listingTotalMeso": 555700000
+      "listingTotalMeso": 555700000,
+      "marketPriceMeso": 746700000,
+      "marketPriceBasis": "legacyMax",
+      "marketPriceAt": "2026-08-01",
+      "marketPriceFrom": {
+        "note": "최근 3개월 최고 체결가 · 체결 내역 미확보 · 과대평가 가능"
+      }
     },
     {
       "itemName": "모험가 캡틴 부츠(여)",
@@ -9144,6 +9468,12 @@
         "observedListingLowestMeso": 1111111111,
         "observedResultCount": 4,
         "observedToRetainedRatio": 1.01
+      },
+      "marketPriceMeso": 1099999999,
+      "marketPriceBasis": "legacyMax",
+      "marketPriceAt": "2026-08-12",
+      "marketPriceFrom": {
+        "note": "최근 3개월 최고 체결가 · 체결 내역 미확보 · 과대평가 가능"
       }
     },
     {
@@ -9187,7 +9517,13 @@
       "marketHistoryNote": "최고 체결가 389,999,999 · 시세 탭 보정 적용",
       "listingQuantity": 1,
       "listingTotalMeso": 388999999,
-      "marketHistoryMaxMeso": 389999999
+      "marketHistoryMaxMeso": 389999999,
+      "marketPriceMeso": 389999999,
+      "marketPriceBasis": "legacyMax",
+      "marketPriceAt": "2026-08-12",
+      "marketPriceFrom": {
+        "note": "최근 3개월 최고 체결가 · 체결 내역 미확보 · 과대평가 가능"
+      }
     },
     {
       "itemName": "보스 헤어 쿠폰",
@@ -9210,7 +9546,13 @@
       "marketHistoryNote": "최고 체결가 328,888,888 · 시세 탭 보정 적용",
       "listingQuantity": 1,
       "listingTotalMeso": 377777777,
-      "marketHistoryMaxMeso": 328888888
+      "marketHistoryMaxMeso": 328888888,
+      "marketPriceMeso": 328888888,
+      "marketPriceBasis": "legacyMax",
+      "marketPriceAt": "2026-08-09",
+      "marketPriceFrom": {
+        "note": "최근 3개월 최고 체결가 · 체결 내역 미확보 · 과대평가 가능"
+      }
     },
     {
       "itemName": "플래티넘 카르마의 가위",
@@ -9248,7 +9590,13 @@
       "marketHistoryObservedMaxMeso": 389999999,
       "marketHistoryNote": "최고 체결가 389,999,999 · 오늘 최저 매물가 유지",
       "listingQuantity": 1,
-      "listingTotalMeso": 319000000
+      "listingTotalMeso": 319000000,
+      "marketPriceMeso": 389999999,
+      "marketPriceBasis": "legacyMax",
+      "marketPriceAt": "2026-08-01",
+      "marketPriceFrom": {
+        "note": "최근 3개월 최고 체결가 · 체결 내역 미확보 · 과대평가 가능"
+      }
     },
     {
       "itemName": "프리미엄 헤어쿠폰",
@@ -9306,7 +9654,13 @@
       "marketHistoryNote": "최고 체결가 266,666,666 · 시세 탭 보정 적용",
       "listingQuantity": 1,
       "listingTotalMeso": 244860000,
-      "marketHistoryMaxMeso": 266666666
+      "marketHistoryMaxMeso": 266666666,
+      "marketPriceMeso": 266666666,
+      "marketPriceBasis": "legacyMax",
+      "marketPriceAt": "2026-08-04",
+      "marketPriceFrom": {
+        "note": "최근 3개월 최고 체결가 · 체결 내역 미확보 · 과대평가 가능"
+      }
     },
     {
       "itemName": "금손 은손 성형외과 쿠폰",
@@ -9349,7 +9703,13 @@
       "marketHistoryNote": "최고 체결가 1,888,888,888 · 시세 탭 보정 적용",
       "listingQuantity": 1,
       "listingTotalMeso": 237777777,
-      "marketHistoryMaxMeso": 1888888888
+      "marketHistoryMaxMeso": 1888888888,
+      "marketPriceMeso": 1888888888,
+      "marketPriceBasis": "legacyMax",
+      "marketPriceAt": "2026-08-04",
+      "marketPriceFrom": {
+        "note": "최근 3개월 최고 체결가 · 체결 내역 미확보 · 과대평가 가능"
+      }
     },
     {
       "itemName": "메이플 로얄 스타일",
@@ -9388,7 +9748,13 @@
       "marketHistoryNote": "최고 체결가 378,880,000 · 시세 탭 보정 적용",
       "listingQuantity": 1,
       "listingTotalMeso": 369999999,
-      "marketHistoryMaxMeso": 378880000
+      "marketHistoryMaxMeso": 378880000,
+      "marketPriceMeso": 378880000,
+      "marketPriceBasis": "legacyMax",
+      "marketPriceAt": "2026-08-12",
+      "marketPriceFrom": {
+        "note": "최근 3개월 최고 체결가 · 체결 내역 미확보 · 과대평가 가능"
+      }
     },
     {
       "itemName": "레지스탕스 와일드헌터 헤어핀",
@@ -9439,7 +9805,13 @@
       "marketHistoryNote": "최고 체결가 496,350,000 · 오늘 최저 매물가 유지",
       "accountCharacter": "스카니아 / 키라데벤져",
       "listingQuantity": 1,
-      "listingTotalMeso": 449865666
+      "listingTotalMeso": 449865666,
+      "marketPriceMeso": 496350000,
+      "marketPriceBasis": "legacyMax",
+      "marketPriceAt": "2026-08-01",
+      "marketPriceFrom": {
+        "note": "최근 3개월 최고 체결가 · 체결 내역 미확보 · 과대평가 가능"
+      }
     },
     {
       "itemName": "레프 아크 군화",
@@ -9530,7 +9902,13 @@
       "marketHistoryNote": "최고 체결가 308,999,999 · 시세 탭 보정 적용",
       "listingQuantity": 1,
       "listingTotalMeso": 258777777,
-      "marketHistoryMaxMeso": 308999999
+      "marketHistoryMaxMeso": 308999999,
+      "marketPriceMeso": 308999999,
+      "marketPriceBasis": "legacyMax",
+      "marketPriceAt": "2026-08-04",
+      "marketPriceFrom": {
+        "note": "최근 3개월 최고 체결가 · 체결 내역 미확보 · 과대평가 가능"
+      }
     },
     {
       "itemName": "아이스예티",
@@ -9574,7 +9952,17 @@
       "recentSaleText": "3억 3333만 3333",
       "recentSaleWindowCount": 3,
       "recentSaleWindowFrom": "2026-07-12",
-      "previousMarketHistoryMaxMeso": 177777777
+      "previousMarketHistoryMaxMeso": 177777777,
+      "marketPriceMeso": 333333333,
+      "marketPriceBasis": "recentSale",
+      "marketPriceAt": "2026-08-15",
+      "marketPriceFrom": {
+        "latestMeso": 333333333,
+        "latestDate": "2026-08-15",
+        "median3Meso": 177777777,
+        "sampleCount": 3,
+        "observedMaxMeso": 333333333
+      }
     },
     {
       "itemName": "모험가 불독 로브(남)",
@@ -9612,7 +10000,13 @@
       "accountCharacter": "스카니아 / 키라데벤져",
       "listingLowestText": "4억 8853만 3333",
       "listingQuantity": 1,
-      "listingTotalMeso": 488533333
+      "listingTotalMeso": 488533333,
+      "marketPriceMeso": 497000000,
+      "marketPriceBasis": "legacyMax",
+      "marketPriceAt": "2026-08-01",
+      "marketPriceFrom": {
+        "note": "최근 3개월 최고 체결가 · 체결 내역 미확보 · 과대평가 가능"
+      }
     },
     {
       "itemName": "프리미엄 성형쿠폰",
@@ -9654,7 +10048,13 @@
       "marketHistoryCollectedAt": "2026-08-12T14:00:57.277Z",
       "marketHistoryObservedMaxMeso": 159999999,
       "marketHistoryMaxMeso": 159999999,
-      "marketHistoryNote": "최고 체결가 159,999,999 · 시세 탭 보정 적용"
+      "marketHistoryNote": "최고 체결가 159,999,999 · 시세 탭 보정 적용",
+      "marketPriceMeso": 159999999,
+      "marketPriceBasis": "legacyMax",
+      "marketPriceAt": "2026-08-12",
+      "marketPriceFrom": {
+        "note": "최근 3개월 최고 체결가 · 체결 내역 미확보 · 과대평가 가능"
+      }
     },
     {
       "itemName": "커스텀 믹스염색 쿠폰",
@@ -9843,7 +10243,17 @@
       "recentSaleText": "3억 9999만 9999",
       "recentSaleWindowCount": 5,
       "recentSaleWindowFrom": "2026-07-13",
-      "previousMarketHistoryMaxMeso": 389900000
+      "previousMarketHistoryMaxMeso": 389900000,
+      "marketPriceMeso": 399999999,
+      "marketPriceBasis": "recentSale",
+      "marketPriceAt": "2026-08-11",
+      "marketPriceFrom": {
+        "latestMeso": 399999999,
+        "latestDate": "2026-08-11",
+        "median3Meso": 399999999,
+        "sampleCount": 5,
+        "observedMaxMeso": 399999999
+      }
     },
     {
       "itemName": "레지스탕스 제논 슈트(여)",
@@ -9867,7 +10277,13 @@
       "marketHistoryNote": "최고 체결가 398,886,888 · 매물가 상한 보정",
       "accountCharacter": "스카니아 / 키라데벤져",
       "listingQuantity": 1,
-      "listingTotalMeso": 265555555
+      "listingTotalMeso": 265555555,
+      "marketPriceMeso": 398886888,
+      "marketPriceBasis": "legacyMax",
+      "marketPriceAt": "2026-08-01",
+      "marketPriceFrom": {
+        "note": "최근 3개월 최고 체결가 · 체결 내역 미확보 · 과대평가 가능"
+      }
     },
     {
       "itemName": "모험가 보우마스터 부츠",
@@ -9904,7 +10320,13 @@
       "marketHistoryNote": "최고 체결가 888,888,888 · 오늘 최저 매물가 유지",
       "accountCharacter": "스카니아 / 키라데벤져",
       "listingQuantity": 1,
-      "listingTotalMeso": 698888878
+      "listingTotalMeso": 698888878,
+      "marketPriceMeso": 888888888,
+      "marketPriceBasis": "legacyMax",
+      "marketPriceAt": "2026-08-01",
+      "marketPriceFrom": {
+        "note": "최근 3개월 최고 체결가 · 체결 내역 미확보 · 과대평가 가능"
+      }
     },
     {
       "itemName": "다크 시그너스 드레스(여)",
@@ -9928,7 +10350,13 @@
       "marketHistoryNote": "최고 체결가 888,888,888 · 매물가 상한 보정",
       "accountCharacter": "스카니아 / 헤성",
       "listingQuantity": 1,
-      "listingTotalMeso": 855555000
+      "listingTotalMeso": 855555000,
+      "marketPriceMeso": 888888888,
+      "marketPriceBasis": "legacyMax",
+      "marketPriceAt": "2026-08-01",
+      "marketPriceFrom": {
+        "note": "최근 3개월 최고 체결가 · 체결 내역 미확보 · 과대평가 가능"
+      }
     },
     {
       "itemName": "다크 시그너스 써클릿",
@@ -9969,7 +10397,13 @@
       "marketHistoryNote": "최고 체결가 111,111,111 · 매물가 상한 보정",
       "accountCharacter": "스카니아 / 키라데벤져",
       "listingQuantity": 1,
-      "listingTotalMeso": 85554444
+      "listingTotalMeso": 85554444,
+      "marketPriceMeso": 111111111,
+      "marketPriceBasis": "legacyMax",
+      "marketPriceAt": "2026-08-01",
+      "marketPriceFrom": {
+        "note": "최근 3개월 최고 체결가 · 체결 내역 미확보 · 과대평가 가능"
+      }
     },
     {
       "itemName": "아카이럼의 문양",
@@ -10080,7 +10514,13 @@
       "marketHistoryMaxMeso": 113299999,
       "lastKnownListingMeso": 98888888,
       "lastKnownListingText": "9888만 8888",
-      "lastKnownListingAt": "2026-08-12T14:14:53.035Z"
+      "lastKnownListingAt": "2026-08-12T14:14:53.035Z",
+      "marketPriceMeso": 113299999,
+      "marketPriceBasis": "legacyMax",
+      "marketPriceAt": "2026-08-12",
+      "marketPriceFrom": {
+        "note": "최근 3개월 최고 체결가 · 체결 내역 미확보 · 과대평가 가능"
+      }
     },
     {
       "itemName": "성별 변경 쿠폰",
@@ -11656,5 +12096,12 @@
       ],
       "nextItem": "라스트 서바이버(남)"
     }
+  },
+  "marketPricePolicy": {
+    "adoptedBasis": "recentSale",
+    "rule": "최근 체결가와 최근 3건 중앙값 중 높은 쪽",
+    "fallback": "legacyMax · 체결 내역을 뜨는 대로 교체",
+    "rationale": "3개월 최고 체결가는 파는 사람이 도달할 수 없는 값이라 판매가 추정에 맞지 않는다. 고가 이상치는 채택 단계의 min(시세, 매물)이 막는다.",
+    "documentedIn": "PRICE_VERIFICATION.md"
   }
 }

@@ -666,13 +666,17 @@ function priceFor(target, index) {
   const rowByName = names.map(name => index.byName.get(normalizeKey(name))).find(Boolean);
   const row = rowById || rowByName;
   const listingMeso = roundMeso(row?.listingLowestMeso);
-  const marketHistoryMeso = roundMeso(row?.marketHistoryMaxMeso || row?.marketHistoryMeso);
+  // 채택용 시세는 최근 체결 기반(marketPriceMeso). 아직 체결 내역을 못 뜬 행만
+  // 과거의 3개월 최고가로 물러난다. PRICE_VERIFICATION.md 9절 참고.
+  const marketHistoryMeso = roundMeso(
+    row?.marketPriceMeso || row?.marketHistoryMaxMeso || row?.marketHistoryMeso);
+  const marketPriceBasis = row?.marketPriceBasis || '';
   const marketHistoryStatus = row?.marketHistoryStatus || '';
   const pendingMarketHistory = isMarketHistoryPending(marketHistoryStatus) && marketHistoryMeso <= 0;
   // 시세 탭 최고 체결가는 3개월 내 단발 고가가 섞여 실제 판매가를 과대평가하고,
   // 갱신이 밀리면 반대로 과소평가한다. 낡은 근거를 먼저 후보에서 뺀 뒤 낮은 쪽을 쓴다.
   const listingStale = isEvidenceStale(row?.updatedAt || row?.collectedAt);
-  const marketStale = isEvidenceStale(row?.marketHistoryCollectedAt);
+  const marketStale = isEvidenceStale(row?.marketPriceAt || row?.marketHistoryCollectedAt);
   const candidates = [];
   if (listingMeso > 0 && !listingStale) candidates.push(listingMeso);
   if (marketHistoryMeso > 0 && !marketStale) candidates.push(marketHistoryMeso);
@@ -698,6 +702,7 @@ function priceFor(target, index) {
       marketGapRate,
       usesMarketHistory,
       evidenceStale,
+      marketPriceBasis,
       source: pendingMarketHistory
         ? 'pending'
         : usesMarketHistory
