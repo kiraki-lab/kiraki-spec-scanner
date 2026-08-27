@@ -20,6 +20,8 @@ const MESO_PRECISION = 1000000;
 const REFERENCE_CATEGORY = '마일리지 구매 참고';
 // 이 일수를 넘긴 근거는 판매가 후보에서 뺀다. PRICE_VERIFICATION.md 4절 참고.
 const EVIDENCE_STALE_DAYS = 14;
+// 이 건수 이하의 매물이 유일한 근거이면 순위를 매기지 않는다.
+const THIN_LISTING_COUNT = 2;
 const DEFAULT_SETTINGS = {
   baseMpRate: 6990,
   discountRate: 6,
@@ -702,6 +704,11 @@ function priceFor(target, index) {
   const meso = pendingMarketHistory ? 0 : candidateMeso;
   const usesMarketHistory = marketHistoryMeso > 0 && candidateMeso === marketHistoryMeso;
   const evidenceStale = !candidates.length && candidateMeso > 0;
+  // 쓸 수 있는 시세가 없는데 매물이 1~2건뿐이면 그 호가 하나가 곧 값이 된다.
+  // PRICE_VERIFICATION.md 5절. 마네킹 매물 2건 99.99억이 이 경우다.
+  const listingCount = Number(row?.resultCount || 0);
+  const thinListingOnly = candidates.length === 1 && candidateMeso === listingMeso
+    && listingCount > 0 && listingCount <= THIN_LISTING_COUNT;
   const marketGapRate = listingMeso > 0 && marketHistoryMeso > 0 && listingMeso !== marketHistoryMeso
     ? Math.abs(listingMeso - marketHistoryMeso) / listingMeso * 100
     : 0;
@@ -719,6 +726,8 @@ function priceFor(target, index) {
       usesMarketHistory,
       evidenceStale,
       marketPriceBasis,
+      thinListingOnly,
+      listingCount,
       source: pendingMarketHistory
         ? 'pending'
         : usesMarketHistory
@@ -766,6 +775,7 @@ function totalPriceFor(item, index) {
   let manualCount = 0;
   let historyCount = 0;
   let pendingCount = 0;
+  let thinCount = 0;
   let latest = null;
   const components = tradableComponents.map(component => {
     const price = priceFor(component, index);
@@ -773,6 +783,7 @@ function totalPriceFor(item, index) {
     if (price.source === 'manual') manualCount += 1;
     if (price.source === 'history') historyCount += 1;
     if (price.source === 'pending') pendingCount += 1;
+    if (price.thinListingOnly) thinCount += 1;
     [price.collectedAt, price.marketHistoryCollectedAt].filter(Boolean).forEach(value => {
       if (!latest || new Date(value) > new Date(latest)) latest = value;
     });
@@ -794,6 +805,7 @@ function totalPriceFor(item, index) {
     collectedAt: latest,
     marketHistoryApplied: historyCount > 0,
     pendingMarketCount: pendingCount,
+    thinListingCount: thinCount,
     components
   };
 }
@@ -878,15 +890,25 @@ function compareRankRows(a, b) {
   if (Boolean(a.referenceOnly) !== Boolean(b.referenceOnly)) return a.referenceOnly ? 1 : -1;
   const aOff = a.purchasable === false, bOff = b.purchasable === false;
   if (aOff !== bOff) return aOff ? 1 : -1;
+  const aThin = isThinListingRow(a), bThin = isThinListingRow(b);
+  if (aThin !== bThin) return aThin ? 1 : -1;
   if (a.referenceOnly) return b.referenceMesoPerThousand - a.referenceMesoPerThousand;
   return a.listingEfficiency - b.listingEfficiency;
+}
+
+// 구성품이 없는 단독 상품이 저매물 호가 하나로만 값이 잡히면 순위를 매기지 않는다.
+// 패키지는 여러 구성품으로 평균되므로 뱃지만 달고 순위는 유지한다.
+function isThinListingRow(item) {
+  return !componentList(item.components).length && Boolean(item.listingPrice?.thinListingOnly);
 }
 
 function createRankMap(rows) {
   const ranks = new Map();
   let rank = 0;
   rows.forEach(item => {
-    if (!item.referenceOnly && item.purchasable !== false) ranks.set(rowIdentity(item), ++rank);
+    if (!item.referenceOnly && item.purchasable !== false && !isThinListingRow(item)) {
+      ranks.set(rowIdentity(item), ++rank);
+    }
   });
   return ranks;
 }
@@ -1043,16 +1065,22 @@ function renderTable(rows, rankByKey = new Map(), rankChanges = new Map()) {
         ? `<small class="rank-change down">↓${Math.abs(rankDelta)}</small>`
         : '';
     const soldOut = !isReference && item.purchasable === false;
+    const thinRow = !isReference && !soldOut && isThinListingRow(item);
     const rank = isReference
       ? '<span class="source-pill seed">참고</span>'
       : soldOut
         ? '<span class="source-pill seed" title="캐시샵 판매 기간이 끝나 구매할 수 없습니다.">판매 종료</span>'
-        : `<span class="rank-cell"><span class="rank">${rankNumber}</span>${rankChange}</span>`;
+        : thinRow
+          ? `<span class="source-pill seed" title="매물 ${item.listingPrice?.listingCount || 0}건이 유일한 근거입니다. 시세 검증 전까지 순위에서 제외합니다.">검증 필요</span>`
+          : `<span class="rank-cell"><span class="rank">${rankNumber}</span>${rankChange}</span>`;
     const turnoverWarning = !isReference && isPackageItem(item)
       ? '<span class="turnover-pill" title="패키지는 판매까지 시간이 걸릴 수 있습니다." aria-label="회전율 주의">회전율 주의</span>'
       : '';
     const marketWarning = !isReference && Number(item.listingPrice?.pendingMarketCount || 0) > 0
       ? `<span class="market-warning-pill" title="시세 탭 검증 전 구성품은 보수 합산에서 제외됩니다.">시세 검증 ${item.listingPrice.pendingMarketCount}개</span>`
+      : '';
+    const thinWarning = !isReference && Number(item.listingPrice?.thinListingCount || 0) > 0
+      ? `<span class="market-warning-pill" title="매물 ${THIN_LISTING_COUNT}건 이하가 유일한 근거인 구성품입니다. 호가 하나에 값이 흔들립니다.">저매물 ${item.listingPrice.thinListingCount}개</span>`
       : '';
     const itemMeta = isReference
       ? `<span class="item-meta">마일리지 전용 · 판매 불가 · ${REFERENCE_CATEGORY}</span>`
@@ -1060,7 +1088,7 @@ function renderTable(rows, rankByKey = new Map(), rankChanges = new Map()) {
             soldOut && item.availability?.endAt
               ? ` · ${escapeHtml(formatDate(item.availability.endAt))} 판매 종료`
               : ''}</span>
-         <span class="item-badges">${renderMileageBadge(item.mileageType)}${turnoverWarning}${marketWarning}</span>`;
+         <span class="item-badges">${renderMileageBadge(item.mileageType)}${turnoverWarning}${marketWarning}${thinWarning}</span>`;
     const cost = isReference
       ? `${nf.format(Number(item.mileagePrice || item.cashPrice || 0))} 마일리지`
       : `${nf.format(Number(item.cashPrice || 0))}원`;

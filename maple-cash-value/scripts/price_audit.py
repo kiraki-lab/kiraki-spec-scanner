@@ -100,8 +100,10 @@ def grade_row(row, today):
 
     basis, adopted = min(candidates, key=lambda c: c[1])  # basis: 'listing' | 'market'
 
-    # 저매물 단독 근거는 이상치 위험이 크다
-    thin = basis == 'listing' and 0 < count <= THIN_LISTINGS and not market
+    # 저매물 단독 근거는 이상치 위험이 크다.
+    # 쓸 수 없는 시세(낡음·legacyMax)가 있어도 교차검증이 아니므로 단독으로 본다.
+    thin = (basis == 'listing' and len(candidates) == 1
+            and 0 < count <= THIN_LISTINGS)
 
     if thin:
         info.update(grade='D', basis=basis, adoptedMeso=adopted, gapRate=gap,
@@ -148,7 +150,21 @@ def component_owner_map(items):
     return owners
 
 
-def approx_ranking(items, by_key, settings):
+def is_purchasable(item, today):
+    """판매 기간이 끝났거나 아직이면 순위·검증 대상이 아니다. app.js 와 같은 규칙."""
+    if item.get('rankEligible') is False:
+        return False
+    a = item.get('availability') or {}
+    start = parse_day(a.get('startAt'))
+    end = parse_day(a.get('endAt'))
+    if start and today < start:
+        return False
+    if end and today > end:
+        return False
+    return True
+
+
+def approx_ranking(items, by_key, settings, today):
     """상품별 대략적인 '1억당 현금'을 계산해 순위를 매긴다.
 
     계산기 본식(마일리지·수수료)을 그대로 옮기지는 않는다. 어떤 행이 순위표
@@ -157,6 +173,8 @@ def approx_ranking(items, by_key, settings):
     discount = 1 - (settings.get('discountRate') or 0) / 100
     ranked = []
     for it in items:
+        if not is_purchasable(it, today):
+            continue
         comps = it.get('components') or []
         if comps:
             total, missing = 0, False
@@ -197,7 +215,7 @@ def main():
             by_key.setdefault(''.join(a.split()), g)
 
     settings = json.load(open(ITEMS, encoding='utf-8'))['settings']
-    ranked = approx_ranking(items, by_key, settings)
+    ranked = approx_ranking(items, by_key, settings, today)
 
     # 각 행이 떠받치는 상품 중 가장 높은 순위
     best_rank = {}
