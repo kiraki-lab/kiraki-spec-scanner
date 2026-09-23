@@ -127,6 +127,12 @@
         <div class="section-title">
           <h2>효율 목록</h2>
           <div class="table-heading-actions">
+            <label class="package-toggle resting-toggle" title="다음 회차를 기다리는 주기 판매 컬렉션 상품도 참고 순위에 넣어 봅니다.">
+              <input id="resting-toggle" type="checkbox">
+              <span class="toggle-track" aria-hidden="true"></span>
+              <strong>휴지기 포함</strong>
+              <em id="resting-toggle-state">OFF</em>
+            </label>
             <button id="reset-local-prices" class="local-reset-button" type="button"
               title="이 브라우저에서 수정한 매물가와 시세 참고가 전체 초기화">전체 초기화</button>
             <label class="page-size-control">
@@ -139,6 +145,10 @@
             <span id="row-count" class="count-pill">0개</span>
           </div>
         </div>
+        <p id="resting-banner" class="resting-banner" hidden>
+          <strong>휴지기</strong>
+          <span id="resting-banner-text"></span>
+        </p>
         <div class="table-wrap">
           <table>
             <thead>

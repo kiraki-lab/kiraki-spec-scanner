@@ -1,0 +1,36 @@
+{
+    "status":  "VERIFIED",
+    "verifier":  "codex-exec",
+    "thread_id":  "01a0bf58-6bae-7851-933a-3b79b71ab19e",
+    "task":  "rules-noprice-0920",
+    "project":  "maple-cash-value",
+    "effort":  "medium",
+    "checklist":  "kiraki-youtube-team\\references\\verify-checklists\\maple-cash-rules.md",
+    "started_at":  "2026-09-21T00:03:57.9739109+09:00",
+    "ended_at":  "2026-09-21T00:07:45.4812450+09:00",
+    "exit_code":  0,
+    "verdict":  "REVISE",
+    "findings":  5,
+    "unverified":  [
+                       "crosscheck_adoption.js 원본 명령은 임시 파일 생성·삭제 때문에 실행하지 않았다. 대신 실제 priceFor와 grade_row를 메모리에서 대조했으며, 2026-09-20 기준 원장 564행과 기존 합성 10사례의 불일치는 0건이었다. 추가 발견 사례는 파일 변경 금지에 따라 저장하지 않았다.",
+                       "실제 브라우저 화면은 확인하지 않았다. 순위와 표시 관련 검증은 함수 실행 및 렌더링 코드 대조로 수행했다.",
+                       "NATURALNESS_UNVERIFIED: 음성·BGM·음량 체감은 확인하지 않았다. 이번 입력에는 음성 산출물이 없다."
+                   ],
+    "verdict_path":  "maple-cash-value\\verification\\rules-noprice-0920-v5\\verdict.json",
+    "verdict_sha256":  "b660a61f09c740fb7e13119968b9a7ccdb21cacb9c97bed90e828dd391b40801",
+    "inputs":  [
+                   {
+                       "path":  "maple-cash-value\\app.js",
+                       "sha256":  "6309a358c1603de95ef8d434ff8488d9989c5411df85b3f345e11b713863ee0d"
+                   },
+                   {
+                       "path":  "maple-cash-value\\scripts\\price_audit.py",
+                       "sha256":  "64c2b626fc1f43dc75809b9939d6f0705102018c82eeecfa6635db0183e3431e"
+                   },
+                   {
+                       "path":  "maple-cash-value\\scripts\\apply_market_basis.py",
+                       "sha256":  "6a022ab3ff24a7422da4ef8e81275d2c102812324aaf3c7a44d1e03854042984"
+                   }
+               ],
+    "out_dir":  "maple-cash-value\\verification\\rules-noprice-0920-v5"
+}

@@ -1,0 +1,18 @@
+{
+  "verdict": "REVISE",
+  "findings": [
+    {
+      "severity": "high",
+      "file": "maple-cash-value/app.js",
+      "claim": "PACKAGE_SEED_RANKING_DIVERGENCE",
+      "evidence": "PRICE_VERIFICATION.md 91·133~135줄은 초기값을 표시하되 순위에서 제외하도록 규정한다. app.js 812~825줄은 구성품의 초기값도 패키지 가격에 합산하지만, 957~967줄의 초기값 제외는 구성품 없는 상품에만 적용한다. 메모리 재현에서 매물·시세 없이 seedMesoPrice=240000000인 구성품 하나를 가진 '__package_seed' 패키지는 계산기 합산가 240000000, hasNoPriceEvidence=false, 순위 1을 반환했다. 반면 scripts/price_audit.py 334~348줄은 같은 구성품의 calcAdoptedMeso=0을 합산하여 패키지를 순위에서 제외했다. 현재 items.json에는 구성품 초기값이 없어 기존 데이터에서는 발생하지 않지만, 합성 입력에서 두 구현의 차이가 재현된다."
+    }
+  ],
+  "unverified": [
+    "scripts/crosscheck_adoption.js 원본 명령은 72~85줄에서 임시 파일을 생성·삭제하므로 실행하지 않았다. 파일 입출력을 메모리 전달로 대체한 검증에서는 2026-09-20 기준 원장 564행과 기존 합성 사례 16건의 채택가·저매물·순위 가능 여부·저매물 등급 불일치가 모두 0건이었다.",
+    "새 패키지 초기값 사례는 메모리에서만 재현했다. 파일 변경 금지 조건에 따라 adoption-cases.json에는 추가하지 않았다.",
+    "브라우저의 실제 화면 표시는 실행하지 않았으며, 순위 제외 사유는 렌더링 코드로 확인했다.",
+    "NATURALNESS_UNVERIFIED: 음성·BGM·음량 체감은 청취 검증하지 않았다. 이번 대상은 코드와 규칙 문서다."
+  ],
+  "external_actions": 0
+}

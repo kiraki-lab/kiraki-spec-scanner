@@ -11279,6 +11279,17 @@
       "observationPrecision": "day",
       "queueGroup": "packageDeferred",
       "aliases": []
+    },
+    {
+      "itemName": "캐치! 티니핑 굿즈 컬렉션",
+      "query": "캐치! 티니핑 굿즈 컬렉션",
+      "listingLowestMeso": 0,
+      "resultCount": 0,
+      "status": "unverified",
+      "filter": "캐시",
+      "queueGroup": "dailyPriority",
+      "addedAt": "2026-09-20",
+      "addedReason": "2026-09-17 캐시샵 신규. 아직 조회 전"
     }
   ],
   "skipped": [

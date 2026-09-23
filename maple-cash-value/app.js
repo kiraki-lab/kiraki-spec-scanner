@@ -2,7 +2,8 @@ const DATA_PATHS = {
   items: './data/items.json',
   auction: './data/auction-prices.json',
   notices: './data/cashshop-notices.json',
-  saleItems: './data/cashshop-sale-items.json'
+  saleItems: './data/cashshop-sale-items.json',
+  collections: './data/collections.json'
 };
 
 const SHEET_MARKET_SOURCE = Object.freeze({
@@ -14,6 +15,8 @@ const SHEET_REFRESH_INTERVAL_MS = 30000;
 
 const SETTINGS_KEY = 'maple-cash-value-settings-v2';
 const LOCAL_DATA_KEY = 'maple-cash-value-local-data-v1';
+// 화면 보기 선택(휴지기 포함 여부). 계산 설정과 섞지 않는다 — 설정은 내보내기에 실린다.
+const VIEW_KEY = 'maple-cash-value-view-v1';
 const FIXED_MILEAGE_MESO_RATE = 10000;
 const MESO_INPUT_UNIT = 100000000;
 const MESO_PRECISION = 1000000;
@@ -106,6 +109,10 @@ const state = {
   categoryFilter: '',
   statusFilter: '',
   packagesVisible: true,
+  // 주기 판매 컬렉션. data/collections.json. 상품은 collection id 로 가리킨다.
+  collections: {},
+  // 휴지기(다음 판매를 기다리는 컬렉션) 상품도 순위에 넣어 볼지. 기본은 끔.
+  includeResting: false,
   saleSearch: '',
   saleGroupFilter: '',
   saleTypeFilter: '',
@@ -359,14 +366,20 @@ async function loadJson(path, fallback) {
 
 async function loadData() {
   loadStoredSettings();
+  loadViewSettings();
   syncInputs();
   try {
-    const [itemsDoc, auctionDoc, noticeDoc, saleDoc] = await Promise.all([
+    const [itemsDoc, auctionDoc, noticeDoc, saleDoc, collectionsDoc] = await Promise.all([
       loadJson(DATA_PATHS.items, { items: [], settings: DEFAULT_SETTINGS }),
       loadJson(DATA_PATHS.auction, { prices: [], skipped: [] }),
       loadJson(DATA_PATHS.notices, { notices: [] }),
-      loadJson(DATA_PATHS.saleItems, { sales: [] })
+      loadJson(DATA_PATHS.saleItems, { sales: [] }),
+      loadJson(DATA_PATHS.collections, { collections: {} })
     ]);
+
+    const loadedCollections = collectionsDoc && collectionsDoc.collections;
+    state.collections = loadedCollections && typeof loadedCollections === 'object'
+      && !Array.isArray(loadedCollections) ? loadedCollections : {};
 
     state.baseItems = normalizeItemList(itemsDoc.items || []);
     state.items = [...state.baseItems];
@@ -389,18 +402,191 @@ async function loadData() {
   render();
 }
 
+// 판매 기간 창. 컬렉션을 가리키면 그 컬렉션의 회차들, 아니면 상품 자체의 availability.
+// 돌려주는 값: 배열 = 창 목록, null = 기간 정보 없음(상시판매), undefined = 해석 불가.
+// 컬렉션 id 가 없거나 모양이 틀리면 undefined 로 '기간 미확인'을 만든다 —
+// 오타 하나로 상품이 영원히 판매 중이 되면 안 된다. price_audit.sale_windows 와 같다.
+function saleWindows(item) {
+  const cid = item.collection;
+  if (cid !== undefined && cid !== null && cid !== '') {
+    if (typeof cid !== 'string') return undefined;
+    const c = Object.prototype.hasOwnProperty.call(state.collections, cid) ? state.collections[cid] : null;
+    if (!c || typeof c !== 'object' || Array.isArray(c) || !Array.isArray(c.runs)) return undefined;
+    return c.runs;
+  }
+  const a = item.availability;
+  return a === undefined || a === null ? null : [a];
+}
+
+// 판매 창 경계로 받는 시각 형식. 이 밖의 문자열은 브라우저마다 해석이 달라
+// 감사(파이썬)와 갈라지므로 받지 않는다. price_audit.ISO_MOMENT 와 같은 식.
+const ISO_MOMENT = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])(T([01]\d|2[0-3]):[0-5]\d(:[0-5]\d(\.\d{1,3})?)?(Z|[+-]([01]\d|2[0-3]):[0-5]\d)?)?$/;
+
+// null = 값 없음(열린 끝), NaN = 값은 있는데 못 읽음, 숫자 = 밀리초.
+// 날짜만 있으면 UTC 자정, 오프셋 없는 시각은 로컬 시각 — JavaScript 규칙 그대로다.
+function windowBound(value) {
+  if (value === undefined || value === null || value === '') return null;
+  if (typeof value !== 'string' || !ISO_MOMENT.test(value)) return NaN;
+  // 달력에 없는 날은 받지 않는다. V8 은 '2026-02-30' 을 3월 2일로 넘겨 읽지만
+  // 파이썬은 거부한다. 1970 년 전은 판매 기간일 수 없고, 파이썬 datetime 이
+  // 서기 1년 근처에서 오프셋 계산을 못 해 갈라지므로 함께 막는다.
+  const [y, mo, d] = value.slice(0, 10).split('-').map(Number);
+  const probe = new Date(0);
+  probe.setUTCFullYear(y, mo - 1, d);
+  if (y < 1970 || probe.getUTCFullYear() !== y || probe.getUTCMonth() !== mo - 1 || probe.getUTCDate() !== d) {
+    return NaN;
+  }
+  const t = new Date(value).getTime();
+  return Number.isFinite(t) ? t : NaN;
+}
+
+function isWindowObject(w) {
+  return Boolean(w) && typeof w === 'object' && !Array.isArray(w);
+}
+
+// 창 하나의 경계. [start, end] 또는 null(해석 불가).
+//   상품 availability 에서 날짜가 하나도 없는 창은 type: 'always' 라고 적었을 때만
+//   열린 창(상시판매)이다. 빈 객체 {} 를 열린 창으로 읽으면 실수 하나로 영원히
+//   판매 중이 된다. 그 밖의 창과 컬렉션 회차는 시작·끝이 둘 다 있고 시작 <= 끝이어야 한다.
+// price_audit.window_span 과 같은 규칙.
+function windowSpan(w, fromCollection) {
+  if (!isWindowObject(w)) return null;
+  const start = windowBound(w.startAt);
+  const end = windowBound(w.endAt);
+  if (Number.isNaN(start) || Number.isNaN(end)) return null;
+  if (start === null && end === null) {
+    return !fromCollection && w.type === 'always' ? [null, null] : null;
+  }
+  if (w.type === 'always') return null;           // 상시라면서 날짜가 있으면 모순
+  if (start === null || end === null || start > end) return null;
+  return [start, end];
+}
+
+// 캐시샵 판매 상태. price_audit.sale_status 와 같은 규칙이어야 한다.
+//   on       판매 중
+//   always   판매 기간 정보 없음 = 상시판매로 본다
+//   upcoming 다음 회차가 공지돼 있고 아직 시작 전
+//   resting  주기 판매 컬렉션의 휴지기 (지난 회차는 끝났고 다음 회차는 미공지)
+//   ended    일회성 판매가 끝남, 또는 rankEligible: false
+//   unknown  가리키는 컬렉션이 없거나 판매 창을 읽을 수 없음
+// 창을 하나라도 못 읽으면 나머지를 보기 전에 unknown 이다(순서에 따라 답이 바뀌지 않게).
+function saleStatus(item) {
+  if (item.rankEligible === false) return 'ended';
+  const windows = saleWindows(item);
+  if (windows === undefined) return 'unknown';
+  if (windows === null) return 'always';
+  const cid = item.collection;
+  const fromCollection = cid !== undefined && cid !== null && cid !== '';
+  const bounds = [];
+  for (const w of windows) {
+    const span = windowSpan(w, fromCollection);
+    if (!span) return 'unknown';
+    bounds.push(span);
+  }
+  const now = Date.now();
+  let upcoming = false;
+  for (const [start, end] of bounds) {
+    const started = start === null || now >= start;
+    const notEnded = end === null || now <= end;
+    if (started && notEnded) return 'on';
+    if (start !== null && now < start) upcoming = true;
+  }
+  if (upcoming) return 'upcoming';
+  const recurring = fromCollection && state.collections[cid].recurring !== false;
+  return recurring ? 'resting' : 'ended';
+}
+
 // 캐시샵에서 지금 살 수 있는 상품인가. 살 수 없으면 "사서 팔면 이득"이라는
 // 효율 순위 자체가 성립하지 않으므로 순위에서 뺀다.
 function isPurchasable(item) {
-  if (item.rankEligible === false) return false;
-  const a = item.availability;
-  if (!a) return true;
+  const status = saleStatus(item);
+  return status === 'on' || status === 'always';
+}
+
+// 가장 최근에 끝난 회차와 가장 가까운 다음 회차. 화면 설명용.
+function saleWindowSummary(item) {
+  const windows = saleWindows(item) || [];
   const now = Date.now();
-  const start = a.startAt ? new Date(a.startAt).getTime() : null;
-  const end = a.endAt ? new Date(a.endAt).getTime() : null;
-  if (Number.isFinite(start) && now < start) return false;
-  if (Number.isFinite(end) && now > end) return false;
-  return true;
+  let lastEnd = null, nextStart = null;
+  const cid = item.collection;
+  const fromCollection = cid !== undefined && cid !== null && cid !== '';
+  for (const w of windows) {
+    const span = windowSpan(w, fromCollection);
+    if (!span) continue;
+    const [start, end] = span;
+    if (end !== null && end < now && (lastEnd === null || end > lastEnd)) lastEnd = end;
+    if (start !== null && start > now && (nextStart === null || start < nextStart)) nextStart = start;
+  }
+  return {
+    lastEnd: lastEnd === null ? null : new Date(lastEnd).toISOString(),
+    nextStart: nextStart === null ? null : new Date(nextStart).toISOString()
+  };
+}
+
+function salePill(item, info) {
+  const status = item.saleStatus;
+  if (status === 'resting') {
+    const last = info.lastEnd ? `마지막 판매 ${formatDate(info.lastEnd)} 종료. ` : '';
+    return `<span class="source-pill seed" title="${escapeHtml(last)}주기 판매 컬렉션입니다. 다음 회차가 공지되면 자동으로 순위에 돌아옵니다.">휴지기</span>`;
+  }
+  if (status === 'upcoming') {
+    const next = info.nextStart ? `${formatDate(info.nextStart)} 판매 시작 예정. ` : '';
+    return `<span class="source-pill seed" title="${escapeHtml(next)}시작 전이라 아직 살 수 없습니다.">판매 예정</span>`;
+  }
+  if (status === 'unknown') {
+    return '<span class="source-pill seed" title="가리키는 판매 컬렉션을 찾지 못했습니다. collections.json 을 확인해 주세요.">기간 미확인</span>';
+  }
+  return '<span class="source-pill seed" title="캐시샵 판매 기간이 끝나 구매할 수 없습니다.">판매 종료</span>';
+}
+
+function saleMetaText(item, info) {
+  const status = item.saleStatus;
+  if (status === 'resting') {
+    return info.lastEnd ? ` · ${escapeHtml(formatDate(info.lastEnd))} 판매 종료 · 다음 회차 대기` : ' · 다음 회차 대기';
+  }
+  if (status === 'upcoming') {
+    return info.nextStart ? ` · ${escapeHtml(formatDate(info.nextStart))} 판매 시작` : ' · 판매 예정';
+  }
+  if (status === 'ended' && info.lastEnd) return ` · ${escapeHtml(formatDate(info.lastEnd))} 판매 종료`;
+  return '';
+}
+
+// 순위에 올릴 수 있는 판매 상태인가. 휴지기는 보기에서 켰을 때만 넣는다.
+function isRankableSale(item) {
+  if (item.purchasable !== false) return true;
+  return state.includeResting && item.saleStatus === 'resting';
+}
+
+function loadViewSettings() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(VIEW_KEY) || '{}');
+    state.includeResting = saved.includeResting === true;
+  } catch (_) {
+    state.includeResting = false;
+  }
+}
+
+function persistViewSettings() {
+  try {
+    localStorage.setItem(VIEW_KEY, JSON.stringify({ includeResting: state.includeResting }));
+  } catch (_) { /* 저장 못 해도 화면은 그대로 동작한다 */ }
+}
+
+function syncRestingToggle(restingCount) {
+  const toggle = $('#resting-toggle');
+  const status = $('#resting-toggle-state');
+  const banner = $('#resting-banner');
+  if (toggle) toggle.checked = state.includeResting;
+  if (status) status.textContent = state.includeResting ? 'ON' : 'OFF';
+  if (banner) {
+    banner.hidden = !restingCount;
+    const text = $('#resting-banner-text');
+    if (text) {
+      text.textContent = state.includeResting
+        ? `휴지기 상품 ${restingCount}개를 참고 순위에 넣어 보고 있습니다. 지금은 살 수 없습니다.`
+        : `휴지기 상품 ${restingCount}개는 순위에서 뺐습니다. 주기 판매 컬렉션이라 다음 회차가 공지되면 돌아옵니다.`;
+    }
+  }
 }
 
 function normalizeItemList(items) {
@@ -414,8 +600,11 @@ function normalizeItemList(items) {
     referenceMesoValue: toNumber(item.referenceMesoValue, 0),
     referenceOnly: Boolean(item.referenceOnly),
     tradable: item.tradable !== false,
-    purchasable: isPurchasable(item),
-    availability: item.availability || null,
+    // purchasable 은 여기서 굳히지 않는다. 화면을 켜 둔 채 판매 종료 시각을
+    // 넘기면 굳은 값이 그대로 남아 종료된 상품이 계속 순위에 있게 된다.
+    // enrichItems 가 그릴 때마다 다시 판정한다.
+    // 없으면 null(상시판매). false·0 같은 값은 그대로 두어 판매 상태에서 '기간 미확인'이 되게 한다.
+    availability: item.availability === undefined ? null : item.availability,
     mileageType: item.mileageType || 'none',
     aliases: Array.isArray(item.aliases) ? item.aliases.map(String).filter(Boolean) : [],
     components: componentList(item.components),
@@ -683,11 +872,27 @@ function priceFor(target, index) {
   const names = [target.name, ...(target.aliases || [])].filter(Boolean);
   const rowByName = names.map(name => index.byName.get(normalizeKey(name))).find(Boolean);
   const row = rowById || rowByName;
+  // 정확일치 미포착은 값을 '모르는' 것이다. 원장에는 직전 확인가를 보존하지만(7절)
+  // 계산에는 쓰지 않는다 — 문서 3절에서 F·계산 제외로 정의돼 있다.
+  // (이 분기가 없으면 아래에서 양수 가격을 먼저 돌려주어 상태 검사에 닿지 못한다.)
+  if (row?.status === 'uncaptured') {
+    return {
+      meso: 0,
+      listingMeso: 0,
+      marketHistoryMeso: 0,
+      source: 'uncaptured',
+      auctionStatus: 'uncaptured',
+      collectedAt: row.collectedAt || row.updatedAt || null
+    };
+  }
   const listingMeso = roundMeso(row?.listingLowestMeso);
   // 채택용 시세는 최근 체결 기반(marketPriceMeso). 아직 체결 내역을 못 뜬 행만
   // 과거의 3개월 최고가로 물러난다. PRICE_VERIFICATION.md 9절 참고.
+  // 대체 순서를 price_audit.grade_row 와 글자 그대로 맞춘다. 순서가 다르면
+  // 어느 한쪽에만 있는 필드가 들어올 때 두 구현의 채택가가 갈린다.
   const marketHistoryMeso = roundMeso(
-    row?.marketPriceMeso || row?.marketHistoryMaxMeso || row?.marketHistoryMeso);
+    row?.marketPriceMeso || row?.marketHistoryMaxMeso
+    || row?.marketHistoryObservedMaxMeso || row?.marketHistoryMeso);
   const marketPriceBasis = row?.marketPriceBasis || '';
   const marketHistoryStatus = row?.marketHistoryStatus || '';
   const pendingMarketHistory = isMarketHistoryPending(marketHistoryStatus) && marketHistoryMeso <= 0;
@@ -706,8 +911,22 @@ function priceFor(target, index) {
   const evidenceStale = !candidates.length && candidateMeso > 0;
   // 쓸 수 있는 시세가 없는데 매물이 1~2건뿐이면 그 호가 하나가 곧 값이 된다.
   // PRICE_VERIFICATION.md 5절. 마네킹 매물 2건 99.99억이 이 경우다.
+  // 교차검증으로 인정할 수 있는 시세만 방패로 친다.
+  // legacyMax(3개월 최고가)는 인정하지 않는다(9절).
+  // 매물까지 낡아 후보가 0개가 되면 근거는 더 약해질 뿐이므로 같이 뺀다.
+  // (예전 규칙은 후보가 정확히 1개일 때만 걸려서, 매물이 14일을 넘기면 그대로
+  //  순위에 올라왔다. 마네킹 187원 1위 사고의 재발 경로다.)
   const listingCount = Number(row?.resultCount || 0);
-  const thinListingOnly = candidates.length === 1 && candidateMeso === listingMeso
+  // marketPriceBasis 가 비어 있는데 시세 값이 있으면 그것은 marketHistoryMaxMeso,
+  // 곧 3개월 최고가다(9절). 기준이 안 적혔다고 교차검증으로 인정하면 안 된다.
+  // price_audit.grade_row 의 `or ('legacyMax' if market else '')` 와 같은 규칙.
+  const effectiveMarketBasis = marketPriceBasis || (marketHistoryMeso > 0 ? 'legacyMax' : '');
+  const marketCrossCheck = marketHistoryMeso > 0 && !marketStale
+    && effectiveMarketBasis !== 'legacyMax';
+  // 체결이 없어 값을 채택하지 않는 행은 '가격 없음'이지 '검증 필요'가 아니다.
+  // pendingMarketHistory 면 meso 가 0 이므로 저매물 판정에서도 빠져야 한다.
+  const thinListingOnly = !pendingMarketHistory && !marketCrossCheck
+    && candidateMeso > 0 && candidateMeso === listingMeso
     && listingCount > 0 && listingCount <= THIN_LISTING_COUNT;
   const marketGapRate = listingMeso > 0 && marketHistoryMeso > 0 && listingMeso !== marketHistoryMeso
     ? Math.abs(listingMeso - marketHistoryMeso) / listingMeso * 100
@@ -790,7 +1009,10 @@ function totalPriceFor(item, index) {
     return { component, price };
   });
   const componentPrices = components.map(entry => entry.price);
-  const meso = components.reduce((sum, { component, price }) => sum + price.meso * component.quantity, 0);
+  // 구성품의 초기값도 근거가 아니다. 단독 상품만 막으면 패키지 문으로 들어온다.
+  // price_audit.approx_ranking 은 구성품의 calcAdoptedMeso(초기값이면 0)를 더한다.
+  const meso = components.reduce((sum, { component, price }) =>
+    sum + (price.source === 'seed' ? 0 : price.meso) * component.quantity, 0);
   const filledCount = liveCount + manualCount + historyCount;
   const source = pendingCount > 0
     ? 'pending'
@@ -831,6 +1053,10 @@ function calculateEfficiency(item, mesoPrice) {
   const netMeso = Number(mesoPrice || 0) * (1 - Number(state.settings.ahFeeRate || 0) / 100);
   const totalReturn = netMeso + mileageEarned * FIXED_MILEAGE_MESO_RATE;
 
+  // 메소 값이 없으면 남는 수익은 마일리지 5% 적립뿐이다. 그 숫자는 '가치가 낮다'가
+  // 아니라 '아직 모른다'는 뜻이므로 효율로 내보내지 않는다. price_audit.py 의
+  // approx_ranking 도 같은 행을 순위에서 뺀다.
+  if (!(Number(mesoPrice) > 0)) return Infinity;
   return totalReturn > 0 ? totalCost / (totalReturn / 100000000) : Infinity;
 }
 
@@ -842,6 +1068,8 @@ function enrichItems() {
       const mileagePrice = Number(item.mileagePrice || item.cashPrice || 0);
       return {
         ...item,
+        saleStatus: saleStatus(item),
+        purchasable: isPurchasable(item),
         listingPrice: {
           meso: referenceMesoValue,
           source: 'reference',
@@ -857,9 +1085,15 @@ function enrichItems() {
     const listing = totalPriceFor(item, index);
     return {
       ...item,
+      // 그릴 때마다 현재 시각으로 다시 판정한다(10절).
+      saleStatus: saleStatus(item),
+      purchasable: isPurchasable(item),
       listingPrice: listing,
       auctionStatus: listing.auctionStatus || 'unverified',
-      listingEfficiency: calculateEfficiency(item, listing.meso)
+      // 초기값은 경매장 근거가 아니다. 효율을 내지 않는다(5절).
+      listingEfficiency: listing.source === 'seed' && !componentList(item.components).length
+        ? Infinity
+        : calculateEfficiency(item, listing.meso)
     };
   });
 }
@@ -888,12 +1122,16 @@ function rowIdentity(item) {
 
 function compareRankRows(a, b) {
   if (Boolean(a.referenceOnly) !== Boolean(b.referenceOnly)) return a.referenceOnly ? 1 : -1;
-  const aOff = a.purchasable === false, bOff = b.purchasable === false;
+  const aOff = !isRankableSale(a), bOff = !isRankableSale(b);
   if (aOff !== bOff) return aOff ? 1 : -1;
   const aThin = isThinListingRow(a), bThin = isThinListingRow(b);
   if (aThin !== bThin) return aThin ? 1 : -1;
+  const aNone = hasNoPriceEvidence(a), bNone = hasNoPriceEvidence(b);
+  if (aNone !== bNone) return aNone ? 1 : -1;
   if (a.referenceOnly) return b.referenceMesoPerThousand - a.referenceMesoPerThousand;
-  return a.listingEfficiency - b.listingEfficiency;
+  // 둘 다 Infinity 면 차가 NaN 이라 정렬이 무너진다.
+  const diff = a.listingEfficiency - b.listingEfficiency;
+  return Number.isFinite(diff) ? diff : 0;
 }
 
 // 구성품이 없는 단독 상품이 저매물 호가 하나로만 값이 잡히면 순위를 매기지 않는다.
@@ -902,11 +1140,31 @@ function isThinListingRow(item) {
   return !componentList(item.components).length && Boolean(item.listingPrice?.thinListingOnly);
 }
 
+// 매물도 시세도 없는 행. 신규 등록 직후나 조회 전 상품이 여기 해당한다.
+// 값을 모르는 것이지 값이 낮은 것이 아니므로 순위를 매기지 않는다.
+//
+// seedMesoPrice(손으로 적어 둔 초기값)도 근거가 아니다. 경매장에서 확인한 값이
+// 아니라 추정이므로 순위에 올리지 않는다. 값 자체는 가격 칸에 그대로 보여 준다.
+// price_audit.grade_row 도 이런 행을 F·채택가 0 으로 본다.
+function isSeedOnly(item) {
+  return !componentList(item.components).length && item.listingPrice?.source === 'seed';
+}
+
+function hasNoPriceEvidence(item) {
+  if (item.referenceOnly) return false;
+  // 'seed' 가 실제 초기값을 뜻하는 것은 구성품 없는 단독 상품에서뿐이다.
+  // 패키지에서는 totalPriceFor 가 '채워진 구성품이 하나도 없음'을 같은 이름으로
+  // 쓴다 — 그쪽은 아래 meso 검사로 걸러진다.
+  if (isSeedOnly(item)) return true;
+  return !(roundMeso(item.listingPrice?.meso) > 0);
+}
+
 function createRankMap(rows) {
   const ranks = new Map();
   let rank = 0;
   rows.forEach(item => {
-    if (!item.referenceOnly && item.purchasable !== false && !isThinListingRow(item)) {
+    if (!item.referenceOnly && isRankableSale(item) && !isThinListingRow(item)
+        && !hasNoPriceEvidence(item)) {
       ranks.set(rowIdentity(item), ++rank);
     }
   });
@@ -966,6 +1224,7 @@ function render() {
 
   syncCategoryOptions(allRows);
   syncPackageToggle();
+  syncRestingToggle(allRows.filter(item => !item.referenceOnly && item.saleStatus === 'resting').length);
   $('#rank-mode-label').textContent = '시세 우선 적용가';
   $('#row-count').textContent = referenceCount ? `${saleRows.length}개 + 참고 ${referenceCount}개` : `${saleRows.length}개`;
   $('#sale-item-count').textContent = `${rows.length}개`;
@@ -976,7 +1235,10 @@ function render() {
     .filter(Boolean)
     .sort((a, b) => (Date.parse(b) || 0) - (Date.parse(a) || 0))[0] || null;
   $('#auction-updated').textContent = formatDate(latestAuctionUpdatedAt);
-  $('#best-efficiency').textContent = rankedVisibleSales.length ? formatWon(rankedVisibleSales[0].listingEfficiency) : '-';
+  // 요약의 '최고 효율'은 지금 살 수 있는 상품만 본다. 휴지기 참고 순위는 넣지 않는다.
+  const bestBuyable = rankedVisibleSales.find(item => item.purchasable !== false
+    && !isThinListingRow(item) && !hasNoPriceEvidence(item));
+  $('#best-efficiency').textContent = bestBuyable ? formatWon(bestBuyable.listingEfficiency) : '-';
   renderNotices();
   renderSaleItems(visibleSaleCatalog);
   renderTable(pageRows, rankByKey, rankChanges);
@@ -1064,15 +1326,23 @@ function renderTable(rows, rankByKey = new Map(), rankChanges = new Map()) {
       : rankDelta < 0
         ? `<small class="rank-change down">↓${Math.abs(rankDelta)}</small>`
         : '';
-    const soldOut = !isReference && item.purchasable === false;
+    const soldOut = !isReference && !isRankableSale(item);
+    const restingRanked = !isReference && item.purchasable === false && isRankableSale(item);
+    const saleInfo = !isReference ? saleWindowSummary(item) : {};
     const thinRow = !isReference && !soldOut && isThinListingRow(item);
+    const noPrice = !isReference && !soldOut && !thinRow && hasNoPriceEvidence(item);
     const rank = isReference
       ? '<span class="source-pill seed">참고</span>'
       : soldOut
-        ? '<span class="source-pill seed" title="캐시샵 판매 기간이 끝나 구매할 수 없습니다.">판매 종료</span>'
+        ? salePill(item, saleInfo)
         : thinRow
           ? `<span class="source-pill seed" title="매물 ${item.listingPrice?.listingCount || 0}건이 유일한 근거입니다. 시세 검증 전까지 순위에서 제외합니다.">검증 필요</span>`
-          : `<span class="rank-cell"><span class="rank">${rankNumber}</span>${rankChange}</span>`;
+          : noPrice
+            ? (isSeedOnly(item)
+                ? '<span class="source-pill seed" title="경매장에서 확인한 값이 아니라 손으로 적어 둔 초기값입니다. 순위에는 올리지 않습니다.">초기값</span>'
+                : '<span class="source-pill seed" title="경매장 매물과 시세가 모두 없어 효율을 계산할 수 없습니다. 다음 회차에 조회합니다.">가격 없음</span>')
+            : `<span class="rank-cell"><span class="rank">${rankNumber}</span>${rankChange}${
+                restingRanked ? '<small class="rank-tag" title="지금은 살 수 없습니다. 다음 판매 회차 기준의 참고 순위입니다.">휴지기</small>' : ''}</span>`;
     const turnoverWarning = !isReference && isPackageItem(item)
       ? '<span class="turnover-pill" title="패키지는 판매까지 시간이 걸릴 수 있습니다." aria-label="회전율 주의">회전율 주의</span>'
       : '';
@@ -1085,9 +1355,7 @@ function renderTable(rows, rankByKey = new Map(), rankChanges = new Map()) {
     const itemMeta = isReference
       ? `<span class="item-meta">마일리지 전용 · 판매 불가 · ${REFERENCE_CATEGORY}</span>`
       : `<span class="item-meta">${escapeHtml(item.category || '캐시 아이템')}${
-            soldOut && item.availability?.endAt
-              ? ` · ${escapeHtml(formatDate(item.availability.endAt))} 판매 종료`
-              : ''}</span>
+            isReference ? '' : saleMetaText(item, saleInfo)}</span>
          <span class="item-badges">${renderMileageBadge(item.mileageType)}${turnoverWarning}${marketWarning}${thinWarning}</span>`;
     const cost = isReference
       ? `${nf.format(Number(item.mileagePrice || item.cashPrice || 0))} 마일리지`
@@ -1845,6 +2113,15 @@ on('#major-filter-reset', 'click', event => {
   state.jobGroupFilter = 'all';
   state.categoryFilter = '';
   state.packagesVisible = true;
+  state.page = 1;
+  render();
+});
+
+on('#resting-toggle', 'change', event => {
+  state.includeResting = event.target.checked;
+  persistViewSettings();
+  // 순위 집합이 바뀌므로 고정해 둔 행 순서를 버리고 새 순위대로 다시 세운다.
+  state.stableRowOrder = [];
   state.page = 1;
   render();
 });

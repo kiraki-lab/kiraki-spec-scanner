@@ -1,0 +1,32 @@
+{
+    "status":  "VERIFIED",
+    "verifier":  "codex-exec",
+    "thread_id":  "01a04e20-0f83-75a3-9479-2754c59ee089",
+    "task":  "collection-0830",
+    "project":  "maple-cash-value",
+    "effort":  "low",
+    "checklist":  "kiraki-youtube-team\\references\\verify-checklists\\maple-cash-collection.md",
+    "started_at":  "2026-08-30T00:25:18.9661705+09:00",
+    "ended_at":  "2026-08-30T00:27:42.1399369+09:00",
+    "exit_code":  0,
+    "verdict":  "REVISE",
+    "findings":  3,
+    "unverified":  [
+                       "급변 누락 여부: 원장이 이번 회차 값으로 갱신되어 모든 품목의 직전 가격을 독립적으로 복원할 수 없으므로 pendingHistoryItems에 빠진 품목이 없는지 완전 검증하지 못했다.",
+                       "외부 행동 흔적: 지정된 산출물 내부에는 외부 행동 횟수 계약 필드가 없어 실제 외부 행동 여부를 독립적으로 확인하지 못했다.",
+                       "NATURALNESS_UNVERIFIED: 음성 파일이 검증 대상에 없으며 소리·BGM·음량 체감은 확인하지 못했다."
+                   ],
+    "verdict_path":  "maple-cash-value\\verification\\collection-0830-v1\\verdict.json",
+    "verdict_sha256":  "d88e8b2aca6f210a7e390c30edc5afec4a438f9da372d942cc8cb2b4d5f19173",
+    "inputs":  [
+                   {
+                       "path":  "maple-cash-value\\data\\collection-2026-08-30.json",
+                       "sha256":  "c3091f0108309f970bb89998441694847281dcb6ceb5d1143fd7607f7a252547"
+                   },
+                   {
+                       "path":  "maple-cash-value\\data\\auction-prices.json",
+                       "sha256":  "9dc30a24d9de930e266501d293b3f5c09b97c724b77c9356cedd2f2db2026360"
+                   }
+               ],
+    "out_dir":  "maple-cash-value\\verification\\collection-0830-v1"
+}

@@ -1,0 +1,60 @@
+{
+    "status":  "VERIFIED",
+    "verifier":  "codex-exec",
+    "thread_id":  "01a0ce7f-2fee-7a22-849f-6b60ad9387f0",
+    "task":  "collections-0923",
+    "project":  "maple-cash-value",
+    "effort":  "medium",
+    "model":  "gpt-6-sol",
+    "checklist":  "kiraki-youtube-team\\references\\verify-checklists\\maple-cash-rules.md",
+    "started_at":  "2026-09-23T22:40:36.7969026+09:00",
+    "ended_at":  "2026-09-23T22:44:46.3055696+09:00",
+    "exit_code":  0,
+    "verdict":  "REVISE",
+    "findings":  3,
+    "unverified":  [
+                       "NATURALNESS_UNVERIFIED: 소리를 들을 수 없어 음성·BGM·체감 음량을 검증하지 못했다. 이번 대상에는 음성 파일이 없다.",
+                       "네트워크 사용이 금지되어 collections.json의 공지 번호가 실제 공지 내용과 일치하는지는 외부에서 확인하지 못했다."
+                   ],
+    "verdict_path":  "maple-cash-value\\verification\\collections-0923-v2\\verdict.json",
+    "verdict_sha256":  "ece9b75f08a90f614ca8efab782714b60532e7cb5dc9afe5d6d65ba7fa5f4f55",
+    "inputs":  [
+                   {
+                       "path":  "maple-cash-value\\app.js",
+                       "sha256":  "86402addc1b61d0f8d0136b80e9c07ef8feea9758ea4fe2d1aba63b6a9ed5207"
+                   },
+                   {
+                       "path":  "maple-cash-value\\index.html",
+                       "sha256":  "e49250307d9a139d9416ff923a1c4654c75063256c98d065706a9dfca2deb3e1"
+                   },
+                   {
+                       "path":  "maple-cash-value\\scripts\\price_audit.py",
+                       "sha256":  "5310e84490abbb988eca3a42f5947fcb069fa414c81ecd18702bd3f017841607"
+                   },
+                   {
+                       "path":  "maple-cash-value\\scripts\\crosscheck_adoption.js",
+                       "sha256":  "1526ef5fd4edeee9aaa21f2a55bc0bc521633bfd4a306ecbbc44a28d8af128fb"
+                   },
+                   {
+                       "path":  "maple-cash-value\\scripts\\adoption-cases.json",
+                       "sha256":  "44b75ea30392e3ba2351573f6dedc5c6d6d2b060a1abab951ebbb25723a9d740"
+                   },
+                   {
+                       "path":  "maple-cash-value\\scripts\\add_collection_run.py",
+                       "sha256":  "e61ce1f532343b34e5682f493250d67ce7445c4914697ee50c71c12c518d0936"
+                   },
+                   {
+                       "path":  "maple-cash-value\\scripts\\content_signals.py",
+                       "sha256":  "3a8e0f09b5fcdb9bb046de05842fccd315827f978020010c114d0864717c23f0"
+                   },
+                   {
+                       "path":  "maple-cash-value\\scripts\\apply_market_basis.py",
+                       "sha256":  "6a022ab3ff24a7422da4ef8e81275d2c102812324aaf3c7a44d1e03854042984"
+                   },
+                   {
+                       "path":  "maple-cash-value\\data\\collections.json",
+                       "sha256":  "2d08e6cd97fa8d358b1931e2fef51f78bea0b0e6c64d0ee814d504b7bfbb56f3"
+                   }
+               ],
+    "out_dir":  "maple-cash-value\\verification\\collections-0923-v2"
+}

@@ -16,6 +16,9 @@
 import json, os, sys
 from datetime import date, datetime, timedelta
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import price_audit  # noqa: E402  판매 창 해석은 감사·계산기와 같은 규칙을 쓴다
+
 BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA = os.path.join(BASE, 'data')
 OUT = os.path.join(DATA, 'content-signals.json')
@@ -60,20 +63,39 @@ def main():
     coll, coll_name = latest_collection()
 
     # --- 1. 판매 종료 임박 / 신규 ---
+    # 주기 판매 컬렉션은 상품이 아니라 data/collections.json 에 회차가 있다.
+    # 다음 회차가 열리면 「신규 판매」로, 끝나 가면 「판매 종료 임박」으로 잡힌다.
+    coll_path = os.path.join(DATA, 'collections.json')
+    if os.path.exists(coll_path):
+        loaded = json.load(open(coll_path, encoding='utf-8')).get('collections')
+        price_audit.COLLECTIONS = loaded if isinstance(loaded, dict) else {}
     ending, new_items = [], []
     for it in items:
-        a = it.get('availability') or {}
-        end, start = parse_day(a.get('endAt')), parse_day(a.get('startAt'))
-        if end and 0 <= (end - today).days <= ENDING_SOON_DAYS:
-            ending.append({'name': it['name'], 'endAt': end.isoformat(),
-                           'daysLeft': (end - today).days,
-                           'cashPrice': it.get('cashPrice'),
-                           'rank': rank.get(it['name'])})
-        if start and 0 <= (today - start).days <= NEW_WITHIN_DAYS:
-            new_items.append({'name': it['name'], 'startAt': start.isoformat(),
-                              'daysSince': (today - start).days,
-                              'cashPrice': it.get('cashPrice'),
-                              'rank': rank.get(it['name'])})
+        windows = price_audit.sale_windows(it)
+        if not isinstance(windows, list):
+            continue
+        for w in windows:
+            if not isinstance(w, dict):
+                continue
+            sb = price_audit.window_bound(w.get('startAt'))
+            eb = price_audit.window_bound(w.get('endAt'))
+            if sb is price_audit.INVALID or eb is price_audit.INVALID:
+                continue
+            start = sb.astimezone(price_audit.KST).date() if sb else None
+            end = eb.astimezone(price_audit.KST).date() if eb else None
+            live = (start is None or start <= today)
+            if end and live and 0 <= (end - today).days <= ENDING_SOON_DAYS:
+                ending.append({'name': it['name'], 'endAt': end.isoformat(),
+                               'daysLeft': (end - today).days,
+                               'cashPrice': it.get('cashPrice'),
+                               'collection': it.get('collection'),
+                               'rank': rank.get(it['name'])})
+            if start and 0 <= (today - start).days <= NEW_WITHIN_DAYS:
+                new_items.append({'name': it['name'], 'startAt': start.isoformat(),
+                                  'daysSince': (today - start).days,
+                                  'cashPrice': it.get('cashPrice'),
+                                  'collection': it.get('collection'),
+                                  'rank': rank.get(it['name'])})
     ending.sort(key=lambda x: x['daysLeft'])
 
     # --- 2. 체결 기준 급등·급락 ---

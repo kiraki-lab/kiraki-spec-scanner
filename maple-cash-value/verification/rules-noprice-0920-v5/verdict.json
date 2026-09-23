@@ -1,0 +1,41 @@
+{
+  "verdict": "REVISE",
+  "findings": [
+    {
+      "severity": "high",
+      "file": "maple-cash-value/app.js",
+      "claim": "EXPIRED_PRODUCT_REMAINS_RANKED",
+      "evidence": "PRICE_VERIFICATION.md 10절은 판매 종료 후 순위 제외를 요구한다. app.js:417은 상품 정규화 때 purchasable을 저장하고, 865~891행과 944~950행은 현재 시각으로 재판정하지 않는다. 합성 상품 probe_sale_end를 종료 직전에 정규화하고 종료 직후 순위를 계산하자 isPurchasable=false인데 저장된 purchasable=true로 1위가 부여됐다."
+    },
+    {
+      "severity": "medium",
+      "file": "maple-cash-value/scripts/price_audit.py",
+      "claim": "OVERDUE_B_GRADE_QUEUE_EXCLUSION",
+      "evidence": "PRICE_VERIFICATION.md:142~151은 상위 20위의 두 축 유지 목표를 3일로 정한다. price_audit.py:422~424는 기한을 넘겨도 별도 플래그 없는 A·B등급을 큐에서 제외한다. 2026-09-20 23:59:59 KST 기준 재현에서 2위 구성품 레프 일리움 건틀렛은 매물 7.0일·시세 10.6일, B등급으로 큐에서 빠졌다. 양쪽 근거가 정확히 4일 된 합성 1위 상품도 큐가 빈 배열이었다."
+    },
+    {
+      "severity": "medium",
+      "file": "maple-cash-value/app.js",
+      "claim": "MARKET_FALLBACK_FIELD_DIVERGENCE",
+      "evidence": "app.js:702~703의 마지막 대체 필드는 marketHistoryMeso이고, price_audit.py:110~112는 marketHistoryObservedMaxMeso다. 기준 시각 2026-09-20 23:59:59 KST, 시세 수집일 2026-09-20으로 재현했다. probe_observed에 marketHistoryObservedMaxMeso=100000000만 넣으면 계산기 채택가 0·감사 calcAdoptedMeso 100000000이고, probe_history에 marketHistoryMeso=100000000만 넣으면 계산기 100000000·감사 0이다. 어느 대체 필드를 채택할지 두 구현이 다르다."
+    },
+    {
+      "severity": "medium",
+      "file": "maple-cash-value/app.js",
+      "claim": "PENDING_THIN_CLASSIFICATION_DIVERGENCE",
+      "evidence": "app.js:706~717은 체결 없음이면 meso를 0으로 만들지만, 734~735행은 양수 candidateMeso로 저매물을 판정한다. price_audit.py:144~148은 같은 상태에서 F등급으로 즉시 반환한다. 합성 행 probe_pending_thin에 매물 100000000, resultCount=1, updatedAt=2026-09-20, marketHistoryStatus=no_sales를 넣자 채택가는 양쪽 모두 0이지만 계산기 thinListingOnly=true·감사 thinOnly=false였다. app.js:1108~1117에서는 이 차이로 가격 없음보다 검증 필요 표시가 우선된다."
+    },
+    {
+      "severity": "medium",
+      "file": "maple-cash-value/scripts/price_audit.py",
+      "claim": "THIN_LEGACY_GRADE_DIVERGENCE",
+      "evidence": "PRICE_VERIFICATION.md:46,98은 저매물 단독 근거를 D등급으로 정한다. price_audit.py:179~186은 thinOnly=true여도 신선한 legacyMax 분기를 먼저 적용해 C등급을 반환한다. 2026-09-20 기준 합성 행 probe_legacy_equal에 매물·legacyMax 각각 100000000, 매물 1건, 매물일 2026-09-01, 시세일 2026-09-20을 넣자 thinOnly=true·grade=C였다. 문서의 D와 구현의 C가 다르다."
+    }
+  ],
+  "unverified": [
+    "crosscheck_adoption.js 원본 명령은 임시 파일 생성·삭제 때문에 실행하지 않았다. 대신 실제 priceFor와 grade_row를 메모리에서 대조했으며, 2026-09-20 기준 원장 564행과 기존 합성 10사례의 불일치는 0건이었다. 추가 발견 사례는 파일 변경 금지에 따라 저장하지 않았다.",
+    "실제 브라우저 화면은 확인하지 않았다. 순위와 표시 관련 검증은 함수 실행 및 렌더링 코드 대조로 수행했다.",
+    "NATURALNESS_UNVERIFIED: 음성·BGM·음량 체감은 확인하지 않았다. 이번 입력에는 음성 산출물이 없다."
+  ],
+  "external_actions": 0
+}
