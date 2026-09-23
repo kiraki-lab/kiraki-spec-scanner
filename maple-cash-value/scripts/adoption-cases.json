@@ -1,0 +1,747 @@
+{
+  "note": "채택 규칙 회귀 사례. 원장에 아직 없는 조합을 일부러 만든다. 코덱스 판정 2026-09-20 v1~v8 에서 나온 경우들이 여기 들어 있다.",
+  "baseDate": "2026-09-20",
+  "cases": [
+    {
+      "itemName": "__사례 낡은 저매물 단독",
+      "why": "매물이 14일을 넘겨 후보가 0개가 되면 저매물 방어가 풀렸다 (v1 STALE_THIN_LISTING_RANKED)",
+      "row": {
+        "status": "ok",
+        "listingLowestMeso": 100000000,
+        "resultCount": 1,
+        "updatedAt": "2026-09-01T00:00:00+09:00"
+      }
+    },
+    {
+      "itemName": "__사례 신선한 legacyMax 저매물",
+      "why": "legacyMax 는 방패가 아니다. 매물 1건이 단독 근거다",
+      "row": {
+        "status": "ok",
+        "listingLowestMeso": 100000000,
+        "resultCount": 1,
+        "updatedAt": "2026-09-19T00:00:00+09:00",
+        "marketPriceMeso": 110000000,
+        "marketPriceAt": "2026-09-19T00:00:00+09:00",
+        "marketPriceBasis": "legacyMax"
+      }
+    },
+    {
+      "itemName": "__사례 legacyMax 가 상한인 저매물",
+      "why": "legacyMax 가 매물보다 낮으면 그것이 채택가다. 호가가 값을 정하지 않으므로 저매물이 아니다 (v3 LEGACY_ADOPTION_DIVERGENCE)",
+      "row": {
+        "status": "ok",
+        "listingLowestMeso": 200000000,
+        "resultCount": 1,
+        "updatedAt": "2026-09-20T00:00:00+09:00",
+        "marketPriceMeso": 100000000,
+        "marketPriceAt": "2026-09-20T00:00:00+09:00",
+        "marketPriceBasis": "legacyMax"
+      }
+    },
+    {
+      "itemName": "__사례 미포착인데 값이 남아 있음",
+      "why": "정확일치 미포착은 F·계산 제외다. 보존된 가격을 계산기가 쓰면 안 된다 (v3 UNCAPTURED_EXCLUSION_DIVERGENCE)",
+      "row": {
+        "status": "uncaptured",
+        "listingLowestMeso": 200000000,
+        "resultCount": 10,
+        "updatedAt": "2026-09-20T00:00:00+09:00",
+        "pagesScanned": 3
+      }
+    },
+    {
+      "itemName": "__사례 날짜만 있는 시세 14일 경계",
+      "why": "날짜만 있는 값을 KST 로 읽으면 14일 경계가 9시간 어긋난다 (v3 FRESHNESS_TIMEZONE_DIVERGENCE)",
+      "row": {
+        "status": "ok",
+        "listingLowestMeso": 200000000,
+        "resultCount": 10,
+        "updatedAt": "2026-09-20T00:00:00+09:00",
+        "marketPriceMeso": 100000000,
+        "marketPriceAt": "2026-09-06",
+        "marketPriceBasis": "recentSale"
+      }
+    },
+    {
+      "itemName": "__사례 시세 탭 체결 없음",
+      "why": "체결이 없으면 신선한 호가가 있어도 계산기는 값을 안 쓴다 (v2 PENDING_MARKET_ADOPTION_DIVERGENCE)",
+      "row": {
+        "status": "ok",
+        "listingLowestMeso": 100000000,
+        "resultCount": 10,
+        "updatedAt": "2026-09-20T00:00:00+09:00",
+        "marketHistoryStatus": "no_sales"
+      }
+    },
+    {
+      "itemName": "__사례 둘 다 낡고 시세가 더 쌈",
+      "why": "후보가 0개면 시세를 먼저 쓴다 (v2 THIN_LISTING_EXCLUSION_DIVERGENCE)",
+      "row": {
+        "status": "ok",
+        "listingLowestMeso": 900000000,
+        "resultCount": 2,
+        "updatedAt": "2026-09-01T00:00:00+09:00",
+        "marketPriceMeso": 100000000,
+        "marketPriceAt": "2026-09-01T00:00:00+09:00",
+        "marketPriceBasis": "recentSale"
+      }
+    },
+    {
+      "itemName": "__사례 정상 교차검증",
+      "why": "두 근거가 신선하고 가까우면 낮은 쪽을 쓰고 저매물이 아니다",
+      "row": {
+        "status": "ok",
+        "listingLowestMeso": 110000000,
+        "resultCount": 20,
+        "updatedAt": "2026-09-20T00:00:00+09:00",
+        "marketPriceMeso": 100000000,
+        "marketPriceAt": "2026-09-20T00:00:00+09:00",
+        "marketPriceBasis": "recentSale"
+      }
+    },
+    {
+      "itemName": "__사례 반올림하면 같은 값",
+      "why": "계산기는 반올림한 뒤 비교한다. 100.2억과 100.1억은 계산기에서 같은 값이다 (v4 ROUNDING_THIN_LISTING_DIVERGENCE)",
+      "row": {
+        "status": "ok",
+        "listingLowestMeso": 100200000,
+        "resultCount": 1,
+        "updatedAt": "2026-09-19T00:00:00+09:00",
+        "marketPriceMeso": 100100000,
+        "marketPriceAt": "2026-09-19T00:00:00+09:00",
+        "marketPriceBasis": "legacyMax"
+      }
+    },
+    {
+      "itemName": "__사례 기준 없는 시세",
+      "why": "marketPriceBasis 가 비었는데 시세가 있으면 그것은 3개월 최고가다. 교차검증으로 인정하면 안 된다 (v4 IMPLICIT_LEGACY_BASIS_DIVERGENCE)",
+      "row": {
+        "status": "ok",
+        "listingLowestMeso": 100000000,
+        "resultCount": 1,
+        "updatedAt": "2026-09-19T00:00:00+09:00",
+        "marketHistoryMaxMeso": 200000000,
+        "marketHistoryCollectedAt": "2026-09-19T00:00:00+09:00"
+      }
+    },
+    {
+      "itemName": "__사례 observedMax 만 있음",
+      "why": "시세 대체 필드 순서가 두 구현에서 달랐다 (v5 MARKET_FALLBACK_FIELD_DIVERGENCE)",
+      "row": {
+        "status": "ok",
+        "listingLowestMeso": 200000000,
+        "resultCount": 10,
+        "updatedAt": "2026-09-20T00:00:00+09:00",
+        "marketHistoryObservedMaxMeso": 100000000,
+        "marketHistoryCollectedAt": "2026-09-20T00:00:00+09:00"
+      }
+    },
+    {
+      "itemName": "__사례 marketHistoryMeso 만 있음",
+      "why": "app.js 만 읽던 대체 필드. 감사도 같이 읽어야 한다 (v5 MARKET_FALLBACK_FIELD_DIVERGENCE)",
+      "row": {
+        "status": "ok",
+        "listingLowestMeso": 200000000,
+        "resultCount": 10,
+        "updatedAt": "2026-09-20T00:00:00+09:00",
+        "marketHistoryMeso": 100000000,
+        "marketHistoryCollectedAt": "2026-09-20T00:00:00+09:00"
+      }
+    },
+    {
+      "itemName": "__사례 체결 없음 + 매물 1건",
+      "why": "값을 안 쓰는 행은 '가격 없음'이지 '검증 필요'가 아니다 (v5 PENDING_THIN_CLASSIFICATION_DIVERGENCE)",
+      "row": {
+        "status": "ok",
+        "listingLowestMeso": 100000000,
+        "resultCount": 1,
+        "updatedAt": "2026-09-20T00:00:00+09:00",
+        "marketHistoryStatus": "no_sales"
+      }
+    },
+    {
+      "itemName": "__사례 낡은 저매물 + 신선한 legacyMax",
+      "why": "저매물 단독 근거는 D 다. 신선한 legacyMax 가 있다고 C 로 올라가면 안 된다 (v5 THIN_LEGACY_GRADE_DIVERGENCE)",
+      "row": {
+        "status": "ok",
+        "listingLowestMeso": 100000000,
+        "resultCount": 1,
+        "updatedAt": "2026-09-01T00:00:00+09:00",
+        "marketPriceMeso": 100000000,
+        "marketPriceAt": "2026-09-20T00:00:00+09:00",
+        "marketPriceBasis": "legacyMax"
+      }
+    },
+    {
+      "itemName": "__사례 근거 없고 초기값만 있음",
+      "why": "손으로 적은 seedMesoPrice 는 경매장 근거가 아니다. 순위에 올리면 안 된다 (v6 SEED_FALLBACK_RANKING_DIVERGENCE)",
+      "item": {
+        "seedMesoPrice": 240000000
+      },
+      "row": {
+        "status": "ok",
+        "listingLowestMeso": 0,
+        "resultCount": 0,
+        "updatedAt": "2026-09-20T00:00:00+09:00"
+      }
+    },
+    {
+      "itemName": "__사례 초기값 있고 매물도 있음",
+      "why": "매물이 있으면 초기값은 안 쓴다. 정상 순위 대상이다",
+      "item": {
+        "seedMesoPrice": 240000000
+      },
+      "row": {
+        "status": "ok",
+        "listingLowestMeso": 100000000,
+        "resultCount": 10,
+        "updatedAt": "2026-09-20T00:00:00+09:00"
+      }
+    },
+    {
+      "itemName": "__구성품 초기값만 있음",
+      "why": "패키지 구성품의 초기값도 근거가 아니다. 단독 상품만 막으면 패키지 문으로 들어온다 (v8 PACKAGE_SEED_RANKING_DIVERGENCE)",
+      "item": {
+        "seedMesoPrice": 240000000
+      },
+      "row": {
+        "status": "ok",
+        "listingLowestMeso": 0,
+        "resultCount": 0,
+        "updatedAt": "2026-09-20T00:00:00+09:00"
+      }
+    },
+    {
+      "itemName": "__사례 시세가 매물보다 40% 높음",
+      "why": "괴리율 분모는 매물가. 큰 값을 분모로 쓰면 28.57% 로 A 가 되고 매물가 분모면 40% 로 B 다 (코덱스 collections-0923 v2)",
+      "row": {
+        "status": "ok",
+        "listingLowestMeso": 100000000,
+        "resultCount": 10,
+        "updatedAt": "2026-09-23T00:00:00+09:00",
+        "marketPriceMeso": 140000000,
+        "marketPriceAt": "2026-09-23T00:00:00+09:00",
+        "marketPriceBasis": "recentSale"
+      }
+    }
+  ],
+  "packageCases": [
+    {
+      "name": "__사례 초기값 구성품 패키지",
+      "why": "구성품이 초기값뿐인 패키지는 순위에 올리면 안 된다 (v8)",
+      "components": [
+        {
+          "name": "__구성품 초기값만 있음",
+          "quantity": 1,
+          "seedMesoPrice": 240000000
+        }
+      ]
+    }
+  ],
+  "saleCases": [
+    {
+      "name": "회차 안",
+      "now": "2026-07-01T00:00:00+09:00",
+      "item": {
+        "collection": "c1"
+      },
+      "expect": "on",
+      "why": "컬렉션 회차 기간 안이면 판매 중",
+      "collections": {
+        "c1": {
+          "recurring": true,
+          "runs": [
+            {
+              "startAt": "2026-06-18T12:00:00+09:00",
+              "endAt": "2026-09-16T23:59:00+09:00"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "회차 끝 정확히 그 순간",
+      "now": "2026-09-16T23:59:00+09:00",
+      "item": {
+        "collection": "c1"
+      },
+      "expect": "on",
+      "why": "끝 시각은 포함한다(now <= end)",
+      "collections": {
+        "c1": {
+          "recurring": true,
+          "runs": [
+            {
+              "startAt": "2026-06-18T12:00:00+09:00",
+              "endAt": "2026-09-16T23:59:00+09:00"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "회차 끝 1초 뒤",
+      "now": "2026-09-16T23:59:01+09:00",
+      "item": {
+        "collection": "c1"
+      },
+      "expect": "resting",
+      "why": "주기 판매 컬렉션은 끝나면 판매 종료가 아니라 휴지기",
+      "collections": {
+        "c1": {
+          "recurring": true,
+          "runs": [
+            {
+              "startAt": "2026-06-18T12:00:00+09:00",
+              "endAt": "2026-09-16T23:59:00+09:00"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "다음 회차 공지됨",
+      "now": "2026-10-01T00:00:00+09:00",
+      "item": {
+        "collection": "c1"
+      },
+      "expect": "upcoming",
+      "why": "미래 회차가 있으면 휴지기보다 판매 예정이 먼저",
+      "collections": {
+        "c1": {
+          "recurring": true,
+          "runs": [
+            {
+              "startAt": "2026-06-18T12:00:00+09:00",
+              "endAt": "2026-09-16T23:59:00+09:00"
+            },
+            {
+              "startAt": "2026-12-17T10:00:00+09:00",
+              "endAt": "2027-03-17T23:59:00+09:00"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "다음 회차 시작 순간",
+      "now": "2026-12-17T10:00:00+09:00",
+      "item": {
+        "collection": "c1"
+      },
+      "expect": "on",
+      "why": "시작 시각은 포함한다(now >= start)",
+      "collections": {
+        "c1": {
+          "recurring": true,
+          "runs": [
+            {
+              "startAt": "2026-06-18T12:00:00+09:00",
+              "endAt": "2026-09-16T23:59:00+09:00"
+            },
+            {
+              "startAt": "2026-12-17T10:00:00+09:00",
+              "endAt": "2027-03-17T23:59:00+09:00"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "일회성 컬렉션 끝",
+      "now": "2026-10-01T00:00:00+09:00",
+      "item": {
+        "collection": "c1"
+      },
+      "expect": "ended",
+      "why": "recurring:false 면 휴지기가 아니라 판매 종료",
+      "collections": {
+        "c1": {
+          "recurring": false,
+          "runs": [
+            {
+              "startAt": "2026-06-18T12:00:00+09:00",
+              "endAt": "2026-09-16T23:59:00+09:00"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "없는 컬렉션",
+      "now": "2026-10-01T00:00:00+09:00",
+      "item": {
+        "collection": "nope"
+      },
+      "expect": "unknown",
+      "why": "오타 하나로 상품이 상시판매가 되면 안 된다",
+      "collections": {
+        "c1": {
+          "recurring": true,
+          "runs": [
+            {
+              "startAt": "2026-06-18T12:00:00+09:00",
+              "endAt": "2026-09-16T23:59:00+09:00"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "컬렉션 id 가 숫자",
+      "now": "2026-10-01T00:00:00+09:00",
+      "item": {
+        "collection": 5
+      },
+      "expect": "unknown",
+      "why": "문자열이 아닌 id 는 해석하지 않는다",
+      "collections": {
+        "5": {
+          "runs": [
+            {
+              "startAt": "2026-06-18T12:00:00+09:00",
+              "endAt": "2026-09-16T23:59:00+09:00"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "컬렉션 id 가 constructor",
+      "now": "2026-10-01T00:00:00+09:00",
+      "item": {
+        "collection": "constructor"
+      },
+      "expect": "unknown",
+      "why": "자바스크립트 객체의 내장 속성(constructor)을 컬렉션으로 읽으면 안 된다. 모양 검사에서 걸러진다",
+      "collections": {
+        "c1": {
+          "recurring": true,
+          "runs": [
+            {
+              "startAt": "2026-06-18T12:00:00+09:00",
+              "endAt": "2026-09-16T23:59:00+09:00"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "runs 가 배열 아님",
+      "now": "2026-10-01T00:00:00+09:00",
+      "item": {
+        "collection": "c1"
+      },
+      "expect": "unknown",
+      "why": "모양이 틀린 컬렉션은 해석 불가",
+      "collections": {
+        "c1": {
+          "runs": {
+            "startAt": "2026-06-18T12:00:00+09:00",
+            "endAt": "2026-09-16T23:59:00+09:00"
+          }
+        }
+      }
+    },
+    {
+      "name": "회차가 문자열",
+      "now": "2026-10-01T00:00:00+09:00",
+      "item": {
+        "collection": "c1"
+      },
+      "expect": "unknown",
+      "why": "회차가 객체가 아니면 해석 불가 — 열린 창으로 읽으면 영원히 판매 중이 된다",
+      "collections": {
+        "c1": {
+          "runs": [
+            "2026-06-18"
+          ]
+        }
+      }
+    },
+    {
+      "name": "슬래시 날짜",
+      "now": "2026-10-01T00:00:00+09:00",
+      "item": {
+        "availability": {
+          "startAt": "2026/06/18",
+          "endAt": "2026-09-16"
+        }
+      },
+      "expect": "unknown",
+      "why": "V8 은 2026/06/18 을 읽지만 파이썬은 못 읽는다. ISO 만 받는다"
+    },
+    {
+      "name": "2월 30일",
+      "now": "2026-10-01T00:00:00+09:00",
+      "item": {
+        "availability": {
+          "endAt": "2026-02-30",
+          "startAt": "2026-06-18T12:00:00+09:00"
+        }
+      },
+      "expect": "unknown",
+      "why": "V8 은 3월 2일로 넘겨 읽고 파이썬은 거부한다"
+    },
+    {
+      "name": "24시",
+      "now": "2026-10-01T00:00:00+09:00",
+      "item": {
+        "availability": {
+          "endAt": "2026-09-16T24:00:00+09:00",
+          "startAt": "2026-06-18T12:00:00+09:00"
+        }
+      },
+      "expect": "unknown",
+      "why": "V8 은 다음 날 0시로 읽고 파이썬은 거부한다"
+    },
+    {
+      "name": "1970 년 전",
+      "now": "2026-10-01T00:00:00+09:00",
+      "item": {
+        "availability": {
+          "startAt": "0001-01-01T00:00:00+09:00",
+          "endAt": "2026-09-16T23:59:00+09:00"
+        }
+      },
+      "expect": "unknown",
+      "why": "파이썬이 서기 1년 근처 오프셋 계산을 못 한다"
+    },
+    {
+      "name": "날짜만 있는 끝",
+      "now": "2026-09-16T10:00:00+09:00",
+      "item": {
+        "availability": {
+          "endAt": "2026-09-16",
+          "startAt": "2026-06-18T12:00:00+09:00"
+        }
+      },
+      "expect": "ended",
+      "why": "날짜만 있으면 UTC 자정 = KST 09:00 에 끝난다"
+    },
+    {
+      "name": "오프셋 없는 시각",
+      "now": "2026-09-17T00:00:00+09:00",
+      "item": {
+        "availability": {
+          "endAt": "2026-09-16T23:59:00",
+          "startAt": "2026-06-18T12:00:00+09:00"
+        },
+        "collection": ""
+      },
+      "expect": "ended",
+      "why": "오프셋이 없으면 로컬 시각(KST). 빈 컬렉션 id 는 없는 것으로 본다"
+    },
+    {
+      "name": "소수 초",
+      "now": "2026-09-16T23:59:00.400+09:00",
+      "item": {
+        "availability": {
+          "endAt": "2026-09-16T23:59:00.500+09:00",
+          "startAt": "2026-06-18T12:00:00+09:00"
+        }
+      },
+      "expect": "on",
+      "why": "밀리초까지 비교한다"
+    },
+    {
+      "name": "Z 표기",
+      "now": "2026-09-16T15:00:00+09:00",
+      "item": {
+        "availability": {
+          "endAt": "2026-09-16T06:00:00Z",
+          "startAt": "2026-06-18T12:00:00+09:00"
+        }
+      },
+      "expect": "on",
+      "why": "Z 는 UTC. 06:00Z = KST 15:00"
+    },
+    {
+      "name": "기간 정보 없음",
+      "now": "2026-10-01T00:00:00+09:00",
+      "item": {},
+      "expect": "always",
+      "why": "상시판매로 본다"
+    },
+    {
+      "name": "availability 빈 배열",
+      "now": "2026-10-01T00:00:00+09:00",
+      "item": {
+        "availability": []
+      },
+      "expect": "unknown",
+      "why": "값은 있는데 창이 아니다. 해석 불가"
+    },
+    {
+      "name": "availability 빈 객체",
+      "now": "2026-10-01T00:00:00+09:00",
+      "item": {
+        "availability": {}
+      },
+      "expect": "unknown",
+      "why": "날짜도 type 도 없는 창을 열린 창으로 읽으면 실수 하나로 영원히 판매 중이 된다 (코덱스 collections-0923 v1)"
+    },
+    {
+      "name": "rankEligible false",
+      "now": "2026-07-01T00:00:00+09:00",
+      "item": {
+        "collection": "c1",
+        "rankEligible": false
+      },
+      "expect": "ended",
+      "why": "판매 중이어도 순위 대상에서 뺀 상품",
+      "collections": {
+        "c1": {
+          "recurring": true,
+          "runs": [
+            {
+              "startAt": "2026-06-18T12:00:00+09:00",
+              "endAt": "2026-09-16T23:59:00+09:00"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "상시 표시 + 날짜 없음",
+      "now": "2026-10-01T00:00:00+09:00",
+      "item": {
+        "availability": {
+          "type": "always",
+          "source": "공지"
+        }
+      },
+      "expect": "on",
+      "why": "type: always 라고 적은 것만 열린 창. 로얄 스타일·프리미엄 쿠폰 12개가 이 모양이다"
+    },
+    {
+      "name": "상시 표시인데 날짜 있음",
+      "now": "2026-10-01T00:00:00+09:00",
+      "item": {
+        "availability": {
+          "type": "always",
+          "endAt": "2026-09-16T23:59:00+09:00"
+        }
+      },
+      "expect": "unknown",
+      "why": "상시라면서 끝 날짜가 있으면 모순이다"
+    },
+    {
+      "name": "끝만 있는 창",
+      "now": "2026-09-01T00:00:00+09:00",
+      "item": {
+        "availability": {
+          "type": "limited",
+          "endAt": "2026-09-16T23:59:00+09:00"
+        }
+      },
+      "expect": "unknown",
+      "why": "한정 판매는 시작·끝이 둘 다 있어야 한다"
+    },
+    {
+      "name": "시작만 있는 창",
+      "now": "2026-09-01T00:00:00+09:00",
+      "item": {
+        "availability": {
+          "startAt": "2026-06-18T12:00:00+09:00"
+        }
+      },
+      "expect": "unknown",
+      "why": "끝이 없으면 영원히 판매 중으로 읽힌다"
+    },
+    {
+      "name": "역전된 기간",
+      "now": "2026-01-01T00:00:00+09:00",
+      "item": {
+        "availability": {
+          "startAt": "2026-09-16T23:59:00+09:00",
+          "endAt": "2026-06-18T12:00:00+09:00"
+        }
+      },
+      "expect": "unknown",
+      "why": "시작이 끝보다 뒤면 판매 예정으로 잘못 읽힌다 (코덱스 collections-0923 v1)"
+    },
+    {
+      "name": "컬렉션 회차 빈 객체",
+      "now": "2026-10-01T00:00:00+09:00",
+      "item": {
+        "collection": "c1"
+      },
+      "expect": "unknown",
+      "why": "컬렉션 회차는 늘 시작·끝이 둘 다 있어야 한다",
+      "collections": {
+        "c1": {
+          "runs": [
+            {}
+          ]
+        }
+      }
+    },
+    {
+      "name": "컬렉션 회차에 always",
+      "now": "2026-10-01T00:00:00+09:00",
+      "item": {
+        "collection": "c1"
+      },
+      "expect": "unknown",
+      "why": "always 로 열린 창은 상품 availability 에서만 허용한다",
+      "collections": {
+        "c1": {
+          "runs": [
+            {
+              "type": "always"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "시작과 끝이 같은 순간",
+      "now": "2026-09-16T23:59:00+09:00",
+      "item": {
+        "availability": {
+          "startAt": "2026-09-16T23:59:00+09:00",
+          "endAt": "2026-09-16T23:59:00+09:00"
+        }
+      },
+      "expect": "on",
+      "why": "시작 = 끝 은 역전이 아니다. 그 순간만 판매 중"
+    },
+    {
+      "name": "availability false",
+      "now": "2026-10-01T00:00:00+09:00",
+      "item": {
+        "availability": false
+      },
+      "expect": "unknown",
+      "why": "값이 있는데 창이 아니면 상시판매가 아니라 해석 불가 (코덱스 collections-0923 v2)"
+    },
+    {
+      "name": "availability 0",
+      "now": "2026-10-01T00:00:00+09:00",
+      "item": {
+        "availability": 0
+      },
+      "expect": "unknown",
+      "why": "같은 이유"
+    },
+    {
+      "name": "availability 빈 문자열",
+      "now": "2026-10-01T00:00:00+09:00",
+      "item": {
+        "availability": ""
+      },
+      "expect": "unknown",
+      "why": "같은 이유"
+    },
+    {
+      "name": "availability null",
+      "now": "2026-10-01T00:00:00+09:00",
+      "item": {
+        "availability": null
+      },
+      "expect": "always",
+      "why": "값이 없는 것(null)만 기간 정보 없음 = 상시판매"
+    }
+  ]
+}

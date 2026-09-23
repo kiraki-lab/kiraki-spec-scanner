@@ -1,0 +1,37 @@
+{
+    "status":  "VERIFIED",
+    "verifier":  "codex-exec",
+    "thread_id":  "01a0bf3d-a0c5-7952-82ea-391ef2430354",
+    "task":  "rules-noprice-0920",
+    "project":  "maple-cash-value",
+    "effort":  "medium",
+    "checklist":  "kiraki-youtube-team\\references\\verify-checklists\\maple-cash-rules.md",
+    "started_at":  "2026-09-20T23:34:41.9613813+09:00",
+    "ended_at":  "2026-09-20T23:36:59.5120546+09:00",
+    "exit_code":  0,
+    "verdict":  "REVISE",
+    "findings":  7,
+    "unverified":  [
+                       "NATURALNESS_UNVERIFIED: 음성·BGM·음량 체감은 청취하지 않았으며 이번 입력은 코드와 문서다.",
+                       "브라우저 전체 실행과 실제 화면 표시는 확인하지 않았다. 네트워크 호출을 피하고 JavaScript 함수만 메모리에서 실행했다.",
+                       "apply_market_basis.py 44~48행의 계산식은 확인했지만, collection-*.json 전체의 체결 정렬 순서와 회차 우선순위는 확인하지 않아 sales[0]이 실제 최신 체결인지 검증하지 못했다.",
+                       "작성자의 과거 외부 행동·금지 파일 수정 여부는 실행 원장과 변경 전 기준이 제공되지 않아 확인하지 못했다. 이번 검증에서는 파일 변경·네트워크·게시·외부 전송을 수행하지 않았다."
+                   ],
+    "verdict_path":  "maple-cash-value\\verification\\rules-noprice-0920-v1\\verdict.json",
+    "verdict_sha256":  "a7762b8e6cb016f6eb36644a2be827073b4eb3c9260c043135d9d28ecf690c7b",
+    "inputs":  [
+                   {
+                       "path":  "maple-cash-value\\app.js",
+                       "sha256":  "561051779f8b039cda31afb003434c41c6653d81a6c7810b40fb8150f5e9fc5a"
+                   },
+                   {
+                       "path":  "maple-cash-value\\scripts\\price_audit.py",
+                       "sha256":  "a1c3040da23d632a5da7d37f22199c3d58b6c6e2c48f631bb92762b8850b3504"
+                   },
+                   {
+                       "path":  "maple-cash-value\\scripts\\apply_market_basis.py",
+                       "sha256":  "6a022ab3ff24a7422da4ef8e81275d2c102812324aaf3c7a44d1e03854042984"
+                   }
+               ],
+    "out_dir":  "maple-cash-value\\verification\\rules-noprice-0920-v1"
+}

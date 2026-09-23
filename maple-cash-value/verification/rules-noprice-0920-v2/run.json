@@ -1,0 +1,35 @@
+{
+    "status":  "VERIFIED",
+    "verifier":  "codex-exec",
+    "thread_id":  "01a0bf45-d548-7f92-8d16-048a975e478d",
+    "task":  "rules-noprice-0920",
+    "project":  "maple-cash-value",
+    "effort":  "medium",
+    "checklist":  "kiraki-youtube-team\\references\\verify-checklists\\maple-cash-rules.md",
+    "started_at":  "2026-09-20T23:43:39.8060754+09:00",
+    "ended_at":  "2026-09-20T23:47:46.8585198+09:00",
+    "exit_code":  0,
+    "verdict":  "REVISE",
+    "findings":  7,
+    "unverified":  [
+                       "NATURALNESS_UNVERIFIED: 음성·BGM·음량 체감은 청취하지 않았다. 이번 검증 대상은 코드와 규칙 문서다.",
+                       "브라우저의 실제 화면 표시는 실행 확인하지 않았다. 순위 사유 표시 코드를 직접 읽고 계산 함수는 네트워크 없이 메모리에서 재현했다."
+                   ],
+    "verdict_path":  "maple-cash-value\\verification\\rules-noprice-0920-v2\\verdict.json",
+    "verdict_sha256":  "50744f92cd78901198b3fe3a64672e17d207345c4b0f78bd2aa6faae4af18a47",
+    "inputs":  [
+                   {
+                       "path":  "maple-cash-value\\app.js",
+                       "sha256":  "293bb5473a80064cce7e2f814574acf431445ce579ce005e09f69c17c6760810"
+                   },
+                   {
+                       "path":  "maple-cash-value\\scripts\\price_audit.py",
+                       "sha256":  "5dfeddc9f710e5fc8e1b7bf2d67c13175727710db9d13839e1e2bf082a9689df"
+                   },
+                   {
+                       "path":  "maple-cash-value\\scripts\\apply_market_basis.py",
+                       "sha256":  "6a022ab3ff24a7422da4ef8e81275d2c102812324aaf3c7a44d1e03854042984"
+                   }
+               ],
+    "out_dir":  "maple-cash-value\\verification\\rules-noprice-0920-v2"
+}

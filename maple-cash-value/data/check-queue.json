@@ -1,0 +1,84 @@
+{
+  "updatedAt": "2026-09-21T00:34:07",
+  "note": "계산기에 아직 없는 품목의 거래 가능 여부를 경매장에서 확인하는 큐. 한 품목당 매물 조회 1회면 충분하다. 매물이 잡히면 items.json 에 캐시가와 함께 넣고, 안 잡히면 tradable=false 로 기록해 다시 묻지 않는다.",
+  "items": [
+    {
+      "name": "마스터피스",
+      "axis": "listing",
+      "status": "pending",
+      "reason": "거래 가능 여부 미확인"
+    },
+    {
+      "name": "프리미엄 마스터피스",
+      "axis": "listing",
+      "status": "pending",
+      "reason": "거래 가능 여부 미확인"
+    },
+    {
+      "name": "컬러링 프리즘 프로",
+      "axis": "listing",
+      "status": "pending",
+      "reason": "거래 가능 여부 미확인"
+    },
+    {
+      "name": "무기 이펙트 프리즘",
+      "axis": "listing",
+      "status": "pending",
+      "reason": "거래 가능 여부 미확인"
+    },
+    {
+      "name": "초이스 헤어 쿠폰",
+      "axis": "listing",
+      "status": "pending",
+      "reason": "거래 가능 여부 미확인"
+    },
+    {
+      "name": "초이스 성형 쿠폰",
+      "axis": "listing",
+      "status": "pending",
+      "reason": "거래 가능 여부 미확인"
+    },
+    {
+      "name": "프리스타일 쿠폰",
+      "axis": "listing",
+      "status": "pending",
+      "reason": "거래 가능 여부 미확인"
+    },
+    {
+      "name": "밸런스 믹스 염색 쿠폰",
+      "axis": "listing",
+      "status": "pending",
+      "reason": "거래 가능 여부 미확인"
+    },
+    {
+      "name": "밸런스 믹스 컬러렌즈 쿠폰",
+      "axis": "listing",
+      "status": "pending",
+      "reason": "거래 가능 여부 미확인"
+    },
+    {
+      "name": "마스터라벨 플러스",
+      "axis": "listing",
+      "status": "pending",
+      "reason": "거래 가능 여부 미확인"
+    },
+    {
+      "name": "스타일링 스타터 패키지",
+      "axis": "listing",
+      "status": "pending",
+      "reason": "거래 가능 여부 미확인"
+    },
+    {
+      "name": "레테 헤어",
+      "axis": "listing",
+      "status": "pending",
+      "reason": "레테 직업 패키지 존재 여부 미확인 — 공식 직업 48종 중 유일하게 계산기에 패키지가 없다"
+    },
+    {
+      "name": "벨로나 슈트(여)",
+      "axis": "listing",
+      "status": "pending",
+      "reason": "벨로나 패키지(남)/(여) 2026-08-20 추가, 09-16 종료. 계산기에 아예 없다 (공지 640)"
+    }
+  ]
+}

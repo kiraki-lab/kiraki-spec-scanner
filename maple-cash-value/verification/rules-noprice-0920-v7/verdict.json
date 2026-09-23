@@ -1,0 +1,17 @@
+{
+  "verdict": "BLOCKED",
+  "findings": [
+    {
+      "severity": "high",
+      "file": "maple-cash-value/app.js",
+      "claim": "INPUT_SHA_MISMATCH",
+      "evidence": "검증 시작 시 SHA-256은 지정값 754c2031561a28afa4a62691ede6ebab0d6c4fc5832eb9ab8b4ab59118f92693과 일치했으나, 최종 재확인에서는 d6b3ee53dd14e3bfec9d465a1795f6f26c24bc13ddf7376dd0255a0eb109b77c로 변경됐다. 크기도 82,269바이트에서 82,660바이트로 바뀌었고, 957행에 isSeedOnly 함수가 추가됐다. 검증 도중 입력이 변경되어 고정 SHA에 대한 판정을 확정할 수 없다."
+    }
+  ],
+  "unverified": [
+    "검증 중 app.js가 변경되어 전체 체크리스트의 동일 버전 정합성은 확인하지 못했다. 변경된 파일의 SHA를 고정한 뒤 재검증해야 한다.",
+    "변경 감지 전 메모리 기반 대조에서는 원장 564행과 합성 16사례의 불일치가 0건이었으나, 이 결과를 변경된 버전의 검증 근거로 사용할 수 없다.",
+    "NATURALNESS_UNVERIFIED: 음성·BGM·음량 체감은 청취하지 않았다. 이번 코드 검증에는 해당하지 않는다."
+  ],
+  "external_actions": 0
+}

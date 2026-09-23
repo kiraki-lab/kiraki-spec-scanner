@@ -1,0 +1,37 @@
+{
+    "status":  "VERIFIED",
+    "verifier":  "codex-exec",
+    "thread_id":  "01a0bf67-7c81-7722-b4c1-df271faf649d",
+    "task":  "rules-noprice-0920",
+    "project":  "maple-cash-value",
+    "effort":  "medium",
+    "checklist":  "kiraki-youtube-team\\references\\verify-checklists\\maple-cash-rules.md",
+    "started_at":  "2026-09-21T00:20:25.3051999+09:00",
+    "ended_at":  "2026-09-21T00:24:05.3511805+09:00",
+    "exit_code":  0,
+    "verdict":  "REVISE",
+    "findings":  1,
+    "unverified":  [
+                       "scripts/crosscheck_adoption.js 원본 명령은 72~85줄에서 임시 파일을 생성·삭제하므로 실행하지 않았다. 파일 입출력을 메모리 전달로 대체한 검증에서는 2026-09-20 기준 원장 564행과 기존 합성 사례 16건의 채택가·저매물·순위 가능 여부·저매물 등급 불일치가 모두 0건이었다.",
+                       "새 패키지 초기값 사례는 메모리에서만 재현했다. 파일 변경 금지 조건에 따라 adoption-cases.json에는 추가하지 않았다.",
+                       "브라우저의 실제 화면 표시는 실행하지 않았으며, 순위 제외 사유는 렌더링 코드로 확인했다.",
+                       "NATURALNESS_UNVERIFIED: 음성·BGM·음량 체감은 청취 검증하지 않았다. 이번 대상은 코드와 규칙 문서다."
+                   ],
+    "verdict_path":  "maple-cash-value\\verification\\rules-noprice-0920-v8\\verdict.json",
+    "verdict_sha256":  "8fc48a29a12dfcfd1eda7dcde75394ce6c8a1995af51739a1bdd69b106ebeab7",
+    "inputs":  [
+                   {
+                       "path":  "maple-cash-value\\app.js",
+                       "sha256":  "d6b3ee53dd14e3bfec9d465a1795f6f26c24bc13ddf7376dd0255a0eb109b77c"
+                   },
+                   {
+                       "path":  "maple-cash-value\\scripts\\price_audit.py",
+                       "sha256":  "67b6159ff17d552a52ac99e0a2c95cc28ea5edfc5ed15261857ecc11407b4ac7"
+                   },
+                   {
+                       "path":  "maple-cash-value\\scripts\\apply_market_basis.py",
+                       "sha256":  "6a022ab3ff24a7422da4ef8e81275d2c102812324aaf3c7a44d1e03854042984"
+                   }
+               ],
+    "out_dir":  "maple-cash-value\\verification\\rules-noprice-0920-v8"
+}

@@ -1,7 +1,7 @@
 {
   "version": 3,
   "world": "스카니아",
-  "updatedAt": "2026-08-23T10:55:00+09:00",
+  "updatedAt": "2026-09-23T00:00:00+09:00",
   "settings": {
     "baseMpRate": 6990,
     "discountRate": 6,
@@ -147,11 +147,16 @@
       "mileageType": "none",
       "availability": {
         "type": "limited",
-        "startAt": "2026-06-18T10:00:00+09:00",
-        "endAt": "2026-09-16T23:59:00+09:00",
-        "checkedAt": "2026-08-23",
-        "source": "6월 18일 스페셜 루나 크리스탈 (공지 629)",
-        "sourceUrl": "https://maplestory.nexon.com/News/CashShop"
+        "startAt": "2026-09-17T10:00:00+09:00",
+        "endAt": "2026-10-21T23:59:00+09:00",
+        "checkedAt": "2026-09-20",
+        "source": "9월 17일 스페셜 루나 크리스탈 (공지 647)",
+        "sourceUrl": "https://maplestory.nexon.com/News/CashShop",
+        "previousRun": {
+          "startAt": "2026-06-18T10:00:00+09:00",
+          "endAt": "2026-09-16T23:59:00+09:00",
+          "note": "06-18~09-16 판매 후 09-17 재판매"
+        }
       }
     },
     {
@@ -231,14 +236,7 @@
       "cashPrice": 5500,
       "seedMesoPrice": 0,
       "mileageType": "none",
-      "availability": {
-        "type": "limited",
-        "startAt": "2026-08-20T10:00:00+09:00",
-        "endAt": "2026-09-16T23:59:00+09:00",
-        "checkedAt": "2026-08-23",
-        "source": "8월 20일 메이플스토리 보스 패키지 (공지 640)",
-        "sourceUrl": "https://maplestory.nexon.com/News/CashShop"
-      }
+      "collection": "boss"
     },
     {
       "id": 31,
@@ -247,14 +245,7 @@
       "cashPrice": 3500,
       "seedMesoPrice": 0,
       "mileageType": "none",
-      "availability": {
-        "type": "limited",
-        "startAt": "2026-08-20T10:00:00+09:00",
-        "endAt": "2026-09-16T23:59:00+09:00",
-        "checkedAt": "2026-08-23",
-        "source": "8월 20일 메이플스토리 보스 패키지 (공지 640)",
-        "sourceUrl": "https://maplestory.nexon.com/News/CashShop"
-      }
+      "collection": "boss"
     },
     {
       "id": 32,
@@ -295,14 +286,7 @@
       "cashPrice": 5500,
       "seedMesoPrice": 0,
       "mileageType": "none",
-      "availability": {
-        "type": "limited",
-        "startAt": "2026-06-18T10:00:00+09:00",
-        "endAt": "2026-09-16T23:59:00+09:00",
-        "checkedAt": "2026-08-23",
-        "source": "6월 18일 전 직업 일러스트 컬렉션 헤어 쿠폰",
-        "sourceUrl": "https://maplestory.nexon.com/News/CashShop"
-      }
+      "collection": "illust-hair"
     },
     {
       "id": 101,
@@ -327,7 +311,8 @@
           "name": "데몬 슬레이어 윙",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-demon-resistance"
     },
     {
       "id": 102,
@@ -356,7 +341,8 @@
           "name": "데몬 슬레이어 윙",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-demon-resistance"
     },
     {
       "id": 103,
@@ -381,7 +367,8 @@
           "name": "데몬 어벤져 윙",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-demon-resistance"
     },
     {
       "id": 104,
@@ -410,7 +397,8 @@
           "name": "데몬 어벤져 윙",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-demon-resistance"
     },
     {
       "id": 111,
@@ -435,7 +423,8 @@
           "name": "레지스탕스 블래스터 건틀렛 리볼버",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-demon-resistance"
     },
     {
       "id": 112,
@@ -460,7 +449,8 @@
           "name": "레지스탕스 블래스터 건틀렛 리볼버",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-demon-resistance"
     },
     {
       "id": 113,
@@ -485,7 +475,8 @@
           "name": "레지스탕스 배틀메이지 스태프",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-demon-resistance"
     },
     {
       "id": 114,
@@ -510,7 +501,8 @@
           "name": "레지스탕스 배틀메이지 스태프",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-demon-resistance"
     },
     {
       "id": 115,
@@ -535,7 +527,8 @@
           "name": "레지스탕스 와일드헌터 석궁",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-demon-resistance"
     },
     {
       "id": 116,
@@ -560,7 +553,8 @@
           "name": "레지스탕스 와일드헌터 석궁",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-demon-resistance"
     },
     {
       "id": 117,
@@ -585,7 +579,8 @@
           "name": "레지스탕스 제논 에너지소드",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-demon-resistance"
     },
     {
       "id": 118,
@@ -610,7 +605,8 @@
           "name": "레지스탕스 제논 에너지소드",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-demon-resistance"
     },
     {
       "id": 119,
@@ -635,7 +631,8 @@
           "name": "레지스탕스 메카닉 무기",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-demon-resistance"
     },
     {
       "id": 120,
@@ -660,7 +657,8 @@
           "name": "레지스탕스 메카닉 무기",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-demon-resistance"
     },
     {
       "id": 201,
@@ -685,7 +683,8 @@
           "name": "기사단장 미하일 소드",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-cygnus-hero"
     },
     {
       "id": 202,
@@ -710,7 +709,8 @@
           "name": "기사단장 오즈 스태프",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-cygnus-hero"
     },
     {
       "id": 203,
@@ -735,7 +735,8 @@
           "name": "기사단장 오즈 스태프",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-cygnus-hero"
     },
     {
       "id": 204,
@@ -760,7 +761,8 @@
           "name": "기사단장 이리나 보우",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-cygnus-hero"
     },
     {
       "id": 205,
@@ -785,7 +787,8 @@
           "name": "기사단장 이리나 보우",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-cygnus-hero"
     },
     {
       "id": 206,
@@ -810,7 +813,8 @@
           "name": "기사단장 이카르트 표창",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-cygnus-hero"
     },
     {
       "id": 207,
@@ -835,7 +839,8 @@
           "name": "기사단장 이카르트 표창",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-cygnus-hero"
     },
     {
       "id": 208,
@@ -860,7 +865,8 @@
           "name": "기사단장 호크아이 너클",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-cygnus-hero"
     },
     {
       "id": 209,
@@ -885,7 +891,8 @@
           "name": "기사단장 호크아이 너클",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-cygnus-hero"
     },
     {
       "id": 210,
@@ -910,7 +917,8 @@
           "name": "책사 나인하트 도서",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-cygnus-hero"
     },
     {
       "id": 211,
@@ -935,7 +943,8 @@
           "name": "신수의 부름",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-cygnus-hero"
     },
     {
       "id": 221,
@@ -956,7 +965,8 @@
           "name": "영웅 아란 폴암",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-cygnus-hero"
     },
     {
       "id": 222,
@@ -977,7 +987,8 @@
           "name": "영웅 아란 폴암",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-cygnus-hero"
     },
     {
       "id": 223,
@@ -998,7 +1009,8 @@
           "name": "영웅 은월 너클",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-cygnus-hero"
     },
     {
       "id": 224,
@@ -1019,7 +1031,8 @@
           "name": "영웅 은월 너클",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-cygnus-hero"
     },
     {
       "id": 225,
@@ -1040,7 +1053,8 @@
           "name": "영웅 루미너스 샤이닝로드",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-cygnus-hero"
     },
     {
       "id": 226,
@@ -1061,7 +1075,8 @@
           "name": "영웅 루미너스 샤이닝로드",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-cygnus-hero"
     },
     {
       "id": 227,
@@ -1082,7 +1097,8 @@
           "name": "영웅 에반 스태프",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-cygnus-hero"
     },
     {
       "id": 228,
@@ -1103,7 +1119,8 @@
           "name": "영웅 에반 스태프",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-cygnus-hero"
     },
     {
       "id": 229,
@@ -1124,7 +1141,8 @@
           "name": "영웅 메르세데스 듀얼보우건",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-cygnus-hero"
     },
     {
       "id": 230,
@@ -1145,7 +1163,8 @@
           "name": "영웅 메르세데스 듀얼보우건",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-cygnus-hero"
     },
     {
       "id": 231,
@@ -1166,7 +1185,8 @@
           "name": "영웅 팬텀 케인",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-cygnus-hero"
     },
     {
       "id": 232,
@@ -1187,7 +1207,8 @@
           "name": "영웅 팬텀 케인",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-cygnus-hero"
     },
     {
       "id": 301,
@@ -1208,7 +1229,8 @@
           "name": "모험가 히어로 소드",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-adventurer"
     },
     {
       "id": 302,
@@ -1229,7 +1251,8 @@
           "name": "모험가 팔라딘 해머",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-adventurer"
     },
     {
       "id": 303,
@@ -1250,7 +1273,8 @@
           "name": "모험가 다크나이트 스피어",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-adventurer"
     },
     {
       "id": 304,
@@ -1271,7 +1295,8 @@
           "name": "모험가 불독 완드",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-adventurer"
     },
     {
       "id": 305,
@@ -1292,7 +1317,8 @@
           "name": "모험가 불독 완드",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-adventurer"
     },
     {
       "id": 306,
@@ -1313,7 +1339,8 @@
           "name": "모험가 썬콜 스태프",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-adventurer"
     },
     {
       "id": 307,
@@ -1334,7 +1361,8 @@
           "name": "모험가 썬콜 스태프",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-adventurer"
     },
     {
       "id": 308,
@@ -1355,7 +1383,8 @@
           "name": "모험가 비숍 완드",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-adventurer"
     },
     {
       "id": 309,
@@ -1376,7 +1405,8 @@
           "name": "모험가 비숍 완드",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-adventurer"
     },
     {
       "id": 310,
@@ -1397,7 +1427,8 @@
           "name": "모험가 보우마스터 활",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-adventurer"
     },
     {
       "id": 311,
@@ -1418,7 +1449,8 @@
           "name": "모험가 보우마스터 활",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-adventurer"
     },
     {
       "id": 312,
@@ -1439,7 +1471,8 @@
           "name": "모험가 신궁 석궁",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-adventurer"
     },
     {
       "id": 313,
@@ -1460,7 +1493,8 @@
           "name": "모험가 신궁 석궁",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-adventurer"
     },
     {
       "id": 314,
@@ -1481,7 +1515,8 @@
           "name": "모험가 패스파인더 활",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-adventurer"
     },
     {
       "id": 315,
@@ -1502,7 +1537,8 @@
           "name": "모험가 나이트로드 표창",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-adventurer"
     },
     {
       "id": 316,
@@ -1523,7 +1559,8 @@
           "name": "모험가 나이트로드 표창",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-adventurer"
     },
     {
       "id": 317,
@@ -1544,7 +1581,8 @@
           "name": "모험가 듀얼블레이드 단검",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-adventurer"
     },
     {
       "id": 318,
@@ -1565,7 +1603,8 @@
           "name": "모험가 섀도어 단검",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-adventurer"
     },
     {
       "id": 319,
@@ -1586,7 +1625,8 @@
           "name": "모험가 캐논슈터 캐논",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-adventurer"
     },
     {
       "id": 320,
@@ -1607,7 +1647,8 @@
           "name": "모험가 캐논슈터 캐논",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-adventurer"
     },
     {
       "id": 321,
@@ -1628,7 +1669,8 @@
           "name": "모험가 바이퍼 너클",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-adventurer"
     },
     {
       "id": 322,
@@ -1649,7 +1691,8 @@
           "name": "모험가 바이퍼 너클",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-adventurer"
     },
     {
       "id": 323,
@@ -1670,7 +1713,8 @@
           "name": "모험가 캡틴 건",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-adventurer"
     },
     {
       "id": 324,
@@ -1691,7 +1735,8 @@
           "name": "모험가 캡틴 건",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-adventurer"
     },
     {
       "id": 401,
@@ -1716,7 +1761,8 @@
           "name": "노바 카이저 카이세리움",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-nova-leaf"
     },
     {
       "id": 402,
@@ -1743,7 +1789,8 @@
           "name": "노바 카인 마스크",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-nova-leaf"
     },
     {
       "id": 403,
@@ -1764,7 +1811,8 @@
           "name": "노바 카데나 체인",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-nova-leaf"
     },
     {
       "id": 404,
@@ -1789,7 +1837,8 @@
           "name": "노바 엔젤릭버스터 윙",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-nova-leaf"
     },
     {
       "id": 405,
@@ -1810,7 +1859,8 @@
           "name": "레프 아델 튜너",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-nova-leaf"
     },
     {
       "id": 406,
@@ -1845,7 +1895,8 @@
           "name": "레프 일리움 마스크",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-nova-leaf"
     },
     {
       "id": 407,
@@ -1870,7 +1921,8 @@
           "name": "레프 칼리 차크람",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-nova-leaf"
     },
     {
       "id": 408,
@@ -1891,7 +1943,8 @@
           "name": "레프 아크 스펙터 핸드",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-nova-leaf"
     },
     {
       "id": 409,
@@ -1912,7 +1965,8 @@
           "name": "레프 아크 스펙터 핸드",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-nova-leaf"
     },
     {
       "id": 410,
@@ -1933,7 +1987,8 @@
           "name": "프렌즈 월드 키네시스 ESP 리미터",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-kinesis-zero-anima"
     },
     {
       "id": 411,
@@ -1954,7 +2009,8 @@
           "name": "프렌즈 월드 키네시스 ESP 리미터",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-kinesis-zero-anima"
     },
     {
       "id": 412,
@@ -1975,7 +2031,8 @@
           "name": "초월자 제로 알파 라즐리",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-kinesis-zero-anima"
     },
     {
       "id": 413,
@@ -1996,7 +2053,8 @@
           "name": "초월자 제로 베타 라피스",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-kinesis-zero-anima"
     },
     {
       "id": 414,
@@ -2021,7 +2079,8 @@
           "name": "아니마 렌 장검",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-kinesis-zero-anima"
     },
     {
       "id": 415,
@@ -2046,7 +2105,8 @@
           "name": "아니마 렌 장검",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-kinesis-zero-anima"
     },
     {
       "id": 416,
@@ -2071,7 +2131,8 @@
           "name": "아니마 라라 지팡이",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-kinesis-zero-anima"
     },
     {
       "id": 417,
@@ -2096,7 +2157,8 @@
           "name": "아니마 라라 지팡이",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-kinesis-zero-anima"
     },
     {
       "id": 418,
@@ -2125,7 +2187,8 @@
           "name": "아니마 호영 망토",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-kinesis-zero-anima"
     },
     {
       "id": 419,
@@ -2154,7 +2217,8 @@
           "name": "아니마 호영 망토",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "illust-kinesis-zero-anima"
     },
     {
       "id": 501,
@@ -2181,7 +2245,8 @@
           "name": "유피테르 귀고리",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "boss"
     },
     {
       "id": 502,
@@ -2208,7 +2273,8 @@
           "name": "유피테르 귀고리",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "boss"
     },
     {
       "id": 503,
@@ -2237,7 +2303,8 @@
           "name": "찬란한 흉성 케이프",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "boss"
     },
     {
       "id": 504,
@@ -2266,7 +2333,8 @@
           "name": "찬란한 흉성 케이프",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "boss"
     },
     {
       "id": 505,
@@ -2291,7 +2359,8 @@
           "name": "최초의 대적자 망토",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "boss"
     },
     {
       "id": 506,
@@ -2316,7 +2385,8 @@
           "name": "최초의 대적자 망토",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "boss"
     },
     {
       "id": 507,
@@ -2351,7 +2421,8 @@
           "name": "발드릭스 장갑",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "boss"
     },
     {
       "id": 508,
@@ -2386,7 +2457,8 @@
           "name": "매그너스 장갑",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "boss"
     },
     {
       "id": 509,
@@ -2421,7 +2493,8 @@
           "name": "아카이럼 수염",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "boss"
     },
     {
       "id": 510,
@@ -2450,7 +2523,8 @@
           "name": "다크 시그너스 엠블럼",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "boss"
     },
     {
       "id": 511,
@@ -2479,7 +2553,8 @@
           "name": "다크 시그너스 엠블럼",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "boss"
     },
     {
       "id": 512,
@@ -2514,7 +2589,8 @@
           "name": "파멸의 안대",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "boss"
     },
     {
       "id": 513,
@@ -2543,7 +2619,8 @@
           "name": "트루 윌",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "boss"
     },
     {
       "id": 514,
@@ -2572,7 +2649,8 @@
           "name": "고통의 속박",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "boss"
     },
     {
       "id": 515,
@@ -2601,7 +2679,8 @@
           "name": "고통의 속박",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "boss"
     },
     {
       "id": 516,
@@ -2636,7 +2715,8 @@
           "name": "듄켈 장갑",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "boss"
     },
     {
       "id": 517,
@@ -2665,7 +2745,8 @@
           "name": "창세의 힘",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "boss"
     },
     {
       "id": 518,
@@ -2700,7 +2781,8 @@
           "name": "천족의 날개귀",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "boss"
     },
     {
       "id": 519,
@@ -2729,7 +2811,8 @@
           "name": "카링의 악기",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "boss"
     },
     {
       "id": 520,
@@ -2758,7 +2841,8 @@
           "name": "카링의 악기",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "boss"
     },
     {
       "id": 521,
@@ -2793,7 +2877,8 @@
           "name": "파워풀 빅풋",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "boss"
     },
     {
       "id": 522,
@@ -2828,7 +2913,8 @@
           "name": "림보 글러브",
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "collection": "boss"
     },
     {
       "id": 679,
@@ -3049,8 +3135,66 @@
         "url": "https://maplestory.nexon.com/News/CashShop/Sale/638",
         "imageSha256": "2aac3fe20e47bb6d205a127898e71864d8588cadffde1f153d0788af84e080e5"
       }
+    },
+    {
+      "id": 686,
+      "name": "캐치! 티니핑 굿즈 컬렉션",
+      "category": "랜덤",
+      "cashPrice": 9900,
+      "seedMesoPrice": 0,
+      "mileageType": "none",
+      "tradable": true,
+      "rankEligible": true,
+      "availability": {
+        "type": "limited",
+        "startAt": "2026-09-17T10:00:00+09:00",
+        "endAt": "2026-10-21T23:59:00+09:00",
+        "checkedAt": "2026-09-20",
+        "source": "9월 17일 캐치! 티니핑 굿즈 컬렉션 (공지 648)",
+        "sourceUrl": "https://maplestory.nexon.com/News/CashShop/Sale/648"
+      },
+      "conditions": {
+        "exchangeStatus": "conditional",
+        "maxTrades": 1,
+        "exchangeCondition": "사용 전 1회에 한해 교환 가능",
+        "validityDays": 7,
+        "note": "획득한 교환권도 1회 교환 가능. 교환권을 사용해 얻은 최종 아이템은 교환 불가·영구"
+      }
+    },
+    {
+      "id": 687,
+      "name": "캐치! 티니핑 굿즈 컬렉션 10개",
+      "category": "랜덤",
+      "cashPrice": 99000,
+      "seedMesoPrice": 0,
+      "mileageType": "none",
+      "tradable": true,
+      "rankEligible": true,
+      "availability": {
+        "type": "limited",
+        "startAt": "2026-09-17T10:00:00+09:00",
+        "endAt": "2026-10-21T23:59:00+09:00",
+        "checkedAt": "2026-09-20",
+        "source": "9월 17일 캐치! 티니핑 굿즈 컬렉션 (공지 648)",
+        "sourceUrl": "https://maplestory.nexon.com/News/CashShop/Sale/648"
+      },
+      "conditions": {
+        "exchangeStatus": "conditional",
+        "maxTrades": 1,
+        "exchangeCondition": "사용 전 1회에 한해 교환 가능",
+        "validityDays": 7,
+        "note": "획득한 교환권도 1회 교환 가능. 교환권을 사용해 얻은 최종 아이템은 교환 불가·영구"
+      },
+      "components": [
+        {
+          "name": "캐치! 티니핑 굿즈 컬렉션",
+          "quantity": 10,
+          "seedMesoPrice": 0
+        }
+      ]
     }
   ],
-  "availabilityCheckedAt": "2026-08-23",
-  "availabilityNote": "캐시샵 공지 판매중/판매종료 목록에서 확인. 근거를 못 찾은 품목은 availability 를 비워 두었고 상시판매로 간주된다."
+  "availabilityCheckedAt": "2026-09-21",
+  "availabilityNote": "캐시샵 공지 판매중/판매종료 목록에서 확인. 근거를 못 찾은 품목은 availability 를 비워 두었고 상시판매로 간주된다.",
+  "collectionsPath": "data/collections.json"
 }

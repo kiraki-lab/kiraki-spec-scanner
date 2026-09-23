@@ -1,0 +1,36 @@
+{
+    "status":  "VERIFIED",
+    "verifier":  "codex-exec",
+    "thread_id":  "01a0bf65-90c9-7350-84d1-e350b6df21bf",
+    "task":  "rules-noprice-0920",
+    "project":  "maple-cash-value",
+    "effort":  "medium",
+    "checklist":  "kiraki-youtube-team\\references\\verify-checklists\\maple-cash-rules.md",
+    "started_at":  "2026-09-21T00:18:19.2109615+09:00",
+    "ended_at":  "2026-09-21T00:20:03.9231752+09:00",
+    "exit_code":  0,
+    "verdict":  "BLOCKED",
+    "findings":  1,
+    "unverified":  [
+                       "검증 중 app.js가 변경되어 전체 체크리스트의 동일 버전 정합성은 확인하지 못했다. 변경된 파일의 SHA를 고정한 뒤 재검증해야 한다.",
+                       "변경 감지 전 메모리 기반 대조에서는 원장 564행과 합성 16사례의 불일치가 0건이었으나, 이 결과를 변경된 버전의 검증 근거로 사용할 수 없다.",
+                       "NATURALNESS_UNVERIFIED: 음성·BGM·음량 체감은 청취하지 않았다. 이번 코드 검증에는 해당하지 않는다."
+                   ],
+    "verdict_path":  "maple-cash-value\\verification\\rules-noprice-0920-v7\\verdict.json",
+    "verdict_sha256":  "2e549e7abdec2ef4dda4adc9b363448d66750cd5f986cddcf0be45229b89ae43",
+    "inputs":  [
+                   {
+                       "path":  "maple-cash-value\\app.js",
+                       "sha256":  "d6b3ee53dd14e3bfec9d465a1795f6f26c24bc13ddf7376dd0255a0eb109b77c"
+                   },
+                   {
+                       "path":  "maple-cash-value\\scripts\\price_audit.py",
+                       "sha256":  "67b6159ff17d552a52ac99e0a2c95cc28ea5edfc5ed15261857ecc11407b4ac7"
+                   },
+                   {
+                       "path":  "maple-cash-value\\scripts\\apply_market_basis.py",
+                       "sha256":  "6a022ab3ff24a7422da4ef8e81275d2c102812324aaf3c7a44d1e03854042984"
+                   }
+               ],
+    "out_dir":  "maple-cash-value\\verification\\rules-noprice-0920-v7"
+}

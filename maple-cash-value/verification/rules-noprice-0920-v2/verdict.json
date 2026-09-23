@@ -1,0 +1,52 @@
+{
+  "verdict": "REVISE",
+  "findings": [
+    {
+      "severity": "high",
+      "file": "maple-cash-value/app.js",
+      "claim": "THIN_LISTING_EXCLUSION_DIVERGENCE",
+      "evidence": "PRICE_VERIFICATION.md:75~86은 유효한 교차검증 시세가 없는 저매물 단독 상품을 제외하며 legacyMax도 방패로 인정하지 않는다. app.js:701~717은 채택가가 매물가와 같아야만 제외한다. 2026-09-20 기준 매물 9억·시세 1억·매물 2건·두 근거 날짜 09-01로 재현하면 계산기는 1억을 채택해 순위를 부여하지만, price_audit.py:128~135,267~268은 thinOnly=true로 제외한다. 두 근거가 신선해도 시세가 legacyMax이면 같은 제외 판정 차이가 발생한다."
+    },
+    {
+      "severity": "medium",
+      "file": "maple-cash-value/scripts/price_audit.py",
+      "claim": "FRESHNESS_BOUNDARY_DIVERGENCE",
+      "evidence": "app.js:673~677은 경과 시간을 24시간 단위로 비교하지만 price_audit.py:42~46,77~79,113~116은 날짜 차이만 사용한다. 2026-09-20 12:00 KST에 매물 1억의 갱신 시각을 09-06 00:00 KST, 시세 2억을 당일로 두면 계산기는 14.5일 된 매물을 제외해 2억을 채택하고, 감사는 14일로 계산해 매물 1억·등급 B를 반환한다."
+    },
+    {
+      "severity": "medium",
+      "file": "maple-cash-value/app.js",
+      "claim": "PENDING_MARKET_ADOPTION_DIVERGENCE",
+      "evidence": "PRICE_VERIFICATION.md:58~63은 신선한 후보가 하나면 해당 값을 채택한다. app.js:653~654,693~704는 marketHistoryStatus=no_sales 또는 listing_unconfirmed이고 시세가 없으면 신선한 매물도 0으로 바꾼다. 당일 매물 1억·매물 10건·no_sales 입력에서 계산기는 0과 순위 제외를 반환하지만 price_audit.py:122~165는 1억과 등급 C를 반환한다."
+    },
+    {
+      "severity": "medium",
+      "file": "maple-cash-value/scripts/price_audit.py",
+      "claim": "UNDOCUMENTED_QUEUE_THRESHOLDS",
+      "evidence": "price_audit.py:34~38,204~211,330~348은 상위 20위/40위/80위에 각각 3일/7일/21일 목표를 적용하고 대역 밖은 기본 휴면 처리한다. PRICE_VERIFICATION.md:108~117은 상위권·급변·시세 없음·14일 초과·나머지 로테이션 순서를 명시하지만, 7일·21일 임계값과 80위 초과 기본 제외 규칙은 명시하지 않는다."
+    },
+    {
+      "severity": "medium",
+      "file": "maple-cash-value/scripts/price_audit.py",
+      "claim": "ZERO_VALUE_QUEUE_CONTRACT_DIVERGENCE",
+      "evidence": "제공된 역할 체크리스트 3.5는 값 0인 행을 순위와 검증 큐에서 제외하도록 요구한다. price_audit.py:271~272는 순위에서 제외하지만 322~328,366~382는 판매 중 상품을 뒷받침하는 값 0인 행을 bootstrap으로 검증 큐에 추가한다. 2026-09-20 기준 메모리 재현에서 성별 변경 쿠폰과 캐치! 티니핑 굿즈 컬렉션이 topRank=null, bootstrap=true로 큐에 포함됐다."
+    },
+    {
+      "severity": "medium",
+      "file": "maple-cash-value/scripts/price_audit.py",
+      "claim": "LEGACY_ONLY_GRADE_DIVERGENCE",
+      "evidence": "PRICE_VERIFICATION.md 9절은 legacyMax를 교차검증으로 인정하지 않고 등급 C로 내린다고 명시한다. price_audit.py:126~136은 legacyMax를 후보에서 제외한 뒤 후보가 없으면 D를 반환하므로 160~162의 C 분기에 도달하지 못한다. 당일 legacyMax 시세 1억만 있는 입력에서 marketAgeDays=0인데도 등급 D와 '근거가 모두 14일 초과로 낡음'이라는 사유가 반환됐다."
+    },
+    {
+      "severity": "low",
+      "file": "maple-cash-value/PRICE_VERIFICATION.md",
+      "claim": "STALE_MARKETLESS_ROW_COUNT",
+      "evidence": "PRICE_VERIFICATION.md:185~187의 recentSale 83·legacyMax 32·없음 449행은 현재 data/auction-prices.json의 prices[].marketPriceBasis 집계와 일치한다. 그러나 같은 절 198행은 현재 시세 축이 없는 행을 498행이라고 적어 표 및 실제 449행과 다르다."
+    }
+  ],
+  "unverified": [
+    "NATURALNESS_UNVERIFIED: 음성·BGM·음량 체감은 청취하지 않았다. 이번 검증 대상은 코드와 규칙 문서다.",
+    "브라우저의 실제 화면 표시는 실행 확인하지 않았다. 순위 사유 표시 코드를 직접 읽고 계산 함수는 네트워크 없이 메모리에서 재현했다."
+  ],
+  "external_actions": 0
+}

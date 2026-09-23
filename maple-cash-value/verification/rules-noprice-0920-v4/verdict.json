@@ -1,0 +1,24 @@
+{
+  "verdict": "REVISE",
+  "findings": [
+    {
+      "severity": "high",
+      "file": "maple-cash-value/app.js",
+      "claim": "ROUNDING_THIN_LISTING_DIVERGENCE",
+      "evidence": "app.js:699~703,729~730은 가격을 먼저 반올림하여 비교하지만 scripts/price_audit.py:149~152,183~185는 원값으로 비교한다. 기준 시각 2026-09-20 23:59:59 KST, 매물 100200000·legacyMax 시세 100100000·매물 1건·두 근거 날짜 2026-09-19인 추가 사례 '__rounding_legacy_cap'에서 계산기 thinListingOnly=true, 감사 thinOnly=false를 재현했다. app.js:943~945와 price_audit.py:308~309에 따라 단독 상품의 순위 포함 여부가 갈린다."
+    },
+    {
+      "severity": "high",
+      "file": "maple-cash-value/scripts/price_audit.py",
+      "claim": "IMPLICIT_LEGACY_BASIS_DIVERGENCE",
+      "evidence": "app.js:704는 marketPriceBasis 누락 시 빈 문자열을 사용하고 728행에서 교차검증으로 인정한다. scripts/price_audit.py:102는 시세가 있으면 누락 기준을 legacyMax로 간주하고 183행에서 교차검증에서 제외한다. 매물 100000000·marketHistoryMaxMeso 200000000·매물 1건·두 근거 날짜 2026-09-19·marketPriceBasis 없음인 추가 사례 '__implicit_legacy'에서 계산기 thinListingOnly=false, 감사 thinOnly=true를 재현했다. 채택가는 양쪽 모두 100000000이지만 단독 상품의 순위 포함 여부가 갈린다."
+    }
+  ],
+  "unverified": [
+    "scripts/crosscheck_adoption.js 원본 명령은 65~78행에서 임시 파일을 생성·삭제하므로 그대로 실행하지 않았다. 파일 입출력을 메모리 전달로 대체하고 양쪽 기준 시각을 고정한 대조에서는 원장 564행과 기존 합성 8사례의 채택가·저매물 판정 불일치가 각각 0건이었다.",
+    "새로 발견한 두 사례는 메모리에서만 재현했다. 파일 변경 금지 조건에 따라 scripts/adoption-cases.json에 추가하지 않았다.",
+    "브라우저 실제 화면 표시와 외부 시트 연동은 실행하지 않았다. 네트워크 금지 조건에 따라 코드로만 확인했다.",
+    "NATURALNESS_UNVERIFIED: 음성·BGM·음량 체감은 청취하지 않았으며 이번 코드 검증에는 해당하지 않는다."
+  ],
+  "external_actions": 0
+}

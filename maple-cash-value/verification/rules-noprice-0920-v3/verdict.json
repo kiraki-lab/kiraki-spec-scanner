@@ -1,0 +1,28 @@
+{
+  "verdict": "REVISE",
+  "findings": [
+    {
+      "severity": "high",
+      "file": "maple-cash-value/scripts/price_audit.py",
+      "claim": "LEGACY_ADOPTION_DIVERGENCE",
+      "evidence": "PRICE_VERIFICATION.md 9절은 legacyMax를 계산기 후보로 유지하되 감사에서는 교차검증으로 인정하지 않는다고 명시한다. app.js:699~703은 이를 채택 후보에 넣지만 price_audit.py:137~138은 제외한다. 기준 시각 2026-09-20 23:59:59 KST, 당일 매물 2억·legacyMax 1억·매물 1건인 재현 행 fresh_legacy에서 계산기는 1억·thinListingOnly=false, 감사는 2억·thinOnly=true를 반환했다. 등급뿐 아니라 채택가와 단독 상품의 순위 포함 여부까지 갈린다. 지정 교차검증의 현재 원장 564행은 불일치 0건이지만 이 사례는 포함하지 않는다."
+    },
+    {
+      "severity": "high",
+      "file": "maple-cash-value/app.js",
+      "claim": "UNCAPTURED_EXCLUSION_DIVERGENCE",
+      "evidence": "PRICE_VERIFICATION.md 3절은 정확일치 미포착을 F·계산 제외로 정의하며, 7절은 미포착 시 기존 가격을 보존하도록 한다. price_audit.py:109~111은 status=uncaptured이면 채택가 없이 F를 반환하지만 app.js:722~744는 양수 가격을 먼저 반환하여 747행의 상태 검사에 도달하지 않는다. 당일 매물 2억·매물 10건·status=uncaptured인 재현 행에서 계산기는 2억·저매물 아님, 감사는 F·채택가 없음으로 갈렸다. 현재 원장에는 보존 가격이 있는 uncaptured 행이 없어 전 행 교차검증에서는 드러나지 않았다."
+    },
+    {
+      "severity": "medium",
+      "file": "maple-cash-value/app.js",
+      "claim": "FRESHNESS_TIMEZONE_DIVERGENCE",
+      "evidence": "app.js:673~677의 new Date는 날짜만 있는 값을 UTC 자정으로 해석하지만 price_audit.py:57~66은 KST 자정으로 해석한다. 기준 시각 2026-09-20 03:00 KST, 당일 매물 2억·recentSale 시세 1억·marketPriceAt='2026-09-06'인 재현 행 date_boundary에서 계산기는 시세를 유효하게 보고 1억을, 감사는 14.125일 경과로 제외하여 2억을 채택했다. apply_market_basis.py의 marketPriceAt 저장 경로에서 사용하는 날짜 형식에 대해 14일 경계가 9시간 갈린다."
+    }
+  ],
+  "unverified": [
+    "브라우저에서 실제 목록과 사유 뱃지의 시각적 표시는 확인하지 않았다. 순위 제외와 표시 분기는 코드로 확인했다.",
+    "NATURALNESS_UNVERIFIED: 음성·BGM·음량 체감은 청취하지 않았다. 이번 검증 대상에는 음성 산출물이 없다."
+  ],
+  "external_actions": 0
+}

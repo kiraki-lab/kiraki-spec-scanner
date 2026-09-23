@@ -1,0 +1,149 @@
+{
+  "version": 1,
+  "updatedAt": "2026-09-23T00:00:00+09:00",
+  "note": "주기 판매 컬렉션의 판매 회차. 상품은 items.json 에서 \"collection\": <id> 로 가리킨다. 다음 회차가 공지되면 scripts/add_collection_run.py 로 회차 하나만 추가한다. 규칙은 PRICE_VERIFICATION.md 10절.",
+  "collections": {
+    "boss": {
+      "name": "메이플스토리 보스 컬렉션",
+      "recurring": true,
+      "runs": [
+        {
+          "startAt": "2025-12-18T10:00:00+09:00",
+          "endAt": "2026-03-18T23:59:00+09:00",
+          "notice": 581,
+          "title": "메이플스토리 보스 컬렉션",
+          "sourceUrl": "https://maplestory.nexon.com/News/CashShop/EndOfSale/581"
+        },
+        {
+          "startAt": "2026-06-18T12:00:00+09:00",
+          "endAt": "2026-09-16T23:59:00+09:00",
+          "notice": 621,
+          "title": "메이플스토리 보스 컬렉션",
+          "sourceUrl": "https://maplestory.nexon.com/News/CashShop/EndOfSale/621"
+        }
+      ],
+      "note": "회차 중간 추가: 591(01-15)·599(02-12) 보스 컬렉션 패키지, 640(08-20) 보스 패키지(벨로나 추가). 구성원은 2026-06-18 회차 공지 이미지로 확인했다."
+    },
+    "illust-hair": {
+      "name": "전 직업 일러스트 컬렉션 헤어 쿠폰",
+      "recurring": true,
+      "runs": [
+        {
+          "startAt": "2025-12-18T10:00:00+09:00",
+          "endAt": "2026-03-18T23:59:00+09:00",
+          "notice": 582,
+          "title": "전 직업 일러스트 컬렉션 헤어 쿠폰",
+          "sourceUrl": "https://maplestory.nexon.com/News/CashShop/EndOfSale/582"
+        },
+        {
+          "startAt": "2026-06-18T12:00:00+09:00",
+          "endAt": "2026-09-16T23:59:00+09:00",
+          "notice": 622,
+          "title": "전 직업 일러스트 컬렉션 헤어 쿠폰",
+          "sourceUrl": "https://maplestory.nexon.com/News/CashShop/EndOfSale/622"
+        }
+      ]
+    },
+    "illust-adventurer": {
+      "name": "전 직업 일러스트 컬렉션 : 모험가",
+      "recurring": true,
+      "runs": [
+        {
+          "startAt": "2025-12-18T10:00:00+09:00",
+          "endAt": "2026-03-18T23:59:00+09:00",
+          "notice": 583,
+          "title": "전 직업 일러스트 컬렉션 : 모험가",
+          "sourceUrl": "https://maplestory.nexon.com/News/CashShop/EndOfSale/583"
+        },
+        {
+          "startAt": "2026-06-18T12:00:00+09:00",
+          "endAt": "2026-09-16T23:59:00+09:00",
+          "notice": 627,
+          "title": "전 직업 일러스트 컬렉션 : 모험가",
+          "sourceUrl": "https://maplestory.nexon.com/News/CashShop/EndOfSale/627"
+        }
+      ]
+    },
+    "illust-cygnus-hero": {
+      "name": "전 직업 일러스트 컬렉션 : 시그너스 & 영웅",
+      "recurring": true,
+      "runs": [
+        {
+          "startAt": "2025-12-18T10:00:00+09:00",
+          "endAt": "2026-03-18T23:59:00+09:00",
+          "notice": 584,
+          "title": "전 직업 일러스트 컬렉션 : 시그너스 & 영웅",
+          "sourceUrl": "https://maplestory.nexon.com/News/CashShop/EndOfSale/584"
+        },
+        {
+          "startAt": "2026-06-18T12:00:00+09:00",
+          "endAt": "2026-09-16T23:59:00+09:00",
+          "notice": 626,
+          "title": "전 직업 일러스트 컬렉션 : 시그너스 & 영웅",
+          "sourceUrl": "https://maplestory.nexon.com/News/CashShop/EndOfSale/626"
+        }
+      ]
+    },
+    "illust-demon-resistance": {
+      "name": "전 직업 일러스트 컬렉션 : 데몬 & 레지스탕스",
+      "recurring": true,
+      "runs": [
+        {
+          "startAt": "2025-12-18T10:00:00+09:00",
+          "endAt": "2026-03-18T23:59:00+09:00",
+          "notice": 585,
+          "title": "전 직업 일러스트 컬렉션 : 데몬 & 레지스탕스",
+          "sourceUrl": "https://maplestory.nexon.com/News/CashShop/EndOfSale/585"
+        },
+        {
+          "startAt": "2026-06-18T12:00:00+09:00",
+          "endAt": "2026-09-16T23:59:00+09:00",
+          "notice": 625,
+          "title": "전 직업 일러스트 컬렉션 : 데몬 & 레지스탕스",
+          "sourceUrl": "https://maplestory.nexon.com/News/CashShop/EndOfSale/625"
+        }
+      ]
+    },
+    "illust-nova-leaf": {
+      "name": "전 직업 일러스트 컬렉션 : 노바 & 레프",
+      "recurring": true,
+      "runs": [
+        {
+          "startAt": "2025-12-18T10:00:00+09:00",
+          "endAt": "2026-03-18T23:59:00+09:00",
+          "notice": 586,
+          "title": "전 직업 일러스트 컬렉션 : 노바 & 레프",
+          "sourceUrl": "https://maplestory.nexon.com/News/CashShop/EndOfSale/586"
+        },
+        {
+          "startAt": "2026-06-18T12:00:00+09:00",
+          "endAt": "2026-09-16T23:59:00+09:00",
+          "notice": 624,
+          "title": "전 직업 일러스트 컬렉션 : 노바 & 레프",
+          "sourceUrl": "https://maplestory.nexon.com/News/CashShop/EndOfSale/624"
+        }
+      ]
+    },
+    "illust-kinesis-zero-anima": {
+      "name": "전 직업 일러스트 컬렉션 : 키네시스 & 제로 & 아니마",
+      "recurring": true,
+      "runs": [
+        {
+          "startAt": "2025-12-18T10:00:00+09:00",
+          "endAt": "2026-03-18T23:59:00+09:00",
+          "notice": 587,
+          "title": "전 직업 일러스트 컬렉션 : 프렌즈 월드 & 초월자",
+          "sourceUrl": "https://maplestory.nexon.com/News/CashShop/EndOfSale/587"
+        },
+        {
+          "startAt": "2026-06-18T12:00:00+09:00",
+          "endAt": "2026-09-16T23:59:00+09:00",
+          "notice": 623,
+          "title": "전 직업 일러스트 컬렉션 : 키네시스&제로&아니마",
+          "sourceUrl": "https://maplestory.nexon.com/News/CashShop/EndOfSale/623"
+        }
+      ],
+      "note": "2025-12-18 회차 이름은 「프렌즈 월드 & 초월자」라 아니마가 들어 있었는지 확인하지 못했다."
+    }
+  }
+}
