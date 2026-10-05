@@ -1,0 +1,43 @@
+{
+  "verdict": "REVISE",
+  "findings": [
+    {
+      "severity": "high",
+      "file": "maple-cash-value/app.js",
+      "claim": "CREDIT_CANDIDATE_VALIDATION_INCOMPLETE",
+      "evidence": "PRICE_VERIFICATION.md:512는 크레딧 후보에서 체결 대기·14일 넘긴 값을 제외한다. app.js:907,920,1074-1075는 시세 상태와 시세 자체의 신선도를 직접 검사하지 않는다. 실제 함수로 기준 시각 2026-10-05T12:00:00+09:00, 매물 5억·매물 10건·갱신일 10-04, 시세 4억·체결일 09-01, 크레딧 가격 10,000을 재현하면 evidenceStale=false로 크레딧 가치 50,000메소가 채택된다. 체결일을 10-04로 바꾸고 marketHistoryStatus=no_sales로 두어도 40,000메소가 채택된다. scripts/test_credit.js:60-68은 가격 판정을 대체한 객체를 사용하므로 이 조합을 검사하지 않는다."
+    },
+    {
+      "severity": "high",
+      "file": "maple-cash-value/scripts/ingest_run.py",
+      "claim": "STOPPED_RUN_MARKED_COMPLETE",
+      "evidence": "ingest_run.py:56-57은 stopped로 시작하는 모든 중단 상태를 허용하고, 107행은 accountComplete와 dailyPriorityComplete를 항상 true로 기록한다. auction_collector.js:129-130에서 검색 실패·결과 불일치로 중단된 회차도 기존 정상 검색이 하나 이상이면 완료로 변환될 수 있다. merge_run.py:143-144는 이 완료 값을 그대로 전달하고 publish_prices.py:55-56의 미완료 차단도 통과한다. 중단 상태와 완료 기록이 갈라진다."
+    },
+    {
+      "severity": "medium",
+      "file": "maple-cash-value/app.js",
+      "claim": "CREDIT_SHOP_PARSE_FAILURE_ABORTS_CALCULATOR",
+      "evidence": "app.js:368-371은 JSON 해석 실패에 기본값을 반환하지 않고, 379-386은 크레딧 가격표를 다른 필수 데이터와 Promise.all로 묶는다. 실제 loadJson·loadData 함수를 추출해 다른 응답은 정상, 크레딧 응답만 JSON 해석 오류로 재현하면 407-409행의 로딩 실패로 이동하고 상품 목록이 빈 배열로 남는다. 모양이 이상한 크레딧 가격표에서도 계산이 유지돼야 한다는 체크리스트 6-1의 요구를 충족하지 못한다."
+    },
+    {
+      "severity": "medium",
+      "file": "maple-cash-value/scripts/auction_collector.js",
+      "claim": "MIDNIGHT_RESUME_CONTRACT_DIVERGENCE",
+      "evidence": "PRICE_VERIFICATION.md:218-220은 한도 소진 시 멈추지 않고 30초마다 카운터 초기화를 확인해 자동 재개한다고 규정한다. auction_collector.js:129는 not_triggered를 포함한 검색 실패 시 즉시 반환하며 초기화 대기 경로가 없다. AUTOMATION.md:37도 자정 뒤 __kr.run(QUEUE)를 다시 호출하도록 안내한다. 정본의 자동 재개와 구현·운영 안내의 수동 재개가 갈라진다."
+    },
+    {
+      "severity": "low",
+      "file": "maple-cash-value/PRICE_VERIFICATION.md",
+      "claim": "MIGRATION_COUNTS_OUTDATED",
+      "evidence": "PRICE_VERIFICATION.md:283-285의 이행 상태는 recentSale 83·legacyMax 32·없음 449, 합계 564행이다. 현재 data/auction-prices.json의 prices[].marketPriceBasis를 직접 집계하면 recentSale 90·legacyMax 31·없음 452, 합계 573행이다."
+    }
+  ],
+  "unverified": [
+    "NATURALNESS_UNVERIFIED: 소리를 듣지 않았으므로 음성·BGM·음량 체감은 확인하지 못했다. 이번 대상에는 음성 산출물이 없다.",
+    "실제 브라우저 화면과 경매장 수집·자정 초기화·원격 게시 동작은 실행하지 않았다. 네트워크 금지에 따라 코드와 로컬 재현만 검토했다.",
+    "공식 공지의 현재 내용과 외부 승인·게시 이력은 확인하지 못했다.",
+    "수집·병합의 Python 단위 검사는 요청대로 실행하지 않고 코드와 검사 사례를 읽어 판정했다.",
+    "새로 발견한 재현 사례는 파일 수정 금지에 따라 회귀 사례 파일에 추가하지 않았다."
+  ],
+  "external_actions": 0
+}

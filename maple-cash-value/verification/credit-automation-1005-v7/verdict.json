@@ -1,0 +1,18 @@
+{
+  "verdict": "REVISE",
+  "findings": [
+    {
+      "severity": "high",
+      "file": "maple-cash-value/app.js",
+      "claim": "MANUAL_LISTING_FRESHNESS_NOT_UPDATED",
+      "evidence": "maple-cash-value/app.js:1831–1841의 upsertLocalPrice는 기존 updatedAt을 보존하고 collectedAt만 갱신한다. 그러나 911줄의 priceFor는 updatedAt을 우선해 신선도를 판정한다. 메모리 재현에서 기준 시각 2026-10-05 12:00 KST, 기존 updatedAt=2026-09-01, 신선한 시세=4억인 상품에 매물가 2억을 수동 입력하자, 새 매물가를 낡은 후보로 제외하고 4억을 채택했다. PRICE_VERIFICATION.md:60–69의 신선한 후보 중 최저가 채택 규칙 및 app.js:1895–1896의 수동 가격 반영 안내와 어긋나며 효율·순위를 왜곡한다."
+    }
+  ],
+  "unverified": [
+    "NATURALNESS_UNVERIFIED: 소리를 듣지 않았으므로 음성·BGM·음량 체감은 확인하지 못했다. 이번 대상은 코드·규칙 문서다.",
+    "실제 브라우저 화면과 로그인된 경매장에서의 수집 동작은 네트워크 금지 조건 때문에 확인하지 못했다.",
+    "test_ingest_run.py와 test_merge_run.py는 지시대로 실행하지 않고 코드로 검토했다.",
+    "발견한 수동 매물 갱신 사례는 파일 수정 금지 조건 때문에 회귀 사례 파일에 추가하지 않았다."
+  ],
+  "external_actions": 0
+}

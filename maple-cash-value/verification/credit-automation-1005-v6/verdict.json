@@ -1,0 +1,18 @@
+{
+  "verdict": "REVISE",
+  "findings": [
+    {
+      "severity": "high",
+      "file": "maple-cash-value/scripts/auction_collector.js",
+      "claim": "UNCHANGED_URL_SEARCH_DROPPED",
+      "evidence": "maple-cash-value/scripts/auction_collector.js:102~111은 URL 변경과 카운터 변경을 모두 요구한다. 실제 search 함수를 메모리에서 재현한 결과, 같은 URL에서 카운터가 7→8로 증가하고 결과 3건이 있어도 not_triggered를 반환했다. 138·156줄은 이 검색을 중단 처리하고, scripts/ingest_run.py:82~83은 해당 결과를 건너뛰어 확보 건수와 허비 횟수 모두에 넣지 않는다. AUTOMATION.md:39의 '검색이 안 눌린 것'이라는 설명과 다르며, 같은 품목 재시도에서도 검색 예산을 소비하면서 진행하지 못할 수 있다."
+    }
+  ],
+  "unverified": [
+    "실제 경매장에서는 같은 품목 재조회·자정 초기화 때 URL이 유지되는지 확인하지 않았다. 네트워크 접근 금지에 따라 수집기의 DOM 조작과 실제 카운터 초기화는 검증하지 않았다.",
+    "scripts/test_ingest_run.py와 scripts/test_merge_run.py는 지시대로 실행하지 않고 코드와 구문을 검토했다.",
+    "scripts/publish_prices.py의 원격 기준본 비교·게시 후 검증은 코드만 검토했다. 외부 호출은 실행하지 않았다.",
+    "NATURALNESS_UNVERIFIED: 소리는 듣지 못하므로 음성·BGM·음량 체감은 확인하지 않았다. 이번 대상에는 음성 산출물이 없다."
+  ],
+  "external_actions": 0
+}
