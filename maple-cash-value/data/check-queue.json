@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-28T11:12:45Z",
+  "updatedAt": "2026-10-05T11:00:00Z",
   "note": "계산기에 아직 없는 품목의 매물·거래 규칙을 확인하는 큐. 매물이 잡히면 공식 캐시가·판매기간을 확인한 뒤 추가한다. 매물 0건·자동완성 없음·반복 미관측만으로 tradable=false를 기록하지 않는다. 관측은 no_listing/unseen으로 남기고 재확인 시점을 정한다. tradable=false는 공식 안내 또는 게임 내 교환 속성의 명시 근거가 있을 때만 기록한다.",
   "items": [
     {
@@ -15,53 +15,53 @@
     {
       "name": "프리미엄 마스터피스",
       "axis": "listing",
-      "status": "listing_confirmed_pending_catalog",
-      "reason": "실제 매물 확인 · 공식 캐시가·판매 규칙 검증 및 상품목록 반영 대기",
-      "checkedAt": "2026-09-28T11:08:29.709Z",
+      "status": "catalog_added",
+      "reason": "2026-10-05 공지 이미지로 캐시가·판매기간 확인, 매물·체결 조사 후 상품 등록. 교환 근거 등급은 items.json exchangeEvidence",
+      "checkedAt": "2026-10-05",
       "resultCount": 1069,
       "listingLowestMeso": 86990000
     },
     {
       "name": "컬러링 프리즘 프로",
       "axis": "listing",
-      "status": "listing_confirmed_pending_catalog",
-      "reason": "실제 매물 확인 · 공식 캐시가·판매 규칙 검증 및 상품목록 반영 대기",
-      "checkedAt": "2026-09-28T11:08:44.138Z",
+      "status": "catalog_added",
+      "reason": "2026-10-05 공지 이미지로 캐시가·판매기간 확인, 매물·체결 조사 후 상품 등록. 교환 근거 등급은 items.json exchangeEvidence",
+      "checkedAt": "2026-10-05",
       "resultCount": 404,
       "listingLowestMeso": 1215555555
     },
     {
       "name": "무기 이펙트 프리즘",
       "axis": "listing",
-      "status": "listing_confirmed_pending_catalog",
-      "reason": "실제 매물 확인 · 공식 캐시가·판매 규칙 검증 및 상품목록 반영 대기",
-      "checkedAt": "2026-09-28T11:08:55.490Z",
+      "status": "catalog_added",
+      "reason": "2026-10-05 공지 이미지로 캐시가·판매기간 확인, 매물·체결 조사 후 상품 등록. 교환 근거 등급은 items.json exchangeEvidence",
+      "checkedAt": "2026-10-05",
       "resultCount": 28,
       "listingLowestMeso": 611111111
     },
     {
       "name": "초이스 헤어 쿠폰",
       "axis": "listing",
-      "status": "listing_confirmed_pending_catalog",
-      "reason": "실제 매물 확인 · 공식 캐시가·판매 규칙 검증 및 상품목록 반영 대기",
-      "checkedAt": "2026-09-28T11:09:20.339Z",
+      "status": "catalog_added",
+      "reason": "2026-10-05 공지 이미지로 캐시가·판매기간 확인, 매물·체결 조사 후 상품 등록. 교환 근거 등급은 items.json exchangeEvidence",
+      "checkedAt": "2026-10-05",
       "resultCount": 14,
       "listingLowestMeso": 214900000
     },
     {
       "name": "초이스 성형 쿠폰",
       "axis": "listing",
-      "status": "listing_confirmed_pending_catalog",
-      "reason": "실제 매물 확인 · 공식 캐시가·판매 규칙 검증 및 상품목록 반영 대기",
-      "checkedAt": "2026-09-28T11:09:28.223Z",
+      "status": "catalog_added",
+      "reason": "2026-10-05 공지 이미지로 캐시가·판매기간 확인, 매물·체결 조사 후 상품 등록. 교환 근거 등급은 items.json exchangeEvidence",
+      "checkedAt": "2026-10-05",
       "resultCount": 2,
       "listingLowestMeso": 149900000
     },
     {
       "name": "프리스타일 쿠폰",
       "axis": "listing",
-      "status": "catalog_added_local",
-      "reason": "공지548 이미지에서 가격·마일리지 불가·넥슨캐시 구매 시 1회 교환 확인. 단품·10개 로컬 반영; 원격 미발행",
+      "status": "catalog_added",
+      "reason": "공지 548: 가격·넥슨캐시 구매 시 1회 교환. 2026-10-05 사이트 반영",
       "sourceUrl": "https://maplestory.nexon.com/News/CashShop/Sale/548",
       "checkedAt": "2026-09-28T11:09:50.153Z",
       "resultCount": 112,
@@ -70,18 +70,18 @@
     {
       "name": "밸런스 믹스 염색 쿠폰",
       "axis": "listing",
-      "status": "listing_confirmed_pending_catalog",
-      "reason": "실제 매물 확인 · 공식 캐시가·판매 규칙 검증 및 상품목록 반영 대기",
-      "checkedAt": "2026-09-28T11:10:22.976Z",
+      "status": "catalog_added",
+      "reason": "2026-10-05 공지 이미지로 캐시가·판매기간 확인, 매물·체결 조사 후 상품 등록. 교환 근거 등급은 items.json exchangeEvidence",
+      "checkedAt": "2026-10-05",
       "resultCount": 15,
       "listingLowestMeso": 1329999999
     },
     {
       "name": "밸런스 믹스 컬러렌즈 쿠폰",
       "axis": "listing",
-      "status": "listing_confirmed_pending_catalog",
-      "reason": "실제 매물 확인 · 공식 캐시가·판매 규칙 검증 및 상품목록 반영 대기",
-      "checkedAt": "2026-09-28T11:10:31.411Z",
+      "status": "catalog_added",
+      "reason": "2026-10-05 공지 이미지로 캐시가·판매기간 확인, 매물·체결 조사 후 상품 등록. 교환 근거 등급은 items.json exchangeEvidence",
+      "checkedAt": "2026-10-05",
       "resultCount": 4,
       "listingLowestMeso": 688888877
     },

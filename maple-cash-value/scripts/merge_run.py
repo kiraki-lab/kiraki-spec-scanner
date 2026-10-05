@@ -167,11 +167,14 @@ def main():
     print(json.dumps(doc['lastSearchRun'], ensure_ascii=False, indent=2))
     if args.apply:
         backup = path.with_name('auction-prices.before-' + run['date'] + '.json')
-        if backup.exists():
-            # 같은 날 두 번째 계정. 첫 계정의 기준본을 덮지 않는다.
-            backup = path.with_name('auction-prices.before-%s-account%s.json' % (run['date'], run['searchAccount']))
-        if backup.exists():
-            raise RuntimeError('Backup exists: inspect before applying twice')
+        # 같은 날 두 번째 계정이나 두 번째 회차. 앞 회차의 기준본을 덮지 않는다.
+        stem = 'auction-prices.before-%s-account%s' % (run['date'], run['searchAccount'])
+        attempt = 1
+        while backup.exists():
+            backup = path.with_name(stem + ('.json' if attempt == 1 else '-%d.json' % attempt))
+            attempt += 1
+            if attempt > 20:
+                raise RuntimeError('Too many baselines for one day: inspect before applying again')
         backup.write_text(json.dumps(original, ensure_ascii=False, indent=2), encoding='utf-8')
         args.collection.with_suffix('.checkpoints.json').write_text(json.dumps(run, ensure_ascii=False, indent=2), encoding='utf-8')
         normalized = {k: v for k, v in run.items() if 'Checkpoint' not in k and k != 'results'}

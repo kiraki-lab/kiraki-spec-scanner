@@ -27,6 +27,9 @@ const MESO_PRECISION = 1000000;
 const REFERENCE_CATEGORY = '마일리지 구매 참고';
 // 이 일수를 넘긴 근거는 판매가 후보에서 뺀다. PRICE_VERIFICATION.md 4절 참고.
 const EVIDENCE_STALE_DAYS = 14;
+// 3개월 체결이 이보다 적거나 매물이 3건 미만이면 '거래 적음'을 붙인다. 순위에서 빼지는 않는다.
+const LOW_SALE_COUNT = 200;
+const LOW_LISTING_COUNT = 3;
 // 이 건수 이하의 매물이 유일한 근거이면 순위를 매기지 않는다.
 const THIN_LISTING_COUNT = 2;
 const DEFAULT_SETTINGS = {
@@ -120,6 +123,10 @@ const state = {
   creditRate: { rate: 0, name: '' },
   // 휴지기(다음 판매를 기다리는 컬렉션) 상품도 순위에 넣어 볼지. 기본은 끔.
   includeResting: false,
+  // 남은 마일리지로 30% 깎아 사는 계산. 2026-09-17 부터 마일리지가 새로 안 쌓이므로 기본은 끈다.
+  useMileage: false,
+  // 교환 근거가 공식 문구·크레딧샵 명시인 상품만 본다(체결 기록뿐인 상품은 숨김).
+  officialOnly: false,
   saleSearch: '',
   saleGroupFilter: '',
   saleTypeFilter: '',
@@ -562,7 +569,51 @@ function saleMetaText(item, info) {
 }
 
 // 순위에 올릴 수 있는 판매 상태인가. 휴지기는 보기에서 켰을 때만 넣는다.
+// 교환 근거 등급. official = 공지에 넥슨캐시 구매분 교환이 적힘, creditShop = 크레딧샵 구매분 교환이 공식,
+// ingame = 게임 안 구매 화면에서 확인, observed = 경매장 체결 기록뿐.
+const EXCHANGE_EVIDENCE_LABEL = Object.freeze({
+  official: '공식 문구', ingame: '게임 내 확인', creditShop: '크레딧샵 명시', observed: '체결 기록'
+});
+
+function exchangeEvidenceLevel(item) {
+  const level = item.exchangeEvidence && item.exchangeEvidence.level;
+  return Object.prototype.hasOwnProperty.call(EXCHANGE_EVIDENCE_LABEL, level) ? level : '';
+}
+
+function passesEvidenceFilter(item) {
+  if (!state.officialOnly) return true;
+  return ['official', 'ingame', 'creditShop'].includes(exchangeEvidenceLevel(item));
+}
+
+// 값은 맞아도 물량이 안 받쳐 주는 상품. 한 번에 여러 개를 팔기 어렵다는 것을 알린다.
+function lowLiquidityNote(price) {
+  if (!price || !(Number(price.meso) > 0)) return '';
+  const sales = Number(price.saleCount || 0);
+  const listings = Number(price.listingCount || 0);
+  const fewSales = sales > 0 && sales < LOW_SALE_COUNT;
+  const fewListings = listings > 0 && listings < LOW_LISTING_COUNT;
+  if (!fewSales && !fewListings) return '';
+  const parts = [];
+  if (sales > 0) parts.push(`최근 3개월 체결 ${nf.format(sales)}건`);
+  if (listings > 0) parts.push(`매물 ${nf.format(listings)}건`);
+  return `${parts.join(', ')}. 한 번에 여러 개를 팔기 어렵습니다.`;
+}
+
+function renderLiquidityPill(item) {
+  if (componentList(item.components).length) return '';
+  const note = lowLiquidityNote(item.listingPrice);
+  return note ? `<span class="market-warning-pill" title="${escapeAttribute(note)}">거래 적음</span>` : '';
+}
+
+function renderEvidencePill(item) {
+  const level = exchangeEvidenceLevel(item);
+  if (!level) return '';
+  const note = item.exchangeEvidence.note ? ` title="${escapeAttribute(item.exchangeEvidence.note)}"` : '';
+  return `<span class="evidence-pill ${level}"${note}>교환 근거 · ${EXCHANGE_EVIDENCE_LABEL[level]}</span>`;
+}
+
 function isRankableSale(item) {
+  if (!passesEvidenceFilter(item)) return false;
   if (item.purchasable !== false) return true;
   return state.includeResting && item.saleStatus === 'resting';
 }
@@ -571,14 +622,20 @@ function loadViewSettings() {
   try {
     const saved = JSON.parse(localStorage.getItem(VIEW_KEY) || '{}');
     state.includeResting = saved.includeResting === true;
+    state.useMileage = saved.useMileage === true;
+    state.officialOnly = saved.officialOnly === true;
   } catch (_) {
     state.includeResting = false;
+    state.useMileage = false;
+    state.officialOnly = false;
   }
 }
 
 function persistViewSettings() {
   try {
-    localStorage.setItem(VIEW_KEY, JSON.stringify({ includeResting: state.includeResting }));
+    localStorage.setItem(VIEW_KEY, JSON.stringify({
+      includeResting: state.includeResting, useMileage: state.useMileage, officialOnly: state.officialOnly
+    }));
   } catch (_) { /* 저장 못 해도 화면은 그대로 동작한다 */ }
 }
 
@@ -957,6 +1014,8 @@ function priceFor(target, index) {
       evidenceStale,
       marketPriceBasis,
       marketCrossCheck,
+      // 시세 탭에 잡힌 최근 3개월 체결 건수(500 이 상한). 하루에 몇 개나 팔리는지 가늠하는 값이다.
+      saleCount: Number(row?.marketHistorySaleCount || 0),
       thinListingOnly,
       listingCount,
       source: pendingMarketHistory
@@ -1064,7 +1123,7 @@ function mileageUsable(now = Date.now()) {
 }
 
 function effectiveMileageType(item) {
-  return mileageUsable() ? item.mileageType || 'none' : 'none';
+  return state.useMileage && mileageUsable() ? item.mileageType || 'none' : 'none';
 }
 
 // 크레딧 1점이 메소로 얼마인지. 크레딧샵에서 살 수 있는 것 중 가장 비싸게 팔리는 상품으로 잰다.
@@ -1084,7 +1143,9 @@ function creditMesoRate(index) {
   return best;
 }
 
-function calculateEfficiency(item, mesoPrice) {
+// includeCredit 가 false 면 크레딧 적립을 수익에 넣지 않는다. 순위와 큰 숫자는 이 값이다.
+// 크레딧은 모아서 크레딧샵 상품 한 개 값이 돼야 쓸 수 있으므로, 포함한 값은 추정치로 따로 보여 준다.
+function calculateEfficiency(item, mesoPrice, includeCredit = false) {
   const cashPrice = Number(item.cashPrice || 0);
   const mileageType = effectiveMileageType(item);
   let nominalCashPaid = cashPrice;
@@ -1106,7 +1167,7 @@ function calculateEfficiency(item, mesoPrice) {
   const totalCost = actualCashCost + mileageUsed * mileageCashValue;
   const netMeso = Number(mesoPrice || 0) * feeKeep;
   // 크레딧으로 산 것도 경매장에 팔아야 메소가 되므로 수수료를 똑같이 뗀다.
-  const totalReturn = netMeso + creditEarned * Number(state.creditRate?.rate || 0) * feeKeep;
+  const totalReturn = netMeso + (includeCredit ? creditEarned * Number(state.creditRate?.rate || 0) * feeKeep : 0);
 
   // 메소 값이 없으면 남는 수익은 크레딧 5% 적립뿐이다. 그 숫자는 '가치가 낮다'가
   // 아니라 '아직 모른다'는 뜻이므로 효율로 내보내지 않는다. price_audit.py 의
@@ -1149,7 +1210,10 @@ function enrichItems() {
       // 초기값은 경매장 근거가 아니다. 효율을 내지 않는다(5절).
       listingEfficiency: listing.source === 'seed' && !componentList(item.components).length
         ? Infinity
-        : calculateEfficiency(item, listing.meso)
+        : calculateEfficiency(item, listing.meso),
+      creditEfficiency: listing.source === 'seed' && !componentList(item.components).length
+        ? Infinity
+        : calculateEfficiency(item, listing.meso, true)
     };
   });
 }
@@ -1157,6 +1221,7 @@ function enrichItems() {
 function filteredRows(sourceRows = enrichItems()) {
   const q = normalizeKey(state.search);
   return sourceRows.filter(item => {
+    if (!item.referenceOnly && !passesEvidenceFilter(item)) return false;
     if (!matchesMajorFilter(item)) return false;
     if (!state.packagesVisible && isPackageItem(item)) return false;
     if (item.referenceOnly) {
@@ -1281,6 +1346,8 @@ function render() {
   syncCategoryOptions(allRows);
   syncPackageToggle();
   syncRestingToggle(allRows.filter(item => !item.referenceOnly && item.saleStatus === 'resting').length);
+  syncViewToggles();
+  renderPremiseLine(latestAuctionUpdatedAtForPremise());
   const credit = state.creditRate || { rate: 0, name: '' };
   $('#credit-rate').textContent = credit.rate > 0 ? `${nf.format(Math.round(credit.rate / 100) * 100)}메소` : '-';
   $('#credit-rate').title = credit.rate > 0
@@ -1416,7 +1483,7 @@ function renderTable(rows, rankByKey = new Map(), rankChanges = new Map()) {
       ? `<span class="item-meta">마일리지 전용 · 판매 불가 · ${REFERENCE_CATEGORY}</span>`
       : `<span class="item-meta">${escapeHtml(item.category || '캐시 아이템')}${
             isReference ? '' : saleMetaText(item, saleInfo)}</span>
-         <span class="item-badges">${renderMileageBadge(item.mileageType)}${turnoverWarning}${marketWarning}${thinWarning}</span>`;
+         <span class="item-badges">${renderEvidencePill(item)}${isReference ? '' : renderLiquidityPill(item)}${renderMileageBadge(item.mileageType)}${turnoverWarning}${marketWarning}${thinWarning}</span>`;
     const cost = isReference
       ? `${nf.format(Number(item.mileagePrice || item.cashPrice || 0))} 마일리지`
       : `${nf.format(Number(item.cashPrice || 0))}원`;
@@ -1427,7 +1494,10 @@ function renderTable(rows, rankByKey = new Map(), rankChanges = new Map()) {
         : renderInlinePriceEditor(item.name, item.listingPrice);
     const result = isReference
       ? `<span class="eff-value">${formatReferenceMeso(item.referenceMesoPerThousand)}</span><span class="price-meta">1,000 마일리지당 절약</span>`
-      : `<span class="eff-value">${formatWon(item.listingEfficiency)}</span><span class="price-meta">${item.listingPrice?.source === 'pending' ? '확인된 구성품 합계' : '1억당 현금'}</span>`;
+      : `<span class="eff-value">${formatWon(item.listingEfficiency)}</span><span class="price-meta">${item.listingPrice?.source === 'pending' ? '확인된 구성품 합계' : '1억당 현금'}</span>${
+          Number.isFinite(item.creditEfficiency) && Number.isFinite(item.listingEfficiency) && item.creditEfficiency < item.listingEfficiency
+            ? `<span class="price-meta credit-meta" title="넥슨캐시 5% 적립 크레딧을 모아 크레딧샵 상품을 사서 판다고 가정한 추정치입니다.">크레딧 포함 ${formatWon(item.creditEfficiency)}</span>`
+            : ''}`;
     const rowClass = [
       isReference ? 'reference-row' : '',
       isPackageItem(item) ? 'package-row' : '',
@@ -1665,8 +1735,9 @@ function renderComponentDetailRow(item, key) {
 }
 
 function renderMileageBadge(rawType) {
-  const type = mileageUsable() ? rawType : 'none';
-  if (!mileageUsable()) return '';
+  // 남은 마일리지 계산을 켰을 때만 보여 준다. 꺼져 있으면 모든 상품을 넥슨캐시 전액 결제로 본다.
+  if (!state.useMileage || !mileageUsable()) return '';
+  const type = rawType;
   if (type === 'full') return '<span class="mileage-pill full" title="마일리지로 전액 결제">마일리지 100%</span>';
   if (type === 'partial') return '<span class="mileage-pill partial" title="마일리지로 30% 할인">마일리지 30%</span>';
   return '<span class="mileage-pill none" title="마일리지 할인 불가">마일리지 불가</span>';
@@ -2186,6 +2257,72 @@ on('#major-filter-reset', 'click', event => {
   state.page = 1;
   render();
 });
+
+function syncViewToggles() {
+  const pairs = [['#mileage-toggle', '#mileage-toggle-state', state.useMileage], ['#official-toggle', '#official-toggle-state', state.officialOnly]];
+  for (const [input, label, value] of pairs) {
+    if ($(input)) $(input).checked = value;
+    if ($(label)) $(label).textContent = value ? 'ON' : 'OFF';
+  }
+  const mileageWrap = $('#mileage-toggle-wrap');
+  if (mileageWrap) mileageWrap.hidden = !mileageUsable();
+}
+
+function latestAuctionUpdatedAtForPremise() {
+  return [state.metadata.auctionUpdatedAt, state.localAuctionRows.length ? state.localDataUpdatedAt : null]
+    .filter(Boolean)
+    .sort((a, b) => (Date.parse(b) || 0) - (Date.parse(a) || 0))[0] || null;
+}
+
+// 숫자가 어떤 전제 위에 서 있는지 한 줄로 밝힌다.
+function renderPremiseLine(updatedAt) {
+  const line = $('#premise-line');
+  if (!line) return;
+  const mileageWon = Math.round(FIXED_MILEAGE_MESO_RATE * Number(state.settings.baseMpRate || 0) / 100000000 * 100) / 100;
+  const parts = [
+    `가격 ${formatDate(updatedAt)} 기준`,
+    `상품권 할인 ${Number(state.settings.discountRate || 0)}%`,
+    `경매장 수수료 ${Number(state.settings.ahFeeRate || 0)}%`,
+    '크레딧 적립은 뺀 값',
+    state.useMileage && mileageUsable() ? `남은 마일리지 30% 사용(1점을 ${mileageWon}원으로 침)` : '',
+    '파는 데 걸리는 시간은 넣지 않음'
+  ].filter(Boolean);
+  line.textContent = parts.join(' · ');
+}
+
+// 화면에 보이는 숫자를 그대로 내보낸다. 영상에 쓴 순위표의 근거를 날짜와 함께 남길 때 쓴다.
+window.kirakiSnapshot = () => {
+  const rows = enrichItems().filter(item => !item.referenceOnly).sort(compareRankRows);
+  const ranks = createRankMap(rows);
+  return {
+    takenAt: nowIso(),
+    auctionUpdatedAt: latestAuctionUpdatedAtForPremise(),
+    settings: { ...state.settings, useMileage: state.useMileage && mileageUsable(), officialOnly: state.officialOnly, includeResting: state.includeResting },
+    credit: { ...state.creditRate, earnRate: state.creditShop.earnRate },
+    rows: rows.filter(item => ranks.has(rowIdentity(item))).map(item => ({
+      rank: ranks.get(rowIdentity(item)), name: item.name, cashPrice: item.cashPrice,
+      adoptedMeso: item.listingPrice.meso, listingMeso: item.listingPrice.listingMeso || null,
+      marketMeso: item.listingPrice.marketHistoryMeso || null, listingCount: item.listingPrice.listingCount || null,
+      saleCount3m: item.listingPrice.saleCount || null, lowLiquidity: Boolean(lowLiquidityNote(item.listingPrice)) && !componentList(item.components).length,
+      gapPercent: Math.round((item.listingPrice.marketGapRate || 0) * 10) / 10,
+      collectedAt: item.listingPrice.collectedAt || null, marketAt: item.listingPrice.marketHistoryCollectedAt || null,
+      wonPerEok: Math.round(item.listingEfficiency * 10) / 10,
+      wonPerEokWithCredit: Math.round(item.creditEfficiency * 10) / 10,
+      exchangeEvidence: exchangeEvidenceLevel(item) || null, saleStatus: item.saleStatus,
+      components: componentList(item.components).length || 0
+    }))
+  };
+};
+
+for (const [selector, key] of [['#mileage-toggle', 'useMileage'], ['#official-toggle', 'officialOnly']]) {
+  on(selector, 'change', event => {
+    state[key] = event.target.checked;
+    persistViewSettings();
+    state.stableRowOrder = [];
+    state.page = 1;
+    render();
+  });
+}
 
 on('#resting-toggle', 'change', event => {
   state.includeResting = event.target.checked;

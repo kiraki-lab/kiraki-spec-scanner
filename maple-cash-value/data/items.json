@@ -1,7 +1,7 @@
 {
   "version": 3,
   "world": "스카니아",
-  "updatedAt": "2026-09-28",
+  "updatedAt": "2026-10-05",
   "settings": {
     "baseMpRate": 6990,
     "discountRate": 6,
@@ -17,8 +17,24 @@
       "seedMesoPrice": 0,
       "mileageType": "none",
       "tradable": true,
-      "availability": {"type": "always", "checkedAt": "2026-09-28", "sourceUrl": "https://maplestory.nexon.com/News/CashShop/Sale/548"},
-      "conditions": {"validityDays": 30, "mileagePercent": 0, "exchangeStatus": "conditional", "maxTrades": 1, "exchangeCondition": "넥슨캐시로 구매 시 1회 교환 가능"}
+      "availability": {
+        "type": "always",
+        "checkedAt": "2026-09-28",
+        "sourceUrl": "https://maplestory.nexon.com/News/CashShop/Sale/548"
+      },
+      "conditions": {
+        "validityDays": 30,
+        "mileagePercent": 0,
+        "exchangeStatus": "conditional",
+        "maxTrades": 1,
+        "exchangeCondition": "넥슨캐시로 구매 시 1회 교환 가능"
+      },
+      "exchangeEvidence": {
+        "level": "official",
+        "note": "공지 548 이미지: 넥슨캐시로 구매 시 1회 교환 가능",
+        "checkedAt": "2026-10-05",
+        "sourceUrl": "https://maplestory.nexon.com/News/CashShop/Sale/548"
+      }
     },
     {
       "id": "cashshop-freestyle-ten",
@@ -28,9 +44,31 @@
       "seedMesoPrice": 0,
       "mileageType": "none",
       "tradable": true,
-      "availability": {"type": "always", "checkedAt": "2026-09-28", "sourceUrl": "https://maplestory.nexon.com/News/CashShop/Sale/548"},
-      "conditions": {"validityDays": 30, "mileagePercent": 0, "exchangeStatus": "conditional", "maxTrades": 1, "exchangeCondition": "넥슨캐시로 구매한 구성 쿠폰 각 1회 교환 가능"},
-      "components": [{"name": "프리스타일 쿠폰", "quantity": 10, "seedMesoPrice": 0}]
+      "availability": {
+        "type": "always",
+        "checkedAt": "2026-09-28",
+        "sourceUrl": "https://maplestory.nexon.com/News/CashShop/Sale/548"
+      },
+      "conditions": {
+        "validityDays": 30,
+        "mileagePercent": 0,
+        "exchangeStatus": "conditional",
+        "maxTrades": 1,
+        "exchangeCondition": "넥슨캐시로 구매한 구성 쿠폰 각 1회 교환 가능"
+      },
+      "components": [
+        {
+          "name": "프리스타일 쿠폰",
+          "quantity": 10,
+          "seedMesoPrice": 0
+        }
+      ],
+      "exchangeEvidence": {
+        "level": "official",
+        "note": "공지 548 이미지: 넥슨캐시로 구매 시 1회 교환 가능",
+        "checkedAt": "2026-10-05",
+        "sourceUrl": "https://maplestory.nexon.com/News/CashShop/Sale/548"
+      }
     },
     {
       "id": 1,
@@ -38,7 +76,13 @@
       "category": "기본",
       "cashPrice": 5900,
       "seedMesoPrice": 240000000,
-      "mileageType": "partial"
+      "mileageType": "partial",
+      "exchangeEvidence": {
+        "level": "creditShop",
+        "note": "크레딧샵에서 산 것은 사용 전 1회 교환 가능(업데이트 813). 넥슨캐시 구매분은 공식 품목별 문구 없이 경매장 체결 기록으로 확인. 8월부터 매 조사에서 체결 확인",
+        "checkedAt": "2026-10-05",
+        "sourceUrl": "https://maplestory.nexon.com/news/update/813"
+      }
     },
     {
       "id": 7,
@@ -52,6 +96,12 @@
         "checkedAt": "2026-08-23",
         "source": "8월 20일 로얄스타일 & 마스터피스 (공지 641)",
         "sourceUrl": "https://maplestory.nexon.com/News/CashShop"
+      },
+      "exchangeEvidence": {
+        "level": "creditShop",
+        "note": "크레딧샵에서 산 것은 사용 전 1회 교환 가능(업데이트 813). 넥슨캐시 구매분은 공식 품목별 문구 없이 경매장 체결 기록으로 확인. 8월부터 매 조사에서 체결 확인",
+        "checkedAt": "2026-10-05",
+        "sourceUrl": "https://maplestory.nexon.com/news/update/813"
       }
     },
     {
@@ -66,6 +116,12 @@
         "checkedAt": "2026-08-23",
         "source": "8월 20일 프리미엄 헤어 & 성형 쿠폰 (공지 639)",
         "sourceUrl": "https://maplestory.nexon.com/News/CashShop"
+      },
+      "exchangeEvidence": {
+        "level": "creditShop",
+        "note": "크레딧샵에서 산 것은 사용 전 1회 교환 가능(업데이트 813). 넥슨캐시 구매분은 공식 품목별 문구 없이 경매장 체결 기록으로 확인. 8월부터 매 조사에서 체결 확인",
+        "checkedAt": "2026-10-05",
+        "sourceUrl": "https://maplestory.nexon.com/news/update/813"
       }
     },
     {
@@ -80,6 +136,12 @@
         "checkedAt": "2026-08-23",
         "source": "8월 20일 프리미엄 헤어 & 성형 쿠폰 (공지 639)",
         "sourceUrl": "https://maplestory.nexon.com/News/CashShop"
+      },
+      "exchangeEvidence": {
+        "level": "creditShop",
+        "note": "크레딧샵에서 산 것은 사용 전 1회 교환 가능(업데이트 813). 넥슨캐시 구매분은 공식 품목별 문구 없이 경매장 체결 기록으로 확인. 8월부터 매 조사에서 체결 확인",
+        "checkedAt": "2026-10-05",
+        "sourceUrl": "https://maplestory.nexon.com/news/update/813"
       }
     },
     {
@@ -94,6 +156,12 @@
         "checkedAt": "2026-08-23",
         "source": "6월 18일 위습의 원더베리 & 루나 크리스탈 (공지 630)",
         "sourceUrl": "https://maplestory.nexon.com/News/CashShop"
+      },
+      "exchangeEvidence": {
+        "level": "creditShop",
+        "note": "크레딧샵에서 산 것은 사용 전 1회 교환 가능(업데이트 813). 넥슨캐시 구매분은 공식 품목별 문구 없이 경매장 체결 기록으로 확인. 8월부터 매 조사에서 체결 확인",
+        "checkedAt": "2026-10-05",
+        "sourceUrl": "https://maplestory.nexon.com/news/update/813"
       }
     },
     {
@@ -108,6 +176,12 @@
         "checkedAt": "2026-08-23",
         "source": "3월 19일 추가옵션, 잠재능력 전승 스크롤",
         "sourceUrl": "https://maplestory.nexon.com/News/CashShop"
+      },
+      "exchangeEvidence": {
+        "level": "observed",
+        "note": "공식 품목별 문구 없음. 경매장 체결 기록으로 확인 — 매 조사에서 최근 체결 확인(3개월 체결 200건 이상)",
+        "checkedAt": "2026-10-05",
+        "sourceUrl": "https://gi.maplestory.nexon.com/Guide/System/CashShop"
       }
     },
     {
@@ -138,6 +212,12 @@
         "checkedAt": "2026-08-23",
         "source": "6월 18일 위습의 원더베리 & 루나 크리스탈 (공지 630)",
         "sourceUrl": "https://maplestory.nexon.com/News/CashShop"
+      },
+      "exchangeEvidence": {
+        "level": "creditShop",
+        "note": "크레딧샵에서 산 것은 사용 전 1회 교환 가능(업데이트 813). 넥슨캐시 구매분은 공식 품목별 문구 없이 경매장 체결 기록으로 확인. 8월부터 매 조사에서 체결 확인",
+        "checkedAt": "2026-10-05",
+        "sourceUrl": "https://maplestory.nexon.com/news/update/813"
       }
     },
     {
@@ -159,6 +239,12 @@
         "checkedAt": "2026-08-23",
         "source": "6월 18일 위습의 원더베리 & 루나 크리스탈 (공지 630)",
         "sourceUrl": "https://maplestory.nexon.com/News/CashShop"
+      },
+      "exchangeEvidence": {
+        "level": "creditShop",
+        "note": "크레딧샵에서 산 것은 사용 전 1회 교환 가능(업데이트 813). 넥슨캐시 구매분은 공식 품목별 문구 없이 경매장 체결 기록으로 확인. 8월부터 매 조사에서 체결 확인",
+        "checkedAt": "2026-10-05",
+        "sourceUrl": "https://maplestory.nexon.com/news/update/813"
       }
     },
     {
@@ -180,6 +266,12 @@
           "endAt": "2026-09-16T23:59:00+09:00",
           "note": "06-18~09-16 판매 후 09-17 재판매"
         }
+      },
+      "exchangeEvidence": {
+        "level": "observed",
+        "note": "공식 품목별 문구 없음. 경매장 체결 기록으로 확인 — 매 조사에서 최근 체결 확인(3개월 체결 200건 이상)",
+        "checkedAt": "2026-10-05",
+        "sourceUrl": "https://gi.maplestory.nexon.com/Guide/System/CashShop"
       }
     },
     {
@@ -2952,6 +3044,12 @@
         "checkedAt": "2026-08-23",
         "source": "1월 15일 성별 변경 쿠폰",
         "sourceUrl": "https://maplestory.nexon.com/News/CashShop"
+      },
+      "exchangeEvidence": {
+        "level": "observed",
+        "note": "공식 품목별 문구 없음. 경매장 체결 기록으로 확인 — 매 조사에서 최근 체결 확인(3개월 체결 200건 이상)",
+        "checkedAt": "2026-10-05",
+        "sourceUrl": "https://gi.maplestory.nexon.com/Guide/System/CashShop"
       }
     },
     {
@@ -2969,6 +3067,12 @@
         "checkedAt": "2026-08-23",
         "source": "3월 19일 추가옵션, 잠재능력 전승 스크롤",
         "sourceUrl": "https://maplestory.nexon.com/News/CashShop"
+      },
+      "exchangeEvidence": {
+        "level": "observed",
+        "note": "공식 품목별 문구 없음. 경매장 체결 기록으로 확인 — 매 조사에서 최근 체결 확인(3개월 체결 200건 이상)",
+        "checkedAt": "2026-10-05",
+        "sourceUrl": "https://gi.maplestory.nexon.com/Guide/System/CashShop"
       }
     },
     {
@@ -2986,6 +3090,12 @@
         "checkedAt": "2026-08-23",
         "source": "6월 19일 커스텀 믹스 염색&컬러렌즈 쿠폰",
         "sourceUrl": "https://maplestory.nexon.com/News/CashShop"
+      },
+      "exchangeEvidence": {
+        "level": "creditShop",
+        "note": "크레딧샵에서 산 것은 사용 전 1회 교환 가능(업데이트 813). 넥슨캐시 구매분은 공식 품목별 문구 없이 경매장 체결 기록으로 확인. 8월부터 매 조사에서 체결 확인",
+        "checkedAt": "2026-10-05",
+        "sourceUrl": "https://maplestory.nexon.com/news/update/813"
       }
     },
     {
@@ -3001,6 +3111,12 @@
         "checkedAt": "2026-08-23",
         "source": "6월 19일 커스텀 믹스 염색&컬러렌즈 쿠폰",
         "sourceUrl": "https://maplestory.nexon.com/News/CashShop"
+      },
+      "exchangeEvidence": {
+        "level": "creditShop",
+        "note": "크레딧샵에서 산 것은 사용 전 1회 교환 가능(업데이트 813). 넥슨캐시 구매분은 공식 품목별 문구 없이 경매장 체결 기록으로 확인. 8월부터 매 조사에서 체결 확인",
+        "checkedAt": "2026-10-05",
+        "sourceUrl": "https://maplestory.nexon.com/news/update/813"
       }
     },
     {
@@ -3010,7 +3126,13 @@
       "cashPrice": 5900,
       "seedMesoPrice": 230000000,
       "aliases": [],
-      "mileageType": "partial"
+      "mileageType": "partial",
+      "exchangeEvidence": {
+        "level": "observed",
+        "note": "공식 품목별 문구 없음. 경매장 체결 기록으로 확인 — 매 조사에서 최근 체결 확인(3개월 체결 200건 이상)",
+        "checkedAt": "2026-10-05",
+        "sourceUrl": "https://gi.maplestory.nexon.com/Guide/System/CashShop"
+      }
     },
     {
       "id": 684,
@@ -3025,6 +3147,12 @@
         "checkedAt": "2026-08-23",
         "source": "4월 18일 마네킹&헤어룸/성형룸 슬롯 확장권",
         "sourceUrl": "https://maplestory.nexon.com/News/CashShop"
+      },
+      "exchangeEvidence": {
+        "level": "observed",
+        "note": "공식 품목별 문구 없음. 경매장 체결 기록으로 확인 — 매 조사에서 최근 체결 확인(3개월 체결 200건 이상)",
+        "checkedAt": "2026-10-05",
+        "sourceUrl": "https://gi.maplestory.nexon.com/Guide/System/CashShop"
       }
     },
     {
@@ -3034,7 +3162,13 @@
       "cashPrice": 5900,
       "seedMesoPrice": 258000000,
       "aliases": [],
-      "mileageType": "none"
+      "mileageType": "none",
+      "exchangeEvidence": {
+        "level": "observed",
+        "note": "공식 품목별 문구 없음. 경매장 체결 기록으로 확인 — 매 조사에서 최근 체결 확인(3개월 체결 200건 이상)",
+        "checkedAt": "2026-10-05",
+        "sourceUrl": "https://gi.maplestory.nexon.com/Guide/System/CashShop"
+      }
     },
     {
       "id": "cashshop-634-best-premium-hair",
@@ -3182,6 +3316,12 @@
         "exchangeCondition": "사용 전 1회에 한해 교환 가능",
         "validityDays": 7,
         "note": "획득한 교환권도 1회 교환 가능. 교환권을 사용해 얻은 최종 아이템은 교환 불가·영구"
+      },
+      "exchangeEvidence": {
+        "level": "observed",
+        "note": "공식 품목별 문구 없음. 경매장 체결 기록으로 확인 — 매 조사에서 최근 체결 확인(3개월 체결 200건 이상)",
+        "checkedAt": "2026-10-05",
+        "sourceUrl": "https://gi.maplestory.nexon.com/Guide/System/CashShop"
       }
     },
     {
@@ -3214,7 +3354,187 @@
           "quantity": 10,
           "seedMesoPrice": 0
         }
-      ]
+      ],
+      "exchangeEvidence": {
+        "level": "observed",
+        "note": "공식 품목별 문구 없음. 경매장 체결 기록으로 확인 — 매 조사에서 최근 체결 확인(3개월 체결 200건 이상)",
+        "checkedAt": "2026-10-05",
+        "sourceUrl": "https://gi.maplestory.nexon.com/Guide/System/CashShop"
+      }
+    },
+    {
+      "id": 688,
+      "name": "프리미엄 마스터피스",
+      "category": "기본",
+      "cashPrice": 1900,
+      "seedMesoPrice": 0,
+      "mileageType": "none",
+      "availability": {
+        "type": "always",
+        "checkedAt": "2026-10-05",
+        "source": "9월 17일 로얄스타일 & 마스터피스 (공지 645)",
+        "sourceUrl": "https://maplestory.nexon.com/News/CashShop/Sale/645"
+      },
+      "conditions": {
+        "mileageNote": "마일리지 사용 조건 미확인"
+      },
+      "exchangeEvidence": {
+        "level": "creditShop",
+        "note": "크레딧샵에서 산 것은 사용 전 1회 교환 가능(업데이트 813). 넥슨캐시 구매분은 공식 품목별 문구 없이 경매장 체결 기록으로 확인. 3개월 체결 500건 이상(10-05 기준 500건이 사흘치)",
+        "checkedAt": "2026-10-05",
+        "sourceUrl": "https://maplestory.nexon.com/news/update/813"
+      }
+    },
+    {
+      "id": 689,
+      "name": "컬러링 프리즘 프로",
+      "category": "기본",
+      "cashPrice": 25000,
+      "seedMesoPrice": 0,
+      "mileageType": "partial",
+      "availability": {
+        "type": "always",
+        "checkedAt": "2026-10-05",
+        "source": "7월 23일 컬러링 프리즘 프로 & 무기 이펙트 프리즘 (공지 637)",
+        "sourceUrl": "https://maplestory.nexon.com/News/CashShop/Sale/637"
+      },
+      "conditions": {
+        "mileagePercent": 30
+      },
+      "exchangeEvidence": {
+        "level": "creditShop",
+        "note": "크레딧샵에서 산 것은 사용 전 1회 교환 가능(업데이트 813). 넥슨캐시 구매분은 공식 품목별 문구 없이 경매장 체결 기록으로 확인. 3개월 체결 500건 이상(10-05 기준 500건이 사흘치)",
+        "checkedAt": "2026-10-05",
+        "sourceUrl": "https://maplestory.nexon.com/news/update/813"
+      }
+    },
+    {
+      "id": 690,
+      "name": "무기 이펙트 프리즘",
+      "category": "기본",
+      "cashPrice": 15000,
+      "seedMesoPrice": 0,
+      "mileageType": "partial",
+      "availability": {
+        "type": "always",
+        "checkedAt": "2026-10-05",
+        "source": "7월 23일 컬러링 프리즘 프로 & 무기 이펙트 프리즘 (공지 637)",
+        "sourceUrl": "https://maplestory.nexon.com/News/CashShop/Sale/637"
+      },
+      "conditions": {
+        "mileagePercent": 30
+      },
+      "exchangeEvidence": {
+        "level": "creditShop",
+        "note": "크레딧샵에서 산 것은 사용 전 1회 교환 가능(업데이트 813). 넥슨캐시 구매분은 공식 품목별 문구 없이 경매장 체결 기록으로 확인. 크레딧샵 시작 전인 2026-09-10 체결 확인",
+        "checkedAt": "2026-10-05",
+        "sourceUrl": "https://maplestory.nexon.com/news/update/813",
+        "oldestSaleSeen": "2026-09-10"
+      }
+    },
+    {
+      "id": 691,
+      "name": "초이스 헤어 쿠폰",
+      "category": "쿠폰",
+      "cashPrice": 3500,
+      "seedMesoPrice": 0,
+      "mileageType": "partial",
+      "availability": {
+        "type": "always",
+        "checkedAt": "2026-10-05",
+        "source": "2월 12일 초이스 헤어 & 성형 쿠폰 (공지 596)",
+        "sourceUrl": "https://maplestory.nexon.com/News/CashShop/Sale/596"
+      },
+      "conditions": {
+        "validityDays": 14,
+        "mileagePercent": 30
+      },
+      "exchangeEvidence": {
+        "level": "observed",
+        "note": "공식 품목별 문구 없음. 경매장 체결 기록으로 확인 — 3개월 107건(2026-07-11 ~ 2026-10-04). 크레딧샵에 없는 상품이고 14일 이내 사용 쿠폰이라 10월 체결분은 9-17 개편 뒤 캐시샵 구매분으로 본다(유효기간이 구매일 기준이라는 전제)",
+        "checkedAt": "2026-10-05",
+        "sourceUrl": "https://gi.maplestory.nexon.com/Guide/System/CashShop",
+        "saleCount3m": 107,
+        "oldestSaleSeen": "2026-07-11"
+      }
+    },
+    {
+      "id": 692,
+      "name": "초이스 성형 쿠폰",
+      "category": "쿠폰",
+      "cashPrice": 2500,
+      "seedMesoPrice": 0,
+      "mileageType": "partial",
+      "availability": {
+        "type": "always",
+        "checkedAt": "2026-10-05",
+        "source": "2월 12일 초이스 헤어 & 성형 쿠폰 (공지 596)",
+        "sourceUrl": "https://maplestory.nexon.com/News/CashShop/Sale/596"
+      },
+      "conditions": {
+        "validityDays": 14,
+        "mileagePercent": 30
+      },
+      "exchangeEvidence": {
+        "level": "observed",
+        "note": "공식 품목별 문구 없음. 경매장 체결 기록으로 확인 — 3개월 145건(2026-07-08 ~ 2026-10-05). 크레딧샵에 없는 상품이고 14일 이내 사용 쿠폰이라 10월 체결분은 9-17 개편 뒤 캐시샵 구매분으로 본다(유효기간이 구매일 기준이라는 전제)",
+        "checkedAt": "2026-10-05",
+        "sourceUrl": "https://gi.maplestory.nexon.com/Guide/System/CashShop",
+        "saleCount3m": 145,
+        "oldestSaleSeen": "2026-07-08"
+      }
+    },
+    {
+      "id": 693,
+      "name": "밸런스 믹스 염색 쿠폰",
+      "category": "쿠폰",
+      "cashPrice": 24000,
+      "seedMesoPrice": 0,
+      "mileageType": "partial",
+      "availability": {
+        "type": "always",
+        "checkedAt": "2026-10-05",
+        "source": "6월 19일 밸런스 믹스 염색&컬러렌즈 쿠폰 (공지 542)",
+        "sourceUrl": "https://maplestory.nexon.com/News/CashShop/Sale/542"
+      },
+      "conditions": {
+        "validityDays": 7,
+        "mileagePercent": 30
+      },
+      "exchangeEvidence": {
+        "level": "creditShop",
+        "note": "크레딧샵에서 산 것은 사용 전 1회 교환 가능(업데이트 813). 넥슨캐시 구매분은 공식 품목별 문구 없이 경매장 체결 기록으로 확인. 3개월 409건, 크레딧샵 시작 전인 2026-09-09 체결 확인",
+        "checkedAt": "2026-10-05",
+        "sourceUrl": "https://maplestory.nexon.com/news/update/813",
+        "saleCount3m": 409,
+        "oldestSaleSeen": "2026-09-09"
+      }
+    },
+    {
+      "id": 694,
+      "name": "밸런스 믹스 컬러렌즈 쿠폰",
+      "category": "쿠폰",
+      "cashPrice": 12000,
+      "seedMesoPrice": 0,
+      "mileageType": "partial",
+      "availability": {
+        "type": "always",
+        "checkedAt": "2026-10-05",
+        "source": "6월 19일 밸런스 믹스 염색&컬러렌즈 쿠폰 (공지 542)",
+        "sourceUrl": "https://maplestory.nexon.com/News/CashShop/Sale/542"
+      },
+      "conditions": {
+        "validityDays": 7,
+        "mileagePercent": 30
+      },
+      "exchangeEvidence": {
+        "level": "creditShop",
+        "note": "크레딧샵에서 산 것은 사용 전 1회 교환 가능(업데이트 813). 넥슨캐시 구매분은 공식 품목별 문구 없이 경매장 체결 기록으로 확인. 3개월 262건, 크레딧샵 시작 전인 2026-07-22 체결 확인",
+        "checkedAt": "2026-10-05",
+        "sourceUrl": "https://maplestory.nexon.com/news/update/813",
+        "saleCount3m": 262,
+        "oldestSaleSeen": "2026-07-22"
+      }
     }
   ],
   "availabilityCheckedAt": "2026-09-21",

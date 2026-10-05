@@ -1,0 +1,74 @@
+{
+    "status":  "VERIFIED",
+    "verifier":  "codex-exec",
+    "thread_id":  "01a10bc6-384e-7970-8ad8-8e7ffd231003",
+    "task":  "video-ready-1005",
+    "project":  "maple-cash-value",
+    "effort":  "medium",
+    "model":  "gpt-6.1-sol",
+    "checklist":  "kiraki-youtube-team\\references\\verify-checklists\\maple-cash-rules.md",
+    "started_at":  "2026-10-05T20:15:02.1518130+09:00",
+    "ended_at":  "2026-10-05T20:20:11.1754413+09:00",
+    "exit_code":  0,
+    "verdict":  "PASS",
+    "findings":  0,
+    "unverified":  [
+                       "NATURALNESS_UNVERIFIED: 소리를 듣지 않았으므로 음성·BGM·음량 체감은 확인하지 못했다. 이번 대상은 코드와 데이터다.",
+                       "네트워크 금지에 따라 공식 공지 원문의 사실성은 재확인하지 않았다. 상품 정보는 PRICE_VERIFICATION.md 12절과 대조했다.",
+                       "실제 브라우저 화면과 스냅숏 파일 생성은 실행하지 않았다. 관련 함수와 검증 조건을 코드로 확인했다.",
+                       "수집·병합의 Python 단위검사는 지시대로 실행하지 않고 구현과 테스트 사례를 직접 읽어 판정했다."
+                   ],
+    "verdict_path":  "maple-cash-value\\verification\\video-ready-1005-v2\\verdict.json",
+    "verdict_sha256":  "839d63c4e30cb64e77b5228610c67f7d5513cecd2f247ead8921850d8f29fedf",
+    "inputs":  [
+                   {
+                       "path":  "maple-cash-value\\app.js",
+                       "sha256":  "b75cf633de0b939dd5aef6773d67bcd2ebc40c2c3a8dfee04f71f8641cfdb88f"
+                   },
+                   {
+                       "path":  "maple-cash-value\\index.html",
+                       "sha256":  "cfeee0b80bbeedcbc6b94c11c8376003b0348057defa54bf2c03d1df7d247cce"
+                   },
+                   {
+                       "path":  "maple-cash-value\\data\\items.json",
+                       "sha256":  "3bf28f783a5d57e4dec3ffa65b833360d71b28a8f1d901fe3d60a141f5ba57ed"
+                   },
+                   {
+                       "path":  "maple-cash-value\\data\\credit-shop.json",
+                       "sha256":  "15f19533521d195b5f157cd0f29c593e3beef105bda2964e2be6942e326b900d"
+                   },
+                   {
+                       "path":  "maple-cash-value\\data\\check-queue.json",
+                       "sha256":  "3d7075e772c5902ddacfcf95bf397cddecbd154bb363887ac6e62e263fc35401"
+                   },
+                   {
+                       "path":  "maple-cash-value\\scripts\\test_credit.js",
+                       "sha256":  "03bdb244430190f195e80db7fe3dcac63a1250960e1fa7b280911fe721eeecb8"
+                   },
+                   {
+                       "path":  "maple-cash-value\\scripts\\make_snapshot.py",
+                       "sha256":  "36207c06e039dd992fd9daa4e4bccbe88b8ac012d0af90c9ff8fabb3192449bb"
+                   },
+                   {
+                       "path":  "maple-cash-value\\scripts\\ingest_run.py",
+                       "sha256":  "cfe25b1b2f42a8df8c33e443618a0475f2d54ddec06d9df9cfa4ca1762ae5e52"
+                   },
+                   {
+                       "path":  "maple-cash-value\\scripts\\merge_run.py",
+                       "sha256":  "f096607a175c1d970f9967e13e0a24d11d6cd131ae92dc809d18c83293929e6a"
+                   },
+                   {
+                       "path":  "maple-cash-value\\scripts\\test_merge_run.py",
+                       "sha256":  "d73f6f5fbc75972da780931d226633bdeeb8402cee8e5dcb75c7573905ecbc37"
+                   },
+                   {
+                       "path":  "maple-cash-value\\scripts\\test_ingest_run.py",
+                       "sha256":  "87992d5a605a40ef497db7e52ed586969e8a46da8fe4e147b95d17b4da14f6ef"
+                   },
+                   {
+                       "path":  "maple-cash-value\\AUTOMATION.md",
+                       "sha256":  "45d9bd0f43f040f6b6fc0db025a682fd6411121dcc4e7023ab12f6cd5ff0e25d"
+                   }
+               ],
+    "out_dir":  "maple-cash-value\\verification\\video-ready-1005-v2"
+}
