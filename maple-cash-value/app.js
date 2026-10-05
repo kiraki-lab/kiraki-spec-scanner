@@ -3,7 +3,8 @@ const DATA_PATHS = {
   auction: './data/auction-prices.json',
   notices: './data/cashshop-notices.json',
   saleItems: './data/cashshop-sale-items.json',
-  collections: './data/collections.json'
+  collections: './data/collections.json',
+  creditShop: './data/credit-shop.json'
 };
 
 const SHEET_MARKET_SOURCE = Object.freeze({
@@ -17,7 +18,10 @@ const SETTINGS_KEY = 'maple-cash-value-settings-v2';
 const LOCAL_DATA_KEY = 'maple-cash-value-local-data-v1';
 // 화면 보기 선택(휴지기 포함 여부). 계산 설정과 섞지 않는다 — 설정은 내보내기에 실린다.
 const VIEW_KEY = 'maple-cash-value-view-v1';
+// 남은 마일리지를 쓸 때 치는 값. 새로 쌓이는 것은 메이플크레딧이라 이 값을 쓰지 않는다.
 const FIXED_MILEAGE_MESO_RATE = 10000;
+// 2026-09-17 부터 넥슨캐시 구매액의 5%가 메이플크레딧으로 쌓인다. 값은 credit-shop.json 이 덮어쓴다.
+const DEFAULT_CREDIT_SHOP = Object.freeze({ earnRate: .05, minCashPrice: 10, mileageEndsAt: '2026-11-19T00:00:00+09:00', items: [] });
 const MESO_INPUT_UNIT = 100000000;
 const MESO_PRECISION = 1000000;
 const REFERENCE_CATEGORY = '마일리지 구매 참고';
@@ -111,6 +115,9 @@ const state = {
   packagesVisible: true,
   // 주기 판매 컬렉션. data/collections.json. 상품은 collection id 로 가리킨다.
   collections: {},
+  // 메이플크레딧 적립 규칙과 크레딧샵 가격표. data/credit-shop.json.
+  creditShop: { earnRate: .05, minCashPrice: 10, mileageEndsAt: '2026-11-19T00:00:00+09:00', items: [] },
+  creditRate: { rate: 0, name: '' },
   // 휴지기(다음 판매를 기다리는 컬렉션) 상품도 순위에 넣어 볼지. 기본은 끔.
   includeResting: false,
   saleSearch: '',
@@ -369,13 +376,16 @@ async function loadData() {
   loadViewSettings();
   syncInputs();
   try {
-    const [itemsDoc, auctionDoc, noticeDoc, saleDoc, collectionsDoc] = await Promise.all([
+    const [itemsDoc, auctionDoc, noticeDoc, saleDoc, collectionsDoc, creditShopDoc] = await Promise.all([
       loadJson(DATA_PATHS.items, { items: [], settings: DEFAULT_SETTINGS }),
       loadJson(DATA_PATHS.auction, { prices: [], skipped: [] }),
       loadJson(DATA_PATHS.notices, { notices: [] }),
       loadJson(DATA_PATHS.saleItems, { sales: [] }),
-      loadJson(DATA_PATHS.collections, { collections: {} })
+      loadJson(DATA_PATHS.collections, { collections: {} }),
+      // 가격표가 없거나 깨져 있어도 계산기는 떠야 한다. 그때는 적립 가치를 0 으로 본다.
+      loadJson(DATA_PATHS.creditShop, DEFAULT_CREDIT_SHOP).catch(() => DEFAULT_CREDIT_SHOP)
     ]);
+    state.creditShop = normalizeCreditShop(creditShopDoc);
 
     const loadedCollections = collectionsDoc && collectionsDoc.collections;
     state.collections = loadedCollections && typeof loadedCollections === 'object'
@@ -527,14 +537,14 @@ function salePill(item, info) {
   const status = item.saleStatus;
   if (status === 'resting') {
     const last = info.lastEnd ? `마지막 판매 ${formatDate(info.lastEnd)} 종료. ` : '';
-    return `<span class="source-pill seed" title="${escapeHtml(last)}주기 판매 컬렉션입니다. 다음 회차가 공지되면 자동으로 순위에 돌아옵니다.">휴지기</span>`;
+    return `<span class="source-pill seed" title="${escapeHtml(last)}다시 판매하면 순위에 돌아옵니다.">재판매 대기</span>`;
   }
   if (status === 'upcoming') {
     const next = info.nextStart ? `${formatDate(info.nextStart)} 판매 시작 예정. ` : '';
     return `<span class="source-pill seed" title="${escapeHtml(next)}시작 전이라 아직 살 수 없습니다.">판매 예정</span>`;
   }
   if (status === 'unknown') {
-    return '<span class="source-pill seed" title="가리키는 판매 컬렉션을 찾지 못했습니다. collections.json 을 확인해 주세요.">기간 미확인</span>';
+    return '<span class="source-pill seed" title="판매 기간을 확인하지 못했습니다.">기간 미확인</span>';
   }
   return '<span class="source-pill seed" title="캐시샵 판매 기간이 끝나 구매할 수 없습니다.">판매 종료</span>';
 }
@@ -542,7 +552,7 @@ function salePill(item, info) {
 function saleMetaText(item, info) {
   const status = item.saleStatus;
   if (status === 'resting') {
-    return info.lastEnd ? ` · ${escapeHtml(formatDate(info.lastEnd))} 판매 종료 · 다음 회차 대기` : ' · 다음 회차 대기';
+    return info.lastEnd ? ` · ${escapeHtml(formatDate(info.lastEnd))} 판매 종료` : '';
   }
   if (status === 'upcoming') {
     return info.nextStart ? ` · ${escapeHtml(formatDate(info.nextStart))} 판매 시작` : ' · 판매 예정';
@@ -583,8 +593,8 @@ function syncRestingToggle(restingCount) {
     const text = $('#resting-banner-text');
     if (text) {
       text.textContent = state.includeResting
-        ? `휴지기 상품 ${restingCount}개를 참고 순위에 넣어 보고 있습니다. 지금은 살 수 없습니다.`
-        : `휴지기 상품 ${restingCount}개는 순위에서 뺐습니다. 주기 판매 컬렉션이라 다음 회차가 공지되면 돌아옵니다.`;
+        ? `지금 안 파는 상품 ${restingCount}개를 같이 보고 있습니다.`
+        : `지금 안 파는 상품 ${restingCount}개는 순위에서 뺐습니다. 다시 판매하면 돌아옵니다.`;
     }
   }
 }
@@ -860,9 +870,10 @@ function summarizeAuctionStatus(prices) {
 }
 
 function isEvidenceStale(value) {
-  if (!value) return true;
-  const at = new Date(value).getTime();
-  if (!Number.isFinite(at)) return true;
+  // 판매 기간과 같은 엄격한 해석을 쓴다(windowBound). new Date 는 '2026/10/04' 나 달력에 없는 날도
+  // 읽어 버려서 파이썬 쪽 감사와 갈라진다. 못 읽는 시각은 낡은 근거다.
+  const at = windowBound(value);
+  if (at === null || !Number.isFinite(at)) return true;
   return (Date.now() - at) / 86400000 > EVIDENCE_STALE_DAYS;
 }
 
@@ -945,6 +956,7 @@ function priceFor(target, index) {
       usesMarketHistory,
       evidenceStale,
       marketPriceBasis,
+      marketCrossCheck,
       thinListingOnly,
       listingCount,
       source: pendingMarketHistory
@@ -1032,28 +1044,71 @@ function totalPriceFor(item, index) {
   };
 }
 
-function calculateEfficiency(item, mesoPrice) {
-  let nominalCashPaid = Number(item.cashPrice || 0);
-  let mileageUsed = 0;
-  let mileageEarned = nominalCashPaid * .05;
+function normalizeCreditShop(doc) {
+  const source = doc && typeof doc === 'object' && !Array.isArray(doc) ? doc : {};
+  const number = (value, fallback) => (Number.isFinite(Number(value)) && Number(value) >= 0 ? Number(value) : fallback);
+  return {
+    earnRate: Math.min(number(source.earnRate, DEFAULT_CREDIT_SHOP.earnRate), 1),
+    minCashPrice: number(source.minCashPrice, DEFAULT_CREDIT_SHOP.minCashPrice),
+    mileageEndsAt: source.mileageEndsAt || DEFAULT_CREDIT_SHOP.mileageEndsAt,
+    items: (Array.isArray(source.items) ? source.items : [])
+      .filter(entry => entry && typeof entry.name === 'string' && Number(entry.credits) > 0)
+      .map(entry => ({ name: entry.name, credits: Number(entry.credits) }))
+  };
+}
 
-  if (item.mileageType === 'partial') {
-    nominalCashPaid *= .7;
-    mileageUsed = Number(item.cashPrice || 0) * .3;
-    mileageEarned = nominalCashPaid * .05;
-  } else if (item.mileageType === 'full') {
-    nominalCashPaid = 0;
-    mileageUsed = Number(item.cashPrice || 0);
-    mileageEarned = 0;
+// 남은 마일리지로 깎아 사는 계산은 마일리지가 사라지는 날까지만 한다.
+function mileageUsable(now = Date.now()) {
+  const end = Date.parse(state.creditShop.mileageEndsAt);
+  return Number.isFinite(end) ? now < end : false;
+}
+
+function effectiveMileageType(item) {
+  return mileageUsable() ? item.mileageType || 'none' : 'none';
+}
+
+// 크레딧 1점이 메소로 얼마인지. 크레딧샵에서 살 수 있는 것 중 가장 비싸게 팔리는 상품으로 잰다.
+// 경매장에서 확인한 값만 쓴다(초기값·저매물 단독·체결 대기·낡은 값은 뺀다).
+function creditMesoRate(index) {
+  let best = { rate: 0, name: '' };
+  for (const entry of state.creditShop.items) {
+    const price = priceFor({ name: entry.name }, index);
+    // 매물 호가만 있는 상품은 쓰지 않는다. 낡지 않은 최근 체결가(recentSale)로 교차 확인된 것만 본다.
+    // 3개월 최고가, 화면에서 손으로 넣은 참고가, 체결 0건·대기 상태는 체결 근거가 아니므로 뺀다.
+    if (!['live', 'history'].includes(price.source) || price.thinListingOnly || price.evidenceStale
+      || !price.marketCrossCheck || price.marketPriceBasis !== 'recentSale'
+      || isMarketHistoryPending(price.marketHistoryStatus)) continue;
+    const rate = Number(price.meso || 0) / entry.credits;
+    if (rate > best.rate) best = { rate, name: entry.name };
   }
+  return best;
+}
 
+function calculateEfficiency(item, mesoPrice) {
+  const cashPrice = Number(item.cashPrice || 0);
+  const mileageType = effectiveMileageType(item);
+  let nominalCashPaid = cashPrice;
+  let mileageUsed = 0;
+
+  if (mileageType === 'partial') {
+    nominalCashPaid *= .7;
+    mileageUsed = cashPrice * .3;
+  } else if (mileageType === 'full') {
+    nominalCashPaid = 0;
+    mileageUsed = cashPrice;
+  }
+  // 크레딧은 넥슨캐시로 낸 금액에만 붙는다. 10캐시 미만 상품은 붙지 않는다.
+  const creditEarned = cashPrice >= state.creditShop.minCashPrice ? nominalCashPaid * state.creditShop.earnRate : 0;
+
+  const feeKeep = 1 - Number(state.settings.ahFeeRate || 0) / 100;
   const actualCashCost = nominalCashPaid * (1 - Number(state.settings.discountRate || 0) / 100);
   const mileageCashValue = FIXED_MILEAGE_MESO_RATE * (Number(state.settings.baseMpRate || 0) / 100000000);
   const totalCost = actualCashCost + mileageUsed * mileageCashValue;
-  const netMeso = Number(mesoPrice || 0) * (1 - Number(state.settings.ahFeeRate || 0) / 100);
-  const totalReturn = netMeso + mileageEarned * FIXED_MILEAGE_MESO_RATE;
+  const netMeso = Number(mesoPrice || 0) * feeKeep;
+  // 크레딧으로 산 것도 경매장에 팔아야 메소가 되므로 수수료를 똑같이 뗀다.
+  const totalReturn = netMeso + creditEarned * Number(state.creditRate?.rate || 0) * feeKeep;
 
-  // 메소 값이 없으면 남는 수익은 마일리지 5% 적립뿐이다. 그 숫자는 '가치가 낮다'가
+  // 메소 값이 없으면 남는 수익은 크레딧 5% 적립뿐이다. 그 숫자는 '가치가 낮다'가
   // 아니라 '아직 모른다'는 뜻이므로 효율로 내보내지 않는다. price_audit.py 의
   // approx_ranking 도 같은 행을 순위에서 뺀다.
   if (!(Number(mesoPrice) > 0)) return Infinity;
@@ -1062,6 +1117,7 @@ function calculateEfficiency(item, mesoPrice) {
 
 function enrichItems() {
   const index = buildPriceIndex();
+  state.creditRate = creditMesoRate(index);
   return state.items.map(item => {
     if (item.referenceOnly) {
       const referenceMesoValue = Number(item.referenceMesoValue || 0);
@@ -1225,7 +1281,11 @@ function render() {
   syncCategoryOptions(allRows);
   syncPackageToggle();
   syncRestingToggle(allRows.filter(item => !item.referenceOnly && item.saleStatus === 'resting').length);
-  $('#rank-mode-label').textContent = '시세 우선 적용가';
+  const credit = state.creditRate || { rate: 0, name: '' };
+  $('#credit-rate').textContent = credit.rate > 0 ? `${nf.format(Math.round(credit.rate / 100) * 100)}메소` : '-';
+  $('#credit-rate').title = credit.rate > 0
+    ? `넥슨캐시로 사면 5%가 메이플크레딧으로 쌓입니다. 크레딧샵의 ${credit.name} 기준으로 계산에 넣었습니다.`
+    : '크레딧샵 상품의 경매장 가격을 아직 확인하지 못했습니다.';
   $('#row-count').textContent = referenceCount ? `${saleRows.length}개 + 참고 ${referenceCount}개` : `${saleRows.length}개`;
   $('#sale-item-count').textContent = `${rows.length}개`;
   const latestAuctionUpdatedAt = [
@@ -1336,21 +1396,21 @@ function renderTable(rows, rankByKey = new Map(), rankChanges = new Map()) {
       : soldOut
         ? salePill(item, saleInfo)
         : thinRow
-          ? `<span class="source-pill seed" title="매물 ${item.listingPrice?.listingCount || 0}건이 유일한 근거입니다. 시세 검증 전까지 순위에서 제외합니다.">검증 필요</span>`
+          ? `<span class="source-pill seed" title="매물 ${item.listingPrice?.listingCount || 0}건뿐이라 가격이 흔들립니다. 체결가를 확인할 때까지 순위에서 뺍니다.">확인 필요</span>`
           : noPrice
             ? (isSeedOnly(item)
-                ? '<span class="source-pill seed" title="경매장에서 확인한 값이 아니라 손으로 적어 둔 초기값입니다. 순위에는 올리지 않습니다.">초기값</span>'
-                : '<span class="source-pill seed" title="경매장 매물과 시세가 모두 없어 효율을 계산할 수 없습니다. 다음 회차에 조회합니다.">가격 없음</span>')
+                ? '<span class="source-pill seed" title="경매장에서 확인한 가격이 아닙니다. 순위에는 올리지 않습니다.">미확인</span>'
+                : '<span class="source-pill seed" title="경매장에 매물도 체결 기록도 없어 계산할 수 없습니다.">가격 없음</span>')
             : `<span class="rank-cell"><span class="rank">${rankNumber}</span>${rankChange}${
-                restingRanked ? '<small class="rank-tag" title="지금은 살 수 없습니다. 다음 판매 회차 기준의 참고 순위입니다.">휴지기</small>' : ''}</span>`;
+                restingRanked ? '<small class="rank-tag" title="지금은 살 수 없습니다.">재판매 대기</small>' : ''}</span>`;
     const turnoverWarning = !isReference && isPackageItem(item)
       ? '<span class="turnover-pill" title="패키지는 판매까지 시간이 걸릴 수 있습니다." aria-label="회전율 주의">회전율 주의</span>'
       : '';
     const marketWarning = !isReference && Number(item.listingPrice?.pendingMarketCount || 0) > 0
-      ? `<span class="market-warning-pill" title="시세 탭 검증 전 구성품은 보수 합산에서 제외됩니다.">시세 검증 ${item.listingPrice.pendingMarketCount}개</span>`
+      ? `<span class="market-warning-pill" title="체결가를 확인하지 못한 구성품은 합계에서 뺐습니다.">체결 미확인 ${item.listingPrice.pendingMarketCount}개</span>`
       : '';
     const thinWarning = !isReference && Number(item.listingPrice?.thinListingCount || 0) > 0
-      ? `<span class="market-warning-pill" title="매물 ${THIN_LISTING_COUNT}건 이하가 유일한 근거인 구성품입니다. 호가 하나에 값이 흔들립니다.">저매물 ${item.listingPrice.thinListingCount}개</span>`
+      ? `<span class="market-warning-pill" title="매물 ${THIN_LISTING_COUNT}건 이하인 구성품이 있습니다. 가격이 흔들릴 수 있습니다.">매물 적음 ${item.listingPrice.thinListingCount}개</span>`
       : '';
     const itemMeta = isReference
       ? `<span class="item-meta">마일리지 전용 · 판매 불가 · ${REFERENCE_CATEGORY}</span>`
@@ -1367,7 +1427,7 @@ function renderTable(rows, rankByKey = new Map(), rankChanges = new Map()) {
         : renderInlinePriceEditor(item.name, item.listingPrice);
     const result = isReference
       ? `<span class="eff-value">${formatReferenceMeso(item.referenceMesoPerThousand)}</span><span class="price-meta">1,000 마일리지당 절약</span>`
-      : `<span class="eff-value">${formatWon(item.listingEfficiency)}</span><span class="price-meta">${item.listingPrice?.source === 'pending' ? '검증 합산 기준' : '1억당 현금'}</span>`;
+      : `<span class="eff-value">${formatWon(item.listingEfficiency)}</span><span class="price-meta">${item.listingPrice?.source === 'pending' ? '확인된 구성품 합계' : '1억당 현금'}</span>`;
     const rowClass = [
       isReference ? 'reference-row' : '',
       isPackageItem(item) ? 'package-row' : '',
@@ -1415,9 +1475,9 @@ function renderPrice(price) {
     : price.source === 'history'
       ? isSheetOverride ? '시트 보정' : '시세 반영'
       : price.source === 'pending'
-        ? '검증 필요'
+        ? '확인 필요'
         : price.source === 'live'
-          ? '확인가'
+          ? '체결 확인'
           : price.source === 'mixed'
             ? '일부 확인'
             : auctionStatusLabel(status);
@@ -1454,7 +1514,7 @@ function renderInlinePriceEditor(name, price, compact = false) {
     : price?.source === 'history' || pendingMarketHistory
       ? '현재 매물'
       : price?.source === 'live'
-        ? '확인가'
+        ? '체결 확인'
         : auctionStatusLabel(status);
   const meta = listingMeso > 0 ? `${formatMeso(listingMeso)} · ${label}` : label;
   const date = price?.collectedAt && !compact
@@ -1470,14 +1530,14 @@ function renderInlinePriceEditor(name, price, compact = false) {
   const marketMeta = pendingMarketHistory
     ? `<small class="market-reference-meta warning">
         <strong>${escapeHtml(price?.marketHistoryNote || marketHistoryStatusLabel(marketHistoryStatus))}</strong>
-        <span>보수 계산 제외</span>
+        <span>계산 제외</span>
         ${marketDate}
       </small>`
     : marketHistoryMeso > 0
       ? `<small class="market-reference-meta">
           <strong>${marketLabel} ${formatMeso(marketHistoryMeso)}</strong>
           <span>계산 ${formatMeso(appliedMeso)}</span>
-          ${gap > 0 ? `<span class="market-gap">괴리 ${Math.round(gap)}%</span>` : ''}
+          ${gap > 0 ? `<span class="market-gap">차이 ${Math.round(gap)}%</span>` : ''}
           ${marketDate}
         </small>`
       : '';
@@ -1519,7 +1579,7 @@ function renderComponentQuote(price) {
     return '<span class="component-quote"><strong>미확인</strong><em>가격 없음</em></span>';
   }
   if (price.source === 'pending') {
-    return '<span class="component-quote"><strong>검증 필요</strong><em>보수 계산 제외</em></span>';
+    return '<span class="component-quote"><strong>확인 필요</strong><em>계산 제외</em></span>';
   }
   const status = price.auctionStatus || 'unverified';
   if (Number(price.meso || 0) <= 0) {
@@ -1531,7 +1591,7 @@ function renderComponentQuote(price) {
     : price.source === 'history'
       ? isSheetOverride ? '시트 보정' : '시세 반영'
       : price.source === 'live'
-        ? '확인가'
+        ? '체결 확인'
         : price.source === 'mixed'
           ? '일부 확인'
           : auctionStatusLabel(status);
@@ -1604,7 +1664,9 @@ function renderComponentDetailRow(item, key) {
   `;
 }
 
-function renderMileageBadge(type) {
+function renderMileageBadge(rawType) {
+  const type = mileageUsable() ? rawType : 'none';
+  if (!mileageUsable()) return '';
   if (type === 'full') return '<span class="mileage-pill full" title="마일리지로 전액 결제">마일리지 100%</span>';
   if (type === 'partial') return '<span class="mileage-pill partial" title="마일리지로 30% 할인">마일리지 30%</span>';
   return '<span class="mileage-pill none" title="마일리지 할인 불가">마일리지 불가</span>';
@@ -1777,7 +1839,9 @@ function upsertLocalPrice(name, meso, status = 'live') {
     status,
     source: 'manual',
     filter: '수동',
-    collectedAt: nowIso()
+    // priceFor 는 updatedAt 을 먼저 본다. 방금 넣은 값이 원장의 옛 날짜 때문에 낡은 값으로 빠지지 않게 같이 바꾼다.
+    collectedAt: nowIso(),
+    updatedAt: nowIso()
   };
   const index = state.localAuctionRows.findIndex(price => normalizeKey(price.itemName || price.name || price.query) === key);
   if (index >= 0) state.localAuctionRows.splice(index, 1, row);
@@ -1801,6 +1865,12 @@ function upsertLocalMarketPrice(name, meso) {
     query: cleanName,
     listingLowestMeso: listingMeso,
     listingLowestText: listingMeso > 0 ? formatMeso(listingMeso) : '',
+    // priceFor 는 marketPriceMeso 를 먼저 본다. 손으로 넣은 시세가 원장의 체결가에 가려지지 않게
+    // 같은 자리에 넣고, 해제하면 원장 값으로 되돌린다.
+    marketPriceMeso: roundedMeso > 0 ? roundedMeso : base.marketPriceMeso,
+    marketPriceBasis: roundedMeso > 0 ? 'manual' : base.marketPriceBasis,
+    marketPriceAt: roundedMeso > 0 ? nowIso() : base.marketPriceAt,
+    marketPriceFrom: roundedMeso > 0 ? undefined : base.marketPriceFrom,
     marketHistoryMaxMeso: marketHistoryMeso,
     marketHistoryMaxText: marketHistoryMeso > 0 ? formatMeso(marketHistoryMeso) : '',
     marketHistoryBasis: roundedMeso > 0
@@ -1847,7 +1917,7 @@ function saveInlineMarketPrice(name, rawValue) {
     'ready',
     meso > 0 ? '시세 참고가 적용' : '시세 참고가 해제',
     meso > 0
-      ? `${cleanName} 시세를 보수 계산에 반영했습니다.`
+      ? `${cleanName} 시세를 계산에 반영했습니다.`
       : `${cleanName}의 브라우저 시세 참고값을 해제했습니다.`
   );
   render();

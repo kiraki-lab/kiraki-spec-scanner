@@ -1,0 +1,30 @@
+{
+  "verdict": "REVISE",
+  "findings": [
+    {
+      "severity": "high",
+      "file": "maple-cash-value/scripts/auction_collector.js",
+      "claim": "REJECTED_SEARCH_EVIDENCE_MERGED",
+      "evidence": "auction_collector.js 144~147줄은 결과를 먼저 저장한 뒤 제목 불일치·분류 필터를 검사한다. 거부된 결과도 status='searched'로 남는다. 164~167줄의 dump는 hdr.name과 allCategories를 버린다. ingest_run.py 56~61줄은 stopped:unexpected_result를 받아들이고, 66~99줄은 해당 searched 행을 가격 관측으로 변환한다. merge_run.py 78~88줄은 이를 원장에 반영한다. 따라서 분류 필터로 잘못 나온 0건이 정상 no_listing으로 병합될 수 있다. AUTOMATION.md 40줄의 오류 중단과 62줄의 입력 검증만으로 이 경로가 차단되지 않는다."
+    },
+    {
+      "severity": "high",
+      "file": "maple-cash-value/app.js",
+      "claim": "NO_SALES_ADOPTION_RULE_DIVERGENCE",
+      "evidence": "PRICE_VERIFICATION.md 4절의 채택 정합 표는 시세 탭 체결이 없으면 값을 채택하지 않는다고 정한다. 그러나 app.js 908줄과 scripts/price_audit.py 156줄은 보존 시세가 0일 때만 계산에서 제외한다. app.js의 실제 priceFor를 메모리에서 호출한 재현에서 신선한 매물 5억·보존 recentSale 4억·marketHistoryStatus='no_sales' 입력은 meso=400000000, source='history', marketCrossCheck=true를 반환했다. scripts/merge_run.py 94~101줄은 체결 0건일 때 기존 시세를 보존하므로 이 조합이 생성될 수 있다. 두 구현의 대조는 통과하지만 문서의 제외 규칙과 구현의 4억 채택이 갈라진다."
+    },
+    {
+      "severity": "low",
+      "file": "maple-cash-value/PRICE_VERIFICATION.md",
+      "claim": "MIGRATION_COUNT_TEXT_STALE",
+      "evidence": "280~286줄의 이행 표는 현재 원장 집계인 총 573행, recentSale 90행, legacyMax 31행, 시세 없음 452행과 일치한다. 그러나 311줄은 현재 시세 축이 없는 행을 449행이라고 서술하여 같은 절 안의 수치가 다르다."
+    }
+  ],
+  "unverified": [
+    "NATURALNESS_UNVERIFIED: 소리를 듣지 못하므로 음성·BGM·음량 체감은 확인하지 않았다. 이번 대상은 코드와 규칙 문서다.",
+    "경매장 실제 UI에서 검색·오류 중단·자정 초기화를 실행하지 않았다. 수집·변환·병합은 코드로 검토했고 Python 단위 테스트는 실행하지 않았다.",
+    "원격 게시·전송 이력과 공식 공지 원문은 네트워크 금지에 따라 확인하지 않았다.",
+    "새로 발견한 조합의 회귀 사례 추가 여부는 확인하지 못했다. 파일 수정 금지에 따라 사례를 추가하지 않았다."
+  ],
+  "external_actions": 0
+}

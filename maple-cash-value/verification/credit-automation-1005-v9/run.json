@@ -1,0 +1,78 @@
+{
+    "status":  "VERIFIED",
+    "verifier":  "codex-exec",
+    "thread_id":  "01a10a5a-2664-70e0-8a41-c2cbd832b073",
+    "task":  "credit-automation-1005",
+    "project":  "maple-cash-value",
+    "effort":  "medium",
+    "model":  "gpt-6.1-sol",
+    "checklist":  "kiraki-youtube-team\\references\\verify-checklists\\maple-cash-rules.md",
+    "started_at":  "2026-10-05T13:37:22.5028535+09:00",
+    "ended_at":  "2026-10-05T13:43:01.8316221+09:00",
+    "exit_code":  0,
+    "verdict":  "REVISE",
+    "findings":  1,
+    "unverified":  [
+                       "수집·병합 Python 테스트는 지시에 따라 실행하지 않고 구현과 테스트 코드를 읽어 판정했다. 실제 테스트 실행 결과는 확인하지 않았다.",
+                       "실제 경매장 화면의 수집 동작과 원격 게시 결과는 네트워크 금지에 따라 확인하지 않았다.",
+                       "새로 재현한 신선도 불일치 사례는 파일 변경 금지에 따라 adoption-cases.json에 등록하지 않았다.",
+                       "NATURALNESS_UNVERIFIED: 소리를 듣지 않았으므로 음성·BGM·음량 체감은 확인하지 않았다. 이번 대상에는 음성 산출물이 없다."
+                   ],
+    "verdict_path":  "maple-cash-value\\verification\\credit-automation-1005-v9\\verdict.json",
+    "verdict_sha256":  "025f6f8de5d13424cd186f9b8eb992a9705293de0131c591eb69e99cef358d59",
+    "inputs":  [
+                   {
+                       "path":  "maple-cash-value\\app.js",
+                       "sha256":  "a21bee0ae6413f0e8f4c9a8a173800f5c1a4135d1e7a544acd50a447f6e286b1"
+                   },
+                   {
+                       "path":  "maple-cash-value\\index.html",
+                       "sha256":  "6179fc6a51e43eac854f7a2895c9eb95c5a4160d68c15d3faf2a6925b562102f"
+                   },
+                   {
+                       "path":  "maple-cash-value\\data\\credit-shop.json",
+                       "sha256":  "15f19533521d195b5f157cd0f29c593e3beef105bda2964e2be6942e326b900d"
+                   },
+                   {
+                       "path":  "maple-cash-value\\scripts\\test_credit.js",
+                       "sha256":  "c301f5c00792feef1fdd29e964658e2c6c2aaf2a964167072534bbea23ad3e6c"
+                   },
+                   {
+                       "path":  "maple-cash-value\\scripts\\ingest_run.py",
+                       "sha256":  "d6cca2ed0adb8e383532e56a5b699224932f41154e7af053ea629d954d11b345"
+                   },
+                   {
+                       "path":  "maple-cash-value\\scripts\\merge_run.py",
+                       "sha256":  "76193375dd23bf150e1ce7380a7af902fe04b0f903b9a1e138e3cc345d911845"
+                   },
+                   {
+                       "path":  "maple-cash-value\\scripts\\test_merge_run.py",
+                       "sha256":  "b18128f1e9312406e1c424fbe7058ba7db1f43a888eb153e1535d5ee2ff3458c"
+                   },
+                   {
+                       "path":  "maple-cash-value\\scripts\\test_ingest_run.py",
+                       "sha256":  "99db9adf385d64152a08ef483c5e8e1827aced725a789aad49b93ad4cbc8298f"
+                   },
+                   {
+                       "path":  "maple-cash-value\\scripts\\publish_prices.py",
+                       "sha256":  "ee74804f7b69a9df517b237d51f2ec09ad95223f07688f1ecabb9b8df73c4891"
+                   },
+                   {
+                       "path":  "maple-cash-value\\scripts\\auction_collector.js",
+                       "sha256":  "a6b587589adb1a2a9dbe6cef194c934eb000bac37a344c4e8b72e1b4f7fd030e"
+                   },
+                   {
+                       "path":  "maple-cash-value\\scripts\\test_collector.js",
+                       "sha256":  "745956d3e2331103ffa456316898611eb2eefb9d6d4e2e56de6872758dba6dea"
+                   },
+                   {
+                       "path":  "maple-cash-value\\scripts\\adoption-cases.json",
+                       "sha256":  "f410dd79c3bfabd30cfbb79cfa3e091339124fae21a54321f1e2d3dbd509f1f2"
+                   },
+                   {
+                       "path":  "maple-cash-value\\AUTOMATION.md",
+                       "sha256":  "6f4c7b9316006823ebb8dbea4d5a458cb373425d0ac7f1303bb92f2db840f4d2"
+                   }
+               ],
+    "out_dir":  "maple-cash-value\\verification\\credit-automation-1005-v9"
+}

@@ -108,6 +108,18 @@
 `adoptedMeso` 와 `calcAdoptedMeso` 를 혼동하지 않는다. 계산기와 맞춰야 하는 것은
 `calcAdoptedMeso` 이고, `adoptedMeso` 는 등급 판정용이다(문서 9절).
 
+## 6-1. 메이플크레딧 적립 (문서 11절, `app.js` `calculateEfficiency` · `creditMesoRate`)
+
+- 크레딧 1점의 값이 문서 표대로 정해지는가: 크레딧샵 상품 중 `채택가 ÷ 크레딧 가격` 최고값,
+  후보는 체결가가 확인된 행만(초기값 · 저매물 단독 · 체결 대기 · 낡은 값 제외), 후보가 없으면 0
+- 적립량이 넥슨캐시로 낸 금액의 5% 이고 10캐시 미만이면 0 인가. 적립 수익에도 수수료를 떼는가
+- 마일리지 30% · 전액 계산이 `mileageEndsAt` 전까지만 적용되는가(경계 시각 포함)
+- `data/credit-shop.json` 이 없거나 모양이 이상해도 계산이 서는가
+- `node scripts/test_credit.js` 를 돌려 통과하는지 확인한다(파일을 쓰지 않는다)
+- 수집 → 회차 파일 변환(`scripts/ingest_run.py`)과 병합(`scripts/merge_run.py`)은
+  `python -B -m unittest` 대신 코드를 읽어 판정한다. 읽기 전용 샌드박스에서 캐시 파일을 못 쓴다.
+  허비한 검색 · 자정 넘김 · 자동완성 없음이 `AUTOMATION.md` 와 문서 7·8절대로 기록되는지 본다
+
 ## 7. 문서가 사실과 맞는가
 
 문서 9절 「이행 상태」의 행 수(`recentSale` / `legacyMax` / 없음)가

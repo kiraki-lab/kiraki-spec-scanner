@@ -1,0 +1,23 @@
+{
+  "verdict": "REVISE",
+  "findings": [
+    {
+      "severity": "medium",
+      "file": "maple-cash-value/app.js",
+      "claim": "MANUAL_MARKET_OVERRIDE_IGNORED",
+      "evidence": "maple-cash-value/app.js:1858–1869에서 수동 시세는 marketHistoryMaxMeso에 저장하면서 기존 marketPriceMeso를 보존한다. 903–905줄의 priceFor는 기존 marketPriceMeso를 우선한다. 실제 함수를 메모리에서 실행한 결과, 신선한 매물 5억·시세 4억인 행에 시세 2억을 입력해도 채택가는 4억이었다. 1908–1911줄은 이를 계산에 반영했다고 표시한다."
+    },
+    {
+      "severity": "medium",
+      "file": "maple-cash-value/scripts/ingest_run.py",
+      "claim": "REJECTED_SEARCH_MIDNIGHT_RECORD_LOST",
+      "evidence": "maple-cash-value/scripts/auction_collector.js:176–179는 rejected 검색에도 관측 시각을 전달하지만, scripts/ingest_run.py:74–77는 lostSearches에 이름·축·사유만 남기고 날짜 집계 전에 건너뛴다. 88·111줄의 segments에는 성공한 검색만 포함되며, scripts/merge_run.py:148은 segments 개수로 crossedMidnight를 정한다. 따라서 자정 전 rejected 검색 후 자정 뒤 성공 검색만 있는 회차는 실제로 두 날짜에 걸쳤어도 crossedMidnight=false가 된다. PRICE_VERIFICATION.md 6절의 날짜별 횟수·자정 넘김 기록 요구와 갈라진다."
+    }
+  ],
+  "unverified": [
+    "NATURALNESS_UNVERIFIED: 소리를 듣지 않았으므로 음성·BGM·음량 체감은 확인하지 못했다. 대상은 코드와 규칙 문서다.",
+    "실제 경매장 화면의 검색·정렬·자동완성·자정 초기화와 원격 게시 결과는 네트워크·외부 행동 금지로 확인하지 않았다.",
+    "수집 변환·병합의 파이썬 테스트는 지시대로 실행하지 않고 코드로 검토했다. 새 재현 사례 파일도 수정 금지로 추가하지 않았다."
+  ],
+  "external_actions": 0
+}

@@ -62,7 +62,8 @@ def merge(original, run, rows):
     doc = copy.deepcopy(original)
     by_name = {nk(r['itemName']): r for r in doc['prices']}
     old_by_name = {nk(r['itemName']): r for r in original['prices']}
-    markets = {nk(r['itemName']): r for r in rows if r['type'] == 'market'}
+    # 체결 내역을 실제로 얻은 시세 조회만 교차검증이다. 0건 조회는 확인한 것이 없다.
+    markets = {nk(r['itemName']): r for r in rows if r['type'] == 'market' and r['marketRecentSales']}
     pending = {nk(r['itemName']): r for r in original.get('lastSearchRun', {}).get('pendingHistoryItems', [])}
     price_changes = []
     for sample in rows:
@@ -70,8 +71,7 @@ def merge(original, run, rows):
         row = by_name.get(key)
         if row is None:
             row = dict(itemName=sample['itemName'], query=sample['itemName'])
-            if sample['itemName'] == '레프 일리움 윙':
-                row.update(queueGroup='packageDeferred', aliases=[])
+            row.update(queueGroup=sample.get('queueGroup', 'dailyPriority'), aliases=[])
             doc['prices'].append(row)
             by_name[key] = row
         if sample.get('observationPrecision'):
@@ -92,6 +92,14 @@ def merge(original, run, rows):
             row.pop('listingTotalMeso', None)
         else:
             sales = [dict(price=s['priceMeso'], date=s['date']) for s in sample['marketRecentSales']]
+            if not sales:
+                row.update(marketHistoryStatus='no_sales',
+                           marketHistoryCollectedAt=sample['collectedAt'],
+                           marketHistorySaleCount=0,
+                           marketHistorySearchIndex=sample['searchIndex'],
+                           marketHistoryNote='정확일치 시세 조회 · 체결 내역 0건 · 과거 근거 보존')
+                # 급변 대기는 풀지 않는다. 체결을 못 봤으므로 검증된 것이 없다.
+                continue
             value, latest, median = adopt(sales)
             row.update(marketPriceMeso=value, marketPriceBasis='recentSale', marketPriceAt=latest['date'],
                        marketPriceFrom=dict(latestMeso=latest['price'], latestDate=latest['date'],
@@ -125,16 +133,22 @@ def merge(original, run, rows):
                                     reason='가격 급변 · 이번 회차 시세 미확인')
     now = datetime.now(timezone.utc).isoformat(timespec='seconds').replace('+00:00', 'Z')
     listing = [r for r in rows if r['type'] == 'listing']
+    # 화면 카운터 기준 횟수. 값 없이 쓴 검색(lostSearches)이 있으면 기록된 행보다 많다.
+    lost = run.get('lostSearches', [])
+    screen = run.get('screenSearches', len(rows) + len(lost))
+    segments = run.get('segments') or [dict(kstDate=run['date'], searches=len(rows))]
     doc['generatedAt'] = now
-    doc['lastSearchRun'] = dict(date=run['date'], searchLimit=100, totalSearches=len(rows),
-        capturedSearches=len(rows), listingSearches=len(listing), marketHistorySearches=len(markets),
+    doc['lastSearchRun'] = dict(date=run['date'], searchLimit=100, totalSearches=screen,
+        capturedSearches=len(rows), listingSearches=len(listing),
+        marketHistorySearches=sum(r['type'] == 'market' for r in rows),
         okCount=sum(r['status'] == 'ok' for r in listing), noListingCount=sum(r['status'] == 'no_listing' for r in listing),
-        uncapturedCount=0, lostSearches=[], accountComplete=True, dailyPriorityComplete=True,
+        uncapturedCount=0, lostSearches=lost, accountComplete=run.get('accountComplete', False),
+        dailyPriorityComplete=run.get('dailyPriorityComplete', False),
         queueMode='daily_tradable_nonpackage_then_top_rank_two_axis', completedAt=now,
         pendingHistoryItems=list(pending.values()), priceChangeFlags=price_changes, unsearched=run.get('unsearched', []),
-        accounts=[dict(searchAccount=run['searchAccount'], accountCharacter=run['accountCharacter'], screenSearches=len(rows))],
-        segments=[dict(kstDate=run['date'], searches=len(rows))], crossedMidnight=False,
-        note='비패키지 매물 우선 · 상위 구성품 양축 확인 · 날짜만 남은 관측은 일 단위로 기록. 전체 품목 검증 완료를 의미하지 않음.')
+        accounts=[dict(searchAccount=run['searchAccount'], accountCharacter=run['accountCharacter'], screenSearches=screen)],
+        segments=segments, crossedMidnight=len(segments) > 1,
+        note=run.get('note', '비패키지 매물 우선 · 상위 구성품 양축 확인 · 날짜만 남은 관측은 일 단위로 기록. 전체 품목 검증 완료를 의미하지 않음.'))
     touched = {nk(r['itemName']) for r in rows}
     assert all(by_name[k] == value for k, value in old_by_name.items() if k not in touched)
     return doc
@@ -154,17 +168,21 @@ def main():
     if args.apply:
         backup = path.with_name('auction-prices.before-' + run['date'] + '.json')
         if backup.exists():
+            # 같은 날 두 번째 계정. 첫 계정의 기준본을 덮지 않는다.
+            backup = path.with_name('auction-prices.before-%s-account%s.json' % (run['date'], run['searchAccount']))
+        if backup.exists():
             raise RuntimeError('Backup exists: inspect before applying twice')
         backup.write_text(json.dumps(original, ensure_ascii=False, indent=2), encoding='utf-8')
         args.collection.with_suffix('.checkpoints.json').write_text(json.dumps(run, ensure_ascii=False, indent=2), encoding='utf-8')
         normalized = {k: v for k, v in run.items() if 'Checkpoint' not in k and k != 'results'}
-        normalized.update(status='complete', results=[r for r in rows if r['type'] == 'listing'],
+        normalized.update(status='complete' if run.get('accountComplete') else 'partial', results=[r for r in rows if r['type'] == 'listing'],
             marketHistory=[dict(itemName=r['itemName'], searchIndex=r['searchIndex'],
                                 resultCount=r['resultCount'], collectedAt=r['collectedAt'],
                                 sales=[dict(price=s['priceMeso'], date=s['date']) for s in r['marketRecentSales']])
                            for r in rows if r['type'] == 'market'])
         args.collection.write_text(json.dumps(normalized, ensure_ascii=False, indent=2), encoding='utf-8')
         path.write_text(json.dumps(doc, ensure_ascii=False, indent=2), encoding='utf-8')
+        print('baseline: ' + backup.name)
 
 
 if __name__ == '__main__':

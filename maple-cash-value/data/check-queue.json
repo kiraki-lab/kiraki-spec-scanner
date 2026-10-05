@@ -1,84 +1,123 @@
 {
-  "updatedAt": "2026-09-21T00:34:07",
-  "note": "계산기에 아직 없는 품목의 거래 가능 여부를 경매장에서 확인하는 큐. 한 품목당 매물 조회 1회면 충분하다. 매물이 잡히면 items.json 에 캐시가와 함께 넣고, 안 잡히면 tradable=false 로 기록해 다시 묻지 않는다.",
+  "updatedAt": "2026-09-28T11:12:45Z",
+  "note": "계산기에 아직 없는 품목의 매물·거래 규칙을 확인하는 큐. 매물이 잡히면 공식 캐시가·판매기간을 확인한 뒤 추가한다. 매물 0건·자동완성 없음·반복 미관측만으로 tradable=false를 기록하지 않는다. 관측은 no_listing/unseen으로 남기고 재확인 시점을 정한다. tradable=false는 공식 안내 또는 게임 내 교환 속성의 명시 근거가 있을 때만 기록한다.",
   "items": [
     {
       "name": "마스터피스",
       "axis": "listing",
-      "status": "pending",
-      "reason": "거래 가능 여부 미확인"
+      "status": "excluded_sale_ended",
+      "reason": "공식 업데이트811 마스터라벨 개편 절: 일반 마스터피스 판매 종료. 잔존 매물 관측은 보존",
+      "sourceUrl": "https://maplestory.nexon.com/News/Update/811",
+      "checkedAt": "2026-09-28T11:08:01.084Z",
+      "resultCount": 11,
+      "listingLowestMeso": 55000000
     },
     {
       "name": "프리미엄 마스터피스",
       "axis": "listing",
-      "status": "pending",
-      "reason": "거래 가능 여부 미확인"
+      "status": "listing_confirmed_pending_catalog",
+      "reason": "실제 매물 확인 · 공식 캐시가·판매 규칙 검증 및 상품목록 반영 대기",
+      "checkedAt": "2026-09-28T11:08:29.709Z",
+      "resultCount": 1069,
+      "listingLowestMeso": 86990000
     },
     {
       "name": "컬러링 프리즘 프로",
       "axis": "listing",
-      "status": "pending",
-      "reason": "거래 가능 여부 미확인"
+      "status": "listing_confirmed_pending_catalog",
+      "reason": "실제 매물 확인 · 공식 캐시가·판매 규칙 검증 및 상품목록 반영 대기",
+      "checkedAt": "2026-09-28T11:08:44.138Z",
+      "resultCount": 404,
+      "listingLowestMeso": 1215555555
     },
     {
       "name": "무기 이펙트 프리즘",
       "axis": "listing",
-      "status": "pending",
-      "reason": "거래 가능 여부 미확인"
+      "status": "listing_confirmed_pending_catalog",
+      "reason": "실제 매물 확인 · 공식 캐시가·판매 규칙 검증 및 상품목록 반영 대기",
+      "checkedAt": "2026-09-28T11:08:55.490Z",
+      "resultCount": 28,
+      "listingLowestMeso": 611111111
     },
     {
       "name": "초이스 헤어 쿠폰",
       "axis": "listing",
-      "status": "pending",
-      "reason": "거래 가능 여부 미확인"
+      "status": "listing_confirmed_pending_catalog",
+      "reason": "실제 매물 확인 · 공식 캐시가·판매 규칙 검증 및 상품목록 반영 대기",
+      "checkedAt": "2026-09-28T11:09:20.339Z",
+      "resultCount": 14,
+      "listingLowestMeso": 214900000
     },
     {
       "name": "초이스 성형 쿠폰",
       "axis": "listing",
-      "status": "pending",
-      "reason": "거래 가능 여부 미확인"
+      "status": "listing_confirmed_pending_catalog",
+      "reason": "실제 매물 확인 · 공식 캐시가·판매 규칙 검증 및 상품목록 반영 대기",
+      "checkedAt": "2026-09-28T11:09:28.223Z",
+      "resultCount": 2,
+      "listingLowestMeso": 149900000
     },
     {
       "name": "프리스타일 쿠폰",
       "axis": "listing",
-      "status": "pending",
-      "reason": "거래 가능 여부 미확인"
+      "status": "catalog_added_local",
+      "reason": "공지548 이미지에서 가격·마일리지 불가·넥슨캐시 구매 시 1회 교환 확인. 단품·10개 로컬 반영; 원격 미발행",
+      "sourceUrl": "https://maplestory.nexon.com/News/CashShop/Sale/548",
+      "checkedAt": "2026-09-28T11:09:50.153Z",
+      "resultCount": 112,
+      "listingLowestMeso": 255000000
     },
     {
       "name": "밸런스 믹스 염색 쿠폰",
       "axis": "listing",
-      "status": "pending",
-      "reason": "거래 가능 여부 미확인"
+      "status": "listing_confirmed_pending_catalog",
+      "reason": "실제 매물 확인 · 공식 캐시가·판매 규칙 검증 및 상품목록 반영 대기",
+      "checkedAt": "2026-09-28T11:10:22.976Z",
+      "resultCount": 15,
+      "listingLowestMeso": 1329999999
     },
     {
       "name": "밸런스 믹스 컬러렌즈 쿠폰",
       "axis": "listing",
-      "status": "pending",
-      "reason": "거래 가능 여부 미확인"
+      "status": "listing_confirmed_pending_catalog",
+      "reason": "실제 매물 확인 · 공식 캐시가·판매 규칙 검증 및 상품목록 반영 대기",
+      "checkedAt": "2026-09-28T11:10:31.411Z",
+      "resultCount": 4,
+      "listingLowestMeso": 688888877
     },
     {
       "name": "마스터라벨 플러스",
       "axis": "listing",
-      "status": "pending",
-      "reason": "거래 가능 여부 미확인"
+      "status": "excluded_untradable",
+      "reason": "공지642 및 업데이트811: 성장30000/전투40000캐시, 넥슨캐시 구매 시에도 교환불가",
+      "sourceUrl": "https://maplestory.nexon.com/News/Update/811",
+      "checkedAt": "2026-09-28",
+      "nextCheckAt": "2026-10-05"
     },
     {
       "name": "스타일링 스타터 패키지",
       "axis": "listing",
-      "status": "pending",
-      "reason": "거래 가능 여부 미확인"
+      "status": "excluded_untradable",
+      "reason": "공지560 이미지: 9900캐시, 패키지 구매 시 획득한 아이템 모두 교환불가",
+      "sourceUrl": "https://maplestory.nexon.com/News/CashShop/Sale/560",
+      "checkedAt": "2026-09-28",
+      "nextCheckAt": "2026-10-05"
     },
     {
       "name": "레테 헤어",
       "axis": "listing",
-      "status": "pending",
-      "reason": "레테 직업 패키지 존재 여부 미확인 — 공식 직업 48종 중 유일하게 계산기에 패키지가 없다"
+      "status": "unresolved",
+      "reason": "정확일치 자동완성 없음; 공식 상품 존재 확인 필요",
+      "checkedAt": "2026-09-28",
+      "nextCheckAt": "2026-10-05"
     },
     {
       "name": "벨로나 슈트(여)",
       "axis": "listing",
-      "status": "pending",
-      "reason": "벨로나 패키지(남)/(여) 2026-08-20 추가, 09-16 종료. 계산기에 아예 없다 (공지 640)"
+      "status": "deferred",
+      "reason": "09-16 판매 종료 회차; 휴지기 후순위",
+      "checkedAt": "2026-09-28",
+      "nextCheckAt": "2026-10-28"
     }
   ]
 }

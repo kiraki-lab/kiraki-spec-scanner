@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Jua&amp;display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./styles.css?v=0.14.3">
+  <link rel="stylesheet" href="./styles.css?v=0.14.4">
 </head>
 <body>
   <div class="app-shell">
@@ -35,8 +35,8 @@
 
     <section class="summary-grid" aria-label="요약">
       <article class="metric">
-        <span class="metric-label">랭킹 기준</span>
-        <strong id="rank-mode-label">매물 최저가</strong>
+        <span class="metric-label">크레딧 1점</span>
+        <strong id="credit-rate">-</strong>
       </article>
       <article class="metric">
         <span class="metric-label">현재 필터 최고</span>
@@ -127,10 +127,10 @@
         <div class="section-title">
           <h2>효율 목록</h2>
           <div class="table-heading-actions">
-            <label class="package-toggle resting-toggle" title="다음 회차를 기다리는 주기 판매 컬렉션 상품도 참고 순위에 넣어 봅니다.">
+            <label class="package-toggle resting-toggle" title="지금은 안 팔지만 다시 판매하는 상품도 같이 봅니다.">
               <input id="resting-toggle" type="checkbox">
               <span class="toggle-track" aria-hidden="true"></span>
-              <strong>휴지기 포함</strong>
+              <strong>재판매 대기 포함</strong>
               <em id="resting-toggle-state">OFF</em>
             </label>
             <button id="reset-local-prices" class="local-reset-button" type="button"
@@ -146,7 +146,7 @@
           </div>
         </div>
         <p id="resting-banner" class="resting-banner" hidden>
-          <strong>휴지기</strong>
+          <strong>안내</strong>
           <span id="resting-banner-text"></span>
         </p>
         <div class="table-wrap">
@@ -230,6 +230,6 @@
     </tr>
   </template>
 
-  <script type="module" src="./app.js?v=0.17.0"></script>
+  <script type="module" src="./app.js?v=0.18.0"></script>
 </body>
 </html>

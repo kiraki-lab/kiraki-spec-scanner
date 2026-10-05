@@ -1,7 +1,7 @@
 {
   "version": 3,
   "world": "스카니아",
-  "updatedAt": "2026-09-23T00:00:00+09:00",
+  "updatedAt": "2026-09-28",
   "settings": {
     "baseMpRate": 6990,
     "discountRate": 6,
@@ -9,6 +9,29 @@
     "mileageMesoRate": 10000
   },
   "items": [
+    {
+      "id": "cashshop-freestyle-single",
+      "name": "프리스타일 쿠폰",
+      "category": "쿠폰",
+      "cashPrice": 5500,
+      "seedMesoPrice": 0,
+      "mileageType": "none",
+      "tradable": true,
+      "availability": {"type": "always", "checkedAt": "2026-09-28", "sourceUrl": "https://maplestory.nexon.com/News/CashShop/Sale/548"},
+      "conditions": {"validityDays": 30, "mileagePercent": 0, "exchangeStatus": "conditional", "maxTrades": 1, "exchangeCondition": "넥슨캐시로 구매 시 1회 교환 가능"}
+    },
+    {
+      "id": "cashshop-freestyle-ten",
+      "name": "프리스타일 쿠폰 10개",
+      "category": "패키지",
+      "cashPrice": 49500,
+      "seedMesoPrice": 0,
+      "mileageType": "none",
+      "tradable": true,
+      "availability": {"type": "always", "checkedAt": "2026-09-28", "sourceUrl": "https://maplestory.nexon.com/News/CashShop/Sale/548"},
+      "conditions": {"validityDays": 30, "mileagePercent": 0, "exchangeStatus": "conditional", "maxTrades": 1, "exchangeCondition": "넥슨캐시로 구매한 구성 쿠폰 각 1회 교환 가능"},
+      "components": [{"name": "프리스타일 쿠폰", "quantity": 10, "seedMesoPrice": 0}]
+    },
     {
       "id": 1,
       "name": "플래티넘 카르마의 가위",

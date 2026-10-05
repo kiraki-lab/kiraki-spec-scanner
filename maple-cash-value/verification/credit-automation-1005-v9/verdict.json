@@ -1,0 +1,18 @@
+{
+  "verdict": "REVISE",
+  "findings": [
+    {
+      "severity": "high",
+      "file": "maple-cash-value/scripts/price_audit.py",
+      "claim": "FRESHNESS_PARSE_DIVERGENCE",
+      "evidence": "maple-cash-value/scripts/price_audit.py:65–85는 시각 해석 실패 시 parse_day로 물러나며, 50–59에서 문자열 앞 10자를 날짜로 해석한다. 반면 maple-cash-value/app.js:872–876은 잘못된 시각을 낡은 근거로 제외한다. 기준 시각 2026-10-05T12:00:00+09:00, 매물가 100000000, resultCount 10, updatedAt '2026-10-04Tbad', 시세 200000000, marketPriceAt '2026-10-04', marketPriceBasis 'recentSale', status 'ok'인 합성 행을 파일 변경 없이 재현했다. 계산기 채택가는 200000000, 감사 calcAdoptedMeso는 100000000이며 감사는 매물 나이를 1.1일로 판단했다. PRICE_VERIFICATION.md:82–85의 신선도 정합 규칙과 갈라진다. 기존 원장·등록된 합성 사례 대조에서는 불일치 0건이었다."
+    }
+  ],
+  "unverified": [
+    "수집·병합 Python 테스트는 지시에 따라 실행하지 않고 구현과 테스트 코드를 읽어 판정했다. 실제 테스트 실행 결과는 확인하지 않았다.",
+    "실제 경매장 화면의 수집 동작과 원격 게시 결과는 네트워크 금지에 따라 확인하지 않았다.",
+    "새로 재현한 신선도 불일치 사례는 파일 변경 금지에 따라 adoption-cases.json에 등록하지 않았다.",
+    "NATURALNESS_UNVERIFIED: 소리를 듣지 않았으므로 음성·BGM·음량 체감은 확인하지 않았다. 이번 대상에는 음성 산출물이 없다."
+  ],
+  "external_actions": 0
+}

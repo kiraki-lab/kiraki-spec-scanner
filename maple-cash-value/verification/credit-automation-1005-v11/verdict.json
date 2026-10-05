@@ -1,0 +1,24 @@
+{
+  "verdict": "REVISE",
+  "findings": [
+    {
+      "severity": "medium",
+      "file": "maple-cash-value/scripts/price_audit.py",
+      "claim": "STALE_MARKET_SUPPRESSES_SPIKE",
+      "evidence": "price_audit.py:534는 시세 금액과 기준만 보고 market_cross를 정하며 신선도를 확인하지 않는다. 기준 시각 2026-10-05 12:00 KST, 매물 1억→1.6억, 시세 1억·2026-09-01인 합성 입력에서 grade_row는 '교차검증 없음 · 매물 단독'을 반환하지만 main과 같은 detect_spike 호출은 None을 반환했다. 낡은 시세를 제외하면 1.6배 급변이 검출된다. PRICE_VERIFICATION.md 4·5절의 낡은 후보 제외 및 교차검증 없는 1.5배 상승 규칙과 갈라진다."
+    },
+    {
+      "severity": "medium",
+      "file": "maple-cash-value/scripts/merge_run.py",
+      "claim": "ZERO_SALES_CLEARS_SPIKE_PENDING",
+      "evidence": "merge_run.py:94~101은 체결 0건일 때 pendingHistoryItems에서 해당 품목을 제거한다. 127~129는 체결 유무가 아니라 markets에 조회 행이 있다는 이유로 cross_checked를 기록하고 대기 등록을 막는다. 코드 분기상 기존 시세가 없는 품목의 매물이 1억→2억으로 상승하고 같은 회차 시세 조회가 0건이면 pendingHistoryItems는 비고 priceChangeFlags.status는 cross_checked가 된다. PRICE_VERIFICATION.md 5절의 체결 교차검증 규칙과 7절의 급변 대기 기록 규칙과 갈라진다."
+    }
+  ],
+  "unverified": [
+    "NATURALNESS_UNVERIFIED: 소리를 듣지 않았으므로 음성·BGM·음량 체감은 확인하지 못했다. 이번 대상에는 음성 산출물이 없다.",
+    "실제 브라우저 화면, 경매장 수집 및 원격 게시 동작은 네트워크·외부 행동 금지에 따라 실행하지 않았다.",
+    "ingest_run.py와 merge_run.py의 Python 테스트는 지시대로 실행하지 않고 코드와 테스트 내용을 읽어 검토했다.",
+    "새로 발견한 급변 사례의 파일 등록은 파일 수정 금지에 따라 수행하지 않았다."
+  ],
+  "external_actions": 0
+}

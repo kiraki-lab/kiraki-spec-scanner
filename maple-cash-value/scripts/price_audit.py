@@ -71,18 +71,11 @@ def parse_moment(value):
       - 오프셋이 붙은 값        -> 그대로
     날짜만 있는 값을 KST 자정으로 읽으면 14일 경계가 9시간 어긋난다.
     """
-    if not value:
-        return None
-    text = str(value).strip()
-    if len(text) == 10 and 'T' not in text:
-        d = parse_day(text)
-        return None if d is None else datetime.combine(d, time(0, 0), tzinfo=timezone.utc)
-    try:
-        m = datetime.fromisoformat(text.replace('Z', '+00:00'))
-    except ValueError:
-        d = parse_day(text)
-        return None if d is None else datetime.combine(d, time(0, 0), tzinfo=timezone.utc)
-    return m if m.tzinfo else m.replace(tzinfo=KST)
+    # 판매 기간과 같은 엄격한 해석을 쓴다. app.js isEvidenceStale 도 windowBound 를 부른다.
+    # 형식이 다르거나('2026/10/04') 달력에 없는 날('2026-09-31', 'T24:00')은 못 읽는 값이고,
+    # 못 읽는 시각은 낡은 근거다. 두 언어의 느슨한 해석기에 맡기면 서로 다르게 읽는다.
+    m = window_bound(value)
+    return None if m is None or m is INVALID else m
 
 
 def moment_for(today):
@@ -538,7 +531,10 @@ def main():
     spikes = {}
     for r in doc['prices']:
         g = by_key.get(nk(r['itemName'])) or {}
-        market_cross = bool(g.get('marketMeso')) and (g.get('marketBasis') != 'legacyMax')
+        # 낡은 시세는 방패가 못 된다(4절). 등급 판정과 같은 기준으로 본다.
+        m_age = g.get('marketAgeDays')
+        market_cross = (bool(g.get('marketMeso')) and g.get('marketBasis') != 'legacyMax'
+                        and m_age is not None and m_age <= STALE_DAYS)
         sp = detect_spike(r, market_cross)
         if sp:
             spikes[r['itemName']] = sp

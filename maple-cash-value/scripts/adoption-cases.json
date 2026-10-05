@@ -223,6 +223,98 @@
         "marketPriceAt": "2026-09-23T00:00:00+09:00",
         "marketPriceBasis": "recentSale"
       }
+    },
+    {
+      "itemName": "__사례 체결 0건인데 이전 체결가가 남아 있음",
+      "why": "체결 0건 상태라도 보존된 최근 체결가가 신선하면 평소대로 낮은 쪽을 쓴다. 보존 시세가 없을 때만 채택하지 않는다(문서 4절 표, 코덱스 credit-automation-1005 v2)",
+      "row": {
+        "status": "ok",
+        "listingLowestMeso": 500000000,
+        "resultCount": 10,
+        "updatedAt": "2026-10-04T00:00:00+09:00",
+        "marketPriceMeso": 400000000,
+        "marketPriceAt": "2026-10-04T00:00:00+09:00",
+        "marketPriceBasis": "recentSale",
+        "marketHistoryStatus": "no_sales"
+      }
+    },
+    {
+      "itemName": "__사례 매물 시각을 못 읽음",
+      "why": "못 읽는 시각은 두 구현 모두 낡은 근거로 본다. 앞 10자만 날짜로 건지면 감사만 매물을 신선하다고 본다(코덱스 credit-automation-1005 v9)",
+      "row": {
+        "status": "ok",
+        "listingLowestMeso": 100000000,
+        "resultCount": 10,
+        "updatedAt": "2026-10-04Tbad",
+        "marketPriceMeso": 200000000,
+        "marketPriceAt": "2026-10-04",
+        "marketPriceBasis": "recentSale"
+      }
+    },
+    {
+      "itemName": "__사례 매물 시각 형식 — 달력에 없는 날",
+      "why": "근거 시각은 판매 기간과 같은 엄격한 형식만 읽는다. 못 읽으면 두 구현 모두 낡은 근거로 본다(코덱스 credit-automation-1005 v10)",
+      "row": {
+        "status": "ok",
+        "listingLowestMeso": 100000000,
+        "resultCount": 10,
+        "updatedAt": "2026-09-31",
+        "marketPriceMeso": 200000000,
+        "marketPriceAt": "2026-10-04",
+        "marketPriceBasis": "recentSale"
+      }
+    },
+    {
+      "itemName": "__사례 매물 시각 형식 — 빗금 날짜",
+      "why": "근거 시각은 판매 기간과 같은 엄격한 형식만 읽는다. 못 읽으면 두 구현 모두 낡은 근거로 본다(코덱스 credit-automation-1005 v10)",
+      "row": {
+        "status": "ok",
+        "listingLowestMeso": 100000000,
+        "resultCount": 10,
+        "updatedAt": "2026/10/04",
+        "marketPriceMeso": 200000000,
+        "marketPriceAt": "2026-10-04",
+        "marketPriceBasis": "recentSale"
+      }
+    },
+    {
+      "itemName": "__사례 매물 시각 형식 — 24시",
+      "why": "근거 시각은 판매 기간과 같은 엄격한 형식만 읽는다. 못 읽으면 두 구현 모두 낡은 근거로 본다(코덱스 credit-automation-1005 v10)",
+      "row": {
+        "status": "ok",
+        "listingLowestMeso": 100000000,
+        "resultCount": 10,
+        "updatedAt": "2026-10-04T24:00:00+09:00",
+        "marketPriceMeso": 200000000,
+        "marketPriceAt": "2026-10-04",
+        "marketPriceBasis": "recentSale"
+      }
+    },
+    {
+      "itemName": "__사례 매물 시각 형식 — 앞뒤 공백",
+      "why": "근거 시각은 판매 기간과 같은 엄격한 형식만 읽는다. 못 읽으면 두 구현 모두 낡은 근거로 본다(코덱스 credit-automation-1005 v10)",
+      "row": {
+        "status": "ok",
+        "listingLowestMeso": 100000000,
+        "resultCount": 10,
+        "updatedAt": " 2026-10-04 ",
+        "marketPriceMeso": 200000000,
+        "marketPriceAt": "2026-10-04",
+        "marketPriceBasis": "recentSale"
+      }
+    },
+    {
+      "itemName": "__사례 매물 시각 형식 — 숫자",
+      "why": "근거 시각은 판매 기간과 같은 엄격한 형식만 읽는다. 못 읽으면 두 구현 모두 낡은 근거로 본다(코덱스 credit-automation-1005 v10)",
+      "row": {
+        "status": "ok",
+        "listingLowestMeso": 100000000,
+        "resultCount": 10,
+        "updatedAt": "20261004",
+        "marketPriceMeso": 200000000,
+        "marketPriceAt": "2026-10-04",
+        "marketPriceBasis": "recentSale"
+      }
     }
   ],
   "packageCases": [

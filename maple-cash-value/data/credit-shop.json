@@ -1,0 +1,25 @@
+{
+  "updatedAt": "2026-10-03",
+  "sourceUrl": "https://maplestory.nexon.com/news/update/813",
+  "guideUrl": "https://maplestory.nexon.com/Guide/N23GameInformation/Articles/148024",
+  "startsAt": "2026-09-17",
+  "earnRate": 0.05,
+  "minCashPrice": 10,
+  "mileageEndsAt": "2026-11-19T00:00:00+09:00",
+  "note": "넥슨캐시 구매 금액의 5%가 메이플크레딧으로 쌓인다(10캐시 미만·선물 제외, 한도 없음, 1년). 크레딧은 크레딧샵에서만 쓰고, 크레딧샵 상품은 사용 전 1회 교환할 수 있다. name 은 원장 표기를 따른다.",
+  "items": [
+    { "name": "플래티넘 카르마의 가위", "credits": 5900 },
+    { "name": "위습의 원더베리", "credits": 5400 },
+    { "name": "루나 크리스탈", "credits": 3900 },
+    { "name": "메이플 로얄 스타일", "credits": 2200 },
+    { "name": "프리미엄 마스터피스", "credits": 1900 },
+    { "name": "컬러링 프리즘 프로", "credits": 25000 },
+    { "name": "무기 이펙트 프리즘", "credits": 15000 },
+    { "name": "프리미엄 헤어쿠폰", "credits": 5500 },
+    { "name": "프리미엄 성형쿠폰", "credits": 3500 },
+    { "name": "커스텀 믹스염색 쿠폰", "credits": 48000 },
+    { "name": "커스텀 믹스 컬러렌즈 쿠폰", "credits": 24000 },
+    { "name": "밸런스 믹스 염색 쿠폰", "credits": 24000 },
+    { "name": "밸런스 믹스 컬러렌즈 쿠폰", "credits": 12000 }
+  ]
+}
