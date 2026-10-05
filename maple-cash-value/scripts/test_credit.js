@@ -19,7 +19,7 @@ const consts = src.match(/^const (FIXED_MILEAGE_MESO_RATE|DEFAULT_CREDIT_SHOP) =
 const build = (nowIso, prices) => new Function('prices', 'nowMs',
   consts + `
   const realNow = Date.now; Date.now = () => nowMs;
-  const state = { settings: { discountRate: 6, ahFeeRate: 5, baseMpRate: 6990 }, creditShop: null, creditRate: { rate: 0, name: '' } };
+  const state = { settings: { discountRate: 6, ahFeeRate: 5, baseMpRate: 6990 }, creditShop: null, creditRate: { rate: 0, name: '' }, useMileage: true };
   const priceFor = target => prices[target.name] || { meso: 0, source: 'unverified' };
   ` + ['normalizeCreditShop', 'mileageUsable', 'effectiveMileageType', 'creditMesoRate', 'calculateEfficiency'].map(grab).join('\n') + `
   return { state, normalizeCreditShop, creditMesoRate, calculateEfficiency, mileageUsable };`)(prices, new Date(nowIso).getTime());
@@ -35,14 +35,20 @@ const near = (label, got, want) => {
   const m = build('2026-10-05T12:00:00+09:00', {});
   m.state.creditShop = m.normalizeCreditShop({});
   m.state.creditRate = { rate: 50000, name: 'x' };
-  near('적립 포함', m.calculateEfficiency({ cashPrice: 10000, mileageType: 'none' }, 5e8), 9400 / ((5e8 * .95 + 500 * 50000 * .95) / 1e8));
-  near('10캐시 미만은 적립 없음', m.calculateEfficiency({ cashPrice: 5 }, 5e8), 4.7 / (5e8 * .95 / 1e8));
-  near('마일리지 30% (소멸 전)', m.calculateEfficiency({ cashPrice: 10000, mileageType: 'partial' }, 5e8),
+  near('기본은 크레딧을 뺀 값', m.calculateEfficiency({ cashPrice: 10000, mileageType: 'none' }, 5e8), 9400 / (5e8 * .95 / 1e8));
+  near('적립 포함', m.calculateEfficiency({ cashPrice: 10000, mileageType: 'none' }, 5e8, true), 9400 / ((5e8 * .95 + 500 * 50000 * .95) / 1e8));
+  near('10캐시 미만은 적립 없음', m.calculateEfficiency({ cashPrice: 5 }, 5e8, true), 4.7 / (5e8 * .95 / 1e8));
+  near('마일리지 30% (소멸 전)', m.calculateEfficiency({ cashPrice: 10000, mileageType: 'partial' }, 5e8, true),
     (7000 * .94 + 3000 * (10000 * 6990 / 1e8)) / ((5e8 * .95 + 350 * 50000 * .95) / 1e8));
   near('마일리지 전액 (소멸 전)', m.calculateEfficiency({ cashPrice: 10000, mileageType: 'full' }, 5e8), (10000 * (10000 * 6990 / 1e8)) / (5e8 * .95 / 1e8));
+  // 남은 마일리지 사용을 끄면(기본) 30%·전액 상품도 넥슨캐시 전액 결제로 본다
+  m.state.useMileage = false;
+  near('마일리지 꺼짐 30%', m.calculateEfficiency({ cashPrice: 10000, mileageType: 'partial' }, 5e8), 9400 / (5e8 * .95 / 1e8));
+  near('마일리지 꺼짐 전액', m.calculateEfficiency({ cashPrice: 10000, mileageType: 'full' }, 5e8, true), 9400 / ((5e8 * .95 + 500 * 50000 * .95) / 1e8));
+  m.state.useMileage = true;
   near('메소 값 없음', m.calculateEfficiency({ cashPrice: 10000 }, 0), Infinity);
   m.state.creditRate = { rate: 0, name: '' };
-  near('크레딧 가치 모름', m.calculateEfficiency({ cashPrice: 10000 }, 5e8), 9400 / (5e8 * .95 / 1e8));
+  near('크레딧 가치 모름', m.calculateEfficiency({ cashPrice: 10000 }, 5e8, true), 9400 / (5e8 * .95 / 1e8));
 }
 // 2) 마일리지가 사라진 뒤에는 30%·전액 결제를 계산하지 않는다
 {
@@ -50,7 +56,7 @@ const near = (label, got, want) => {
   m.state.creditShop = m.normalizeCreditShop({});
   m.state.creditRate = { rate: 50000, name: 'x' };
   near('소멸 시각부터 사용 불가', m.mileageUsable(), false);
-  near('소멸 뒤 30%', m.calculateEfficiency({ cashPrice: 10000, mileageType: 'partial' }, 5e8), 9400 / ((5e8 * .95 + 500 * 50000 * .95) / 1e8));
+  near('소멸 뒤 30%', m.calculateEfficiency({ cashPrice: 10000, mileageType: 'partial' }, 5e8, true), 9400 / ((5e8 * .95 + 500 * 50000 * .95) / 1e8));
   const before = build('2026-11-18T23:59:59+09:00', {});
   before.state.creditShop = before.normalizeCreditShop({});
   near('소멸 직전은 사용 가능', before.mileageUsable(), true);

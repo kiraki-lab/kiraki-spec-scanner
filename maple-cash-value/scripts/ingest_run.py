@@ -134,7 +134,9 @@ def build(dump, account, character, lost=(), note=None):
 def cmd_build(args):
     dump = json.loads(io.open(args.dump, encoding='utf-8').read())
     run = build(dump, args.account, args.character, args.lost or (), args.note)
-    out = DATA / ('collection-%s-account%d.json' % (run['date'], args.account))
+    # 같은 날 같은 캐릭터로 한 번 더 돌리면 --part b 처럼 붙여 앞 회차 파일을 덮지 않는다.
+    part = ('-' + args.part) if args.part else ''
+    out = DATA / ('collection-%s-account%d%s.json' % (run['date'], args.account, part))
     if out.exists() and not args.force:
         raise SystemExit('이미 있다: %s (덮으려면 --force)' % out.name)
     out.write_text(json.dumps(run, ensure_ascii=False, indent=2), encoding='utf-8')
@@ -152,6 +154,7 @@ def main():
     b = sub.add_parser('build'); b.add_argument('dump')
     b.add_argument('--account', type=int, required=True); b.add_argument('--character', required=True)
     b.add_argument('--lost', action='append'); b.add_argument('--note'); b.add_argument('--force', action='store_true')
+    b.add_argument('--part', default='')
     b.set_defaults(fn=cmd_build)
     args = parser.parse_args()
     args.fn(args)

@@ -4043,3 +4043,34 @@ html[data-theme="pink"] .channel-link:hover {
   flex: none;
   font-weight: 900;
 }
+
+.premise-line {
+  margin: 0 0 10px;
+  padding: 0 4px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #7a6470;
+}
+
+.evidence-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  border: 1px solid #d9cfe6;
+  background: #f6f2fb;
+  color: #5b4a78;
+  white-space: nowrap;
+}
+
+.evidence-pill.observed {
+  border-color: #ead9b0;
+  background: #fdf7e6;
+  color: #7a5a12;
+}
+
+.credit-meta {
+  display: block;
+  color: #8a6a9a;
+}

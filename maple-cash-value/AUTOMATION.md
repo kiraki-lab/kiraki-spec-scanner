@@ -77,6 +77,15 @@ python scripts/publish_prices.py --baseline data/auction-prices.before-<날짜>.
 
 `verification/collection-<날짜>-account<N>.md` 에 횟수, 확보 건수, 매물 0건, 못 찾은 이름, 검증 결과, 커밋을 적는다. 수집 원본(`data/collection-*.json`)에는 캐릭터 이름이 들어 있어 공개 저장소에 올리지 않는다.
 
+## 7. 영상에 쓸 때
+
+기준은 `PRICE_VERIFICATION.md` 12절이다. 촬영 당일 상위 품목의 매물·체결을 다시 조사해 올린 뒤:
+
+1. 계산기 화면에서 `남은 마일리지 사용` · `재판매 대기 포함`이 꺼져 있는지 본다.
+2. 개발자 도구나 브라우저 도구로 `JSON.stringify(kirakiSnapshot())` 를 실행해 `page.json` 으로 저장한다.
+3. `python scripts/make_snapshot.py page.json --label "<영상 이름>"` → `snapshots/<날짜>.json · .md`
+4. 표에서 `체결 기록` · `거래 적음` · 차이 20% 이상인 상품을 확인하고 영상에서 말로 밝힌다.
+
 ## 사람이 판단할 일이 생기는 경우
 
 | 상황 | 할 일 |

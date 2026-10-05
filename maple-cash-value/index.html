@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Jua&amp;display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./styles.css?v=0.14.4">
+  <link rel="stylesheet" href="./styles.css?v=0.15.0">
 </head>
 <body>
   <div class="app-shell">
@@ -127,6 +127,18 @@
         <div class="section-title">
           <h2>효율 목록</h2>
           <div class="table-heading-actions">
+            <label id="mileage-toggle-wrap" class="package-toggle resting-toggle" title="남은 마일리지로 30% 깎아 사는 경우로 계산합니다. 마일리지는 2026-09-17 부터 새로 쌓이지 않고 11-19 에 사라집니다.">
+              <input id="mileage-toggle" type="checkbox">
+              <span class="toggle-track" aria-hidden="true"></span>
+              <strong>남은 마일리지 사용</strong>
+              <em id="mileage-toggle-state">OFF</em>
+            </label>
+            <label class="package-toggle resting-toggle" title="넥슨캐시로 사서 팔 수 있다는 근거가 공식 문구나 크레딧샵 안내에 있는 상품만 봅니다.">
+              <input id="official-toggle" type="checkbox">
+              <span class="toggle-track" aria-hidden="true"></span>
+              <strong>공식 근거만</strong>
+              <em id="official-toggle-state">OFF</em>
+            </label>
             <label class="package-toggle resting-toggle" title="지금은 안 팔지만 다시 판매하는 상품도 같이 봅니다.">
               <input id="resting-toggle" type="checkbox">
               <span class="toggle-track" aria-hidden="true"></span>
@@ -145,6 +157,7 @@
             <span id="row-count" class="count-pill">0개</span>
           </div>
         </div>
+        <p id="premise-line" class="premise-line"></p>
         <p id="resting-banner" class="resting-banner" hidden>
           <strong>안내</strong>
           <span id="resting-banner-text"></span>
@@ -230,6 +243,6 @@
     </tr>
   </template>
 
-  <script type="module" src="./app.js?v=0.18.0"></script>
+  <script type="module" src="./app.js?v=0.19.0"></script>
 </body>
 </html>

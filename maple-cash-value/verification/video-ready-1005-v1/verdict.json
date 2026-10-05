@@ -1,0 +1,31 @@
+{
+  "verdict": "REVISE",
+  "findings": [
+    {
+      "severity": "medium",
+      "file": "maple-cash-value/app.js",
+      "claim": "LOW_LIQUIDITY_ZERO_COUNT_RULE_DIVERGENCE",
+      "evidence": "maple-cash-value/PRICE_VERIFICATION.md:570은 체결 200건 미만 또는 매물 3건 미만이면 표시하도록 규정한다. app.js:593~594는 각각 0보다 커야 한다는 조건을 추가한다. 실제 lowLiquidityNote 함수를 추출해 호출한 결과, 채택가 1억·체결 500건·매물 0건 입력에서 빈 문자열이 반환됐다. 문서의 0건 처리와 구현이 다르다."
+    },
+    {
+      "severity": "medium",
+      "file": "maple-cash-value/PRICE_VERIFICATION.md",
+      "claim": "NEW_ITEM_VERIFICATION_BASELINE_MISSING",
+      "evidence": "maple-cash-value/PRICE_VERIFICATION.md:530~578의 12절에는 교환 근거 등급표는 있으나 체크리스트가 요구한 신규 상품 7종의 캐시가·판매기간 표가 없다. data/items.json의 items[id=688~694]에는 각각 캐시가와 availability가 있지만, 대조할 문서 기준값이 없어 필수 정합 검증을 완료할 수 없다."
+    },
+    {
+      "severity": "low",
+      "file": "maple-cash-value/PRICE_VERIFICATION.md",
+      "claim": "MARKET_BASIS_COUNTS_STALE",
+      "evidence": "maple-cash-value/PRICE_VERIFICATION.md:284~286은 recentSale 90행·legacyMax 31행·없음 452행으로 기재한다. 현재 data/auction-prices.json의 prices[].marketPriceBasis를 직접 집계하면 recentSale 96행·legacyMax 31행·없음 446행이다. 문서:311의 시세 축 없는 452행 설명도 현재 집계와 다르다."
+    }
+  ],
+  "unverified": [
+    "NATURALNESS_UNVERIFIED: 소리를 듣지 않았으므로 음성·BGM·음량 체감은 확인하지 않았다. 이번 대상에는 음성 산출물이 없다.",
+    "신규 상품 7종의 캐시가·판매기간은 문서 기준표가 없어 대조하지 못했다. 공식 사이트 조회는 요청의 네트워크 금지에 따라 수행하지 않았다.",
+    "브라우저의 실제 화면과 스냅숏을 실행해 비교하지 않았다. 순위·효율의 공통 함수 사용과 스냅숏 검사 조건은 코드로 확인했다.",
+    "수집·병합의 파이썬 단위 검사는 지시대로 실행하지 않고 구현과 테스트 코드를 읽었다. 실제 경매장 수집·자정 초기화 동작은 확인하지 않았다.",
+    "추가 대조에 사용한 감사 코드·컬렉션·경매장 원장·합성 사례는 입력 SHA 고정 표에 포함되지 않아 지정된 승인 버전과의 동일성은 확인하지 못했다."
+  ],
+  "external_actions": 0
+}
