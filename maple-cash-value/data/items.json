@@ -3232,11 +3232,6 @@
       "mileageType": "none",
       "tradable": true,
       "rankEligible": true,
-      "availability": {
-        "type": "limited",
-        "startAt": "2026-07-23T10:00:00+09:00",
-        "endAt": "2026-08-19T23:59:00+09:00"
-      },
       "conditions": {
         "nexonCashOnly": true,
         "maplePointsAllowed": false,
@@ -3251,6 +3246,13 @@
         "noticeId": 638,
         "url": "https://maplestory.nexon.com/News/CashShop/Sale/638",
         "imageSha256": "2aac3fe20e47bb6d205a127898e71864d8588cadffde1f153d0788af84e080e5"
+      },
+      "collection": "boutique-gift",
+      "exchangeEvidence": {
+        "level": "official",
+        "note": "공지 651 이미지: 넥슨캐시로 구매 시 다른 캐릭터에게 선물하기 가능, 1회 교환 가능",
+        "checkedAt": "2026-10-24",
+        "sourceUrl": "https://maplestory.nexon.com/News/CashShop/651"
       }
     },
     {
@@ -3271,11 +3273,6 @@
           "quantity": 10
         }
       ],
-      "availability": {
-        "type": "limited",
-        "startAt": "2026-07-23T10:00:00+09:00",
-        "endAt": "2026-08-19T23:59:00+09:00"
-      },
       "conditions": {
         "nexonCashOnly": true,
         "maplePointsAllowed": false,
@@ -3291,6 +3288,13 @@
         "noticeId": 638,
         "url": "https://maplestory.nexon.com/News/CashShop/Sale/638",
         "imageSha256": "2aac3fe20e47bb6d205a127898e71864d8588cadffde1f153d0788af84e080e5"
+      },
+      "collection": "boutique-gift",
+      "exchangeEvidence": {
+        "level": "official",
+        "note": "공지 651 이미지: 넥슨캐시로 구매 시 다른 캐릭터에게 선물하기 가능, 1회 교환 가능",
+        "checkedAt": "2026-10-24",
+        "sourceUrl": "https://maplestory.nexon.com/News/CashShop/651"
       }
     },
     {

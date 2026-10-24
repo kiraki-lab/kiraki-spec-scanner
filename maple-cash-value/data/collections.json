@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-09-23T00:00:00+09:00",
+  "updatedAt": "2026-10-24",
   "note": "주기 판매 컬렉션의 판매 회차. 상품은 items.json 에서 \"collection\": <id> 로 가리킨다. 다음 회차가 공지되면 scripts/add_collection_run.py 로 회차 하나만 추가한다. 규칙은 PRICE_VERIFICATION.md 10절.",
   "collections": {
     "boss": {
@@ -144,6 +144,27 @@
         }
       ],
       "note": "2025-12-18 회차 이름은 「프렌즈 월드 & 초월자」라 아니마가 들어 있었는지 확인하지 못했다."
+    },
+    "boutique-gift": {
+      "name": "부티크 기프트",
+      "recurring": true,
+      "runs": [
+        {
+          "startAt": "2026-07-23T10:00:00+09:00",
+          "endAt": "2026-08-19T23:59:00+09:00",
+          "notice": 638,
+          "title": "부티크 기프트",
+          "sourceUrl": "https://maplestory.nexon.com/News/CashShop/Sale/638"
+        },
+        {
+          "startAt": "2026-10-22T10:00:00+09:00",
+          "endAt": "2026-11-18T23:59:00+09:00",
+          "notice": 651,
+          "title": "10월 22일 캐시아이템 업데이트 - 부티크 기프트",
+          "sourceUrl": "https://maplestory.nexon.com/News/CashShop/651"
+        }
+      ],
+      "note": "10-22 회차: 공지 651 목록 머리의 판매 기간 '2026년 10월 22일 10시 00분 ~ 11월 18일 23시 59분'을 시작·끝으로 적었다(본문은 '점검 후'). 공지 이미지로 확인: 3,300캐시(1개)·33,000캐시(10개), 넥슨캐시로만 구매, 메이플포인트·마일리지 사용 불가, 7일 이내 사용, 1회 교환 가능. 가격·조건은 07-23 회차와 같다."
     }
   }
 }
