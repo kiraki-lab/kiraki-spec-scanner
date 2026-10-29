@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-10-28T22:41:44.982Z",
+  "generatedAt": "2026-10-29T16:04:53.366Z",
   "source": "nexon-open-api",
   "endpoint": "/maplestory/v1/notice-cashshop",
   "status": "ok",
@@ -29,7 +29,7 @@
         "얼굴장식 교환권",
         "얼굴장식 커스텀 스킨 쿠폰"
       ],
-      "summary": ".b_srch{opacity:0;color:transparent;-webkit-text-fill-color:transparent;word-break:keep-all;overflow-wrap:anywhere} .b_srch::search-text,.b_srch::search-text:current{color:transparent;-webkit-text-fill-color:transparent;background:transpare"
+      "summary": "포근복닥 가디건 세트 선택권에서 지급되는 남/여 신발이 서로 반대로 기재된 내용을 수정하였습니다. (2026년 10월 27일(화) 오전 10시 53분 수정) ------------------------------------------------------------ .b_srch{opacity:0;color:transparent;-webkit-text-fill-color:transparent;word-break:keep-all"
     },
     {
       "id": 650,
