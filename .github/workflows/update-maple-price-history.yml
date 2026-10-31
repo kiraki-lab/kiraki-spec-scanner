@@ -1,0 +1,48 @@
+name: Update Maple Price History
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'maple-cash-value/data/auction-prices.json'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: maple-price-history
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # 원장의 조사 회차가 전부 git 이력에 있으므로 끝까지 받는다.
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Build price history
+        run: python maple-cash-value/scripts/build_price_history.py
+
+      # 이 워크플로는 가격 원장을 바꾸지 않는다. 바뀌었으면 멈춘다.
+      - name: Check ledger untouched
+        run: git diff --exit-code -- maple-cash-value/data/auction-prices.json
+
+      - name: Commit price history
+        run: |
+          if git diff --quiet -- maple-cash-value/data/price-history.json; then
+            echo "No price history changes."
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add maple-cash-value/data/price-history.json
+            git commit -m "Update Maple price history [skip ci]"
+            git pull --rebase origin main
+            git push
+          fi
