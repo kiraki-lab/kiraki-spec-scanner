@@ -51,6 +51,14 @@ window.__kr = (() => {
       return { name: p.find(x => !/^\d+$/.test(x)), qty: q ? parseInt(q) : 1, per: ms[0] || 0, date: p.find(x => /^\d{4}-\d{2}-\d{2}$/.test(x)) || null };
     });
   };
+  // 검색이 나갔는가. 새 검색 키가 붙었으면 나간 것이다(카운터는 탭이 느리면 수십 초 늦게 바뀐다).
+  // 키가 그대로면 카운터가 올랐을 때만 나간 것으로 본다. 같은 품목 재조회는 주소가 안 바뀔 수 있어서다.
+  // 자정이 끼면 카운터가 되감겨 오르내림을 믿을 수 없으므로 새 키만 본다.
+  const searchWent = ({ before, now, dayChanged, keyBefore, keyNow }) => {
+    if (now === null) return false;
+    const newKey = Boolean(keyNow) && keyNow !== keyBefore;
+    return dayChanged ? newKey : newKey || now > before;
+  };
   const fire = (el, types) => { for (const t of types) el.dispatchEvent(new MouseEvent(t, { bubbles: true, cancelable: true, view: window })); };
   const CLICK = ['pointerdown', 'mousedown', 'pointerup', 'mouseup', 'click'];
 
@@ -61,7 +69,7 @@ window.__kr = (() => {
     Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value').set.call(cb, name);
     cb.focus(); cb.dispatchEvent(new Event('input', { bubbles: true }));
     let opt = null, seen = [];
-    for (let i = 0; i < 20 && !opt; i++) {
+    for (let i = 0; i < 40 && !opt; i++) {
       await sleep(300);
       const lb = document.getElementById(cb.getAttribute('aria-controls'));
       if (!lb) continue;
@@ -80,8 +88,8 @@ window.__kr = (() => {
     const tab = [...document.querySelectorAll('a,button')].find(e => e.textContent.trim() === (type === 'market' ? '시세' : '구매'));
     if (!tab) return false;
     tab.click();
-    for (let i = 0; i < 30 && !location.pathname.startsWith(path); i++) await sleep(300);
-    await sleep(1500);
+    for (let i = 0; i < 60 && !location.pathname.startsWith(path); i++) await sleep(300);
+    await sleep(2500);
     return location.pathname.startsWith(path);
   }
   async function setSort(text) {
@@ -93,17 +101,32 @@ window.__kr = (() => {
     fire(o, CLICK); await sleep(2500);
     return true;
   }
-  async function search(name, type) {
+  async function search(name, type, alive = () => true) {
     if (!await goto(type)) return { itemName: name, type, status: 'nav_failed' };
     const before = counter();
+    const dayBefore = kstDay();   // 카운터를 읽은 날. 아래 자정 판정에 쓴다
     const pk = await pick(name);
     if (!pk.ok) return { itemName: name, type, status: 'no_autocomplete', seen: pk.seen.slice(0, 5), counter: before, at: new Date().toISOString() };
+    // 자동완성을 기다리는 사이 멈췄으면 Enter 를 누르지 않는다. 눌리면 횟수만 쓰고 새 회차 화면을 흔든다.
+    if (!alive()) return { itemName: name, type, status: 'cancelled' };
+    const keyOf = () => (location.search.match(/(?:buy|price)SearchKey=([0-9a-f-]+)/) || [])[1] || '';
+    // Enter 전에 읽는다. 뒤에 읽으면 빠르게 붙은 새 키를 옛 키로 착각한다.
+    const keyBefore = keyOf();
     const cb = document.querySelector('input[role=combobox]'); cb.focus();
     for (const t of ['keydown', 'keypress', 'keyup']) cb.dispatchEvent(new KeyboardEvent(t, { key: 'Enter', code: 'Enter', keyCode: 13, which: 13, bubbles: true, cancelable: true }));
-    // 검색이 나갔는지는 카운터로만 판단한다. 같은 품목을 다시 조회하면 주소가 안 바뀔 수 있다.
+    // 탭이 느리면 화면 반영에 15초 넘게 걸린다(2026-10-30 에 두 번 멈췄다). 45초까지 기다린다.
     let triggered = false;
-    for (let i = 0; i < 50 && !triggered; i++) { await sleep(300); const now = counter(); triggered = now !== null && now !== before; }
-    await sleep(1800);
+    for (let i = 0; i < 150 && !triggered; i++) {
+      await sleep(300);
+      triggered = searchWent({ before, now: counter(), dayChanged: kstDay() !== dayBefore, keyBefore, keyNow: keyOf() });
+    }
+    await sleep(2500);
+    // 로딩 중에는 0건이나 이전 결과가 보일 수 있다. 검색한 이름의 결과가 뜰 때까지 조금 더 본다.
+    for (let i = 0; i < 20 && triggered; i++) {
+      const shown = header();
+      if (shown && shown.name === pk.gameName && shown.count > 0) break;
+      await sleep(300);
+    }
     const want = type === 'market' ? 'TRADE_DATE_DESC' : 'PRICE_PER_ITEM_ASC';
     const h = header();
     if (triggered && sortOf() !== want && h && h.count > 0) await setSort(type === 'market' ? '최신 판매 시간순' : '개당 낮은 가격순');
@@ -132,7 +155,7 @@ window.__kr = (() => {
       if (st.results.some(r => r.itemName === name && r.type === type && ['searched', 'no_autocomplete'].includes(r.status))) continue;
       let r;
       for (;;) {
-        try { r = await search(name, type); } catch (e) { r = { itemName: name, type, status: 'error', msg: String(e) }; }
+        try { r = await search(name, type, alive); } catch (e) { r = { itemName: name, type, status: 'error', msg: String(e) }; }
         if (!alive()) return;
         // 눌렀는데 카운터가 안 오르고 한도에 차 있으면 소진이다. 날짜가 넘어갈 때까지 기다렸다가 같은 품목을 다시 한다.
         if (r.status !== 'not_triggered' || counter() < LIMIT) break;
@@ -185,6 +208,6 @@ window.__kr = (() => {
     a.textContent = 'KRDUMP_START' + JSON.stringify({ character: st.character, state: st.state, checksum: String(checksum), results: compact }) + 'KRDUMP_END';
     return compact.length + ' rows · checksum ' + checksum;
   };
-  return { run, status, dump, stop, clear: () => { gen++; localStorage.removeItem(KEY); }, counter, character, search };
+  return { run, status, dump, stop, clear: () => { gen++; localStorage.removeItem(KEY); }, counter, character, search, searchWent };
 })();
 'collector ready';

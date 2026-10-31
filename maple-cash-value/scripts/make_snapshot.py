@@ -48,8 +48,8 @@ def main():
         sys.exit('순위와 효율 순서가 다르다')
     settings = snap['settings']
     discount = float(settings.get('discountRate') or 0)
-    if settings.get('useMileage') or settings.get('includeResting'):
-        sys.exit('남은 마일리지 사용·재판매 대기 포함을 끈 화면에서 뽑아야 한다')
+    if settings.get('useMileage') or settings.get('includeResting') or settings.get('useCredit'):
+        sys.exit('남은 마일리지 사용·재판매 대기 포함·크레딧 반영을 끈 화면에서 뽑아야 한다')
 
     taken = datetime.fromisoformat(snap['takenAt'].replace('Z', '+00:00')).astimezone(KST)
     day = taken.date().isoformat()

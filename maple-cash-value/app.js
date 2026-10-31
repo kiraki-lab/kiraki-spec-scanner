@@ -132,6 +132,8 @@ const state = {
   useMileage: false,
   // 교환 근거가 공식 문구·크레딧샵 명시인 상품만 본다(체결 기록뿐인 상품은 숨김).
   officialOnly: false,
+  // 쌓이는 크레딧 값까지 순위에 넣는다. 모아야 쓸 수 있으므로 기본은 끈다(12절).
+  useCredit: false,
   saleSearch: '',
   saleGroupFilter: '',
   saleTypeFilter: '',
@@ -589,7 +591,7 @@ function saleMetaText(item, info) {
 // 교환 근거 등급. official = 공지에 넥슨캐시 구매분 교환이 적힘, creditShop = 크레딧샵 구매분 교환이 공식,
 // ingame = 게임 안 구매 화면에서 확인, observed = 경매장 체결 기록뿐.
 const EXCHANGE_EVIDENCE_LABEL = Object.freeze({
-  official: '공식 문구', ingame: '게임 내 확인', creditShop: '크레딧샵 명시', observed: '체결 기록'
+  official: '공지에 교환 가능', ingame: '캐시샵에서 교환 확인', creditShop: '크레딧샵 교환 가능', observed: '경매장 거래 중'
 });
 
 function exchangeEvidenceLevel(item) {
@@ -626,7 +628,7 @@ function renderEvidencePill(item) {
   const level = exchangeEvidenceLevel(item);
   if (!level) return '';
   const note = item.exchangeEvidence.note ? ` title="${escapeAttribute(item.exchangeEvidence.note)}"` : '';
-  return `<span class="evidence-pill ${level}"${note}>교환 근거 · ${EXCHANGE_EVIDENCE_LABEL[level]}</span>`;
+  return `<span class="evidence-pill ${level}"${note}>${EXCHANGE_EVIDENCE_LABEL[level]}</span>`;
 }
 
 function isRankableSale(item) {
@@ -640,6 +642,7 @@ function loadViewSettings() {
     const saved = JSON.parse(localStorage.getItem(VIEW_KEY) || '{}');
     state.includeResting = saved.includeResting === true;
     state.useMileage = saved.useMileage === true;
+    state.useCredit = saved.useCredit === true;
     state.officialOnly = saved.officialOnly === true;
   } catch (_) {
     state.includeResting = false;
@@ -651,7 +654,7 @@ function loadViewSettings() {
 function persistViewSettings() {
   try {
     localStorage.setItem(VIEW_KEY, JSON.stringify({
-      includeResting: state.includeResting, useMileage: state.useMileage, officialOnly: state.officialOnly
+      includeResting: state.includeResting, useMileage: state.useMileage, officialOnly: state.officialOnly, useCredit: state.useCredit
     }));
   } catch (_) { /* 저장 못 해도 화면은 그대로 동작한다 */ }
 }
@@ -1227,7 +1230,7 @@ function enrichItems() {
       // 초기값은 경매장 근거가 아니다. 효율을 내지 않는다(5절).
       listingEfficiency: listing.source === 'seed' && !componentList(item.components).length
         ? Infinity
-        : calculateEfficiency(item, listing.meso),
+        : calculateEfficiency(item, listing.meso, state.useCredit),
       creditEfficiency: listing.source === 'seed' && !componentList(item.components).length
         ? Infinity
         : calculateEfficiency(item, listing.meso, true)
@@ -1402,12 +1405,8 @@ function renderStepSummaries(credit) {
   });
   $('#step-mileage').textContent = state.useMileage && mileageUsable() ? '30% 깎아 사기' : '사용 안 함';
   $('#step-credit').textContent = credit.rate > 0
-    ? `1점 ${nf.format(Math.round(credit.rate / 100) * 100)}메소 · 순위 제외`
-    : '순위 제외';
-  $('#step-view').textContent = [
-    state.officialOnly ? '공식 근거만' : '근거 전체',
-    state.includeResting ? '재판매 대기 포함' : '판매 중만'
-  ].join(' · ');
+    ? `1점 ${nf.format(Math.round(credit.rate / 100) * 100)}메소 · ${state.useCredit ? '순위에 반영' : '순위 제외'}`
+    : state.useCredit ? '순위에 반영' : '순위 제외';
 }
 
 // 큰 결론. 1등 상품과 값을 먼저 보이고 2·3위는 작게 붙인다.
@@ -1485,11 +1484,11 @@ function renderWaitingPanel(saleRows, rankByKey, rankChanges) {
   $('#waiting-count').textContent = `${waiting.length}개`;
   setHtml($('#package-rows'), packages.length
     ? packages.map(item => renderListRow(item, rankByKey, rankChanges)).join('')
-    : `<li class="empty">${state.officialOnly ? '공식 근거가 있는 패키지가 없습니다.' : '지금 살 수 있는 패키지가 없습니다.'}</li>`);
+    : `<li class="empty">${state.officialOnly ? '교환이 확인된 패키지가 없습니다.' : '지금 살 수 있는 패키지가 없습니다.'}</li>`);
   const visible = state.waitingListAll ? waiting : waiting.slice(0, WAITING_LIST_LIMIT);
   setHtml($('#waiting-rows'), visible.length
     ? visible.map(item => renderListRow(item, rankByKey, rankChanges)).join('')
-    : `<li class="empty">${state.officialOnly ? '공식 근거가 있는 재판매 대기 상품이 없습니다.' : '재판매를 기다리는 상품이 없습니다.'}</li>`);
+    : `<li class="empty">${state.officialOnly ? '교환이 확인된 재판매 대기 상품이 없습니다.' : '재판매를 기다리는 상품이 없습니다.'}</li>`);
   const more = $('#waiting-more');
   more.hidden = waiting.length <= WAITING_LIST_LIMIT;
   more.textContent = state.waitingListAll ? `${WAITING_LIST_LIMIT}개만 보기` : `전체 ${waiting.length}개 보기`;
@@ -1984,6 +1983,7 @@ function setActiveTab(name, { focus = false } = {}) {
 function restoreDefaults() {
   state.settings = { ...DEFAULT_SETTINGS };
   state.useMileage = false;
+  state.useCredit = false;
   state.officialOnly = false;
   state.includeResting = false;
   persistSettings();
@@ -2556,7 +2556,7 @@ on('#major-filter-reset', 'click', event => {
 });
 
 function syncViewToggles() {
-  const pairs = [['#mileage-toggle', '#mileage-toggle-state', state.useMileage], ['#official-toggle', '#official-toggle-state', state.officialOnly]];
+  const pairs = [['#mileage-toggle', '#mileage-toggle-state', state.useMileage], ['#official-toggle', '#official-toggle-state', state.officialOnly], ['#credit-toggle', '#credit-toggle-state', state.useCredit]];
   for (const [input, label, value] of pairs) {
     if ($(input)) $(input).checked = value;
     if ($(label)) $(label).textContent = value ? 'ON' : 'OFF';
@@ -2583,7 +2583,7 @@ function renderPremiseLine(updatedAt) {
     `가격 ${formatDate(updatedAt)} 기준`,
     `상품권 할인 ${Number(state.settings.discountRate || 0)}%`,
     `경매장 수수료 ${Number(state.settings.ahFeeRate || 0)}%`,
-    '크레딧 적립은 뺀 값',
+    state.useCredit ? '크레딧 적립 포함' : '크레딧 적립은 뺀 값',
     state.useMileage && mileageUsable() ? `남은 마일리지 30% 사용(1점을 ${mileageWon}원으로 침)` : '',
     '파는 데 걸리는 시간은 넣지 않음'
   ].filter(Boolean);
@@ -2597,7 +2597,7 @@ window.kirakiSnapshot = () => {
   return {
     takenAt: nowIso(),
     auctionUpdatedAt: latestAuctionUpdatedAtForPremise(),
-    settings: { ...state.settings, useMileage: state.useMileage && mileageUsable(), officialOnly: state.officialOnly, includeResting: state.includeResting },
+    settings: { ...state.settings, useMileage: state.useMileage && mileageUsable(), useCredit: state.useCredit, officialOnly: state.officialOnly, includeResting: state.includeResting },
     credit: { ...state.creditRate, earnRate: state.creditShop.earnRate },
     rows: rows.filter(item => ranks.has(rowIdentity(item))).map(item => ({
       rank: ranks.get(rowIdentity(item)), name: item.name, cashPrice: item.cashPrice,
@@ -2614,7 +2614,7 @@ window.kirakiSnapshot = () => {
   };
 };
 
-for (const [selector, key] of [['#mileage-toggle', 'useMileage'], ['#official-toggle', 'officialOnly']]) {
+for (const [selector, key] of [['#mileage-toggle', 'useMileage'], ['#official-toggle', 'officialOnly'], ['#credit-toggle', 'useCredit']]) {
   on(selector, 'change', event => {
     state[key] = event.target.checked;
     persistViewSettings();
