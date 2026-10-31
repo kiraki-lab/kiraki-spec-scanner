@@ -131,7 +131,7 @@ button, summary { cursor: pointer; -webkit-tap-highlight-color: transparent; }
   display: flex; justify-content: space-between; align-items: center; gap: 16px;
   min-height: 72px; border-bottom: 1px solid var(--line);
 }
-.brand { display: inline-flex; align-items: center; gap: 10px; min-width: 0; font-size: 15px; font-weight: 800; text-decoration: none; }
+.brand { display: inline-flex; align-items: center; gap: 10px; min-width: 0; min-height: 40px; font-size: 15px; font-weight: 800; text-decoration: none; }
 .brand-mark {
   flex: none; display: grid; place-items: center; width: 32px; height: 32px; border-radius: 10px;
   background: var(--accent); color: var(--accent-ink); font-family: "Jua", sans-serif; font-size: 18px;
@@ -147,13 +147,14 @@ button, summary { cursor: pointer; -webkit-tap-highlight-color: transparent; }
 
 .channel-link, .ghost-button {
   flex: none; display: inline-flex; align-items: center; justify-content: center;
-  min-height: 36px; padding: 0 12px; border: 1px solid var(--line); border-radius: 10px;
+  min-height: 40px; padding: 0 12px; border: 1px solid var(--line); border-radius: 10px;
   background: transparent; color: var(--ink-soft); font-size: 12px; font-weight: 700; text-decoration: none; white-space: nowrap;
 }
 .channel-link:hover, .ghost-button:hover { background: var(--panel-soft); }
 .ghost-button:disabled { opacity: .4; cursor: default; }
 .wide-button { width: 100%; margin-top: 12px; }
 .link-button {
+  display: inline-flex; align-items: center; min-height: 40px;
   border: 0; padding: 0; background: none; color: var(--accent-text);
   font-size: 12px; font-weight: 700; text-decoration: underline; text-underline-offset: 2px;
 }
@@ -190,7 +191,7 @@ button, summary { cursor: pointer; -webkit-tap-highlight-color: transparent; }
   background: var(--tab-active); color: var(--tab-active-ink); font-size: 11px; font-weight: 800;
 }
 .head-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-left: auto; }
-.head-tools select { width: auto; min-height: 36px; }
+.head-tools select { width: auto; min-height: 40px; }
 .count-pill, .best-pill {
   padding: 3px 9px; border-radius: 999px; background: var(--panel-soft); color: var(--ink-soft); font-size: 12px; font-weight: 700; white-space: nowrap;
 }
@@ -262,7 +263,7 @@ input[type="number"], input[type="search"], select {
 }
 input:focus, select:focus { outline: 2px solid var(--accent-text); outline-offset: 0; border-color: transparent; }
 
-.switch { display: flex; align-items: center; gap: 8px; min-height: 30px; cursor: pointer; }
+.switch { display: flex; align-items: center; gap: 8px; min-height: 40px; cursor: pointer; }
 .switch input { position: absolute; opacity: 0; width: 1px; height: 1px; }
 .switch strong { font-size: 13px; }
 .switch em { margin-left: auto; color: var(--muted); font-size: 11px; font-style: normal; font-weight: 800; }
@@ -316,7 +317,7 @@ input:focus, select:focus { outline: 2px solid var(--accent-text); outline-offse
 [aria-expanded="true"] > .row-chevron { transform: rotate(45deg); }
 
 .row-detail { display: grid; gap: 8px; margin: 0 0 12px 62px; padding: 12px 14px; border-radius: 12px; background: var(--panel-soft); font-size: 13px; }
-.row-detail dl { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 6px 16px; }
+.row-detail dl { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 230px)); gap: 6px 24px; }
 .row-detail dl div { display: flex; justify-content: space-between; gap: 8px; }
 .row-detail dt { color: var(--muted); font-size: 12px; }
 .row-detail dd { font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
@@ -328,8 +329,8 @@ input:focus, select:focus { outline: 2px solid var(--accent-text); outline-offse
 .sale-editor-row label { display: flex; flex: 1 1 220px; align-items: center; gap: 6px; min-width: 0; font-size: 12px; font-weight: 700; }
 .sale-editor-row label span { flex: 1 1 auto; min-width: 4em; }
 .sale-editor-row em { color: var(--muted); font-style: normal; }
-.sale-editor-row .sale-editor-input { flex: 0 0 96px; width: 96px; padding: 6px 8px; border: 1px solid var(--line); border-radius: 8px; background: var(--field); color: inherit; font: inherit; text-align: right; }
-.sale-editor-save { padding: 6px 12px; border: 0; border-radius: 8px; background: var(--accent); color: var(--accent-ink); font: inherit; font-size: 12px; font-weight: 700; cursor: pointer; }
+.sale-editor-row .sale-editor-input { flex: 0 0 96px; width: 96px; min-height: 40px; padding: 6px 8px; border: 1px solid var(--line); border-radius: 8px; background: var(--field); color: inherit; font: inherit; text-align: right; }
+.sale-editor-save { min-height: 40px; padding: 6px 14px; border: 0; border-radius: 8px; background: var(--accent); color: var(--accent-ink); font: inherit; font-size: 12px; font-weight: 700; cursor: pointer; }
 .local-pill { color: var(--warn-text); }
 .data-credit { margin: 24px 0 8px; color: var(--muted); font-size: 11px; text-align: center; }
 
@@ -371,13 +372,13 @@ input:focus, select:focus { outline: 2px solid var(--accent-text); outline-offse
 .mileage-pill.partial { background: var(--info-soft); color: var(--info-text); }
 
 /* 상품별 상세 */
-.filter-row { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr) auto; gap: 12px; align-items: end; }
+.filter-row { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr) auto auto; gap: 12px; align-items: end; }
 .package-switch { min-height: 40px; }
 .package-switch em { margin-left: 2px; }
 .major-row { display: flex; align-items: flex-start; gap: 10px; margin-top: 14px; }
 .major-filter-list, .job-group-list { flex: 1; display: flex; flex-wrap: wrap; gap: 6px; min-width: 0; }
 .major-filter-button, .job-group-button {
-  display: inline-flex; align-items: center; gap: 6px; min-height: 34px; padding: 0 11px; border: 1px solid var(--line); border-radius: 999px;
+  display: inline-flex; align-items: center; gap: 6px; min-height: 40px; padding: 0 12px; border: 1px solid var(--line); border-radius: 999px;
   background: transparent; color: var(--ink-soft); font-size: 12px; font-weight: 700;
 }
 .major-filter-button em, .job-group-button em { color: var(--muted); font-size: 11px; font-style: normal; }
@@ -385,7 +386,7 @@ input:focus, select:focus { outline: 2px solid var(--accent-text); outline-offse
 .major-filter-button.active, .job-group-button.active { border-color: var(--tab-active); background: var(--tab-active); color: var(--tab-active-ink); }
 .major-filter-button.active em, .job-group-button.active em { color: var(--tab-active-sub); }
 .job-group-filter { display: flex; align-items: flex-start; gap: 10px; margin-top: 10px; }
-.job-group-label { flex: none; padding-top: 7px; color: var(--muted); font-size: 12px; font-weight: 700; }
+.job-group-label { flex: none; padding-top: 10px; color: var(--muted); font-size: 12px; font-weight: 700; }
 
 .table-wrap { min-width: 0; }
 table { width: 100%; border-collapse: collapse; }
@@ -406,7 +407,7 @@ td[colspan] { width: auto; text-align: left; }
 .reference-row td { background: var(--panel-soft); }
 
 .component-toggle {
-  display: inline-flex; align-items: center; gap: 4px; margin-top: 4px; padding: 0; border: 0; background: none;
+  display: inline-flex; align-items: center; gap: 4px; min-height: 40px; padding: 0; border: 0; background: none;
   color: var(--accent-text); font-size: 12px; font-weight: 700;
 }
 .component-detail-row td { padding-top: 0; }
@@ -428,10 +429,10 @@ td[colspan] { width: auto; text-align: left; }
 
 .inline-price-editor { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
 .inline-price-row, .inline-market-row { display: flex; align-items: center; gap: 4px; min-width: 0; }
-.inline-price-row input, .inline-market-row input { flex: 1 1 60px; min-width: 0; min-height: 34px; padding: 0 8px; text-align: right; font-variant-numeric: tabular-nums; }
+.inline-price-row input, .inline-market-row input { flex: 1 1 60px; min-width: 0; min-height: 40px; padding: 0 8px; text-align: right; font-variant-numeric: tabular-nums; }
 .inline-price-unit, .inline-market-label { color: var(--muted); font-size: 12px; }
 .inline-market-toggle, .inline-price-save, .inline-market-save {
-  flex: none; min-height: 34px; min-width: 34px; padding: 0 6px; border: 1px solid var(--line); border-radius: 8px;
+  flex: none; min-height: 40px; min-width: 40px; padding: 0 6px; border: 1px solid var(--line); border-radius: 8px;
   background: transparent; color: var(--ink-soft); font-size: 12px; font-weight: 700;
 }
 .inline-market-toggle.has-value { color: var(--accent-text); }
@@ -444,14 +445,14 @@ td[colspan] { width: auto; text-align: left; }
 .market-gap { color: var(--warn-text); font-weight: 700; }
 
 .table-pagination { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 14px; color: var(--ink-soft); font-size: 13px; }
-.page-button { min-width: 38px; font-size: 16px; }
+.page-button { min-width: 40px; font-size: 16px; }
 
 /* 판매 정보 */
-.market-info summary { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 10px; list-style: none; font-size: 16px; }
-.market-info summary::-webkit-details-marker { display: none; }
-.market-info summary::after { content: "+"; margin-left: auto; color: var(--muted); font-weight: 800; }
-.market-info[open] summary::after { content: "-"; }
-.market-info summary span { color: var(--muted); font-size: 12px; }
+.market-info > summary { display: flex; flex-wrap: wrap; align-items: center; gap: 2px 10px; min-height: 40px; list-style: none; font-size: 16px; }
+.market-info > summary::-webkit-details-marker { display: none; }
+.market-info > summary::after { content: "+"; margin-left: auto; color: var(--muted); font-weight: 800; }
+.market-info[open] > summary::after { content: "-"; }
+.market-info > summary span { color: var(--muted); font-size: 12px; }
 .market-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); gap: 20px; margin-top: 14px; }
 .market-grid h3 { margin-bottom: 8px; font-size: 14px; }
 .notice-list, .sale-list { display: grid; gap: 8px; }
@@ -460,12 +461,18 @@ td[colspan] { width: auto; text-align: left; }
 .notice-item > span, .sale-item > span { color: var(--muted); font-size: 12px; }
 .notice-summary { color: var(--ink-soft); font-size: 12px; }
 .notice-tags, .sale-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
-.notice-tag, .sale-tag { padding: 1px 7px; border-radius: 999px; background: var(--panel); color: var(--ink-soft); font-size: 11px; }
+.notice-tag, .sale-tag { padding: 1px 7px; border-radius: 10px; background: var(--panel); color: var(--ink-soft); font-size: 11px; }
 .sale-tag em { margin-left: 4px; color: var(--muted); font-style: normal; }
 .sale-tag.review { background: var(--warn-soft); color: var(--warn-text); }
-.sale-item summary { display: flex; justify-content: space-between; gap: 8px; font-size: 13px; }
+details.sale-item { padding: 0 12px; }
+details.sale-item[open] { padding-bottom: 10px; }
+.sale-item summary { display: flex; justify-content: space-between; align-items: center; gap: 8px; min-height: 40px; padding: 8px 0; list-style: none; font-size: 13px; }
+.sale-item summary::-webkit-details-marker { display: none; }
+.sale-item summary::after { content: "+"; flex: none; color: var(--muted); font-weight: 800; }
+.sale-item[open] summary::after { content: "-"; }
+.sale-item summary strong { flex: 1; min-width: 0; }
 .sale-item summary span { flex: none; color: var(--muted); font-size: 12px; }
-.sale-link { display: inline-block; margin-top: 6px; color: var(--accent-text); font-size: 12px; font-weight: 700; }
+.sale-link { display: inline-flex; align-items: center; min-height: 40px; color: var(--accent-text); font-size: 12px; font-weight: 700; }
 .sale-filters { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-bottom: 10px; }
 
 @media (max-width: 1080px) {
@@ -500,11 +507,11 @@ td[colspan] { width: auto; text-align: left; }
   .row-figures { grid-column: 2 / -1; grid-row: 2; display: flex; justify-content: space-between; gap: 8px; }
   .row-figure { flex-direction: row; gap: 4px; align-items: baseline; }
   /* 순위 대신 표시가 붙는 줄은 표시를 한 줄 위로 올린다. */
-  .row-rank:has(.source-pill) { grid-column: 1 / -1; grid-row: 1; }
-  .row-rank:has(.source-pill) ~ .row-item { grid-column: 1 / 3; grid-row: 2; }
-  .row-rank:has(.source-pill) ~ .row-won { grid-row: 2; }
-  .row-rank:has(.source-pill) ~ .row-chevron { grid-row: 2; }
-  .row-rank:has(.source-pill) ~ .row-figures { grid-column: 1 / -1; grid-row: 3; }
+  .has-tag > .row-rank { grid-column: 1 / -1; grid-row: 1; }
+  .has-tag > .row-item { grid-column: 1 / 3; grid-row: 2; }
+  .has-tag > .row-won { grid-row: 2; }
+  .has-tag > .row-chevron { grid-row: 2; }
+  .has-tag > .row-figures { grid-column: 1 / -1; grid-row: 3; }
   .row-detail { margin-left: 0; }
 
   .filter-row { grid-template-columns: minmax(0, 1fr); }
@@ -541,6 +548,6 @@ td[colspan] { width: auto; text-align: left; }
   .row-chevron { grid-column: 3; }
   .row-won { grid-column: 2 / -1; grid-row: 2; flex-direction: row; justify-content: space-between; align-items: baseline; gap: 8px; text-align: left; }
   .row-figures { grid-row: 3; }
-  .row-rank:has(.source-pill) ~ .row-won { grid-column: 1 / -1; grid-row: 3; }
-  .row-rank:has(.source-pill) ~ .row-figures { grid-row: 4; }
+  .has-tag > .row-won { grid-column: 1 / -1; grid-row: 3; }
+  .has-tag > .row-figures { grid-row: 4; }
 }
