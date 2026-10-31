@@ -108,7 +108,6 @@ const state = {
   auctionRows: [],
   auctionSkips: [],
   sheetAuctionRows: [],
-  sheetDataUpdatedAt: null,
   sheetRefreshPending: false,
   localAuctionRows: [],
   localDataUpdatedAt: null,
@@ -140,8 +139,6 @@ const state = {
   saleReviewFilter: 'all',
   page: 1,
   pageSize: 10,
-  adminItemId: '',
-  priceTargetName: '',
   stableRowOrder: [],
   currentRanks: new Map(),
   pendingPreviousRanks: null,
@@ -223,14 +220,6 @@ function mesoToInputUnit(value) {
 
 function mesoFromInputUnit(value) {
   return roundMeso(toNumber(value, 0) * MESO_INPUT_UNIT);
-}
-
-function canEditPrices() {
-  return true;
-}
-
-function canEditItems() {
-  return false;
 }
 
 function loadStoredSettings() {
@@ -374,11 +363,6 @@ async function refreshSheetMarketRows() {
     const result = await loadSheetMarketRows();
     if (!result.ok) return;
     state.sheetAuctionRows = mergeSheetMarketRows(result.rows);
-    state.sheetDataUpdatedAt = result.rows
-      .map(row => row.marketHistoryCollectedAt)
-      .filter(Boolean)
-      .sort()
-      .at(-1) || null;
     setSyncState(
       'ready',
       '가격 불러오기 완료',
@@ -660,10 +644,8 @@ function persistViewSettings() {
 
 function syncRestingToggle(restingCount) {
   const toggle = $('#resting-toggle');
-  const status = $('#resting-toggle-state');
   const banner = $('#resting-banner');
   if (toggle) toggle.checked = state.includeResting;
-  if (status) status.textContent = state.includeResting ? 'ON' : 'OFF';
   if (banner) {
     banner.hidden = !restingCount;
     const text = $('#resting-banner-text');
@@ -1868,12 +1850,6 @@ function renderMileageBadge(rawType) {
   return '<span class="mileage-pill none" title="마일리지 할인 불가">마일리지 불가</span>';
 }
 
-function mileageLabel(type) {
-  if (type === 'full') return '마일리지 전액 결제';
-  if (type === 'partial') return '마일리지 30% 할인';
-  return '마일리지 할인 불가';
-}
-
 function setActiveTab(name, { focus = false } = {}) {
   document.querySelectorAll('[data-tab]').forEach(tab => {
     const active = tab.dataset.tab === name;
@@ -1993,85 +1969,12 @@ function syncCategoryOptions(rows) {
   if (select.value !== current) state.categoryFilter = '';
 }
 
-function allPriceTargets() {
-  const targets = new Map();
-  const add = value => {
-    const name = String(value?.name || '').trim();
-    if (!name) return;
-    const key = normalizeKey(name);
-    if (!targets.has(key)) targets.set(key, name);
-  };
-  state.items.forEach(item => {
-    if (item.referenceOnly) return;
-    add(item);
-    componentList(item.components).forEach(add);
-  });
-  return [...targets.values()].sort((a, b) => a.localeCompare(b, 'ko-KR'));
-}
-
-function syncPriceTargetOptions() {
-  const select = $('#price-target-select');
-  if (!select) return;
-  const current = state.priceTargetName;
-  select.innerHTML = '<option value="">직접 입력</option>' + allPriceTargets()
-    .map(name => `<option value="${escapeAttribute(name)}">${escapeHtml(name)}</option>`)
-    .join('');
-  select.value = current;
-}
-
-function syncAdminItemOptions() {
-  const select = $('#admin-item-select');
-  if (!select) return;
-  const current = state.adminItemId;
-  select.innerHTML = '<option value="">새 항목</option>' + state.items
-    .map(item => `<option value="${escapeAttribute(item.id)}">${escapeHtml(item.name)}</option>`)
-    .join('');
-  select.value = current;
-}
-
 function setSyncState(kind, title, detail) {
   const card = $('.sync-card');
   card.classList.remove('ready', 'error');
   if (kind) card.classList.add(kind);
   $('#sync-state').textContent = title;
   $('#sync-detail').textContent = detail;
-}
-
-function nextItemId() {
-  const maxId = state.items.reduce((max, item) => Math.max(max, Number(item.id) || 0), 0);
-  return maxId + 1;
-}
-
-function upsertItem(item) {
-  const id = String(item.id);
-  const index = state.items.findIndex(row => String(row.id) === id);
-  const normalized = normalizeItemList([item])[0];
-  if (index >= 0) state.items.splice(index, 1, normalized);
-  else state.items.push(normalized);
-  state.hasLocalItems = true;
-  persistLocalData();
-}
-
-function deleteSelectedItem() {
-  if (!canEditItems() || !state.adminItemId) return;
-  const item = state.items.find(row => String(row.id) === String(state.adminItemId));
-  if (!item || !confirm(`${item.name} 항목을 삭제할까요?`)) return;
-  state.items = state.items.filter(row => String(row.id) !== String(state.adminItemId));
-  state.adminItemId = '';
-  state.hasLocalItems = true;
-  persistLocalData();
-  writeItemEditor(null);
-  render();
-}
-
-function resetAdminItems() {
-  if (!canEditItems() || !confirm('항목 수정 데이터를 기본값으로 되돌릴까요?')) return;
-  state.items = [...state.baseItems];
-  state.hasLocalItems = false;
-  state.adminItemId = '';
-  persistLocalData();
-  writeItemEditor(null);
-  render();
 }
 
 function upsertLocalPrice(name, meso, status = 'live') {
@@ -2164,18 +2067,6 @@ function resetSalePrice(name) {
   render();
 }
 
-function clearLocalPrice() {
-  if (!canEditPrices()) return;
-  const name = $('#price-item-name').value.trim() || state.priceTargetName;
-  const key = normalizeKey(name);
-  if (!key) return;
-  state.localAuctionRows = state.localAuctionRows.filter(row => normalizeKey(row.itemName || row.name || row.query) !== key);
-  persistLocalData();
-  writePriceEditor(name);
-  setSyncState('ready', '내 가격 삭제', `${name}의 브라우저 가격을 삭제했습니다.`);
-  render();
-}
-
 function clearAllLocalPrices() {
   if (!state.localAuctionRows.length) {
     setSyncState('ready', '고친 가격 없음', '되돌릴 판매가가 없습니다.');
@@ -2184,27 +2075,8 @@ function clearAllLocalPrices() {
   if (!confirm('이 브라우저에서 고친 판매가를 모두 원래 값으로 되돌릴까요?')) return;
   state.pendingPreviousRanks = new Map(state.currentRanks);
   state.localAuctionRows = [];
-  state.priceTargetName = '';
   persistLocalData();
   setSyncState('ready', '고친 가격 되돌림', '고친 판매가를 모두 원래 값으로 되돌렸습니다.');
-  render();
-}
-
-function savePriceEditor() {
-  if (!canEditPrices()) return;
-  const name = $('#price-item-name').value.trim() || state.priceTargetName;
-  const status = $('#price-status').value || 'live';
-  const meso = mesoFromInputUnit($('#price-meso').value);
-  if (!name) {
-    setSyncState('error', '가격 저장 실패', '품목명을 입력해 주세요.');
-    return;
-  }
-  if ((status === 'live' || status === 'seed') && meso <= 0) {
-    setSyncState('error', '가격 저장 실패', '가격을 입력해 주세요.');
-    return;
-  }
-  upsertLocalPrice(name, meso, status);
-  setSyncState('ready', '내 가격 적용', `${name} 가격을 이 브라우저 계산에 반영했습니다.`);
   render();
 }
 
@@ -2214,159 +2086,6 @@ function findPriceRow(name) {
     || state.auctionRows.find(row => normalizeKey(row.itemName || row.name || row.query) === key)
     || state.auctionSkips.find(row => normalizeKey(row.itemName || row.name || row.query) === key)
     || null;
-}
-
-function writePriceEditor(name) {
-  const row = findPriceRow(name);
-  $('#price-item-name').value = name || '';
-  $('#price-meso').value = mesoToInputUnit(row?.listingLowestMeso) || '';
-  $('#price-status').value = row?.listingLowestMeso > 0 ? 'live' : row?.status || 'live';
-}
-
-function writeItemEditor(item) {
-  $('#admin-item-name').value = item?.name || '';
-  $('#admin-item-category').value = item?.category || '';
-  $('#admin-item-cash').value = item?.cashPrice || '';
-  $('#admin-item-seed').value = mesoToInputUnit(item?.seedMesoPrice) || '';
-  $('#admin-item-mileage').value = item?.mileageType || 'none';
-  $('#admin-item-aliases').value = Array.isArray(item?.aliases) ? item.aliases.join('\n') : '';
-  $('#admin-item-components').value = componentList(item?.components).map(component => {
-    const fields = [component.name];
-    if (component.seedMesoPrice || component.quantity > 1) fields.push(mesoToInputUnit(component.seedMesoPrice) || 0);
-    if (component.quantity > 1) fields.push(component.quantity);
-    return fields.join(' | ');
-  }).join('\n');
-}
-
-function readItemEditor() {
-  const selected = state.items.find(item => String(item.id) === String(state.adminItemId));
-  return {
-    ...(selected || {}),
-    id: selected?.id || nextItemId(),
-    name: $('#admin-item-name').value.trim(),
-    category: $('#admin-item-category').value.trim() || '캐시 아이템',
-    cashPrice: toNumber($('#admin-item-cash').value, 0),
-    seedMesoPrice: mesoFromInputUnit($('#admin-item-seed').value),
-    mileageType: $('#admin-item-mileage').value || 'none',
-    aliases: parseAliasText($('#admin-item-aliases').value),
-    components: parseComponentsText($('#admin-item-components').value)
-  };
-}
-
-function parseAliasText(text) {
-  return String(text || '').split(/[\n,]+/).map(value => value.trim()).filter(Boolean);
-}
-
-function parseComponentsText(text) {
-  return String(text || '').split(/\n+/).map(line => line.trim()).filter(Boolean).map(line => {
-    const [name, price, rawQuantity] = line.split('|').map(value => value.trim());
-    const component = { name };
-    const seedMesoPrice = mesoFromInputUnit(price);
-    const quantity = Math.max(1, Math.floor(toNumber(rawQuantity, 1)));
-    if (seedMesoPrice > 0) component.seedMesoPrice = seedMesoPrice;
-    if (quantity > 1) component.quantity = quantity;
-    return component;
-  }).filter(component => component.name);
-}
-
-function saveAdminItem() {
-  if (!canEditItems()) return;
-  const item = readItemEditor();
-  if (!item.name || item.cashPrice <= 0) {
-    setSyncState('error', '항목 저장 실패', '아이템명과 캐시 가격을 입력해 주세요.');
-    return;
-  }
-  upsertItem(item);
-  state.adminItemId = String(item.id);
-  setSyncState('ready', '항목 저장 완료', `${item.name} 항목을 저장했습니다.`);
-  render();
-}
-
-function exportItems() {
-  const doc = {
-    version: 3,
-    world: state.metadata.world || '스카니아',
-    updatedAt: nowIso(),
-    settings: {
-      ...state.settings,
-      mileageMesoRate: FIXED_MILEAGE_MESO_RATE
-    },
-    items: state.items
-  };
-  downloadJson('items.local.json', doc);
-}
-
-function exportPrices() {
-  const doc = {
-    version: 2,
-    world: state.metadata.world || '스카니아',
-    generatedAt: nowIso(),
-    source: 'manual-browser-overrides',
-    policy: {
-      priceBasis: 'marketHistoryMaxMeso || listingLowestMeso',
-      marketHistorySupported: true,
-      manualEditable: true
-    },
-    prices: mergedAuctionRows(),
-    skipped: state.auctionSkips
-  };
-  downloadJson('auction-prices.local.json', doc);
-}
-
-function importItems() {
-  if (!canEditItems()) return;
-  const doc = parseImportJson();
-  const items = Array.isArray(doc) ? doc : doc.items;
-  if (!Array.isArray(items)) {
-    setImportState('항목 배열 없음');
-    return;
-  }
-  state.items = normalizeItemList(items);
-  state.hasLocalItems = true;
-  persistLocalData();
-  state.adminItemId = '';
-  writeItemEditor(null);
-  setImportState(`${state.items.length}개 항목 반영`);
-  render();
-}
-
-function importPrices() {
-  if (!canEditPrices()) return;
-  const doc = parseImportJson();
-  const prices = Array.isArray(doc) ? doc : doc.prices || doc.auctionPrices;
-  if (!Array.isArray(prices)) {
-    setImportState('가격 배열 없음');
-    return;
-  }
-  state.localAuctionRows = normalizeAuctionRows(prices);
-  persistLocalData();
-  setImportState(`${state.localAuctionRows.length}개 가격 반영`);
-  render();
-}
-
-function parseImportJson() {
-  try {
-    return JSON.parse($('#data-import').value || '{}');
-  } catch (_) {
-    setImportState('데이터 형식 오류');
-    return {};
-  }
-}
-
-function setImportState(text) {
-  $('#import-state').textContent = text;
-}
-
-function downloadJson(filename, doc) {
-  const blob = new Blob([JSON.stringify(doc, null, 2)], { type: 'application/json;charset=utf-8' });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement('a');
-  link.href = url;
-  link.download = filename;
-  document.body.appendChild(link);
-  link.click();
-  link.remove();
-  URL.revokeObjectURL(url);
 }
 
 function escapeHtml(value) {
@@ -2675,32 +2394,7 @@ on('#item-rows', 'click', event => {
   render();
 });
 
-on('#price-target-select', 'change', event => {
-  state.priceTargetName = event.target.value;
-  writePriceEditor(state.priceTargetName);
-});
-
-on('#save-price-row', 'click', savePriceEditor);
-on('#clear-price-row', 'click', clearLocalPrice);
 on('#reset-local-prices', 'click', clearAllLocalPrices);
-on('#export-prices', 'click', exportPrices);
-
-on('#admin-item-select', 'change', event => {
-  state.adminItemId = event.target.value;
-  const item = state.items.find(row => String(row.id) === String(state.adminItemId));
-  writeItemEditor(item || null);
-});
-
-on('#save-admin-item', 'click', saveAdminItem);
-on('#delete-admin-item', 'click', deleteSelectedItem);
-on('#reset-admin-items', 'click', resetAdminItems);
-on('#export-items', 'click', exportItems);
-on('#import-prices', 'click', importPrices);
-on('#import-items', 'click', importItems);
-on('#clear-import', 'click', () => {
-  $('#data-import').value = '';
-  setImportState('대기');
-});
 
 window.addEventListener('focus', () => {
   void refreshSheetMarketRows();
