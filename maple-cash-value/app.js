@@ -1458,17 +1458,17 @@ function renderRankList(rankedRows, rankByKey, rankChanges) {
 }
 
 function renderWaitingPanel(saleRows, rankByKey, rankChanges) {
-  const packages = saleRows.filter(item => isPackageItem(item) && item.purchasable !== false);
-  const waiting = saleRows.filter(item => item.saleStatus === 'resting' || item.saleStatus === 'upcoming');
+  const packages = saleRows.filter(item => isPackageItem(item) && item.purchasable !== false && passesEvidenceFilter(item));
+  const waiting = saleRows.filter(item => (item.saleStatus === 'resting' || item.saleStatus === 'upcoming') && passesEvidenceFilter(item));
   $('#package-count').textContent = `${packages.length}개`;
   $('#waiting-count').textContent = `${waiting.length}개`;
   setHtml($('#package-rows'), packages.length
     ? packages.map(item => renderListRow(item, rankByKey, rankChanges)).join('')
-    : '<li class="empty">지금 살 수 있는 패키지가 없습니다.</li>');
+    : `<li class="empty">${state.officialOnly ? '공식 근거가 있는 패키지가 없습니다.' : '지금 살 수 있는 패키지가 없습니다.'}</li>`);
   const visible = state.waitingListAll ? waiting : waiting.slice(0, WAITING_LIST_LIMIT);
   setHtml($('#waiting-rows'), visible.length
     ? visible.map(item => renderListRow(item, rankByKey, rankChanges)).join('')
-    : '<li class="empty">재판매를 기다리는 상품이 없습니다.</li>');
+    : `<li class="empty">${state.officialOnly ? '공식 근거가 있는 재판매 대기 상품이 없습니다.' : '재판매를 기다리는 상품이 없습니다.'}</li>`);
   const more = $('#waiting-more');
   more.hidden = waiting.length <= WAITING_LIST_LIMIT;
   more.textContent = state.waitingListAll ? `${WAITING_LIST_LIMIT}개만 보기` : `전체 ${waiting.length}개 보기`;
