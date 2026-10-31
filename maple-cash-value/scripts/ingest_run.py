@@ -4,7 +4,7 @@
   python scripts/ingest_run.py queue [--date 2026-10-05]
       그날 계획(data/run-plan-<날짜>.json)을 수집기에 넣을 [[이름, 축], ...] 로 찍는다.
 
-  python scripts/ingest_run.py build <dump.json> --account 2 --character "스카니아 / 비공개"
+  python scripts/ingest_run.py build <dump.json> --account 2 --character "스카니아 / <캐릭터>"
       [--lost "프리스타일 쿠폰:listing:필터가 걸린 채 검색"] [--note "..."]
       data/collection-<날짜>-account<N>.json 을 만든다. 그 뒤는 merge_run.py 가 받는다.
 
