@@ -1436,10 +1436,15 @@ function renderConclusion(rankedRows, rankByKey) {
         <strong>${formatWon(item.listingEfficiency)}</strong>
         <span class="runner-name">${escapeHtml(item.name)}</span>
         <span class="runner-meta">${nf.format(item.cashPrice)}원 → ${formatMeso(item.listingPrice.meso)}</span>
-        <span class="item-badges">${renderEvidencePill(item)}${renderLiquidityPill(item)}</span>
+        <span class="item-badges">${renderWaitingPill(item)}${renderEvidencePill(item)}${renderLiquidityPill(item)}</span>
       </article>
     `).join('')}
   `);
+}
+
+// 재판매 대기까지 순위에 넣어 보면 지금 못 사는 상품이 위로 온다. 살 수 없다는 것을 바로 보여 준다.
+function renderWaitingPill(item) {
+  return item.purchasable === false ? '<small class="rank-tag" title="지금은 살 수 없습니다.">재판매 대기</small>' : '';
 }
 
 function hasCreditValue(item) {
