@@ -326,7 +326,7 @@ input:focus, select:focus { outline: 2px solid var(--accent-text); outline-offse
 .sale-editor { display: grid; gap: 6px; padding-top: 8px; border-top: 1px solid var(--line); }
 .sale-editor small { color: var(--muted); font-size: 11px; }
 .sale-editor-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
-.sale-editor-row label { display: flex; flex: 1 1 220px; align-items: center; gap: 6px; min-width: 0; font-size: 12px; font-weight: 700; }
+.sale-editor-row label { display: flex; flex: 1 1 220px; max-width: 440px; align-items: center; gap: 6px; min-width: 0; font-size: 12px; font-weight: 700; }
 .sale-editor-row label span { flex: 1 1 auto; min-width: 4em; }
 .sale-editor-row em { color: var(--muted); font-style: normal; }
 .sale-editor-row .sale-editor-input { flex: 0 0 96px; width: 96px; min-height: 40px; padding: 6px 8px; border: 1px solid var(--line); border-radius: 8px; background: var(--field); color: inherit; font: inherit; text-align: right; }
@@ -372,10 +372,8 @@ input:focus, select:focus { outline: 2px solid var(--accent-text); outline-offse
 .mileage-pill.partial { background: var(--info-soft); color: var(--info-text); }
 
 /* 상품별 상세 */
-.filter-row { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr) auto auto; gap: 12px; align-items: end; }
-.package-switch { min-height: 40px; }
-.package-switch em { margin-left: 2px; }
-.major-row { display: flex; align-items: flex-start; gap: 10px; margin-top: 14px; }
+.filter-card .search-field input { min-height: 44px; font-size: 15px; }
+.major-row { display: flex; align-items: flex-start; gap: 10px; margin-top: 12px; }
 .major-filter-list, .job-group-list { flex: 1; display: flex; flex-wrap: wrap; gap: 6px; min-width: 0; }
 .major-filter-button, .job-group-button {
   display: inline-flex; align-items: center; gap: 6px; min-height: 40px; padding: 0 12px; border: 1px solid var(--line); border-radius: 999px;
@@ -388,61 +386,58 @@ input:focus, select:focus { outline: 2px solid var(--accent-text); outline-offse
 .job-group-filter { display: flex; align-items: flex-start; gap: 10px; margin-top: 10px; }
 .job-group-label { flex: none; padding-top: 10px; color: var(--muted); font-size: 12px; font-weight: 700; }
 
+/* 자주 안 쓰는 조건은 접어 둔다. 켜진 게 있으면 접힌 줄에 개수가 보인다. */
+.more-filters { margin-top: 12px; border-top: 1px solid var(--line-soft); }
+.more-filters > summary {
+  display: flex; align-items: center; gap: 10px; min-height: 44px; padding-top: 4px; list-style: none; font-size: 13px;
+}
+.more-filters > summary::-webkit-details-marker { display: none; }
+.more-filters > summary::after {
+  content: ""; flex: none; width: 7px; height: 7px; margin: 0 4px 0 auto; border-right: 2px solid var(--muted); border-bottom: 2px solid var(--muted); transform: rotate(45deg);
+}
+.more-filters[open] > summary::after { transform: rotate(-135deg); }
+.more-filters > summary b { flex: none; }
+.more-filters > summary span { min-width: 0; color: var(--muted); font-size: 12px; }
+.more-filters > summary span.is-active { padding: 1px 8px; border-radius: 999px; background: var(--accent-soft); color: var(--accent-text); font-weight: 700; }
+.filter-row { display: grid; grid-template-columns: repeat(2, minmax(0, 220px)) auto auto; gap: 12px; align-items: end; padding: 4px 0 4px; }
+.package-switch { min-height: 40px; }
+.package-switch em { margin-left: 2px; }
+
 .table-wrap { min-width: 0; }
 table { width: 100%; border-collapse: collapse; }
 th {
   padding: 8px 10px; border-bottom: 1px solid var(--line); color: var(--muted); font-size: 12px; font-weight: 700; text-align: left;
 }
-th small { font-weight: 500; }
-td { padding: 12px 10px; border-bottom: 1px solid var(--line-soft); vertical-align: top; }
-th:nth-child(3), td:nth-child(3) { text-align: right; white-space: nowrap; }
-th:nth-child(5), td:nth-child(5) { text-align: right; }
-th:nth-child(1), td:nth-child(1) { width: 96px; }
-th:nth-child(4), td:nth-child(4) { width: 240px; }
-th:nth-child(5), td:nth-child(5) { width: 140px; }
+td { padding: 14px 10px; border-bottom: 1px solid var(--line-soft); vertical-align: top; }
+th:nth-child(1), td:nth-child(1) { width: 84px; }
+th:nth-child(3), td:nth-child(3) { width: 220px; }
+th:nth-child(4), td:nth-child(4) { width: 150px; text-align: right; }
 td[colspan] { width: auto; text-align: left; }
-.cash-value { font-weight: 700; font-variant-numeric: tabular-nums; }
 .empty { padding: 28px 10px; color: var(--muted); text-align: center; }
 .market-pending-row td { background: var(--warn-soft); }
 .reference-row td { background: var(--panel-soft); }
-
-.component-toggle {
-  display: inline-flex; align-items: center; gap: 4px; min-height: 40px; padding: 0; border: 0; background: none;
-  color: var(--accent-text); font-size: 12px; font-weight: 700;
-}
-.component-detail-row td { padding-top: 0; }
-.component-detail-shell { padding: 12px 14px; border-radius: 12px; background: var(--panel-soft); }
-.component-detail-header { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 12px; margin-bottom: 8px; font-size: 13px; }
-.component-detail-header span { color: var(--muted); font-size: 12px; }
-.component-list { display: grid; gap: 8px; }
-.component-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 220px); gap: 10px; align-items: start; font-size: 13px; }
-.component-quote { display: flex; justify-content: flex-end; gap: 6px; font-size: 12px; }
-.component-quote em { color: var(--muted); font-style: normal; }
+#item-rows > tr.is-open > td { border-bottom: 0; }
+.item-cost { display: block; margin-top: 4px; color: var(--muted); font-size: 12px; }
+.item-cost b { color: var(--ink-soft); font-weight: 700; font-variant-numeric: tabular-nums; }
+.row-detail-row > td { padding: 0 10px; }
+#item-rows .row-detail { margin: 0 0 14px; }
 
 .price-cell { min-width: 0; }
 .price-display { display: flex; flex-direction: column; gap: 2px; }
-.price-line { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
-.price-value { font-weight: 700; font-variant-numeric: tabular-nums; }
-.price-date { color: var(--muted); font-size: 11px; }
+.price-line { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; }
+.price-value { font-size: 17px; font-weight: 800; font-variant-numeric: tabular-nums; }
 .price-note { font-size: 11px; }
 .price-note.warning { color: var(--warn-text); }
-
-.inline-price-editor { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
-.inline-price-row, .inline-market-row { display: flex; align-items: center; gap: 4px; min-width: 0; }
-.inline-price-row input, .inline-market-row input { flex: 1 1 60px; min-width: 0; min-height: 40px; padding: 0 8px; text-align: right; font-variant-numeric: tabular-nums; }
-.inline-price-unit, .inline-market-label { color: var(--muted); font-size: 12px; }
-.inline-market-toggle, .inline-price-save, .inline-market-save {
-  flex: none; min-height: 40px; min-width: 40px; padding: 0 6px; border: 1px solid var(--line); border-radius: 8px;
-  background: transparent; color: var(--ink-soft); font-size: 12px; font-weight: 700;
+#item-rows .eff-value { display: block; font-size: 19px; }
+#item-rows .price-meta { display: block; }
+.edit-toggle {
+  display: inline-flex; align-items: center; gap: 6px; min-height: 40px; padding: 0; border: 0;
+  background: transparent; color: var(--accent-text); font-size: 12px; font-weight: 700;
 }
-.inline-market-toggle.has-value { color: var(--accent-text); }
-.inline-market-toggle.has-warning { color: var(--warn-text); }
-.inline-price-save:hover, .inline-market-save:hover, .inline-market-toggle:hover { background: var(--panel-soft); }
-.is-dirty .inline-price-save, .is-dirty .inline-market-save { border-color: var(--accent); background: var(--accent); color: var(--accent-ink); }
-.inline-price-meta, .market-reference-meta { display: flex; flex-wrap: wrap; gap: 2px 8px; color: var(--muted); font-size: 11px; }
-.market-reference-meta strong { color: var(--ink-soft); font-weight: 700; }
-.market-reference-meta.warning strong { color: var(--warn-text); }
-.market-gap { color: var(--warn-text); font-weight: 700; }
+.edit-toggle:hover span:first-child { text-decoration: underline; text-underline-offset: 2px; }
+.edit-chevron { width: 6px; height: 6px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: rotate(45deg) translate(-1px, -1px); }
+.edit-toggle[aria-expanded="true"] .edit-chevron { transform: rotate(-135deg) translate(-1px, -1px); }
+.sale-editor-hint { display: block; color: var(--warn-text); font-size: 11px; font-weight: 500; }
 
 .table-pagination { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 14px; color: var(--ink-soft); font-size: 13px; }
 .page-button { min-width: 40px; font-size: 16px; }
@@ -479,7 +474,6 @@ details.sale-item[open] { padding-bottom: 10px; }
   .rank-layout { grid-template-columns: minmax(0, 1fr); grid-template-areas: "conclusion" "input" "rank"; }
   .input-card { position: static; }
   .filter-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .search-field { grid-column: 1 / -1; }
 }
 
 @media (max-width: 760px) {
@@ -520,23 +514,28 @@ details.sale-item[open] { padding-bottom: 10px; }
   .head-tools .ghost-button { flex: 1; }
   .head-tools select { flex: 1; width: auto; }
 
-  /* 표는 카드로 편다. 가로 스크롤을 만들지 않는다. */
+  /* 표는 카드로 편다. 가로 스크롤을 만들지 않는다. 이름 아래에 판매가와 1억당 현금을 나란히 둔다. */
   table, tbody, tr, td { display: block; width: 100%; }
   thead { display: none; }
-  #item-rows > tr { padding: 12px 0; border-bottom: 1px solid var(--line); }
-  #item-rows > tr.component-detail-row { padding-top: 0; }
+  #item-rows > tr:not(.row-detail-row) {
+    display: grid; grid-template-columns: 34px minmax(0, 1fr) auto; grid-template-areas: "rank name name" ". price eff";
+    gap: 6px 10px; padding: 14px 0; border-bottom: 1px solid var(--line);
+  }
+  #item-rows > tr.has-tag { grid-template-areas: "rank rank rank" "name name name" "price price eff"; }
+  #item-rows > tr.is-open { border-bottom: 0; }
   #item-rows > tr.market-pending-row, #item-rows > tr.reference-row { margin-top: 8px; padding: 12px; border-radius: 12px; }
   #item-rows > tr.market-pending-row { background: var(--warn-soft); }
   #item-rows > tr.reference-row { background: var(--panel-soft); }
   .market-pending-row td, .reference-row td { background: none; }
-  td, th:nth-child(n), td:nth-child(n) { width: 100%; padding: 3px 0; border: 0; text-align: left; white-space: normal; }
-  td[data-label="구매 가격"], td[data-label="판매 효율/절약"] { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 2px 8px; }
-  td[data-label]:not([data-label="순위"]):not([data-label="아이템"])::before { content: attr(data-label); color: var(--muted); font-size: 12px; }
-  td[data-label="매물가/참고가"]::before { display: block; margin-bottom: 2px; }
-  td[data-label="판매 효율/절약"] .price-meta { text-align: right; }
-  .component-detail-row td { padding: 0; }
-  .component-row { grid-template-columns: minmax(0, 1fr); gap: 4px; }
-  .component-quote { justify-content: flex-start; }
+  td, th:nth-child(n), td:nth-child(n) { width: auto; min-width: 0; padding: 0; border: 0; text-align: left; white-space: normal; }
+  td[data-label="순위"] { grid-area: rank; }
+  td[data-label="상품"] { grid-area: name; }
+  td[data-label="판매가"] { grid-area: price; }
+  td[data-label="1억당 현금"] { grid-area: eff; text-align: right; }
+  td[data-label="판매가"]::before, td[data-label="1억당 현금"]::before { content: attr(data-label); display: block; color: var(--muted); font-size: 11px; }
+  .row-detail-row > td { padding: 0; }
+  #item-rows > tr.row-detail-row { padding-bottom: 12px; border-bottom: 1px solid var(--line); }
+  #item-rows .row-detail { margin: 0; }
 
   .market-grid { grid-template-columns: minmax(0, 1fr); }
   .sale-filters { grid-template-columns: minmax(0, 1fr); }

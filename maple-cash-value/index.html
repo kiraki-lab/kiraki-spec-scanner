@@ -17,7 +17,7 @@
       if (savedTheme === 'light' || savedTheme === 'dark') document.documentElement.dataset.theme = savedTheme;
     } catch (_) {}
   </script>
-  <link rel="stylesheet" href="./styles.css?v=0.25.1">
+  <link rel="stylesheet" href="./styles.css?v=0.26.0">
 </head>
 <body>
   <div class="app-shell">
@@ -141,42 +141,10 @@
 
       <section id="panel-detail" class="tab-panel" role="tabpanel" aria-labelledby="tab-detail" hidden>
         <section class="card filter-card" aria-label="상품 찾기">
-          <div class="filter-row">
-            <label class="field search-field">
-              <span>검색</span>
-              <input id="search-input" type="search" placeholder="아이템명 · 구성품 검색" autocomplete="off">
-            </label>
-            <label class="field">
-              <span>세부 분류</span>
-              <select id="category-filter">
-                <option value="">전체</option>
-              </select>
-            </label>
-            <label class="field">
-              <span>가격 상태</span>
-              <select id="status-filter">
-                <option value="">전체</option>
-                <option value="live">가격 있음</option>
-                <option value="seed">기본값</option>
-                <option value="no_listing">매물 없음</option>
-                <option value="no_candidate">정확한 품목 없음</option>
-                <option value="unverified">미확인</option>
-              </select>
-            </label>
-            <label class="switch package-switch">
-              <input id="package-filter-toggle" type="checkbox" checked>
-              <span class="toggle-track" aria-hidden="true"></span>
-              <strong>패키지 전체</strong>
-              <em id="package-filter-state">ON</em>
-            </label>
-            <label class="switch package-switch">
-              <input id="official-toggle" type="checkbox">
-              <span class="toggle-track" aria-hidden="true"></span>
-              <strong>교환 확인된 상품만</strong>
-              <em id="official-toggle-state">OFF</em>
-            </label>
-            <input id="resting-toggle" type="checkbox" hidden>
-          </div>
+          <label class="field search-field">
+            <span>검색</span>
+            <input id="search-input" type="search" placeholder="아이템명 · 구성품 검색" autocomplete="off">
+          </label>
 
           <div class="major-row">
             <div id="major-filter-list" class="major-filter-list" role="group" aria-label="큰 분류"></div>
@@ -186,6 +154,42 @@
             <span class="job-group-label">직업군</span>
             <div id="job-group-filter-list" class="job-group-list" role="group" aria-label="직업군"></div>
           </div>
+
+          <details id="more-filters" class="more-filters">
+            <summary><b>필터 더 보기</b><span id="more-filters-state">세부 분류 · 가격 상태 · 패키지 · 교환 확인</span></summary>
+            <div class="filter-row">
+              <label class="field">
+                <span>세부 분류</span>
+                <select id="category-filter">
+                  <option value="">전체</option>
+                </select>
+              </label>
+              <label class="field">
+                <span>가격 상태</span>
+                <select id="status-filter">
+                  <option value="">전체</option>
+                  <option value="live">가격 있음</option>
+                  <option value="seed">기본값</option>
+                  <option value="no_listing">매물 없음</option>
+                  <option value="no_candidate">정확한 품목 없음</option>
+                  <option value="unverified">미확인</option>
+                </select>
+              </label>
+              <label class="switch package-switch">
+                <input id="package-filter-toggle" type="checkbox" checked>
+                <span class="toggle-track" aria-hidden="true"></span>
+                <strong>패키지 전체</strong>
+                <em id="package-filter-state">ON</em>
+              </label>
+              <label class="switch package-switch">
+                <input id="official-toggle" type="checkbox">
+                <span class="toggle-track" aria-hidden="true"></span>
+                <strong>교환 확인된 상품만</strong>
+                <em id="official-toggle-state">OFF</em>
+              </label>
+              <input id="resting-toggle" type="checkbox" hidden>
+            </div>
+          </details>
         </section>
 
         <section class="card table-panel" aria-label="전체 상품">
@@ -195,7 +199,7 @@
             <span id="row-count" class="count-pill">0개</span>
             <span class="best-pill">이 조건 최고 <strong id="best-efficiency">-</strong></span>
             <div class="head-tools">
-              <button id="reset-local-prices" class="ghost-button" type="button" title="이 브라우저에서 수정한 매물가와 시세 참고가 전체 초기화">고친 가격 되돌리기</button>
+              <button id="reset-local-prices" class="ghost-button" type="button" title="이 브라우저에서 고친 판매가를 모두 원래 값으로 되돌립니다.">고친 가격 되돌리기</button>
               <select id="page-size" aria-label="페이지당 표시 개수">
                 <option value="10">10개씩</option>
                 <option value="20">20개씩</option>
@@ -209,10 +213,9 @@
               <thead>
                 <tr>
                   <th scope="col">순위</th>
-                  <th scope="col">아이템</th>
-                  <th scope="col">구매 가격</th>
-                  <th scope="col">매물가/참고가</th>
-                  <th scope="col" class="efficiency-heading">판매 효율 <small>1억당 현금</small></th>
+                  <th scope="col">상품</th>
+                  <th scope="col">판매가</th>
+                  <th scope="col">1억당 현금</th>
                 </tr>
               </thead>
               <tbody id="item-rows"></tbody>
@@ -305,10 +308,10 @@
 
   <template id="empty-template">
     <tr>
-      <td colspan="5" class="empty">표시할 항목이 없습니다.</td>
+      <td colspan="4" class="empty">표시할 항목이 없습니다.</td>
     </tr>
   </template>
 
-  <script type="module" src="./app.js?v=0.25.1"></script>
+  <script type="module" src="./app.js?v=0.26.0"></script>
 </body>
 </html>
