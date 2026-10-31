@@ -1328,7 +1328,31 @@ function stableDisplayRows(rows) {
   return [...rows].sort((a, b) => (order.get(rowIdentity(a)) ?? Number.MAX_SAFE_INTEGER) - (order.get(rowIdentity(b)) ?? Number.MAX_SAFE_INTEGER));
 }
 
+// 목록을 다시 그리면 누른 버튼이 새 버튼으로 바뀌어 키보드 위치가 사라진다. 같은 상품의 같은 버튼으로 돌려놓는다.
+const FOCUS_KEYS = [
+  'data-row-toggle', 'data-sale-price-name', 'data-sale-price-save', 'data-sale-price-reset',
+  'data-inline-price-name', 'data-inline-price-save', 'data-inline-market-name', 'data-inline-market-save',
+  'data-inline-market-toggle', 'data-component-toggle', 'data-major-filter', 'data-job-group-filter'
+];
+
+function rememberFocus() {
+  const active = document.activeElement;
+  const key = active && FOCUS_KEYS.find(name => active.hasAttribute(name));
+  if (!key) return () => {};
+  const value = active.getAttribute(key);
+  const boxId = active.closest('[id]')?.id;
+  return () => {
+    if (document.contains(active)) return;
+    const root = (boxId && document.getElementById(boxId)) || document;
+    const find = name => [...root.querySelectorAll(`[${name}]`)].find(element => element.getAttribute(name) === value);
+    // '원래 값으로'는 누르면 사라지므로 같은 줄의 '적용'으로 간다.
+    const target = find(key) || (key === 'data-sale-price-reset' ? find('data-sale-price-save') : null);
+    target?.focus({ preventScroll: true });
+  };
+}
+
 function render() {
+  const restoreFocus = rememberFocus();
   const allRows = enrichItems();
   renderMajorFilterControls(allRows);
 
@@ -1387,6 +1411,7 @@ function render() {
   renderSaleItems(visibleSaleCatalog);
   renderTable(pageRows, rankByKey, rankChanges);
   renderPagination(rows.length, pageStart, pageEnd, totalPages);
+  restoreFocus();
 }
 
 function isBestCandidate(item) {
@@ -1510,10 +1535,13 @@ function renderListRow(item, rankByKey, rankChanges) {
   const expanded = state.expandedRowKeys.has(key);
   const noValue = !Number.isFinite(item.listingEfficiency);
   const rowClass = ['list-row', rankNumber && rankNumber <= 3 ? `top-rank rank-${rankNumber}` : ''].filter(Boolean).join(' ');
+  const badge = renderRankBadge(item, rankNumber, rankChanges.get(key) || 0, saleInfo);
+  // 순위 숫자 대신 표시가 붙는 줄. 폰에서 표시를 한 줄 위로 올린다(:has() 를 못 쓰는 브라우저도 같게).
+  const tagged = badge.includes('source-pill');
   return `
     <li class="${rowClass}">
-      <button class="list-row-main" type="button" data-row-toggle="${escapeAttribute(key)}" aria-expanded="${expanded}">
-        <span class="row-rank">${renderRankBadge(item, rankNumber, rankChanges.get(key) || 0, saleInfo)}</span>
+      <button class="list-row-main${tagged ? ' has-tag' : ''}" type="button" data-row-toggle="${escapeAttribute(key)}" aria-expanded="${expanded}">
+        <span class="row-rank">${badge}</span>
         <span class="row-item">
           <span class="item-name">${escapeHtml(item.name)}</span>
           <span class="item-meta">${escapeHtml(item.category || '캐시 아이템')}${saleMetaText(item, saleInfo)}</span>
@@ -2732,7 +2760,8 @@ on('#theme-toggle', 'click', () => {
 on('main', 'click', event => {
   const goto = event.target.closest('button[data-goto-tab]');
   if (goto) {
-    setActiveTab(goto.dataset.gotoTab);
+    // 누른 버튼이 숨는 탭에 있으므로 키보드 위치를 새 탭으로 옮긴다.
+    setActiveTab(goto.dataset.gotoTab, { focus: true });
     return;
   }
   const open = event.target.closest('button[data-open-detail]');
