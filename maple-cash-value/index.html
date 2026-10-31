@@ -17,7 +17,7 @@
       if (savedTheme === 'light' || savedTheme === 'dark') document.documentElement.dataset.theme = savedTheme;
     } catch (_) {}
   </script>
-  <link rel="stylesheet" href="./styles.css?v=0.20.0">
+  <link rel="stylesheet" href="./styles.css?v=0.22.0">
 </head>
 <body>
   <div class="app-shell">
@@ -58,30 +58,38 @@
           </div>
 
           <div class="steps">
-            <details class="step" name="calc-step">
-              <summary><b>캐시 구매</b><span id="step-cash"></span></summary>
+            <div class="step step-open">
+              <div class="step-head"><b>캐시 구매</b><span id="step-cash"></span></div>
               <div class="step-body">
-                <label class="field">
-                  <span>상품권 할인율 (%)</span>
-                  <input id="discount-rate" type="number" min="0" max="100" step="0.1" inputmode="decimal">
+                <div class="quick-group" role="group" aria-label="상품권 할인율">
+                  <button type="button" data-discount="0">없음</button>
+                  <button type="button" data-discount="6">6%</button>
+                  <button type="button" data-discount="7">7%</button>
+                  <button type="button" data-discount="8.5">8.5%<small>삼성 월렛</small></button>
+                </div>
+                <label class="field field-inline">
+                  <span>직접 입력</span>
+                  <input id="discount-rate" type="number" min="0" max="100" step="0.1" inputmode="decimal" aria-label="상품권 할인율 (%)">
+                  <em>%</em>
                 </label>
               </div>
-            </details>
+            </div>
 
-            <details class="step" name="calc-step">
-              <summary><b>경매장 판매</b><span id="step-fee"></span></summary>
+            <div class="step step-open">
+              <div class="step-head"><b>경매장 판매</b><span id="step-fee"></span></div>
               <div class="step-body">
-                <label class="field">
-                  <span>수수료</span>
-                  <select id="ah-fee-rate">
-                    <option value="5">5% 일반</option>
-                    <option value="3">3% MVP</option>
-                  </select>
-                </label>
+                <div class="quick-group" role="group" aria-label="경매장 수수료">
+                  <button type="button" data-fee="5">5%<small>일반</small></button>
+                  <button type="button" data-fee="3">3%<small>MVP</small></button>
+                </div>
+                <select id="ah-fee-rate" hidden>
+                  <option value="5">5% 일반</option>
+                  <option value="3">3% MVP</option>
+                </select>
               </div>
-            </details>
+            </div>
 
-            <details id="mileage-step" class="step" name="calc-step">
+            <details id="mileage-step" class="step">
               <summary><b>남은 마일리지</b><span id="step-mileage"></span></summary>
               <div class="step-body">
                 <label id="mileage-toggle-wrap" class="switch">
@@ -98,7 +106,7 @@
               </div>
             </details>
 
-            <details class="step" name="calc-step">
+            <details class="step">
               <summary><b>크레딧</b><span id="step-credit"></span></summary>
               <div class="step-body">
                 <p class="step-fact"><span>크레딧 1점</span><strong id="credit-rate">-</strong></p>
@@ -106,7 +114,7 @@
               </div>
             </details>
 
-            <details class="step" name="calc-step">
+            <details class="step">
               <summary><b>보는 상품</b><span id="step-view"></span></summary>
               <div class="step-body">
                 <label class="switch">
@@ -298,6 +306,7 @@
           </div>
         </details>
       </section>
+      <p class="data-credit">Data based on NEXON Open API</p>
     </main>
   </div>
 
@@ -307,6 +316,6 @@
     </tr>
   </template>
 
-  <script type="module" src="./app.js?v=0.20.0"></script>
+  <script type="module" src="./app.js?v=0.22.0"></script>
 </body>
 </html>
