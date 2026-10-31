@@ -4,7 +4,8 @@ const DATA_PATHS = {
   notices: './data/cashshop-notices.json',
   saleItems: './data/cashshop-sale-items.json',
   collections: './data/collections.json',
-  creditShop: './data/credit-shop.json'
+  creditShop: './data/credit-shop.json',
+  priceHistory: './data/price-history.json'
 };
 
 const SHEET_MARKET_SOURCE = Object.freeze({
@@ -143,6 +144,8 @@ const state = {
   currentRanks: new Map(),
   pendingPreviousRanks: null,
   expandedComponentKeys: new Set(),
+  // 판매가 추이. null = 아직 안 불러옴, Map = 불러옴(못 읽었으면 빈 Map).
+  priceHistory: null,
   // 순위 줄을 눌러 펼친 근거. 시트가 30초마다 다시 그려도 펼친 줄이 닫히지 않게 여기 둔다.
   expandedRowKeys: new Set(),
   rankListAll: false,
@@ -1402,6 +1405,7 @@ function render() {
   renderSaleItems(visibleSaleCatalog);
   renderTable(pageRows, rankByKey, rankChanges);
   renderPagination(rows.length, pageStart, pageEnd, totalPages);
+  drawPriceCharts();
   restoreFocus();
 }
 
@@ -1574,6 +1578,7 @@ function renderRowDetail(item) {
   ].filter(Boolean);
   return `
     <div class="row-detail">
+      ${renderPriceChart(item)}
       <dl>${facts.map(([label, value]) => `<div><dt>${escapeHtml(label)}</dt><dd>${escapeHtml(value)}</dd></div>`).join('')}</dl>
       ${notes.map(note => `<p>${escapeHtml(note)}</p>`).join('')}
       ${breakdown && breakdown.bonus.length
@@ -1582,6 +1587,247 @@ function renderRowDetail(item) {
       ${renderSaleEditor(item, breakdown)}
     </div>
   `;
+}
+
+// ── 판매가 추이 그래프 ──────────────────────────────────────────────
+// 처음 줄을 펼칠 때 한 번 불러온다. 못 읽으면 그래프만 빠지고 계산기는 그대로다.
+let priceHistoryRequest = null;
+
+function requestPriceHistory() {
+  if (priceHistoryRequest) return;
+  priceHistoryRequest = loadJson(DATA_PATHS.priceHistory, null)
+    .then(doc => { state.priceHistory = normalizePriceHistory(doc); })
+    .catch(() => { state.priceHistory = new Map(); })
+    .finally(() => render());
+}
+
+// 필드 이름이 길든 짧든(d·l·m·s) fields 순서대로 읽는다.
+function normalizePriceHistory(doc) {
+  const history = new Map();
+  if (!doc || typeof doc.items !== 'object' || !doc.items) return history;
+  const [dateKey, listingKey, marketKey, saleKey] = Array.isArray(doc.fields) && doc.fields.length === 4
+    ? doc.fields : ['date', 'listing', 'market', 'sale'];
+  for (const [name, rows] of Object.entries(doc.items)) {
+    if (!Array.isArray(rows)) continue;
+    const points = rows
+      .map(row => ({
+        date: String(row?.[dateKey] || ''),
+        t: Date.parse(`${row?.[dateKey]}T00:00:00+09:00`),
+        listing: Number(row?.[listingKey]) > 0 ? Number(row[listingKey]) : null,
+        market: Number(row?.[marketKey]) > 0 ? Number(row[marketKey]) : null,
+        sale: Number(row?.[saleKey]) > 0 ? Number(row[saleKey]) : null
+      }))
+      .filter(point => Number.isFinite(point.t))
+      .sort((a, b) => a.t - b.t);
+    history.set(normalizeKey(name), points);
+  }
+  return history;
+}
+
+// 단품은 자기 그래프, 한 가지 상품을 여러 개 묶은 것은 그 단품 그래프. 패키지는 그리지 않는다.
+function priceChartTarget(item) {
+  const breakdown = componentBreakdown(item);
+  if (!breakdown) return { name: item.name, quantity: 1 };
+  if (breakdown.bonus.length || breakdown.tradable.length !== 1) return null;
+  return { name: breakdown.tradable[0].name, quantity: breakdown.tradable[0].quantity };
+}
+
+function chartDate(point) {
+  const [, month, day] = point.date.split('-').map(Number);
+  return `${month}.${day}`;
+}
+
+// 예전 회차에 잘못 잡힌 호가(마네킹 100억 같은 값)가 축을 망가뜨리지 않게 그래프에서만 뺀다. 파일 값은 그대로다.
+function chartPoints(name) {
+  const points = (state.priceHistory.get(normalizeKey(name)) || []).filter(point => point.sale);
+  const sorted = points.map(point => point.sale).sort((a, b) => a - b);
+  const median = sorted[Math.floor(sorted.length / 2)];
+  return points.filter(point => point.sale <= median * 3 && point.sale >= median / 3);
+}
+
+function renderPriceChart(item) {
+  if (state.priceHistory === null) {
+    requestPriceHistory();
+    return '';
+  }
+  const target = priceChartTarget(item);
+  if (!target) return '';
+  const points = chartPoints(target.name);
+  if (points.length < 2) return '';
+  const sales = points.map(point => point.sale);
+  const last = points[points.length - 1];
+  return `
+    <figure class="price-chart">
+      <figcaption>
+        <b>판매가 추이${target.quantity > 1 ? ` <small>${escapeHtml(target.name)} 1개</small>` : ''}</b>
+        <span class="price-chart-stats">
+          <span>최저 <strong>${formatMeso(Math.min(...sales))}</strong></span>
+          <span>최고 <strong>${formatMeso(Math.max(...sales))}</strong></span>
+          <span>지금 <strong class="is-now">${formatMeso(last.sale)}</strong></span>
+        </span>
+      </figcaption>
+      <div class="price-chart-plot" tabindex="0" role="img" data-history-name="${escapeAttribute(target.name)}"
+        aria-label="${escapeAttribute(`${target.name} 판매가 추이, ${chartDate(points[0])}부터 ${chartDate(last)}까지, 최저 ${formatMeso(Math.min(...sales))}, 최고 ${formatMeso(Math.max(...sales))}, 지금 ${formatMeso(last.sale)}`)}"></div>
+    </figure>
+  `;
+}
+
+// 줄이 화면에 들어온 뒤 실제 폭을 재서 그린다. 폭이 같으면 다시 그리지 않는다.
+function drawPriceCharts(force = false) {
+  if (!(state.priceHistory instanceof Map)) return;
+  document.querySelectorAll('.price-chart-plot').forEach(plot => {
+    const width = Math.round(plot.clientWidth);
+    if (!width || (!force && Number(plot.dataset.width) === width)) return;
+    const points = chartPoints(plot.dataset.historyName);
+    if (points.length < 2) return;
+    drawPriceChart(plot, points, width);
+  });
+}
+
+function drawPriceChart(plot, points, width) {
+  const height = width < 420 ? 140 : 168;
+  const pad = { top: 14, right: 52, bottom: 26, left: 6 };
+  const innerW = width - pad.left - pad.right;
+  const innerH = height - pad.top - pad.bottom;
+  const sales = points.map(point => point.sale);
+  let lo = Math.min(...sales);
+  let hi = Math.max(...sales);
+  const spread = hi - lo || hi * 0.1 || 1;
+  lo = Math.max(0, lo - spread * 0.15);
+  hi += spread * 0.15;
+  const t0 = points[0].t;
+  const t1 = points[points.length - 1].t;
+  const x = t => pad.left + (t1 === t0 ? innerW / 2 : (t - t0) / (t1 - t0) * innerW);
+  const y = value => pad.top + (hi - value) / (hi - lo) * innerH;
+  const inRange = value => value != null && value >= lo && value <= hi;
+  const pts = points.map(point => ({ ...point, x: x(point.t), y: y(point.sale) }));
+
+  const line = pts.map((point, index) => `${index ? 'L' : 'M'}${point.x.toFixed(1)},${point.y.toFixed(1)}`).join('');
+  const area = `${line}L${pts[pts.length - 1].x.toFixed(1)},${pad.top + innerH}L${pts[0].x.toFixed(1)},${pad.top + innerH}Z`;
+  const digits = hi - lo < MESO_INPUT_UNIT * 0.3 ? 2 : 1;
+  const grid = [0, 0.5, 1].map(ratio => {
+    const value = lo + (hi - lo) * (1 - ratio);
+    const gy = pad.top + innerH * ratio;
+    return `<line class="pc-grid" x1="${pad.left}" x2="${pad.left + innerW}" y1="${gy}" y2="${gy}"/>
+      <text class="pc-axis" x="${width - 4}" y="${gy + 4}" text-anchor="end">${(value / MESO_INPUT_UNIT).toFixed(digits)}억</text>`;
+  }).join('');
+  // 가로축: 처음·끝 날짜와, 자리가 있으면 그 사이 달의 첫날.
+  const ticks = [{ t: t0, label: chartDate(points[0]), anchor: 'start' }, { t: t1, label: chartDate(points[points.length - 1]), anchor: 'end' }];
+  const start = new Date(t0 + 9 * 3600000);
+  for (let month = new Date(Date.UTC(start.getUTCFullYear(), start.getUTCMonth() + 1, 1)); month.getTime() - 9 * 3600000 < t1; month.setUTCMonth(month.getUTCMonth() + 1)) {
+    const t = month.getTime() - 9 * 3600000;
+    if (x(t) - x(t0) > 44 && x(t1) - x(t) > 44) ticks.push({ t, label: `${month.getUTCMonth() + 1}월`, anchor: 'middle', month: true });
+  }
+  const xAxis = ticks.map(tick => `${tick.month ? `<line class="pc-grid pc-month" x1="${x(tick.t)}" x2="${x(tick.t)}" y1="${pad.top}" y2="${pad.top + innerH}"/>` : ''}
+    <text class="pc-axis" x="${tick.anchor === 'start' ? pad.left : tick.anchor === 'end' ? pad.left + innerW : x(tick.t)}" y="${height - 7}" text-anchor="${tick.anchor}">${tick.label}</text>`).join('');
+  const dots = pts.map((point, index) => `<circle class="pc-dot${index === pts.length - 1 ? ' is-last' : ''}" cx="${point.x.toFixed(1)}" cy="${point.y.toFixed(1)}" r="${index === pts.length - 1 ? 4 : 3}"/>`).join('');
+
+  plot.innerHTML = `
+    <svg class="pc-svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" aria-hidden="true" focusable="false">
+      ${grid}${xAxis}
+      <path class="pc-area" d="${area}"/>
+      <path class="pc-line" d="${line}"/>
+      ${dots}
+      <g class="pc-focus" hidden>
+        <line class="pc-guide" y1="${pad.top}" y2="${pad.top + innerH}"/>
+        <rect class="pc-listing" width="7" height="7" rx="1"/>
+        <path class="pc-market" d="M0,-5L5,0L0,5L-5,0Z"/>
+        <circle class="pc-pick" r="5"/>
+      </g>
+    </svg>
+    <div class="pc-tip" hidden></div>`;
+  plot.dataset.width = String(width);
+  plot._chart = { pts, y, inRange, width, pinned: false, index: -1 };
+  bindPriceChart(plot);
+}
+
+function selectPricePoint(plot, index) {
+  const chart = plot._chart;
+  const focus = plot.querySelector('.pc-focus');
+  const tip = plot.querySelector('.pc-tip');
+  if (!chart || !focus || !tip) return;
+  chart.index = index;
+  if (index < 0) {
+    focus.hidden = true;
+    tip.hidden = true;
+    return;
+  }
+  const point = chart.pts[index];
+  focus.hidden = false;
+  focus.querySelector('.pc-guide').setAttribute('x1', point.x);
+  focus.querySelector('.pc-guide').setAttribute('x2', point.x);
+  const pick = focus.querySelector('.pc-pick');
+  pick.setAttribute('cx', point.x);
+  pick.setAttribute('cy', point.y);
+  const listing = focus.querySelector('.pc-listing');
+  listing.toggleAttribute('hidden', !chart.inRange(point.listing));
+  if (chart.inRange(point.listing)) {
+    listing.setAttribute('x', point.x - 3.5);
+    listing.setAttribute('y', chart.y(point.listing) - 3.5);
+  }
+  const market = focus.querySelector('.pc-market');
+  market.toggleAttribute('hidden', !chart.inRange(point.market));
+  if (chart.inRange(point.market)) market.setAttribute('transform', `translate(${point.x},${chart.y(point.market)})`);
+  tip.innerHTML = `<b>${chartDate(point)}</b>
+    <span class="pc-tip-sale">판매가 <strong>${formatMeso(point.sale)}</strong></span>
+    <span><i class="pc-key-listing" aria-hidden="true"></i>매물 ${formatMeso(point.listing)}</span>
+    <span><i class="pc-key-market" aria-hidden="true"></i>체결 ${formatMeso(point.market)}</span>`;
+  tip.hidden = false;
+  // 고른 점과 안내선이 가려지지 않게 점 옆에 둔다. 오른쪽에 자리가 없으면 왼쪽.
+  const right = point.x + 12;
+  const left = right + tip.offsetWidth <= chart.width ? right : Math.max(0, point.x - 12 - tip.offsetWidth);
+  tip.style.transform = `translateX(${Math.round(left)}px)`;
+}
+
+function nearestPricePoint(plot, clientX) {
+  const chart = plot._chart;
+  const offset = clientX - plot.getBoundingClientRect().left;
+  let best = 0;
+  chart.pts.forEach((point, index) => {
+    if (Math.abs(point.x - offset) < Math.abs(chart.pts[best].x - offset)) best = index;
+  });
+  return best;
+}
+
+// 마우스는 올리면 보이고, 손가락은 누르면 고정된다. 키보드는 ←→ 로 점을 옮긴다.
+function bindPriceChart(plot) {
+  if (plot.dataset.bound) return;
+  plot.dataset.bound = '1';
+  plot.addEventListener('pointermove', event => {
+    if (!plot._chart || (plot._chart.pinned && event.pointerType !== 'mouse')) return;
+    selectPricePoint(plot, nearestPricePoint(plot, event.clientX));
+  });
+  plot.addEventListener('pointerdown', event => {
+    if (!plot._chart) return;
+    const index = nearestPricePoint(plot, event.clientX);
+    plot._chart.pinned = !(plot._chart.pinned && plot._chart.index === index);
+    selectPricePoint(plot, plot._chart.pinned ? index : -1);
+  });
+  plot.addEventListener('pointerleave', () => {
+    if (plot._chart && !plot._chart.pinned) selectPricePoint(plot, -1);
+  });
+  plot.addEventListener('focus', () => {
+    if (plot._chart && plot._chart.index < 0) selectPricePoint(plot, plot._chart.pts.length - 1);
+  });
+  plot.addEventListener('blur', () => {
+    if (plot._chart) {
+      plot._chart.pinned = false;
+      selectPricePoint(plot, -1);
+    }
+  });
+  plot.addEventListener('keydown', event => {
+    const chart = plot._chart;
+    if (!chart) return;
+    if (event.key === 'Escape') {
+      selectPricePoint(plot, -1);
+      return;
+    }
+    if (!['ArrowLeft', 'ArrowRight'].includes(event.key)) return;
+    event.preventDefault();
+    const step = event.key === 'ArrowRight' ? 1 : -1;
+    const from = chart.index < 0 ? chart.pts.length - 1 : chart.index;
+    selectPricePoint(plot, Math.min(Math.max(from + step, 0), chart.pts.length - 1));
+  });
 }
 
 // 조사가 밀려도 각자 지금 본 값으로 계산할 수 있게 줄 안에서 판매가를 고친다. 패키지는 구성품별로 고친다.
@@ -1860,6 +2106,7 @@ function setActiveTab(name, { focus = false } = {}) {
   document.querySelectorAll('.tab-panel').forEach(panel => {
     panel.hidden = panel.id !== `panel-${name}`;
   });
+  drawPriceCharts();
 }
 
 // 계산 기준과 보기 토글만 되돌린다. 손으로 고친 가격은 '고친 가격 되돌리기'가 맡는다.
@@ -2407,6 +2654,12 @@ document.addEventListener('visibilitychange', () => {
 window.setInterval(() => {
   if (!document.hidden) void refreshSheetMarketRows();
 }, SHEET_REFRESH_INTERVAL_MS);
+
+let chartResizeFrame = 0;
+window.addEventListener('resize', () => {
+  cancelAnimationFrame(chartResizeFrame);
+  chartResizeFrame = requestAnimationFrame(() => drawPriceCharts());
+});
 
 syncThemeButton();
 loadData();

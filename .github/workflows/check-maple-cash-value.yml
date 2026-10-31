@@ -62,6 +62,10 @@ jobs:
         if: ${{ !cancelled() }}
         run: python scripts/test_merge_run.py
 
+      - name: test_build_price_history.py
+        if: ${{ !cancelled() }}
+        run: python scripts/test_build_price_history.py
+
       - name: 화면 검사 (test_page.js)
         if: ${{ !cancelled() }}
         run: node scripts/test_page.js

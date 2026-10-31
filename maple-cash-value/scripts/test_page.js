@@ -46,7 +46,7 @@ async function startServer() {
   throw new Error('http.server 가 뜨지 않았다');
 }
 
-async function openPage(browser, url, viewport) {
+async function openPage(browser, url, viewport, { blockHistory = null } = {}) {
   const context = await browser.newContext({ viewport, locale: 'ko-KR', timezoneId: 'Asia/Seoul' });
   // 시트 시세는 응답 처리기를 바로 불러 '실패'로 끝낸다. 6초 대기도, 값 변동도 없다.
   await context.route(/docs\.google\.com/, route => {
@@ -54,14 +54,24 @@ async function openPage(browser, url, viewport) {
     route.fulfill({ contentType: 'text/javascript', body: /^[\w$]+$/.test(handler) ? `${handler}({status:'error'});` : '' });
   });
   await context.route(/fonts\.(googleapis|gstatic)\.com/, route => route.fulfill({ contentType: 'text/css', body: '' }));
+  // 그래프 파일을 못 읽는 경우: 'abort' = 네트워크 실패, 'broken' = 깨진 내용.
+  if (blockHistory === 'abort') await context.route(/price-history\.json/, route => route.abort());
+  if (blockHistory === 'broken') await context.route(/price-history\.json/, route => route.fulfill({ contentType: 'application/json', body: '{not json' }));
   const page = await context.newPage();
   const errors = [];
-  page.on('console', message => { if (message.type() === 'error') errors.push(message.text()); });
+  const historyRequests = [];
+  page.on('request', request => { if (request.url().includes('price-history.json')) historyRequests.push(request.url()); });
+  page.on('console', message => {
+    if (message.type() !== 'error') return;
+    // 막은 파일을 브라우저가 '불러오기 실패'로 찍는 것은 페이지 오류가 아니다.
+    if (blockHistory && message.location().url.includes('price-history.json')) return;
+    errors.push(message.text());
+  });
   page.on('pageerror', error => errors.push(error.message));
   await page.clock.setFixedTime(PINNED_AT);
   await page.goto(url, { waitUntil: 'load' });
   await page.waitForSelector('#rank-rows .list-row');
-  return { context, page, errors };
+  return { context, page, errors, historyRequests };
 }
 
 async function snapshot(page) {
@@ -150,6 +160,70 @@ async function check(name, fn) {
 
     await check('누르는 동안에도 콘솔 오류가 없다', async () => assert.deepStrictEqual(errors, []));
     await context.close();
+
+    // 판매가 추이 그래프
+    const historyDoc = JSON.parse(fs.readFileSync(path.join(BASE, 'data', 'price-history.json'), 'utf8'));
+    const [dKey, , , sKey] = historyDoc.fields;
+    const salePoints = name => (historyDoc.items[name] || []).filter(point => point[sKey] > 0);
+    const graph = await openPage(browser, server.url, { width: 1280, height: 900 });
+    await check('줄을 펼치면 판매가 그래프가 그려진다', async () => {
+      const { page: gp } = graph;
+      assert.deepStrictEqual(graph.historyRequests, [], '줄을 펼치기 전에 그래프 파일을 불렀다');
+      const target = initial.rows.find(row => !row.components && salePoints(row.name).length >= 2);
+      assert.ok(target, '그래프를 그릴 상품이 없다');
+      const more = gp.locator('#rank-more');
+      if (await more.isVisible()) await more.click();
+      const row = gp.locator('#rank-rows .list-row').filter({ has: gp.locator('.item-name', { hasText: new RegExp(`^${target.name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`) }) }).first();
+      await row.locator('.list-row-main').click();
+      await row.locator('.price-chart-plot .pc-line').waitFor({ timeout: 5000 });
+      assert.strictEqual(graph.historyRequests.length, 1, '그래프 파일을 한 번만 불러야 한다');
+      const points = salePoints(target.name);
+      assert.strictEqual(await row.locator('.pc-dot').count(), points.length, '점 수가 파일과 다르다');
+      const last = points[points.length - 1][sKey];
+      assert.strictEqual((await row.locator('.price-chart-stats .is-now').textContent()).trim(), `${(last / 1e8).toFixed(2)}억`);
+      // 점에 올리면 그날 매물·체결이 보인다
+      const plot = row.locator('.price-chart-plot');
+      await plot.scrollIntoViewIfNeeded();
+      const box = await plot.boundingBox();
+      await plot.hover({ position: { x: box.width - 60, y: box.height / 2 } });
+      const tip = await row.locator('.pc-tip').innerText();
+      assert.ok(/판매가/.test(tip) && /매물/.test(tip) && /체결/.test(tip), `안내가 비었다: ${tip}`);
+      // 판매가를 고쳐도 그래프는 공용 값 그대로
+      await row.locator('.sale-editor-input').fill(String(Math.round(target.adoptedMeso * 3 / 1e6) / 100));
+      await row.locator('.sale-editor-save').click();
+      const edited = gp.locator('#rank-rows .list-row').filter({ has: gp.locator('.item-name', { hasText: new RegExp(`^${target.name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`) }) }).first();
+      assert.strictEqual((await edited.locator('.price-chart-stats .is-now').textContent()).trim(), `${(last / 1e8).toFixed(2)}억`, '고친 값이 그래프에 들어갔다');
+      await edited.locator('button[data-sale-price-reset]').click();
+      // 패키지는 그래프가 없다
+      await gp.click('#tab-waiting');
+      const pkg = gp.locator('#package-rows .list-row').first();
+      if (await pkg.count()) {
+        const name = (await pkg.locator('.item-name').textContent()).trim();
+        await pkg.locator('.list-row-main').click();
+        const single = initial.rows.find(r => r.name === name);
+        if (!single || single.components > 1) assert.strictEqual(await pkg.locator('.price-chart').count(), 0, '패키지에 그래프가 그려졌다');
+      }
+      assert.deepStrictEqual(await snapshot(gp), initial, '그래프를 그린 뒤 스냅숏이 달라졌다');
+      assert.deepStrictEqual(graph.errors, []);
+    });
+    await graph.context.close();
+
+    for (const mode of ['abort', 'broken']) {
+      const blocked = await openPage(browser, server.url, { width: 1280, height: 900 }, { blockHistory: mode });
+      await check(`그래프 파일을 못 읽어도(${mode === 'abort' ? '네트워크 실패' : '깨진 내용'}) 계산기가 그대로 동작한다`, async () => {
+        const { page: bp } = blocked;
+        await bp.locator('#rank-rows .list-row-main').first().click();
+        await bp.waitForTimeout(500);
+        assert.strictEqual(blocked.historyRequests.length, 1, '그래프 파일을 부르지 않았다');
+        assert.strictEqual(await bp.locator('.price-chart').count(), 0, '못 읽었는데 그래프 칸이 있다');
+        assert.ok(await bp.locator('#rank-rows .sale-editor').count(), '펼친 줄이 그려지지 않았다');
+        assert.deepStrictEqual(await snapshot(bp), initial);
+        await bp.click('button[data-discount="8.5"]');
+        assert.strictEqual(Number((await snapshot(bp)).settings.discountRate), 8.5, '못 읽은 뒤 계산이 멈췄다');
+        assert.deepStrictEqual(blocked.errors, []);
+      });
+      await blocked.context.close();
+    }
 
     const narrow = await openPage(browser, server.url, { width: 320, height: 800 });
     await check('폭 320 에서 가로 스크롤이 없다', async () => {
