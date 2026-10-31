@@ -33,7 +33,7 @@ SHORT_KEYS = ('d', 'l', 'm', 's')
 
 
 def git(repo, *args):
-    return subprocess.run(['git', '-C', repo, *args], check=True, capture_output=True, text=True).stdout
+    return subprocess.run(['git', '-C', repo, *args], check=True, capture_output=True, text=True, encoding='utf-8').stdout
 
 
 def commits(repo, path):
