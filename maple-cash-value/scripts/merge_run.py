@@ -45,7 +45,8 @@ def normalize(run):
         if len(row['collectedAt']) == 10:
             row['observationPrecision'] = 'day'
             row['collectedAt'] += 'T00:00:00+09:00'
-        row.update(searchAccount=run['searchAccount'], accountCharacter=run['accountCharacter'],
+        # 캐릭터 이름은 공개 파일에 쓰지 않는다. 회차 파일(로컬)에만 남는다.
+        row.update(searchAccount=run['searchAccount'],
                    exactMatch=True, pagesScanned=1)
         if row['type'] == 'listing':
             assert (row['resultCount'] == 0) == (not row['listingLowestMeso'])
@@ -86,7 +87,7 @@ def merge(original, run, rows):
                        resultCount=sample['resultCount'], status=sample['status'],
                        collectedAt=sample['collectedAt'], updatedAt=sample['collectedAt'],
                        searchIndex=sample['searchIndex'], searchAccount=run['searchAccount'],
-                       accountCharacter=run['accountCharacter'], filter='정확일치 · 개당 낮은 가격순')
+                       filter='정확일치 · 개당 낮은 가격순')
             # Quantity/total were not captured; do not retain old lot metadata.
             row.pop('listingQuantity', None)
             row.pop('listingTotalMeso', None)
@@ -146,7 +147,7 @@ def merge(original, run, rows):
         dailyPriorityComplete=run.get('dailyPriorityComplete', False),
         queueMode='daily_tradable_nonpackage_then_top_rank_two_axis', completedAt=now,
         pendingHistoryItems=list(pending.values()), priceChangeFlags=price_changes, unsearched=run.get('unsearched', []),
-        accounts=[dict(searchAccount=run['searchAccount'], accountCharacter=run['accountCharacter'], screenSearches=screen)],
+        accounts=[dict(searchAccount=run['searchAccount'], screenSearches=screen)],
         segments=segments, crossedMidnight=len(segments) > 1,
         note=run.get('note', '비패키지 매물 우선 · 상위 구성품 양축 확인 · 날짜만 남은 관측은 일 단위로 기록. 전체 품목 검증 완료를 의미하지 않음.'))
     touched = {nk(r['itemName']) for r in rows}
