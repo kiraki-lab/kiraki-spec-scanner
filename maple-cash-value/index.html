@@ -1,239 +1,312 @@
 <!doctype html>
-<html lang="ko" data-theme="pink">
+<html lang="ko">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="color-scheme" content="light">
-  <meta name="theme-color" content="#fff0f5">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#faf6f4">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#17141b">
   <link rel="icon" href="./favicon.svg?v=20260712" type="image/svg+xml">
   <title>키라키 캐시 효율 계산기</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Jua&amp;display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./styles.css?v=0.15.0">
+  <script>
+    try {
+      var savedTheme = localStorage.getItem('maple-cash-value-theme');
+      if (savedTheme === 'light' || savedTheme === 'dark') document.documentElement.dataset.theme = savedTheme;
+    } catch (_) {}
+  </script>
+  <link rel="stylesheet" href="./styles.css?v=0.22.0">
 </head>
 <body>
   <div class="app-shell">
     <header class="topbar">
-      <div class="brand-block">
-        <p class="eyebrow">스카니아 · 월드 통합 경매장</p>
-        <h1>키라키 캐시 효율 계산기</h1>
-        <div class="brand-actions">
-          <a class="channel-link" href="https://youtube.com/channel/UCTa93vcBRawFA1YLyDOAkdw?si=RAosYvNcb20jcBWu" target="_blank" rel="noopener noreferrer">키라키 채널 방문</a>
-        </div>
-      </div>
+      <a class="brand" href="#top"><span class="brand-mark" aria-hidden="true">K</span><span>키라키 캐시 효율 계산기</span></a>
       <div class="topbar-actions">
         <div class="sync-card" aria-live="polite">
           <span class="sync-dot"></span>
           <div>
-            <strong id="sync-state">데이터 로딩 중</strong>
+            <strong id="sync-state">가격 불러오는 중</strong>
             <span id="sync-detail">최신 가격을 불러오고 있습니다.</span>
           </div>
         </div>
+        <a class="channel-link" href="https://youtube.com/channel/UCTa93vcBRawFA1YLyDOAkdw?si=RAosYvNcb20jcBWu" target="_blank" rel="noopener noreferrer">키라키 채널</a>
+        <button id="theme-toggle" class="ghost-button" type="button" aria-label="화면 밝기 바꾸기">다크</button>
       </div>
     </header>
 
-    <section class="summary-grid" aria-label="요약">
-      <article class="metric">
-        <span class="metric-label">크레딧 1점</span>
-        <strong id="credit-rate">-</strong>
-      </article>
-      <article class="metric">
-        <span class="metric-label">현재 필터 최고</span>
-        <strong id="best-efficiency">-</strong>
-      </article>
-      <article class="metric">
-        <span class="metric-label">경매장 갱신</span>
-        <strong id="auction-updated">-</strong>
-      </article>
-      <article class="metric">
-        <span class="metric-label">계산 품목</span>
-        <strong id="sale-item-count">-</strong>
-      </article>
+    <section class="hero" id="top">
+      <p class="eyebrow">스카니아 · 월드 통합 경매장</p>
+      <h1>메소 살 때, 어떤 캐시템이 제일 쌀까?</h1>
+      <p class="hero-lead">넥슨캐시로 사서 경매장에 팔면 1억 메소에 현금이 얼마나 드는지 상품별로 비교합니다.</p>
     </section>
 
-    <section class="controls" aria-label="계산 기준">
-      <div class="controls-heading">
-        <h2>계산 기준 설정</h2>
-      </div>
-      <label class="search">
-        <span>검색</span>
-        <input id="search-input" type="search" placeholder="아이템명 · 구성품 검색" autocomplete="off">
-      </label>
+    <nav class="view-tabs" role="tablist" aria-label="계산기 화면 선택">
+      <button id="tab-rank" type="button" role="tab" aria-selected="true" aria-controls="panel-rank" data-tab="rank"><b>효율 순위</b><span>지금 살 수 있는 상품</span></button>
+      <button id="tab-detail" type="button" role="tab" aria-selected="false" aria-controls="panel-detail" data-tab="detail" tabindex="-1"><b>상품별 상세</b><span>검색 · 가격 직접 수정</span></button>
+      <button id="tab-waiting" type="button" role="tab" aria-selected="false" aria-controls="panel-waiting" data-tab="waiting" tabindex="-1"><b>패키지·재판매 대기</b><span>구성품 합계 · 지금 안 파는 상품</span></button>
+    </nav>
 
-      <div class="control-field">
-        <div class="control-label-row">
-          <label for="category-filter">세부 분류</label>
-          <label class="package-toggle">
-                <input id="package-filter-toggle" type="checkbox" checked>
-                <span class="toggle-track" aria-hidden="true"></span>
-                <strong>패키지 전체</strong>
-                <em id="package-filter-state">ON</em>
-              </label>
-        </div>
-        <select id="category-filter">
-          <option value="">전체</option>
-        </select>
-      </div>
+    <main>
+      <section id="panel-rank" class="tab-panel rank-layout" role="tabpanel" aria-labelledby="tab-rank">
+        <aside class="card input-card" aria-label="계산 기준">
+          <div class="card-head">
+            <span class="card-tag">입력</span>
+            <h2>계산 기준</h2>
+            <button id="restore-defaults" class="ghost-button" type="button">기본값 복원</button>
+          </div>
 
-      <label>
-        <span>가격 상태</span>
-        <select id="status-filter">
-          <option value="">전체</option>
-          <option value="live">가격 있음</option>
-          <option value="seed">기본값</option>
-          <option value="no_listing">매물 없음</option>
-          <option value="no_candidate">정확한 품목 없음</option>
-          <option value="unverified">미확인</option>
-        </select>
-      </label>
+          <div class="steps">
+            <div class="step step-open">
+              <div class="step-head"><b>캐시 구매</b><span id="step-cash"></span></div>
+              <div class="step-body">
+                <div class="quick-group" role="group" aria-label="상품권 할인율">
+                  <button type="button" data-discount="0">없음</button>
+                  <button type="button" data-discount="6">6%</button>
+                  <button type="button" data-discount="7">7%</button>
+                  <button type="button" data-discount="8.5">8.5%<small>삼성 월렛</small></button>
+                </div>
+                <label class="field field-inline">
+                  <span>직접 입력</span>
+                  <input id="discount-rate" type="number" min="0" max="100" step="0.1" inputmode="decimal" aria-label="상품권 할인율 (%)">
+                  <em>%</em>
+                </label>
+              </div>
+            </div>
 
-      <label>
-        <span>상품권 할인율</span>
-        <input id="discount-rate" type="number" min="0" max="100" step="0.1">
-      </label>
-      <label>
-        <span>수수료</span>
-        <select id="ah-fee-rate">
-          <option value="5">5% 일반</option>
-          <option value="3">3% MVP</option>
-        </select>
-      </label>
-      <label>
-        <span>1억당 마일리지 시세</span>
-        <input id="base-mp-rate" type="number" min="0" step="10">
-      </label>
-    </section>
+            <div class="step step-open">
+              <div class="step-head"><b>경매장 판매</b><span id="step-fee"></span></div>
+              <div class="step-body">
+                <div class="quick-group" role="group" aria-label="경매장 수수료">
+                  <button type="button" data-fee="5">5%<small>일반</small></button>
+                  <button type="button" data-fee="3">3%<small>MVP</small></button>
+                </div>
+                <select id="ah-fee-rate" hidden>
+                  <option value="5">5% 일반</option>
+                  <option value="3">3% MVP</option>
+                </select>
+              </div>
+            </div>
 
-    <details class="filter-panel compact-panel" aria-label="큰 분류 필터" open>
-      <summary class="compact-summary filter-summary">
-        <span>큰 분류</span>
-        <button id="major-filter-reset" type="button">초기화</button>
-      </summary>
-      <div class="filter-panel-body">
-        <div class="filter-group major-filter-group">
-          <div id="major-filter-list" class="major-filter-list" role="group" aria-label="큰 분류"></div>
+            <details id="mileage-step" class="step">
+              <summary><b>남은 마일리지</b><span id="step-mileage"></span></summary>
+              <div class="step-body">
+                <label id="mileage-toggle-wrap" class="switch">
+                  <input id="mileage-toggle" type="checkbox">
+                  <span class="toggle-track" aria-hidden="true"></span>
+                  <strong>남은 마일리지 사용</strong>
+                  <em id="mileage-toggle-state">OFF</em>
+                </label>
+                <p class="step-note">남은 마일리지로 30% 깎아 사는 경우로 계산합니다(11월 19일에 사라집니다).</p>
+                <label class="field">
+                  <span>1억당 마일리지 시세</span>
+                  <input id="base-mp-rate" type="number" min="0" step="10" inputmode="numeric">
+                </label>
+              </div>
+            </details>
+
+            <details class="step">
+              <summary><b>크레딧</b><span id="step-credit"></span></summary>
+              <div class="step-body">
+                <p class="step-fact"><span>크레딧 1점</span><strong id="credit-rate">-</strong></p>
+                <p class="step-note"><span id="credit-basis"></span>넥슨캐시 결제액의 5%가 쌓이지만 모아야 쓸 수 있어 순위에는 넣지 않습니다.</p>
+              </div>
+            </details>
+
+            <details class="step">
+              <summary><b>보는 상품</b><span id="step-view"></span></summary>
+              <div class="step-body">
+                <label class="switch">
+                  <input id="official-toggle" type="checkbox">
+                  <span class="toggle-track" aria-hidden="true"></span>
+                  <strong>공식 근거만</strong>
+                  <em id="official-toggle-state">OFF</em>
+                </label>
+                <p class="step-note">넥슨캐시로 사서 팔 수 있다는 공식 문구나 크레딧샵 안내가 있는 상품만 봅니다.</p>
+                <label class="switch">
+                  <input id="resting-toggle" type="checkbox">
+                  <span class="toggle-track" aria-hidden="true"></span>
+                  <strong>재판매 대기 포함</strong>
+                  <em id="resting-toggle-state">OFF</em>
+                </label>
+                <p class="step-note">지금은 안 팔지만 다시 판매하는 상품도 같이 봅니다.</p>
+              </div>
+            </details>
+          </div>
+        </aside>
+
+        <section id="conclusion" class="conclusion" aria-label="결론"></section>
+
+        <section class="card rank-card" aria-label="효율 순위">
+          <div class="card-head">
+            <span class="card-tag">순위</span>
+            <h2>1억 메소당 싼 순서</h2>
+          </div>
+          <p id="premise-line" class="premise-line"></p>
+          <p id="resting-banner" class="notice-line" hidden>
+            <span id="resting-banner-text"></span>
+            <button class="link-button" type="button" data-goto-tab="waiting">재판매 대기 보기</button>
+          </p>
+          <ol id="rank-rows" class="row-list"></ol>
+          <button id="rank-more" class="ghost-button wide-button" type="button" hidden></button>
+        </section>
+      </section>
+
+      <section id="panel-detail" class="tab-panel" role="tabpanel" aria-labelledby="tab-detail" hidden>
+        <section class="card filter-card" aria-label="상품 찾기">
+          <div class="filter-row">
+            <label class="field search-field">
+              <span>검색</span>
+              <input id="search-input" type="search" placeholder="아이템명 · 구성품 검색" autocomplete="off">
+            </label>
+            <label class="field">
+              <span>세부 분류</span>
+              <select id="category-filter">
+                <option value="">전체</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>가격 상태</span>
+              <select id="status-filter">
+                <option value="">전체</option>
+                <option value="live">가격 있음</option>
+                <option value="seed">기본값</option>
+                <option value="no_listing">매물 없음</option>
+                <option value="no_candidate">정확한 품목 없음</option>
+                <option value="unverified">미확인</option>
+              </select>
+            </label>
+            <label class="switch package-switch">
+              <input id="package-filter-toggle" type="checkbox" checked>
+              <span class="toggle-track" aria-hidden="true"></span>
+              <strong>패키지 전체</strong>
+              <em id="package-filter-state">ON</em>
+            </label>
+          </div>
+
+          <div class="major-row">
+            <div id="major-filter-list" class="major-filter-list" role="group" aria-label="큰 분류"></div>
+            <button id="major-filter-reset" class="ghost-button" type="button">초기화</button>
+          </div>
           <div id="job-group-filter-wrap" class="job-group-filter" hidden>
             <span class="job-group-label">직업군</span>
             <div id="job-group-filter-list" class="job-group-list" role="group" aria-label="직업군"></div>
           </div>
-        </div>
-      </div>
-    </details>
+        </section>
 
-
-    <main>
-      <section class="table-panel" aria-label="효율 목록">
-        <div class="section-title">
-          <h2>효율 목록</h2>
-          <div class="table-heading-actions">
-            <label id="mileage-toggle-wrap" class="package-toggle resting-toggle" title="남은 마일리지로 30% 깎아 사는 경우로 계산합니다. 마일리지는 2026-09-17 부터 새로 쌓이지 않고 11-19 에 사라집니다.">
-              <input id="mileage-toggle" type="checkbox">
-              <span class="toggle-track" aria-hidden="true"></span>
-              <strong>남은 마일리지 사용</strong>
-              <em id="mileage-toggle-state">OFF</em>
-            </label>
-            <label class="package-toggle resting-toggle" title="넥슨캐시로 사서 팔 수 있다는 근거가 공식 문구나 크레딧샵 안내에 있는 상품만 봅니다.">
-              <input id="official-toggle" type="checkbox">
-              <span class="toggle-track" aria-hidden="true"></span>
-              <strong>공식 근거만</strong>
-              <em id="official-toggle-state">OFF</em>
-            </label>
-            <label class="package-toggle resting-toggle" title="지금은 안 팔지만 다시 판매하는 상품도 같이 봅니다.">
-              <input id="resting-toggle" type="checkbox">
-              <span class="toggle-track" aria-hidden="true"></span>
-              <strong>재판매 대기 포함</strong>
-              <em id="resting-toggle-state">OFF</em>
-            </label>
-            <button id="reset-local-prices" class="local-reset-button" type="button"
-              title="이 브라우저에서 수정한 매물가와 시세 참고가 전체 초기화">전체 초기화</button>
-            <label class="page-size-control">
+        <section class="card table-panel" aria-label="전체 상품">
+          <div class="card-head">
+            <span class="card-tag">상세</span>
+            <h2>전체 상품</h2>
+            <span id="row-count" class="count-pill">0개</span>
+            <span class="best-pill">이 조건 최고 <strong id="best-efficiency">-</strong></span>
+            <div class="head-tools">
+              <button id="reset-local-prices" class="ghost-button" type="button" title="이 브라우저에서 수정한 매물가와 시세 참고가 전체 초기화">고친 가격 되돌리기</button>
               <select id="page-size" aria-label="페이지당 표시 개수">
                 <option value="10">10개씩</option>
                 <option value="20">20개씩</option>
                 <option value="0">전체</option>
               </select>
-            </label>
-            <span id="row-count" class="count-pill">0개</span>
+            </div>
           </div>
-        </div>
-        <p id="premise-line" class="premise-line"></p>
-        <p id="resting-banner" class="resting-banner" hidden>
-          <strong>안내</strong>
-          <span id="resting-banner-text"></span>
-        </p>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th scope="col">순위</th>
-                <th scope="col">아이템</th>
-                <th scope="col">구매 가격</th>
-                <th scope="col">매물가/참고가</th>
-                <th scope="col" class="efficiency-heading"><span>판매 효율</span><small>1억당 현금</small></th>
-              </tr>
-            </thead>
-            <tbody id="item-rows"></tbody>
-          </table>
-        </div>
-        <nav class="table-pagination" aria-label="효율 목록 페이지">
-          <button id="page-prev" class="page-button" type="button" aria-label="이전 페이지" title="이전 페이지">‹</button>
-          <span id="page-state" aria-live="polite">0 / 0</span>
-          <button id="page-next" class="page-button" type="button" aria-label="다음 페이지" title="다음 페이지">›</button>
-        </nav>
+          <p class="premise-line premise-copy"></p>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col">순위</th>
+                  <th scope="col">아이템</th>
+                  <th scope="col">구매 가격</th>
+                  <th scope="col">매물가/참고가</th>
+                  <th scope="col" class="efficiency-heading">판매 효율 <small>1억당 현금</small></th>
+                </tr>
+              </thead>
+              <tbody id="item-rows"></tbody>
+            </table>
+          </div>
+          <nav class="table-pagination" aria-label="효율 목록 페이지">
+            <button id="page-prev" class="ghost-button page-button" type="button" aria-label="이전 페이지" title="이전 페이지">‹</button>
+            <span id="page-state" aria-live="polite">0 / 0</span>
+            <button id="page-next" class="ghost-button page-button" type="button" aria-label="다음 페이지" title="다음 페이지">›</button>
+          </nav>
+        </section>
       </section>
 
-      <details class="market-info">
-        <summary class="compact-summary"><span>판매 정보</span></summary>
-        <div class="side-stack">
-          <section class="notice-panel" aria-label="캐시샵 업데이트">
-            <div class="section-title">
-              <h2>캐시샵 업데이트</h2>
-            </div>
-            <div id="notice-list" class="notice-list"></div>
-          </section>
+      <section id="panel-waiting" class="tab-panel" role="tabpanel" aria-labelledby="tab-waiting" hidden>
+        <section class="card" aria-label="지금 살 수 있는 패키지">
+          <div class="card-head">
+            <span class="card-tag">패키지</span>
+            <h2>지금 살 수 있는 패키지</h2>
+            <span id="package-count" class="count-pill">0개</span>
+          </div>
+          <p class="section-note">구성품을 따로 팔아 합친 값이라 다 팔릴 때까지 시간이 걸릴 수 있습니다.</p>
+          <ol id="package-rows" class="row-list"></ol>
+        </section>
 
-          <section class="sale-panel" aria-label="판매 품목">
-            <div class="section-title">
-              <h2>판매 품목</h2>
+        <section class="card" aria-label="재판매 대기">
+          <div class="card-head">
+            <span class="card-tag">대기</span>
+            <h2>재판매 대기</h2>
+            <span id="waiting-count" class="count-pill">0개</span>
+            <div class="head-tools">
+              <button id="resting-quick-toggle" class="ghost-button" type="button">순위에 같이 보기</button>
             </div>
-            <div class="sale-filters" aria-label="판매 품목 필터">
-              <label>
-                <span>품목 검색</span>
-                <input id="sale-search-input" type="search" placeholder="판매 품목 검색" autocomplete="off">
-              </label>
-              <label>
-                <span>판매글</span>
-                <select id="sale-group-filter">
-                  <option value="">전체 판매글</option>
-                </select>
-              </label>
-              <label>
-                <span>품목 분류</span>
-                <select id="sale-type-filter">
-                  <option value="">전체 분류</option>
-                  <option value="패키지">패키지</option>
-                  <option value="쿠폰">쿠폰</option>
-                  <option value="확률형">확률형</option>
-                  <option value="펫">펫</option>
-                  <option value="펫장비">펫장비</option>
-                  <option value="치장">치장</option>
-                  <option value="기타">기타</option>
-                </select>
-              </label>
-              <label>
-                <span>상태</span>
-                <select id="sale-review-filter">
-                  <option value="all">전체</option>
-                  <option value="confirmed">확인됨</option>
-                  <option value="review">확인 필요</option>
-                </select>
-              </label>
-            </div>
-            <div id="sale-item-list" class="sale-list"></div>
-          </section>
-        </div>
-      </details>
+          </div>
+          <p class="section-note">지금은 살 수 없고, 다시 판매하면 순위에 돌아옵니다.</p>
+          <ol id="waiting-rows" class="row-list"></ol>
+          <button id="waiting-more" class="ghost-button wide-button" type="button" hidden></button>
+        </section>
+
+        <details class="card market-info">
+          <summary><b>캐시샵 판매 정보</b><span>공지 · 판매 품목</span></summary>
+          <div class="market-grid">
+            <section aria-label="캐시샵 업데이트">
+              <h3>캐시샵 업데이트</h3>
+              <div id="notice-list" class="notice-list"></div>
+            </section>
+
+            <section aria-label="판매 품목">
+              <h3>판매 품목</h3>
+              <div class="sale-filters" aria-label="판매 품목 필터">
+                <label class="field">
+                  <span>품목 검색</span>
+                  <input id="sale-search-input" type="search" placeholder="판매 품목 검색" autocomplete="off">
+                </label>
+                <label class="field">
+                  <span>판매글</span>
+                  <select id="sale-group-filter">
+                    <option value="">전체 판매글</option>
+                  </select>
+                </label>
+                <label class="field">
+                  <span>품목 분류</span>
+                  <select id="sale-type-filter">
+                    <option value="">전체 분류</option>
+                    <option value="패키지">패키지</option>
+                    <option value="쿠폰">쿠폰</option>
+                    <option value="확률형">확률형</option>
+                    <option value="펫">펫</option>
+                    <option value="펫장비">펫장비</option>
+                    <option value="치장">치장</option>
+                    <option value="기타">기타</option>
+                  </select>
+                </label>
+                <label class="field">
+                  <span>상태</span>
+                  <select id="sale-review-filter">
+                    <option value="all">전체</option>
+                    <option value="confirmed">확인됨</option>
+                    <option value="review">확인 필요</option>
+                  </select>
+                </label>
+              </div>
+              <div id="sale-item-list" class="sale-list"></div>
+            </section>
+          </div>
+        </details>
+      </section>
+      <p class="data-credit">Data based on NEXON Open API</p>
     </main>
   </div>
 
@@ -243,6 +316,6 @@
     </tr>
   </template>
 
-  <script type="module" src="./app.js?v=0.19.0"></script>
+  <script type="module" src="./app.js?v=0.22.0"></script>
 </body>
 </html>
