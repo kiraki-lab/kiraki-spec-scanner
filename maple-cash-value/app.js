@@ -1637,6 +1637,14 @@ function chartDate(point) {
   return `${month}.${day}`;
 }
 
+// 예전 회차에 잘못 잡힌 호가(마네킹 100억 같은 값)가 축을 망가뜨리지 않게 그래프에서만 뺀다. 파일 값은 그대로다.
+function chartPoints(name) {
+  const points = (state.priceHistory.get(normalizeKey(name)) || []).filter(point => point.sale);
+  const sorted = points.map(point => point.sale).sort((a, b) => a - b);
+  const median = sorted[Math.floor(sorted.length / 2)];
+  return points.filter(point => point.sale <= median * 3 && point.sale >= median / 3);
+}
+
 function renderPriceChart(item) {
   if (state.priceHistory === null) {
     requestPriceHistory();
@@ -1644,7 +1652,7 @@ function renderPriceChart(item) {
   }
   const target = priceChartTarget(item);
   if (!target) return '';
-  const points = (state.priceHistory.get(normalizeKey(target.name)) || []).filter(point => point.sale);
+  const points = chartPoints(target.name);
   if (points.length < 2) return '';
   const sales = points.map(point => point.sale);
   const last = points[points.length - 1];
@@ -1670,7 +1678,7 @@ function drawPriceCharts(force = false) {
   document.querySelectorAll('.price-chart-plot').forEach(plot => {
     const width = Math.round(plot.clientWidth);
     if (!width || (!force && Number(plot.dataset.width) === width)) return;
-    const points = (state.priceHistory.get(normalizeKey(plot.dataset.historyName)) || []).filter(point => point.sale);
+    const points = chartPoints(plot.dataset.historyName);
     if (points.length < 2) return;
     drawPriceChart(plot, points, width);
   });
