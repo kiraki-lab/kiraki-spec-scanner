@@ -9,6 +9,7 @@ on:
 
 permissions:
   contents: write
+  actions: write
 
 concurrency:
   group: maple-price-history
@@ -35,6 +36,8 @@ jobs:
         run: git diff --exit-code -- maple-cash-value/data/auction-prices.json
 
       - name: Commit price history
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           if git diff --quiet -- maple-cash-value/data/price-history.json; then
             echo "No price history changes."
@@ -45,4 +48,6 @@ jobs:
             git commit -m "Update Maple price history [skip ci]"
             git pull --rebase origin main
             git push
+            # [skip ci] 라 배포가 안 돈다. 그래프가 다음 예약 실행까지 밀리지 않게 바로 부른다.
+            gh workflow run update-maple-cash-value.yml --ref main
           fi
