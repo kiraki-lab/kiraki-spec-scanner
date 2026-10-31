@@ -1394,6 +1394,12 @@ function renderStepSummaries(credit) {
   const { discountRate, ahFeeRate } = state.settings;
   $('#step-cash').textContent = `상품권 ${Number(discountRate || 0)}% 할인`;
   $('#step-fee').textContent = `수수료 ${Number(ahFeeRate || 0)}%${Number(ahFeeRate) === 3 ? ' MVP' : ' 일반'}`;
+  document.querySelectorAll('button[data-discount]').forEach(button => {
+    button.classList.toggle('is-active', Number(button.dataset.discount) === Number(discountRate || 0));
+  });
+  document.querySelectorAll('button[data-fee]').forEach(button => {
+    button.classList.toggle('is-active', Number(button.dataset.fee) === Number(ahFeeRate || 0));
+  });
   $('#step-mileage').textContent = state.useMileage && mileageUsable() ? '30% 깎아 사기' : '사용 안 함';
   $('#step-credit').textContent = credit.rate > 0
     ? `1점 ${nf.format(Math.round(credit.rate / 100) * 100)}메소 · 순위 제외`
@@ -1428,7 +1434,7 @@ function renderConclusion(rankedRows, rankByKey) {
       <span class="verdict-name">${escapeHtml(best.name)}</span>
       <span class="verdict-meta">${nf.format(best.cashPrice)}원에 사서 ${formatMeso(best.listingPrice.meso)}에 판매${bestRank > 1 ? ` · 전체 ${bestRank}위` : ''}</span>
       ${creditLine}
-      <span class="item-badges">${renderEvidencePill(best)}${renderLiquidityPill(best)}</span>
+      <span class="item-badges">${renderLocalPill(best)}${renderEvidencePill(best)}${renderLiquidityPill(best)}</span>
     </article>
     ${others.map(item => `
       <article class="runner-up">
@@ -1436,7 +1442,7 @@ function renderConclusion(rankedRows, rankByKey) {
         <strong>${formatWon(item.listingEfficiency)}</strong>
         <span class="runner-name">${escapeHtml(item.name)}</span>
         <span class="runner-meta">${nf.format(item.cashPrice)}원 → ${formatMeso(item.listingPrice.meso)}</span>
-        <span class="item-badges">${renderWaitingPill(item)}${renderEvidencePill(item)}${renderLiquidityPill(item)}</span>
+        <span class="item-badges">${renderWaitingPill(item)}${renderLocalPill(item)}${renderEvidencePill(item)}${renderLiquidityPill(item)}</span>
       </article>
     `).join('')}
   `);
@@ -1445,6 +1451,16 @@ function renderConclusion(rankedRows, rankByKey) {
 // 재판매 대기까지 순위에 넣어 보면 지금 못 사는 상품이 위로 온다. 살 수 없다는 것을 바로 보여 준다.
 function renderWaitingPill(item) {
   return item.purchasable === false ? '<small class="rank-tag" title="지금은 살 수 없습니다.">재판매 대기</small>' : '';
+}
+
+function hasLocalPrice(name) {
+  const key = normalizeKey(name);
+  return state.localAuctionRows.some(row => normalizeKey(row.itemName || row.name || row.query) === key);
+}
+
+function renderLocalPill(item) {
+  const names = [item.name, ...componentList(item.components).map(component => component.name)];
+  return names.some(hasLocalPrice) ? '<span class="evidence-pill local-pill">내가 고친 값</span>' : '';
 }
 
 function hasCreditValue(item) {
@@ -1542,9 +1558,31 @@ function renderRowDetail(item) {
     <div class="row-detail">
       <dl>${facts.map(([label, value]) => `<div><dt>${escapeHtml(label)}</dt><dd>${escapeHtml(value)}</dd></div>`).join('')}</dl>
       ${notes.map(note => `<p>${escapeHtml(note)}</p>`).join('')}
-      <button class="link-button" type="button" data-open-detail="${escapeAttribute(item.name)}">상품별 상세에서 가격 고치기</button>
+      ${renderSaleEditor(item, breakdown)}
     </div>
   `;
+}
+
+// 조사가 밀려도 각자 지금 본 값으로 계산할 수 있게 줄 안에서 판매가를 고친다. 패키지는 구성품별로 고친다.
+function renderSaleEditor(item, breakdown) {
+  const targets = breakdown && breakdown.tradable.length ? breakdown.tradable : [{ name: item.name, quantity: 1 }];
+  const rows = targets.map(target => {
+    const price = breakdown ? breakdown.prices.get(normalizeKey(target.name)) : item.listingPrice;
+    const name = escapeAttribute(target.name);
+    return `
+      <div class="sale-editor-row">
+        <label>
+          <span>${breakdown ? `${escapeHtml(target.name)}${target.quantity > 1 ? ` × ${nf.format(target.quantity)}` : ''}` : '내 판매가'}</span>
+          <input class="sale-editor-input" type="number" min="0" step="0.01" inputmode="decimal"
+            value="${mesoToInputUnit(price?.meso) || ''}" data-sale-price-name="${name}"
+            aria-label="${name} 판매가 (억 메소)">
+          <em>억</em>
+        </label>
+        <button class="sale-editor-save" type="button" data-sale-price-save="${name}">적용</button>
+        ${hasLocalPrice(target.name) ? `<button class="link-button" type="button" data-sale-price-reset="${name}">원래 값으로</button>` : ''}
+      </div>`;
+  }).join('');
+  return `<div class="sale-editor">${rows}<small>고친 값은 이 브라우저에만 저장됩니다.</small></div>`;
 }
 
 function renderPagination(total, start, end, totalPages) {
@@ -1643,7 +1681,7 @@ function renderItemBadges(item) {
   const thinWarning = Number(item.listingPrice?.thinListingCount || 0) > 0
     ? `<span class="market-warning-pill" title="매물 ${THIN_LISTING_COUNT}건 이하인 구성품이 있습니다. 가격이 흔들릴 수 있습니다.">매물 적음 ${item.listingPrice.thinListingCount}개</span>`
     : '';
-  return `${renderEvidencePill(item)}${renderLiquidityPill(item)}${renderMileageBadge(item.mileageType)}${turnoverWarning}${marketWarning}${thinWarning}`;
+  return `${renderLocalPill(item)}${renderEvidencePill(item)}${renderLiquidityPill(item)}${renderMileageBadge(item.mileageType)}${turnoverWarning}${marketWarning}${thinWarning}`;
 }
 
 function renderTable(rows, rankByKey = new Map(), rankChanges = new Map()) {
@@ -2211,6 +2249,31 @@ function saveInlinePrice(name, rawValue) {
   render();
 }
 
+// 계산은 매물과 시세 중 낮은 쪽을 쓴다. 매물 칸만 고치면 시세보다 높게 적은 값이 무시되므로 둘 다 같은 값으로 넣는다.
+function saveSalePrice(name, rawValue) {
+  const cleanName = String(name || '').trim();
+  if (!cleanName) return;
+  const meso = mesoFromInputUnit(rawValue);
+  if (meso <= 0) {
+    resetSalePrice(cleanName);
+    return;
+  }
+  state.pendingPreviousRanks = new Map(state.currentRanks);
+  upsertLocalPrice(cleanName, meso, 'live');
+  upsertLocalMarketPrice(cleanName, meso);
+  setSyncState('ready', '판매가 적용', `${cleanName} 판매가를 이 브라우저 계산에 반영했습니다.`);
+  render();
+}
+
+function resetSalePrice(name) {
+  const key = normalizeKey(name);
+  state.pendingPreviousRanks = new Map(state.currentRanks);
+  state.localAuctionRows = state.localAuctionRows.filter(row => normalizeKey(row.itemName || row.name || row.query) !== key);
+  persistLocalData();
+  setSyncState('ready', '기본 가격 복원', `${name} 판매가를 공용 값으로 되돌렸습니다.`);
+  render();
+}
+
 function saveInlineMarketPrice(name, rawValue) {
   const cleanName = String(name || '').trim();
   if (!cleanName) return;
@@ -2677,12 +2740,44 @@ on('main', 'click', event => {
     openInDetail(open.dataset.openDetail);
     return;
   }
+  const saleSave = event.target.closest('button[data-sale-price-save]');
+  if (saleSave) {
+    const input = saleSave.closest('.sale-editor-row')?.querySelector('.sale-editor-input');
+    saveSalePrice(saleSave.dataset.salePriceSave, input?.value);
+    return;
+  }
+  const saleReset = event.target.closest('button[data-sale-price-reset]');
+  if (saleReset) {
+    resetSalePrice(saleReset.dataset.salePriceReset);
+    return;
+  }
   const row = event.target.closest('button[data-row-toggle]');
   if (row) {
     const key = row.dataset.rowToggle;
     if (state.expandedRowKeys.has(key)) state.expandedRowKeys.delete(key);
     else state.expandedRowKeys.add(key);
     render();
+  }
+});
+
+on('main', 'keydown', event => {
+  if (event.key !== 'Enter' || !event.target.matches('.sale-editor-input')) return;
+  event.preventDefault();
+  saveSalePrice(event.target.dataset.salePriceName, event.target.value);
+});
+
+on('main', 'click', event => {
+  const discount = event.target.closest('button[data-discount]');
+  if (discount) {
+    const input = $('#discount-rate');
+    input.value = discount.dataset.discount;
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+  }
+  const fee = event.target.closest('button[data-fee]');
+  if (fee) {
+    const select = $('#ah-fee-rate');
+    select.value = fee.dataset.fee;
+    select.dispatchEvent(new Event('change', { bubbles: true }));
   }
 });
 
