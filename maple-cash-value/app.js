@@ -146,7 +146,6 @@ const state = {
   currentRanks: new Map(),
   pendingPreviousRanks: null,
   expandedComponentKeys: new Set(),
-  expandedMarketKeys: new Set(),
   // 순위 줄을 눌러 펼친 근거. 시트가 30초마다 다시 그려도 펼친 줄이 닫히지 않게 여기 둔다.
   expandedRowKeys: new Set(),
   rankListAll: false,
@@ -922,6 +921,16 @@ function syncPackageToggle() {
   status.textContent = state.packagesVisible ? 'ON' : 'OFF';
 }
 
+// 접어 둔 조건이 켜져 있으면 접힌 채로도 알 수 있게 개수를 보인다.
+function syncMoreFilters() {
+  const summary = $('#more-filters-state');
+  if (!summary) return;
+  const autoCategory = state.majorFilter === 'mileage' && state.categoryFilter === REFERENCE_CATEGORY;
+  const active = [state.categoryFilter && !autoCategory, state.statusFilter, !state.packagesVisible, state.officialOnly].filter(Boolean).length;
+  summary.textContent = active ? `${active}개 적용 중` : '세부 분류 · 가격 상태 · 패키지 · 교환 확인';
+  summary.classList.toggle('is-active', active > 0);
+}
+
 function auctionStatusLabel(status) {
   return AUCTION_STATUS_LABELS[status] || '미확인';
 }
@@ -1331,8 +1340,7 @@ function stableDisplayRows(rows) {
 // 목록을 다시 그리면 누른 버튼이 새 버튼으로 바뀌어 키보드 위치가 사라진다. 같은 상품의 같은 버튼으로 돌려놓는다.
 const FOCUS_KEYS = [
   'data-row-toggle', 'data-sale-price-name', 'data-sale-price-save', 'data-sale-price-reset',
-  'data-inline-price-name', 'data-inline-price-save', 'data-inline-market-name', 'data-inline-market-save',
-  'data-inline-market-toggle', 'data-component-toggle', 'data-major-filter', 'data-job-group-filter'
+  'data-component-toggle', 'data-major-filter', 'data-job-group-filter'
 ];
 
 function rememberFocus() {
@@ -1389,6 +1397,7 @@ function render() {
 
   syncCategoryOptions(allRows);
   syncPackageToggle();
+  syncMoreFilters();
   syncRestingToggle(allRows.filter(item => !item.referenceOnly && item.saleStatus === 'resting').length);
   syncViewToggles();
   renderPremiseLine(latestAuctionUpdatedAtForPremise());
@@ -1585,6 +1594,9 @@ function renderRowDetail(item) {
     <div class="row-detail">
       <dl>${facts.map(([label, value]) => `<div><dt>${escapeHtml(label)}</dt><dd>${escapeHtml(value)}</dd></div>`).join('')}</dl>
       ${notes.map(note => `<p>${escapeHtml(note)}</p>`).join('')}
+      ${breakdown && breakdown.bonus.length
+        ? `<p>따로 팔 수 없어 합계에서 뺐습니다: ${escapeHtml(breakdown.bonus.map(componentDisplayName).join(', '))}</p>`
+        : ''}
       ${renderSaleEditor(item, breakdown)}
     </div>
   `;
@@ -1596,10 +1608,14 @@ function renderSaleEditor(item, breakdown) {
   const rows = targets.map(target => {
     const price = breakdown ? breakdown.prices.get(normalizeKey(target.name)) : item.listingPrice;
     const name = escapeAttribute(target.name);
+    const hint = !breakdown ? ''
+      : price?.source === 'pending'
+        ? `${Number(price.listingMeso) > 0 ? `매물 ${formatMeso(price.listingMeso)}, ` : ''}체결 확인 전이라 합계에서 뺐습니다`
+        : !(Number(price?.meso) > 0) ? '아직 가격이 없습니다' : '';
     return `
       <div class="sale-editor-row">
         <label>
-          <span>${breakdown ? `${escapeHtml(target.name)}${target.quantity > 1 ? ` × ${nf.format(target.quantity)}` : ''}` : '내 판매가'}</span>
+          <span>${breakdown ? `${escapeHtml(componentDisplayName(target))}${hint ? `<small class="sale-editor-hint">${hint}</small>` : ''}` : '내 판매가'}</span>
           <input class="sale-editor-input" type="number" min="0" step="0.01" inputmode="decimal"
             value="${mesoToInputUnit(price?.meso) || ''}" data-sale-price-name="${name}"
             aria-label="${name} 판매가 (억 메소)">
@@ -1711,6 +1727,7 @@ function renderItemBadges(item) {
   return `${renderLocalPill(item)}${renderEvidencePill(item)}${renderLiquidityPill(item)}${renderMileageBadge(item.mileageType)}${turnoverWarning}${marketWarning}${thinWarning}`;
 }
 
+// 상세 탭 표. 상품 이름·판매가·1억당 현금이 먼저 보이고, 판매가는 줄을 펼쳐 순위 탭과 같은 칸으로 고친다.
 function renderTable(rows, rankByKey = new Map(), rankChanges = new Map()) {
   const tbody = $('#item-rows');
   if (!rows.length) {
@@ -1733,14 +1750,13 @@ function renderTable(rows, rankByKey = new Map(), rankChanges = new Map()) {
     const cost = isReference
       ? `${nf.format(Number(item.mileagePrice || item.cashPrice || 0))} 마일리지`
       : `${nf.format(Number(item.cashPrice || 0))}원`;
+    const expanded = !isReference && state.expandedComponentKeys.has(key);
     const price = isReference
       ? renderReferencePrice(item)
-      : isPackageItem(item)
-        ? renderPrice(item.listingPrice)
-        : renderInlinePriceEditor(item.name, item.listingPrice);
+      : `${renderPrice(item.listingPrice)}${renderEditToggle(item, key, expanded)}`;
     const result = isReference
       ? `<span class="eff-value">${formatReferenceMeso(item.referenceMesoPerThousand)}</span><span class="price-meta">1,000 마일리지당 절약</span>`
-      : `<span class="eff-value">${formatWon(item.listingEfficiency)}</span><span class="price-meta">${item.listingPrice?.source === 'pending' ? '확인된 구성품 합계' : '1억당 현금'}</span>${
+      : `<span class="eff-value">${formatWon(item.listingEfficiency)}</span>${item.listingPrice?.source === 'pending' ? '<span class="price-meta">확인된 구성품 합계</span>' : ''}${
           hasCreditValue(item)
             ? `<span class="price-meta credit-meta" title="넥슨캐시 5% 적립 크레딧을 모아 크레딧샵 상품을 사서 판다고 가정한 추정치입니다.">크레딧 포함 ${formatWon(item.creditEfficiency)}</span>`
             : ''}`;
@@ -1748,37 +1764,34 @@ function renderTable(rows, rankByKey = new Map(), rankChanges = new Map()) {
       isReference ? 'reference-row' : '',
       isPackageItem(item) ? 'package-row' : '',
       item.listingPrice?.source === 'pending' ? 'market-pending-row' : '',
+      rank.includes('source-pill') ? 'has-tag' : '',
+      expanded ? 'is-open' : '',
       rankNumber && rankNumber <= 3 ? `top-rank rank-${rankNumber}` : ''
     ].filter(Boolean).join(' ');
 
     const itemRow = `
       <tr${rowClass ? ` class="${rowClass}"` : ''}>
         <td data-label="순위">${rank}</td>
-        <td data-label="아이템">
+        <td data-label="상품">
           <span class="item-name">${escapeHtml(item.name)}</span>
           <span class="item-meta-row">${itemMeta}</span>
-          ${renderComponentToggle(item, key)}
+          <span class="item-cost">${isReference ? '마일리지 가격' : '캐시 가격'} <b>${cost}</b></span>
         </td>
-        <td data-label="구매 가격"><span class="cash-value">${cost}</span></td>
-        <td data-label="매물가/참고가"><div class="price-cell">${price}</div></td>
-        <td data-label="판매 효율/절약">${result}</td>
+        <td data-label="판매가"><div class="price-cell">${price}</div></td>
+        <td data-label="1억당 현금">${result}</td>
       </tr>
     `;
-    return itemRow + renderComponentDetailRow(item, key);
+    return itemRow + (expanded ? `<tr class="row-detail-row"><td colspan="4">${renderRowDetail(item)}</td></tr>` : '');
   }).join(''));
 }
 
 function renderReferencePrice(item) {
-  const date = item.referenceUpdatedAt
-    ? `<time class="price-date">${escapeHtml(formatDate(item.referenceUpdatedAt))}</time>`
-    : '';
   return `
     <span class="price-display">
       <span class="price-line">
         <span class="price-value">${formatMeso(item.referenceMesoValue)}</span>
         <span class="source-pill seed">대체 구매가</span>
       </span>
-      ${date}
     </span>
   `;
 }
@@ -1798,9 +1811,6 @@ function renderPrice(price) {
             ? '일부 확인'
             : auctionStatusLabel(status);
   const klass = ['live', 'manual', 'history', 'pending', 'mixed'].includes(price.source) ? price.source : status;
-  const date = price.collectedAt
-    ? `<time class="price-date">${escapeHtml(formatDate(price.collectedAt))}</time>`
-    : '';
   const note = price.source === 'pending'
     ? `<span class="price-note warning">체결 미확인 ${nf.format(price.pendingMarketCount || 0)}개 제외</span>`
     : '';
@@ -1811,107 +1821,21 @@ function renderPrice(price) {
         <span class="source-pill ${klass}">${escapeHtml(label)}</span>
       </span>
       ${note}
-      ${date}
     </span>
   `;
 }
 
-function renderInlinePriceEditor(name, price, compact = false) {
-  const appliedMeso = roundMeso(price?.meso);
-  const listingMeso = roundMeso(price?.listingMeso || (price?.marketHistoryMeso ? 0 : price?.meso));
-  const marketHistoryMeso = roundMeso(price?.marketHistoryMeso);
-  const marketHistoryStatus = price?.marketHistoryStatus || '';
-  const pendingMarketHistory = price?.source === 'pending';
-  const inputMeso = mesoToInputUnit(listingMeso);
-  const marketInputMeso = mesoToInputUnit(marketHistoryMeso);
-  const status = price?.auctionStatus || 'unverified';
-  const label = price?.source === 'manual'
-    ? '수동입력'
-    : price?.source === 'history' || pendingMarketHistory
-      ? '현재 매물'
-      : price?.source === 'live'
-        ? '체결 확인'
-        : auctionStatusLabel(status);
-  const meta = listingMeso > 0 ? `${formatMeso(listingMeso)} · ${label}` : label;
-  const date = price?.collectedAt && !compact
-    ? `<time class="inline-price-date">${escapeHtml(formatDate(price.collectedAt))}</time>`
-    : '';
-  const marketKey = normalizeKey(name);
-  const marketExpanded = state.expandedMarketKeys.has(marketKey);
-  const gap = Number(price?.marketGapRate || 0);
-  const marketDate = price?.marketHistoryCollectedAt
-    ? `<time>${escapeHtml(formatDate(price.marketHistoryCollectedAt))}</time>`
-    : '';
-  const marketLabel = String(price?.marketHistoryBasis || '').includes('구글 시트') ? '시트 보정' : '시세 탭';
-  const marketMeta = pendingMarketHistory
-    ? `<small class="market-reference-meta warning">
-        <strong>${escapeHtml(price?.marketHistoryNote || marketHistoryStatusLabel(marketHistoryStatus))}</strong>
-        <span>계산 제외</span>
-        ${marketDate}
-      </small>`
-    : marketHistoryMeso > 0
-      ? `<small class="market-reference-meta">
-          <strong>${marketLabel} ${formatMeso(marketHistoryMeso)}</strong>
-          <span>계산 ${formatMeso(appliedMeso)}</span>
-          ${Math.round(gap) > 0 ? `<span class="market-gap">차이 ${Math.round(gap)}%</span>` : ''}
-          ${marketDate}
-        </small>`
-      : '';
-  const marketEditor = marketExpanded
-    ? `<span class="inline-market-row">
-        <span class="inline-market-label">시세</span>
-        <input class="inline-market-input" type="number" min="0" step="0.01" inputmode="decimal"
-          value="${marketInputMeso || ''}" data-inline-market-name="${escapeAttribute(name)}"
-          aria-label="${escapeAttribute(name)} 시세 탭 참고가 (억 메소)">
-        <span class="inline-price-unit">억</span>
-        <button class="inline-market-save" type="button"
-          data-inline-market-save="${escapeAttribute(name)}"
-          aria-label="${escapeAttribute(name)} 시세 참고가 적용" title="시세 참고가 적용">&#10003;</button>
-      </span>`
-    : '';
+// 줄을 펼치는 버튼. 단품은 판매가 하나, 패키지는 구성품마다 고친다.
+function renderEditToggle(item, key, expanded) {
+  const breakdown = componentBreakdown(item);
+  const tradableCount = breakdown ? breakdown.tradable.reduce((sum, component) => sum + component.quantity, 0) : 0;
+  const label = breakdown && breakdown.tradable.length ? `구성품 ${nf.format(tradableCount)}개 고치기` : '판매가 고치기';
   return `
-    <span class="inline-price-editor${compact ? ' compact' : ''}${marketHistoryMeso > 0 || pendingMarketHistory ? ' has-market' : ''}">
-      <span class="inline-price-row">
-        <input class="inline-price-input" type="number" min="0" step="0.01" inputmode="decimal"
-          value="${inputMeso || ''}" data-inline-price-name="${escapeAttribute(name)}"
-          aria-label="${escapeAttribute(name)} 현재 매물가 (억 메소)">
-        <span class="inline-price-unit">억</span>
-        <button class="inline-market-toggle${marketHistoryMeso > 0 ? ' has-value' : ''}${pendingMarketHistory ? ' has-warning' : ''}" type="button"
-          data-inline-market-toggle="${escapeAttribute(name)}" aria-expanded="${marketExpanded}"
-          aria-label="${escapeAttribute(name)} 시세 참고가 입력" title="시세 탭 참고가 입력">시세</button>
-        <button class="inline-price-save" type="button"
-          data-inline-price-save="${escapeAttribute(name)}"
-          aria-label="${escapeAttribute(name)} 매물가 적용" title="매물가 적용">&#10003;</button>
-      </span>
-      <small class="inline-price-meta"><span>${escapeHtml(meta)}</span>${date}</small>
-      ${marketMeta}
-      ${marketEditor}
-    </span>
+    <button class="edit-toggle" type="button"
+      data-component-toggle="${escapeAttribute(key)}" aria-expanded="${expanded}">
+      <span>${label}</span><span class="edit-chevron" aria-hidden="true"></span>
+    </button>
   `;
-}
-
-function renderComponentQuote(price) {
-  if (!price) {
-    return '<span class="component-quote"><strong>미확인</strong><em>가격 없음</em></span>';
-  }
-  if (price.source === 'pending') {
-    return '<span class="component-quote"><strong>확인 필요</strong><em>계산 제외</em></span>';
-  }
-  const status = price.auctionStatus || 'unverified';
-  if (Number(price.meso || 0) <= 0) {
-    return `<span class="component-quote"><strong>${escapeHtml(auctionStatusLabel(status))}</strong><em>가격 없음</em></span>`;
-  }
-  const isSheetOverride = String(price.marketHistoryBasis || '').includes('구글 시트');
-  const label = price.source === 'manual'
-    ? '수동입력'
-    : price.source === 'history'
-      ? isSheetOverride ? '시트 보정' : '시세 반영'
-      : price.source === 'live'
-        ? '체결 확인'
-        : price.source === 'mixed'
-          ? '일부 확인'
-          : auctionStatusLabel(status);
-  return `<span class="component-quote"><strong>${formatMeso(price.meso)}</strong><em>${escapeHtml(label)}</em></span>`;
 }
 
 function componentDisplayName(component) {
@@ -1933,51 +1857,6 @@ function componentBreakdown(item) {
     : `구성품 ${tradableCount}개`;
 
   return { tradable, bonus, prices, label };
-}
-
-function renderComponentToggle(item, key) {
-  const breakdown = componentBreakdown(item);
-  if (!breakdown) return '';
-  const expanded = state.expandedComponentKeys.has(key);
-  return `
-    <button class="component-toggle" type="button"
-      data-component-toggle="${escapeAttribute(key)}" aria-expanded="${expanded}">
-      <span aria-hidden="true">${expanded ? '▾' : '▸'}</span>
-      <span>${escapeHtml(breakdown.label)}</span>
-    </button>
-  `;
-}
-
-function renderComponentDetailRow(item, key) {
-  const breakdown = componentBreakdown(item);
-  if (!breakdown || !state.expandedComponentKeys.has(key)) return '';
-
-  return `
-    <tr class="component-detail-row">
-      <td colspan="5">
-        <div class="component-detail-shell">
-          <div class="component-detail-header">
-            <strong>${escapeHtml(item.name)} 구성품</strong>
-            <span>${escapeHtml(breakdown.label)}</span>
-          </div>
-          <div class="component-list">
-            ${breakdown.tradable.map(component => `
-              <div class="component-row">
-                <span class="component-name">${escapeHtml(componentDisplayName(component))}</span>
-                ${renderInlinePriceEditor(component.name, breakdown.prices.get(normalizeKey(component.name)), true)}
-              </div>
-            `).join('')}
-            ${breakdown.bonus.map(component => `
-              <div class="component-row bonus">
-                <span class="component-name">${escapeHtml(componentDisplayName(component))}</span>
-                <span class="component-quote"><strong>계산 제외</strong><em>추가 구성</em></span>
-              </div>
-            `).join('')}
-          </div>
-        </div>
-      </td>
-    </tr>
-  `;
 }
 
 function renderMileageBadge(rawType) {
@@ -2260,23 +2139,6 @@ function upsertLocalMarketPrice(name, meso) {
   persistLocalData();
 }
 
-function saveInlinePrice(name, rawValue) {
-  const cleanName = String(name || '').trim();
-  if (!cleanName) return;
-  const meso = mesoFromInputUnit(rawValue);
-  state.pendingPreviousRanks = new Map(state.currentRanks);
-  if (meso > 0) {
-    upsertLocalPrice(cleanName, meso, 'live');
-    setSyncState('ready', '매물가 적용', `${cleanName} 가격을 이 브라우저 계산에 반영했습니다.`);
-  } else {
-    const key = normalizeKey(cleanName);
-    state.localAuctionRows = state.localAuctionRows.filter(row => normalizeKey(row.itemName || row.name || row.query) !== key);
-    persistLocalData();
-    setSyncState('ready', '기본 가격 복원', `${cleanName}의 로컬 가격을 해제했습니다.`);
-  }
-  render();
-}
-
 // 계산은 매물과 시세 중 낮은 쪽을 쓴다. 매물 칸만 고치면 시세보다 높게 적은 값이 무시되므로 둘 다 같은 값으로 넣는다.
 function saveSalePrice(name, rawValue) {
   const cleanName = String(name || '').trim();
@@ -2302,23 +2164,6 @@ function resetSalePrice(name) {
   render();
 }
 
-function saveInlineMarketPrice(name, rawValue) {
-  const cleanName = String(name || '').trim();
-  if (!cleanName) return;
-  const meso = mesoFromInputUnit(rawValue);
-  state.pendingPreviousRanks = new Map(state.currentRanks);
-  upsertLocalMarketPrice(cleanName, meso);
-  state.expandedMarketKeys.delete(normalizeKey(cleanName));
-  setSyncState(
-    'ready',
-    meso > 0 ? '시세 참고가 적용' : '시세 참고가 해제',
-    meso > 0
-      ? `${cleanName} 시세를 계산에 반영했습니다.`
-      : `${cleanName}의 브라우저 시세 참고값을 해제했습니다.`
-  );
-  render();
-}
-
 function clearLocalPrice() {
   if (!canEditPrices()) return;
   const name = $('#price-item-name').value.trim() || state.priceTargetName;
@@ -2333,16 +2178,15 @@ function clearLocalPrice() {
 
 function clearAllLocalPrices() {
   if (!state.localAuctionRows.length) {
-    setSyncState('ready', '로컬 수정 없음', '초기화할 매물가나 시세 참고가가 없습니다.');
+    setSyncState('ready', '고친 가격 없음', '되돌릴 판매가가 없습니다.');
     return;
   }
-  if (!confirm('이 브라우저에서 수정한 매물가와 시세 참고가를 모두 삭제하고 공용 기본값으로 되돌릴까요?')) return;
+  if (!confirm('이 브라우저에서 고친 판매가를 모두 원래 값으로 되돌릴까요?')) return;
   state.pendingPreviousRanks = new Map(state.currentRanks);
   state.localAuctionRows = [];
   state.priceTargetName = '';
-  state.expandedMarketKeys.clear();
   persistLocalData();
-  setSyncState('ready', '전체 초기화 완료', '로컬 매물가와 시세 참고가를 공용 기본값으로 되돌렸습니다.');
+  setSyncState('ready', '고친 가격 되돌림', '고친 판매가를 모두 원래 값으로 되돌렸습니다.');
   render();
 }
 
@@ -2824,53 +2668,11 @@ on('#resting-quick-toggle', 'click', () => $('#resting-toggle').click());
 
 on('#item-rows', 'click', event => {
   const toggle = event.target.closest('button[data-component-toggle]');
-  if (toggle) {
-    const key = toggle.dataset.componentToggle;
-    if (state.expandedComponentKeys.has(key)) state.expandedComponentKeys.delete(key);
-    else state.expandedComponentKeys.add(key);
-    render();
-    return;
-  }
-
-  const marketToggle = event.target.closest('button[data-inline-market-toggle]');
-  if (marketToggle) {
-    const key = normalizeKey(marketToggle.dataset.inlineMarketToggle);
-    if (state.expandedMarketKeys.has(key)) state.expandedMarketKeys.delete(key);
-    else state.expandedMarketKeys.add(key);
-    render();
-    return;
-  }
-
-  const marketButton = event.target.closest('button[data-inline-market-save]');
-  if (marketButton) {
-    const editor = marketButton.closest('.inline-price-editor');
-    const input = editor?.querySelector('.inline-market-input');
-    saveInlineMarketPrice(marketButton.dataset.inlineMarketSave, input?.value);
-    return;
-  }
-
-  const button = event.target.closest('button[data-inline-price-save]');
-  if (!button) return;
-  const editor = button.closest('.inline-price-editor');
-  const input = editor?.querySelector('.inline-price-input');
-  saveInlinePrice(button.dataset.inlinePriceSave, input?.value);
-});
-
-on('#item-rows', 'input', event => {
-  if (!event.target.matches('.inline-price-input, .inline-market-input')) return;
-  event.target.closest('.inline-price-editor')?.classList.add('is-dirty');
-});
-
-on('#item-rows', 'keydown', event => {
-  if (event.key !== 'Enter') return;
-  if (event.target.matches('.inline-price-input')) {
-    event.preventDefault();
-    saveInlinePrice(event.target.dataset.inlinePriceName, event.target.value);
-  }
-  if (event.target.matches('.inline-market-input')) {
-    event.preventDefault();
-    saveInlineMarketPrice(event.target.dataset.inlineMarketName, event.target.value);
-  }
+  if (!toggle) return;
+  const key = toggle.dataset.componentToggle;
+  if (state.expandedComponentKeys.has(key)) state.expandedComponentKeys.delete(key);
+  else state.expandedComponentKeys.add(key);
+  render();
 });
 
 on('#price-target-select', 'change', event => {
