@@ -1,9 +1,142 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-19T00:31:41.402Z",
+  "generatedAt": "2026-11-20T00:42:02.594Z",
   "source": "nexon-open-api",
   "endpoint": "/maplestory/v1/notice-cashshop",
-  "status": "api-error",
-  "error": "Nexon API 400: {\"error\":{\"name\":\"OPENAPI00010\",\"message\":\"Please wait until the game maintenance is finished\"}}",
-  "notices": []
+  "status": "ok",
+  "notices": [
+    {
+      "id": 655,
+      "title": "11월 19일 캐시아이템 업데이트 - 블루 아카이브 굿즈 컬렉션 Vol.1",
+      "date": "2026-11-19T08:39+09:00",
+      "url": "https://maplestory.nexon.com/News/CashShop/655",
+      "items": [
+        "블루 아카이브 굿즈 컬렉션 Vol.1",
+        "261119_블루 아카이브 굿즈 컬렉션 Vol.1",
+        "키쿄 컷인 이펙트 획득권",
+        "이로하 컷인 이펙트 획득권",
+        "미카 액션 헤어 gif 이미지",
+        "블루 아카이브 굿즈 컬렉션 Vol.1 블루 아카이브 굿즈 컬렉션",
+        "Vol.1 블루 아카이브 굿즈 컬렉션 Vol.1 '블루 아카이브 굿즈 컬렉션",
+        "Vol.1' 획득 아이템 블루 아카이브 학생 이름표 명찰 반지 교환권",
+        "이로하 컷인 이펙트 획득권 키쿄 컷인 이펙트 획득권 아로나 액션 헤어 쿠폰",
+        "아루 액션 헤어 쿠폰 이부키 액션 헤어 쿠폰 유우카 액션 헤어 쿠폰",
+        "나기사 액션 헤어 쿠폰 미카 액션 헤어 쿠폰 세이아 액션 헤어 쿠폰",
+        "키쿄 액션 헤어 쿠폰 와카모 액션 헤어 쿠폰 이부키 명찰&말풍선 반지 교환권",
+        "유우카 명찰&말풍선 반지 교환권 아리스(메이드) 액션 헤어 쿠폰",
+        "아루 명찰&말풍선 반지 교환권 나기사 명찰&말풍선 반지 교환권",
+        "세이아 명찰&말풍선 반지 교환권 미카 명찰&말풍선 반지 교환권",
+        "키쿄 명찰&말풍선 반지 교환권 와카모 명찰&말풍선 반지 교환권",
+        "소울 스킨 이로하 소울 스킨 키쿄 소울 스킨 블루 아카이브 커스텀 배경 교환권",
+        "권 아로나(기쁜 표정) 스페셜 일러스트 등록권 딸기우유 콤플렉스 선글라스 교환권",
+        "소라 아르바이트 한벌옷 교환권 콩콩 아로나 모자 교환권",
+        "페로로지라 얼굴장식 교환권 블루 이터니티 교환권 아로나의 고래 교환권",
+        "블루 스카이 판타지 교환권 티파티 타임 교환권 블루 아카이브 교실에서 교환권"
+      ],
+      "summary": ".b_srch{opacity:0;color:transparent;-webkit-text-fill-color:transparent;word-break:keep-all;overflow-wrap:anywhere} .b_srch::search-text,.b_srch::search-text:current{color:transparent;-webkit-text-fill-color:transparent;background:transpare"
+    },
+    {
+      "id": 654,
+      "title": "11월 19일 캐시아이템 업데이트 - 블루 아카이브 코디 컬렉션 Vol.1",
+      "date": "2026-11-19T08:39+09:00",
+      "url": "https://maplestory.nexon.com/News/CashShop/654",
+      "items": [
+        "블루 아카이브 코디 컬렉션 Vol.1",
+        "아로나 명찰",
+        "말풍선 반지 교환권",
+        "블루 아카이브 코디 컬렉션 Vol.1 블루 아카이브 코디 컬렉션",
+        "Vol.1 획득 아이템 아로나 세트 교환권 아루 세트 교환권 이부키 세트 교환권",
+        "유우카 세트 교환권 나기사 세트 교환권 미카 세트 교환권 세이아 세트 교환권",
+        "키쿄 세트 교환권 와카모 세트 교환권 아리스(메이드) 세트 교환권",
+        "블루 아카이브 코디 컬렉션",
+        "Vol.1 사용 이벤트 일루전 링 : 미니 아로나 교환권",
+        "아로나 명찰 & 말풍선 반지 교환권 아로나 세트 아로나 헤어 쿠폰",
+        "아로나 성형 쿠폰",
+        "옷 아로나의 운동화 아로나의 우산 아로나의 헤일로 아루 세트 아루 헤어 쿠폰",
+        "아루 성형 쿠폰",
+        "와인레드 어드마이어 아루의 장갑 아루의 헤일로 이부키 세트 이부키 헤어 쿠폰",
+        "이부키 성형 쿠폰",
+        "쨩 이부키의 헤일로 유우카 세트 유우카 헤어 쿠폰 유우카 성형 쿠폰",
+        "츠 로직 앤 리즌 유우카의 장갑 유우카의 헤일로 나기사 세트 나기사 헤어 쿠폰",
+        "나기사 성형 쿠폰",
+        "의 구두 나기사의 날개 로얄 블렌드 나기사의 헤일로 미카 세트 미카 헤어 쿠폰"
+      ],
+      "summary": ".b_srch{opacity:0;color:transparent;-webkit-text-fill-color:transparent;word-break:keep-all;overflow-wrap:anywhere} .b_srch::search-text,.b_srch::search-text:current{color:transparent;-webkit-text-fill-color:transparent;background:transpare"
+    },
+    {
+      "id": 653,
+      "title": "11월 19일 캐시아이템 업데이트 - 로얄스타일 & 마스터피스",
+      "date": "2026-11-19T08:39+09:00",
+      "url": "https://maplestory.nexon.com/News/CashShop/653",
+      "items": [
+        "로얄스타일",
+        "마스터피스",
+        "팬케이크 네온 블루 스톰 명찰 반지 네온 블루 스톰 말풍선 반지 프리미엄 마스터피스",
+        "잊혀진 왈츠(여) 끝없는 걸음(남) 영원한 공허(여) 마스터 어밴든 헤어 쿠폰",
+        "달빛 눈물 라스트 벤데타 마스터 어밴든 헤어 쿠폰",
+        "안개 레아 헤어 마스터피스 20기 헤어 이벤트 마스터피스",
+        "밤의 로이 & 밤의 레아 밤의 로이 헤어 쿠폰 (남) 밤의 레아 헤어 쿠폰",
+        "여) 마스터피스",
+        "걸음(남) 영원한 공허(여) 달빛 눈물 라스트 벤데타 마스터 어밴든 성형 쿠폰",
+        "교환권 무정 성형 쿠폰 (남) 냉정 성형 쿠폰",
+        "여) 무정 얼굴(남) 냉정 얼굴(여) 마스터피스"
+      ],
+      "summary": ".b_srch{opacity:0;color:transparent;-webkit-text-fill-color:transparent;word-break:keep-all;overflow-wrap:anywhere} .b_srch::search-text,.b_srch::search-text:current{color:transparent;-webkit-text-fill-color:transparent;background:transpare"
+    },
+    {
+      "id": 652,
+      "title": "11월 19일 캐시아이템 업데이트 - 프리미엄 헤어 & 성형 쿠폰",
+      "date": "2026-11-19T08:39+09:00",
+      "url": "https://maplestory.nexon.com/News/CashShop/652",
+      "items": [
+        "프리미엄 헤어",
+        "성형 쿠폰",
+        "프리미엄 헤어 쿠폰 프리미엄 성형 쿠폰 프리미엄 헤어 쿠폰",
+        "하수 헤어 뿔뿔이 헤어 월화 헤어 슈가봉봉 헤어 세란 헤어 프리미엄 성형 쿠폰"
+      ],
+      "summary": ".b_srch{opacity:0;color:transparent;-webkit-text-fill-color:transparent;word-break:keep-all;overflow-wrap:anywhere} .b_srch::search-text,.b_srch::search-text:current{color:transparent;-webkit-text-fill-color:transparent;background:transpare"
+    },
+    {
+      "id": 646,
+      "title": "9월 17일 캐시아이템 업데이트 - 위습의 원더베리 & 루나 크리스탈",
+      "date": "2026-09-17T08:09+09:00",
+      "url": "https://maplestory.nexon.com/News/CashShop/646",
+      "items": [
+        "위습의 원더베리",
+        "루나 크리스탈"
+      ],
+      "summary": ""
+    },
+    {
+      "id": 644,
+      "title": "9월 17일 캐시아이템 업데이트 - 몬스터파크 핸즈 이용권",
+      "date": "2026-09-17T08:09+09:00",
+      "url": "https://maplestory.nexon.com/News/CashShop/644",
+      "items": [
+        "몬스터파크 핸즈 이용권"
+      ],
+      "summary": ""
+    },
+    {
+      "id": 642,
+      "title": "8월 20일 캐시아이템 업데이트 - 마스터라벨 플러스",
+      "date": "2026-08-20T08:14+09:00",
+      "url": "https://maplestory.nexon.com/News/CashShop/642",
+      "items": [
+        "마스터라벨 플러스"
+      ],
+      "summary": ""
+    },
+    {
+      "id": 637,
+      "title": "7월 23일 캐시아이템 업데이트 - 컬러링 프리즘 프로 & 무기 이펙트 프리즘",
+      "date": "2026-07-23T08:12+09:00",
+      "url": "https://maplestory.nexon.com/News/CashShop/637",
+      "items": [
+        "컬러링 프리즘 프로",
+        "무기 이펙트 프리즘"
+      ],
+      "summary": ""
+    }
+  ]
 }
