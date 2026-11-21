@@ -11053,6 +11053,30 @@
       "marketHistorySaleCount": 332,
       "marketHistoryNote": "최신 판매 시간순 · 개당 체결가 · 최근 3건 표본",
       "marketHistorySearchIndex": 3
+    },
+    {
+      "itemId": "cashshop-654-blue-archive-coordi",
+      "itemName": "블루 아카이브 코디 컬렉션 Vol.1",
+      "query": "블루 아카이브 코디 컬렉션 Vol.1",
+      "listingLowestMeso": 0,
+      "resultCount": 0,
+      "status": "unverified",
+      "filter": "캐시",
+      "queueGroup": "dailyPriority",
+      "addedAt": "2026-11-22",
+      "addedReason": "2026-11-19 캐시샵 신규. 아직 조회 전"
+    },
+    {
+      "itemId": "cashshop-655-blue-archive-goods",
+      "itemName": "블루 아카이브 굿즈 컬렉션 Vol.1",
+      "query": "블루 아카이브 굿즈 컬렉션 Vol.1",
+      "listingLowestMeso": 0,
+      "resultCount": 0,
+      "status": "unverified",
+      "filter": "캐시",
+      "queueGroup": "dailyPriority",
+      "addedAt": "2026-11-22",
+      "addedReason": "2026-11-19 캐시샵 신규. 아직 조회 전"
     }
   ],
   "skipped": [

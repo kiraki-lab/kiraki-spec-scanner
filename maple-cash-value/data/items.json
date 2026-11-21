@@ -3298,6 +3298,184 @@
       }
     },
     {
+      "id": "cashshop-654-blue-archive-coordi",
+      "name": "블루 아카이브 코디 컬렉션 Vol.1",
+      "category": "랜덤",
+      "catalogCategory": "확률형 · 블루 아카이브",
+      "cashPrice": 9900,
+      "quantity": 1,
+      "mileageType": "none",
+      "tradable": true,
+      "rankEligible": true,
+      "availability": {
+        "type": "limited",
+        "startAt": "2026-11-19T10:00:00+09:00",
+        "endAt": "2027-01-20T23:59:00+09:00",
+        "checkedAt": "2026-11-22",
+        "source": "11월 19일 캐시아이템 업데이트 - 블루 아카이브 코디 컬렉션 Vol.1 (공지 654)",
+        "sourceUrl": "https://maplestory.nexon.com/News/CashShop/654"
+      },
+      "conditions": {
+        "nexonCashOnly": true,
+        "maplePointsAllowed": false,
+        "mileagePercent": 0,
+        "validityDays": 7,
+        "exchangeStatus": "conditional",
+        "maxTrades": 1,
+        "exchangeCondition": "사용하기 전",
+        "probabilityItem": true
+      },
+      "source": {
+        "noticeId": 654,
+        "url": "https://maplestory.nexon.com/News/CashShop/654",
+        "imageSha256": "7c694c6d75e9bf1054cbd428283c96653fa7206268c8f26a4cd409d2e4e28fd7"
+      },
+      "exchangeEvidence": {
+        "level": "official",
+        "note": "공지 654 이미지: 넥슨캐시로만 구매(메이플포인트 사용 불가), 7일 이내 사용, 사용 전 1회에 한해 교환 가능. 획득한 세트 교환권도 1회 교환 가능",
+        "checkedAt": "2026-11-22",
+        "sourceUrl": "https://maplestory.nexon.com/News/CashShop/654"
+      }
+    },
+    {
+      "id": "cashshop-654-blue-archive-coordi-10",
+      "name": "블루 아카이브 코디 컬렉션 Vol.1 10개",
+      "category": "랜덤",
+      "catalogCategory": "확률형 · 블루 아카이브",
+      "cashPrice": 99000,
+      "quantity": 10,
+      "unitCashPrice": 9900,
+      "mileageType": "none",
+      "tradable": true,
+      "rankEligible": true,
+      "availability": {
+        "type": "limited",
+        "startAt": "2026-11-19T10:00:00+09:00",
+        "endAt": "2027-01-20T23:59:00+09:00",
+        "checkedAt": "2026-11-22",
+        "source": "11월 19일 캐시아이템 업데이트 - 블루 아카이브 코디 컬렉션 Vol.1 (공지 654)",
+        "sourceUrl": "https://maplestory.nexon.com/News/CashShop/654"
+      },
+      "components": [
+        {
+          "id": "cashshop-654-blue-archive-coordi",
+          "name": "블루 아카이브 코디 컬렉션 Vol.1",
+          "quantity": 10
+        }
+      ],
+      "conditions": {
+        "nexonCashOnly": true,
+        "maplePointsAllowed": false,
+        "mileagePercent": 0,
+        "validityDays": 7,
+        "exchangeStatus": "conditional",
+        "maxTrades": 1,
+        "exchangeCondition": "사용하기 전",
+        "probabilityItem": true,
+        "bundleSize": 10
+      },
+      "source": {
+        "noticeId": 654,
+        "url": "https://maplestory.nexon.com/News/CashShop/654",
+        "imageSha256": "7c694c6d75e9bf1054cbd428283c96653fa7206268c8f26a4cd409d2e4e28fd7"
+      },
+      "exchangeEvidence": {
+        "level": "official",
+        "note": "공지 654 이미지: 넥슨캐시로만 구매(메이플포인트 사용 불가), 7일 이내 사용, 사용 전 1회에 한해 교환 가능. 획득한 세트 교환권도 1회 교환 가능",
+        "checkedAt": "2026-11-22",
+        "sourceUrl": "https://maplestory.nexon.com/News/CashShop/654"
+      }
+    },
+    {
+      "id": "cashshop-655-blue-archive-goods",
+      "name": "블루 아카이브 굿즈 컬렉션 Vol.1",
+      "category": "랜덤",
+      "catalogCategory": "확률형 · 블루 아카이브",
+      "cashPrice": 3300,
+      "quantity": 1,
+      "mileageType": "none",
+      "tradable": true,
+      "rankEligible": true,
+      "availability": {
+        "type": "limited",
+        "startAt": "2026-11-19T10:00:00+09:00",
+        "endAt": "2027-01-20T23:59:00+09:00",
+        "checkedAt": "2026-11-22",
+        "source": "11월 19일 캐시아이템 업데이트 - 블루 아카이브 굿즈 컬렉션 Vol.1 (공지 655)",
+        "sourceUrl": "https://maplestory.nexon.com/News/CashShop/655"
+      },
+      "conditions": {
+        "nexonCashOnly": true,
+        "maplePointsAllowed": false,
+        "mileagePercent": 0,
+        "validityDays": 7,
+        "exchangeStatus": "conditional",
+        "maxTrades": 1,
+        "exchangeCondition": "사용하기 전",
+        "probabilityItem": true
+      },
+      "source": {
+        "noticeId": 655,
+        "url": "https://maplestory.nexon.com/News/CashShop/655",
+        "imageSha256": "fcdadc6376364e383d8497f6fc2502d7500a78c719126716924253731808963d"
+      },
+      "exchangeEvidence": {
+        "level": "official",
+        "note": "공지 655 이미지: 넥슨캐시로만 구매(메이플포인트 사용 불가), 7일 이내 사용, 사용 전 1회에 한해 교환 가능. 획득한 교환권도 1회 교환 가능",
+        "checkedAt": "2026-11-22",
+        "sourceUrl": "https://maplestory.nexon.com/News/CashShop/655"
+      }
+    },
+    {
+      "id": "cashshop-655-blue-archive-goods-10",
+      "name": "블루 아카이브 굿즈 컬렉션 Vol.1 10개",
+      "category": "랜덤",
+      "catalogCategory": "확률형 · 블루 아카이브",
+      "cashPrice": 33000,
+      "quantity": 10,
+      "unitCashPrice": 3300,
+      "mileageType": "none",
+      "tradable": true,
+      "rankEligible": true,
+      "availability": {
+        "type": "limited",
+        "startAt": "2026-11-19T10:00:00+09:00",
+        "endAt": "2027-01-20T23:59:00+09:00",
+        "checkedAt": "2026-11-22",
+        "source": "11월 19일 캐시아이템 업데이트 - 블루 아카이브 굿즈 컬렉션 Vol.1 (공지 655)",
+        "sourceUrl": "https://maplestory.nexon.com/News/CashShop/655"
+      },
+      "components": [
+        {
+          "id": "cashshop-655-blue-archive-goods",
+          "name": "블루 아카이브 굿즈 컬렉션 Vol.1",
+          "quantity": 10
+        }
+      ],
+      "conditions": {
+        "nexonCashOnly": true,
+        "maplePointsAllowed": false,
+        "mileagePercent": 0,
+        "validityDays": 7,
+        "exchangeStatus": "conditional",
+        "maxTrades": 1,
+        "exchangeCondition": "사용하기 전",
+        "probabilityItem": true,
+        "bundleSize": 10
+      },
+      "source": {
+        "noticeId": 655,
+        "url": "https://maplestory.nexon.com/News/CashShop/655",
+        "imageSha256": "fcdadc6376364e383d8497f6fc2502d7500a78c719126716924253731808963d"
+      },
+      "exchangeEvidence": {
+        "level": "official",
+        "note": "공지 655 이미지: 넥슨캐시로만 구매(메이플포인트 사용 불가), 7일 이내 사용, 사용 전 1회에 한해 교환 가능. 획득한 교환권도 1회 교환 가능",
+        "checkedAt": "2026-11-22",
+        "sourceUrl": "https://maplestory.nexon.com/News/CashShop/655"
+      }
+    },
+    {
       "id": 686,
       "name": "캐치! 티니핑 굿즈 컬렉션",
       "category": "랜덤",
