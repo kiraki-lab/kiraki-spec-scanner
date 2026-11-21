@@ -164,7 +164,13 @@ async function check(name, fn) {
     // 판매가 추이 그래프
     const historyDoc = JSON.parse(fs.readFileSync(path.join(BASE, 'data', 'price-history.json'), 'utf8'));
     const [dKey, , , sKey] = historyDoc.fields;
-    const salePoints = name => (historyDoc.items[name] || []).filter(point => point[sKey] > 0);
+    // 앱의 chartPoints 와 같게 중앙값의 3배 밖 점은 뺀다(튀는 체결 하나가 축을 망치지 않게).
+    const salePoints = name => {
+      const points = (historyDoc.items[name] || []).filter(point => point[sKey] > 0);
+      const sorted = points.map(point => point[sKey]).sort((a, b) => a - b);
+      const median = sorted[Math.floor(sorted.length / 2)];
+      return points.filter(point => point[sKey] <= median * 3 && point[sKey] >= median / 3);
+    };
     const graph = await openPage(browser, server.url, { width: 1280, height: 900 });
     await check('줄을 펼치면 판매가 그래프가 그려진다', async () => {
       const { page: gp } = graph;
